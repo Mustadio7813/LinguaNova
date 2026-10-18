@@ -1688,5 +1688,6 @@
   "ui_lang_progress": "Langue d’interface {lang} : {done}/{total} textes",
   "ui_lang_created": "{lang} créée : {done} textes traduits, {missing} restent en anglais. Choisissez-la dans les Paramètres. Fichier : {path}",
   "ui_lang_failed": "Impossible de créer la langue d’interface : {error}",
-  "update_busy": "Terminez ou arrêtez la traduction en cours avant de mettre à jour."
+  "update_busy": "Terminez ou arrêtez la traduction en cours avant de mettre à jour.",
+  "tool_ui_lang_pick": "Choisissez une langue..."
 }

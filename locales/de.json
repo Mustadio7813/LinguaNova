@@ -1688,5 +1688,6 @@
   "ui_lang_progress": "Oberflächensprache {lang}: {done}/{total} Texte",
   "ui_lang_created": "{lang} erstellt: {done} Texte übersetzt, {missing} bleiben auf Englisch. Wählen Sie sie in den Einstellungen. Datei: {path}",
   "ui_lang_failed": "Die Oberflächensprache konnte nicht erstellt werden: {error}",
-  "update_busy": "Beenden oder stoppen Sie die laufende Übersetzung vor dem Update."
+  "update_busy": "Beenden oder stoppen Sie die laufende Übersetzung vor dem Update.",
+  "tool_ui_lang_pick": "Sprache auswählen..."
 }

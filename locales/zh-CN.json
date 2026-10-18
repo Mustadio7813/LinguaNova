@@ -1688,5 +1688,6 @@
   "ui_lang_progress": "界面语言 {lang}：{done}/{total} 条文本",
   "ui_lang_created": "已创建 {lang}：翻译了 {done} 条文本，{missing} 条保留英文。请在设置中选择它。文件：{path}",
   "ui_lang_failed": "无法创建界面语言：{error}",
-  "update_busy": "请先完成或停止当前翻译，再进行更新。"
+  "update_busy": "请先完成或停止当前翻译，再进行更新。",
+  "tool_ui_lang_pick": "选择一种语言..."
 }

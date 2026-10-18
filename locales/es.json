@@ -1688,5 +1688,6 @@
   "ui_lang_progress": "Idioma de la interfaz {lang}: {done}/{total} textos",
   "ui_lang_created": "{lang} creado: {done} textos traducidos, {missing} quedan en inglés. Elíjalo en Ajustes. Archivo: {path}",
   "ui_lang_failed": "No se pudo crear el idioma de la interfaz: {error}",
-  "update_busy": "Termine o detenga la traducción en curso antes de actualizar."
+  "update_busy": "Termine o detenga la traducción en curso antes de actualizar.",
+  "tool_ui_lang_pick": "Elija un idioma..."
 }

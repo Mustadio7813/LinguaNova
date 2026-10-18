@@ -1689,5 +1689,6 @@
   "ui_lang_progress": "Interface language {lang}: {done}/{total} texts",
   "ui_lang_created": "{lang} created: {done} texts translated, {missing} left in English. Choose it in Settings. File: {path}",
   "ui_lang_failed": "Could not create the interface language: {error}",
-  "update_busy": "Finish or stop the current translation before updating."
+  "update_busy": "Finish or stop the current translation before updating.",
+  "tool_ui_lang_pick": "Choose a language..."
 }

@@ -1689,5 +1689,6 @@
   "ui_lang_progress": "インターフェース言語 {lang}: {done}/{total} テキスト",
   "ui_lang_created": "{lang} を作成しました: {done} 件を翻訳、{missing} 件は英語のままです。設定で選択してください。ファイル: {path}",
   "ui_lang_failed": "インターフェース言語を作成できませんでした: {error}",
-  "update_busy": "更新する前に、実行中の翻訳を完了するか停止してください。"
+  "update_busy": "更新する前に、実行中の翻訳を完了するか停止してください。",
+  "tool_ui_lang_pick": "言語を選択..."
 }

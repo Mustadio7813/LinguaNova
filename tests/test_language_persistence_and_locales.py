@@ -109,7 +109,9 @@ def test_qml_comboboxes_sync_persisted_languages():
         name = obj.metaObject().className()
         # The Toolbox language-activation combo lists game/tl folders of the
         # last opened project, which can be "turkish" too — not a settings combo.
-        if "ComboBox" in name and obj.objectName() != "toolLangActivateCombo":
+        # The Utilities "create an interface language" combo lists target
+        # languages too and is not a persisted setting either.
+        if "ComboBox" in name and obj.objectName() not in ("toolLangActivateCombo", "toolUiLanguageCombo"):
             val = obj.property("currentValue")
             text = obj.property("displayText")
             idx = obj.property("currentIndex")

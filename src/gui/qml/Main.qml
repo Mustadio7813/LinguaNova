@@ -4182,6 +4182,10 @@ ApplicationWindow {
                                 Layout.fillWidth: true; height: root.responsiveButtonHeight
                                 model: uiLangCard.langs
                                 textRole: "name"; valueRole: "code"
+                                // No language preselected: the user picks one on purpose.
+                                currentIndex: -1
+                                displayText: currentIndex >= 0 ? currentText
+                                             : (appBackend.uiTrigger, appBackend.getTextWithDefault("tool_ui_lang_pick", "Choose a language..."))
                                 enabled: !uiLangCard.busy
                                 background: Rectangle { radius: 10; color: clrInput; border.color: parent.hovered ? "#38BDF8" : clrCardBorder; border.width: 1 }
                                 contentItem: Label { leftPadding: 14; rightPadding: 30; text: uiLangTargetCombo.displayText; elide: Text.ElideRight; color: clrTxt; font.pixelSize: 12; verticalAlignment: Text.AlignVCenter }

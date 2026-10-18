@@ -1689,5 +1689,6 @@
   "ui_lang_progress": "Arayüz dili {lang}: {done}/{total} metin",
   "ui_lang_created": "{lang} oluşturuldu: {done} metin çevrildi, {missing} metin İngilizce kaldı. Ayarlar'dan seçin. Dosya: {path}",
   "ui_lang_failed": "Arayüz dili oluşturulamadı: {error}",
-  "update_busy": "Güncellemeden önce devam eden çeviriyi bitirin veya durdurun."
+  "update_busy": "Güncellemeden önce devam eden çeviriyi bitirin veya durdurun.",
+  "tool_ui_lang_pick": "Bir dil seçin..."
 }
