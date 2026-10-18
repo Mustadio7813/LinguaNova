@@ -14,7 +14,9 @@ EXPECTED_MAIN_HOOK_SHA256 = "bee504f9327f240b7714949615b4077a5687feb7583e00ab9fa
 
 
 def test_mod_does_not_change_main_runtime_hook():
-    data = Path("src/core/runtime_hook_template.py").read_bytes()
+    # Git converts LF to CRLF on Windows checkouts (.gitattributes "text=auto"),
+    # so the hash is taken over the LF form stored in the repository.
+    data = Path("src/core/runtime_hook_template.py").read_bytes().replace(b"\r\n", b"\n")
     assert hashlib.sha256(data).hexdigest() == EXPECTED_MAIN_HOOK_SHA256
 
 

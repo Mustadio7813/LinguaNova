@@ -502,3 +502,9 @@ Root causes reproduced with the strings from the user's "iNSight of you ver.13" 
 - **Incremental merge**: `merge_tl_content` and `_extract_tl_string_entries` cut an `old` text at its first escaped quote, so `Say \"bye\" later` was taken for a duplicate of `Say \"hi\" now` and never added; both now use the escape-aware string body.
 - **Locales**: new keys in the nine interface languages; `[DE ACUERDO]`/`[ADVERTIR]` log tags in Spanish became `[ÉXITO]`/`[AVISO]`; guard reasons are now found by `get_log_text` (they were only at top level and always showed in English).
 - Inventory: `EXPECTED_FILES = 258`, `EXPECTED_PY_FILES = 200` (new `src/core/tag_structure.py`, `tests/test_audit_20261018.py`).
+
+### 30. Repository: contribution guide, CI test drift — 2026-10-18
+
+- `CONTRIBUTING.md` (English) and `CONTRIBUTING.es.md` (Spanish) with Developer Certificate of Origin sign-off (`git commit -s`); bilingual pull-request template. Neither adds any restriction to GPL-3.0-or-later.
+- Seven tests had drifted from the code and failed in every CI job (they also failed before the 2026-10-18 audit): the zzz_<lang>_language.rpy tests (that file is no longer written; RTL is now checked in the runtime hook), the CLI menu test (its sample game already listed German), the `.rpyc` fake (missing `progress_callback`), the header label string, the stop-button text window, and the macOS stub (missing `_is_translating`). The tests now check the current behaviour; no product code changed.
+- `tests/test_mod_isolation_contract.py` hashed `runtime_hook_template.py` byte for byte, so it failed on Windows, where git checks the file out with CRLF. The hash is now taken over the LF form.
