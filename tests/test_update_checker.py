@@ -84,3 +84,45 @@ class TestUpdateChecker(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+def test_backend_reports_a_failed_check_instead_of_up_to_date():
+    """A check that never reached GitHub said "You are up to date" (2026-10-18 test)."""
+    from types import SimpleNamespace
+    from src.backend.app_backend import AppBackend
+    from src.utils.update_checker import UpdateCheckResult
+
+    logs, finished = [], []
+    stub = SimpleNamespace(
+        _version="1.0.0",
+        config=SimpleNamespace(get_ui_text=lambda key, default: default),
+        logger=MagicMock(),
+        logMessage=SimpleNamespace(emit=lambda level, msg: logs.append((level, msg))),
+        updateCheckFinished=SimpleNamespace(emit=lambda ok, msg: finished.append((ok, msg))),
+        updateAvailable=SimpleNamespace(emit=lambda *a: finished.append(("available", a))),
+    )
+    failed = UpdateCheckResult("1.0.0", "", False, "", error="HTTP 404")
+    with patch("src.utils.update_checker.check_for_updates", return_value=failed):
+        AppBackend._check_updates_thread(stub, manual=False)
+    assert finished == [(False, "Update check failed: HTTP 404")]
+    assert logs and logs[0][0] == "warning" and "HTTP 404" in logs[0][1]
+    assert not any("up to date" in msg for _, msg in finished)
+
+
+def test_update_dialog_texts_match_the_dialog():
+    """The dialog said "Press OK to download" but its button is "Download",
+    and showed "vv1.0.1" for a "v1.0.1" tag (2026-10-18 test)."""
+    import json
+    from pathlib import Path
+
+    for path in Path("locales").glob("*.json"):
+        data = json.loads(path.read_text(encoding="utf-8"))
+        msg, click = data["update_available_msg"], data["update_available_click"]
+        assert "{current}" in msg and "{latest}" in msg, path.name
+        assert "OK" not in click and "ОК" not in click, path.name
+
+    qml = Path("src/gui/qml/Main.qml").read_text(encoding="utf-8")
+    block = qml[qml.index("id: updateDialog"):qml.index("id: updateDialog") + 9000]
+    assert 'replace(/^[vV]/, "")' in block
+    assert '.replace("{current}"' in block and '.replace("{latest}"' in block
+    assert "CloseOnPressOutside" not in block[:600]

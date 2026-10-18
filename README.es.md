@@ -52,7 +52,19 @@ El archivo [`UPSTREAM.md`](UPSTREAM.md) documenta la relación con el proyecto d
 - Herramientas de fuentes, glosario y diagnóstico.
 - MOD de traducción de interfaz separado del sistema normal de traducción.
 - Cola de trabajos que no cancela automáticamente la operación activa.
-- Interfaz localizada en nueve idiomas.
+- Interfaz en nueve idiomas, más los idiomas que añadas tú (Utilidades → *Crear un idioma de la interfaz*).
+- Instalador de Windows con actualizaciones automáticas verificadas.
+
+## 💾 Instalación
+
+| Sistema | Archivo en cada [versión publicada](https://github.com/Mustadio7813/LinguaNova/releases) | Notas |
+| --- | --- | --- |
+| Windows 10/11 (64 bits) | `LinguaNova_Setup_<versión>.exe` | Instalador. Eliges uno de los discos internos del PC y LinguaNova se instala en `<disco>:\LinguaNova`. Sin permisos de administrador; acceso directo en el escritorio y en el menú Inicio. Se actualiza solo. |
+| Windows (portable) | `LinguaNova-Windows-x64.zip` | Descomprime y ejecuta `LinguaNova.exe`. Crea un archivo vacío `.portable` en la carpeta para guardar la configuración dentro de ella. |
+| Linux (x64) | `LinguaNova-Linux-x64.AppImage` | Compilado y probado al arrancar por GitHub Actions. |
+| macOS (Apple silicon) | `LinguaNova-macOS-arm64.dmg` | **Experimental:** compilado y probado al arrancar por GitHub Actions, aún sin probar en un Mac real por el mantenedor. Se agradecen los reportes. |
+
+El instalador y el programa usan automáticamente el idioma de Windows (inglés si no es uno de los nueve); se puede cambiar en Ajustes. Windows no permite que los instaladores anclen programas a la barra de tareas: abre LinguaNova, haz clic derecho en su icono de la barra y elige **Anclar a la barra de tareas**.
 
 ## 🛠️ Ejecutar desde el código
 
@@ -98,9 +110,15 @@ Antes de publicar un binario:
 
 Consulta [`SOURCE_DISTRIBUTION.md`](SOURCE_DISTRIBUTION.md) y [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md).
 
+En Windows, `build_windows.bat` genera `dist\LinguaNova\` y `build_installer.bat` lo convierte en el instalador (necesita [Inno Setup](https://jrsoftware.org/isdl.php) 6.5 o superior), el ZIP portable y `SHA256SUMS.txt`. Al subir una etiqueta `v*`, GitHub Actions (`release.yml`) compila todo esto para Windows, Linux y macOS y lo publica como versión.
+
 ## 🔄 Actualizaciones de LinguaNova
 
-LinguaNova comprueba si hay una versión nueva en las publicaciones de este repositorio (`Mustadio7813/LinguaNova`). Si la encuentra, **solo avisa y abre la página de descargas**: no descarga ni instala nada por su cuenta.
+LinguaNova comprueba si hay una versión nueva en las publicaciones de este repositorio (`Mustadio7813/LinguaNova`) al iniciar (se puede desactivar) y desde **Utilidades → Actualizaciones → Buscar actualizaciones**.
+
+- **Versión instalada de Windows:** el aviso ofrece **Actualizar ahora**. LinguaNova descarga `LinguaNova_Setup_<versión>.exe` de la publicación, lo comprueba con el `SHA256SUMS.txt` de esa publicación (un archivo que no coincide se borra y nunca se ejecuta), lo instala en la misma carpeta y se vuelve a abrir. No se instala nada sin tu clic.
+- **Portable, Linux y macOS:** el aviso abre la página de la publicación para descargar la versión nueva.
+- Si la comprobación falla (sin conexión, sin versiones publicadas…), LinguaNova lo dice en lugar de indicar que estás al día.
 
 El canal de actualización nunca apunta a RenLocalizer. Esto se refiere a **actualizaciones del programa LinguaNova**, no a modelos de IA ni a componentes externos, que se gestionan por separado.
 

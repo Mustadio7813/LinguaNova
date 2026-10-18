@@ -29,6 +29,10 @@ The current source declares or documents components including:
 
 The build process also uses development/build dependencies such as PyInstaller.
 
+## Build tools: Inno Setup
+
+The Windows installer is built with Inno Setup (Copyright (C) 1997-2026 Jordan Russell, portions Copyright (C) 2000-2026 Martijn Laan), which is not part of LinguaNova's source and is installed separately by whoever builds the installer. The language files `installer/languages/ChineseSimplified.isl` (maintainer: Zhenghan Yang) and `installer/languages/Farsi.isl` (translator: Peyman Mohammadi) are copied unmodified from the Inno Setup source repository (`jrsoftware/issrc`) and are distributed under the Inno Setup License, included as `installer/languages/INNO_SETUP_LICENSE.txt`.
+
 ## Components downloaded separately
 
 Some optional runtimes or models may be downloaded by the user or by LinguaNova on request. A separately downloaded component is not automatically part of the LinguaNova source license merely because LinguaNova can launch or manage it.

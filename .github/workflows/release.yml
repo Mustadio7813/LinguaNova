@@ -38,11 +38,29 @@ jobs:
           cd dist
           Compress-Archive -Path LinguaNova -DestinationPath ../LinguaNova-Windows-x64.zip
 
+      # Installer: installer/LinguaNova.iss (drive picker, per-user install).
+      # The in-app updater downloads LinguaNova_Setup_<version>.exe and checks
+      # it against SHA256SUMS.txt, so these names must not change.
+      - name: Install Inno Setup
+        run: choco install innosetup --no-progress -y
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          $version = python -c "from src.version import VERSION; print(VERSION)"
+          $iscc = Get-ChildItem "C:\Program Files*\Inno Setup*\ISCC.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
+          if (-not $iscc) { throw "ISCC.exe not found" }
+          & $iscc.FullName "/DMyAppVersion=$version" "installer\LinguaNova.iss"
+          if ($LASTEXITCODE -ne 0) { throw "Inno Setup failed" }
+          Copy-Item "installer\Output\LinguaNova_Setup_$version.exe" .
+
       - name: Upload artifact
         uses: actions/upload-artifact@v7
         with:
           name: windows-build
-          path: LinguaNova-Windows-x64.zip
+          path: |
+            LinguaNova-Windows-x64.zip
+            LinguaNova_Setup_*.exe
 
   # ============================================
   # Linux Build → AppImage
@@ -310,12 +328,13 @@ jobs:
           name: macos-build
 
       - name: Generate SHA256 checksums
-        run: sha256sum LinguaNova-* > SHA256SUMS.txt
+        run: sha256sum LinguaNova-* LinguaNova_Setup_*.exe > SHA256SUMS.txt
 
       - name: Create Release
         uses: softprops/action-gh-release@v3
         with:
           files: |
+            LinguaNova_Setup_*.exe
             LinguaNova-Windows-x64.zip
             LinguaNova-Linux-x64.AppImage
             LinguaNova-Linux-x64.tar.gz

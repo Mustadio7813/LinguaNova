@@ -9,3 +9,7 @@ build/linux/*.desktop text eol=lf
 
 # Windows-specific files keep CRLF
 *.bat text eol=crlf
+# Inno Setup installer sources keep CRLF (Windows tool, files checked by SHA-256)
+*.iss text eol=crlf
+*.isl text eol=crlf
+installer/languages/INNO_SETUP_LICENSE.txt text eol=crlf

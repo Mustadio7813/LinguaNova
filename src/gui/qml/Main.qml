@@ -477,12 +477,28 @@ ApplicationWindow {
 
         function onUpdateAvailable(currentVersion, latestVersion, releaseUrl) {
             updateDialog.latestVersion = latestVersion
+            updateDialog.currentVersion = currentVersion
             updateDialog.releaseUrl = releaseUrl
             updateDialog.open()
         }
 
         function onUpdateCheckFinished(hasUpdate, message) {
             showToast(message, hasUpdate ? "success" : "info")
+        }
+
+        function onUpdateDownloadProgress(percent) {
+            updateDialog.progress = percent
+        }
+
+        function onUpdateDownloadFinished(ok, message) {
+            updateDialog.statusText = message
+            // On failure the button falls back to opening the release page.
+            if (!ok) updateDialog.autoFailed = true
+        }
+
+        function onUpdateInstallerLaunched() {
+            // The installer replaces LinguaNova's files: close now so it can.
+            Qt.quit()
         }
     }
 
@@ -2652,6 +2668,13 @@ ApplicationWindow {
                                     Layout.preferredWidth: 240; height: 38
                                     model: appBackend.getAvailableUILanguages()
                                     textRole: "name"; valueRole: "code"
+                                    Connections {
+                                        target: appBackend
+                                        function onUiLanguagesChanged() {
+                                            uiLanguageCombo.model = appBackend.getAvailableUILanguages()
+                                            uiLanguageCombo.syncUILanguage()
+                                        }
+                                    }
                                     function syncUILanguage() {
                                         var cur = appBackend.getCurrentUILanguage() || "en"
                                         var idx = uiLanguageCombo.indexOfValue(cur)
@@ -4011,6 +4034,220 @@ ApplicationWindow {
                             }
                         }
                     }
+
+                    // ── KART: ACTUALIZACIONES ─────────────────────────────────
+                    Rectangle {
+                        id: updatesCard
+                        objectName: "toolUpdatesCard"
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: updatesCardCol.implicitHeight + (root.compactHeight ? 24 : 36)
+                        radius: 18; color: clrCard; border.color: clrCardBorder; border.width: 1
+
+                        property string statusText: ""
+                        property bool checking: false
+                        Connections {
+                            target: appBackend
+                            function onUpdateCheckFinished(hasUpdate, message) {
+                                updatesCard.checking = false
+                                updatesCard.statusText = message
+                            }
+                        }
+
+                        ColumnLayout {
+                            id: updatesCardCol
+                            anchors.fill: parent
+                            anchors.margins: root.responsiveCardPadding
+                            spacing: root.responsiveCardSpacing
+
+                            RowLayout {
+                                spacing: 12; Layout.fillWidth: true
+                                Rectangle {
+                                    width: 38; height: root.responsiveButtonHeight; radius: 10; color: Qt.rgba(167, 139, 250, 0.1)
+                                    border.color: Qt.rgba(167, 139, 250, 0.3); border.width: 1
+                                    Label { anchors.centerIn: parent; text: "🔄"; font.pixelSize: 18 }
+                                }
+                                ColumnLayout {
+                                    spacing: 1; Layout.fillWidth: true
+                                    Label { text: appBackend.uiTrigger, appBackend.getTextWithDefault("tool_updates_title", "Updates"); font.pixelSize: 15; font.bold: true; color: clrTxt }
+                                    Label {
+                                        text: appBackend.uiTrigger, appBackend.getTextWithDefault("tool_updates_installed", "Installed version: {version}").replace("{version}", "v" + appBackend.version)
+                                        font.pixelSize: 11; color: clrTxtDim
+                                    }
+                                }
+                                Rectangle {
+                                    radius: 6; color: Qt.rgba(167, 139, 250, 0.15)
+                                    Layout.preferredHeight: 20; Layout.preferredWidth: 62
+                                    Label { anchors.centerIn: parent; text: appBackend.uiTrigger, appBackend.getTextWithDefault("ln_tool_updates_badge", "UPDATE"); font.pixelSize: 9; font.bold: true; color: clrPurple }
+                                }
+                            }
+
+                            Label {
+                                text: appBackend.uiTrigger, appBackend.getTextWithDefault("tool_updates_desc", "Checks whether a newer LinguaNova has been published. The installed version can download and install it by itself; the portable version opens the download page.")
+                                font.pixelSize: root.compactHeight ? 11 : 12; color: clrTxt2; wrapMode: Text.Wrap; Layout.fillWidth: true
+                            }
+
+                            CheckBox {
+                                id: updatesStartupCheck
+                                objectName: "toolUpdatesStartupCheck"
+                                Layout.fillWidth: true
+                                checked: appBackend.checkForUpdatesOnStartup
+                                onToggled: appBackend.checkForUpdatesOnStartup = checked
+                                contentItem: Label {
+                                    leftPadding: updatesStartupCheck.indicator.width + 8
+                                    text: appBackend.uiTrigger, appBackend.getTextWithDefault("tool_updates_startup", "Check for updates when LinguaNova starts")
+                                    color: clrTxt2; font.pixelSize: 12; wrapMode: Text.Wrap
+                                    verticalAlignment: Text.AlignVCenter
+                                }
+                            }
+
+                            Button {
+                                id: btnCheckUpdates
+                                objectName: "toolCheckUpdatesButton"
+                                Layout.fillWidth: true; height: root.responsiveButtonHeight
+                                enabled: !updatesCard.checking && !appBackend.updateDownloading
+                                text: appBackend.uiTrigger, "🔄 " + appBackend.getTextWithDefault("btn_check_updates", "Check for updates")
+                                onClicked: {
+                                    updatesCard.checking = true
+                                    updatesCard.statusText = appBackend.getTextWithDefault("update_checking", "Checking for updates...")
+                                    appBackend.checkForUpdates(true)
+                                }
+                                background: Rectangle {
+                                    radius: 10; color: parent.hovered ? clrCardHover : clrInput
+                                    border.color: parent.hovered ? clrPurple : clrCardBorder; border.width: 1
+                                }
+                                contentItem: Label { text: parent.text; color: clrPurple; font.pixelSize: 12; font.bold: true; horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter }
+                            }
+
+                            Label {
+                                visible: updatesCard.statusText.length > 0
+                                text: updatesCard.statusText
+                                font.pixelSize: 11; color: clrTxt2; wrapMode: Text.Wrap; Layout.fillWidth: true
+                            }
+                        }
+                    }
+
+                    // ── KART: IDIOMA DE LA INTERFAZ CREADO POR EL USUARIO ──────
+                    Rectangle {
+                        id: uiLangCard
+                        objectName: "toolUiLanguageCard"
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: uiLangCardCol.implicitHeight + (root.compactHeight ? 24 : 36)
+                        radius: 18; color: clrCard; border.color: clrCardBorder; border.width: 1
+
+                        property bool busy: false
+                        property string statusText: ""
+                        property var langs: []
+                        Component.onCompleted: langs = appBackend.getTargetLanguages()
+                        Connections {
+                            target: appBackend
+                            function onUiLanguageGenerationFinished(ok, message) {
+                                uiLangCard.busy = false
+                                uiLangCard.statusText = message
+                            }
+                        }
+
+                        ColumnLayout {
+                            id: uiLangCardCol
+                            anchors.fill: parent
+                            anchors.margins: root.responsiveCardPadding
+                            spacing: root.responsiveCardSpacing
+
+                            RowLayout {
+                                spacing: 12; Layout.fillWidth: true
+                                Rectangle {
+                                    width: 38; height: root.responsiveButtonHeight; radius: 10; color: Qt.rgba(56, 189, 248, 0.1)
+                                    border.color: Qt.rgba(56, 189, 248, 0.3); border.width: 1
+                                    Label { anchors.centerIn: parent; text: "🗣️"; font.pixelSize: 18 }
+                                }
+                                ColumnLayout {
+                                    spacing: 1; Layout.fillWidth: true
+                                    Label { text: appBackend.uiTrigger, appBackend.getTextWithDefault("tool_ui_lang_title", "Create an interface language"); font.pixelSize: 15; font.bold: true; color: clrTxt }
+                                    Label { text: appBackend.uiTrigger, appBackend.getTextWithDefault("tool_ui_lang_subtitle", "Machine-translated draft of the interface"); font.pixelSize: 11; color: clrTxtDim }
+                                }
+                                Rectangle {
+                                    radius: 6; color: Qt.rgba(56, 189, 248, 0.15)
+                                    Layout.preferredHeight: 20; Layout.preferredWidth: 48
+                                    Label { anchors.centerIn: parent; text: appBackend.uiTrigger, appBackend.getTextWithDefault("ln_tool_ui_lang_badge", "UI"); font.pixelSize: 9; font.bold: true; color: "#38BDF8" }
+                                }
+                            }
+
+                            Label {
+                                text: appBackend.uiTrigger, appBackend.getTextWithDefault("tool_ui_lang_desc", "For people who do not speak any of the interface languages: LinguaNova translates its own texts into the chosen language with the selected engine. It is a draft; texts it cannot translate stay in English. You can also edit or add .json files in the languages folder.")
+                                font.pixelSize: root.compactHeight ? 11 : 12; color: clrTxt2; wrapMode: Text.Wrap; Layout.fillWidth: true
+                            }
+
+                            ComboBox {
+                                id: uiLangTargetCombo
+                                objectName: "toolUiLanguageCombo"
+                                Layout.fillWidth: true; height: root.responsiveButtonHeight
+                                model: uiLangCard.langs
+                                textRole: "name"; valueRole: "code"
+                                enabled: !uiLangCard.busy
+                                background: Rectangle { radius: 10; color: clrInput; border.color: parent.hovered ? "#38BDF8" : clrCardBorder; border.width: 1 }
+                                contentItem: Label { leftPadding: 14; rightPadding: 30; text: uiLangTargetCombo.displayText; elide: Text.ElideRight; color: clrTxt; font.pixelSize: 12; verticalAlignment: Text.AlignVCenter }
+                                delegate: ItemDelegate {
+                                    width: uiLangTargetCombo.width
+                                    contentItem: Label { text: modelData.name; color: clrTxt; font.pixelSize: 12; leftPadding: 14; elide: Text.ElideRight }
+                                    background: Rectangle { color: hovered ? Qt.rgba(56, 189, 248, 0.12) : "transparent" }
+                                }
+                                popup: Popup {
+                                    y: uiLangTargetCombo.height; width: uiLangTargetCombo.width
+                                    implicitHeight: Math.min(contentItem.implicitHeight, 260); padding: 4
+                                    contentItem: ListView { clip: true; implicitHeight: contentHeight; model: uiLangTargetCombo.delegateModel; ScrollBar.vertical: ScrollBar {} }
+                                    background: Rectangle { color: clrCard; radius: 10; border.color: clrCardBorder; border.width: 1 }
+                                }
+                            }
+
+                            RowLayout {
+                                Layout.fillWidth: true; spacing: 8
+                                Button {
+                                    id: btnCreateUiLang
+                                    objectName: "toolCreateUiLanguageButton"
+                                    Layout.fillWidth: true; height: root.responsiveButtonHeight
+                                    enabled: !uiLangCard.busy && uiLangTargetCombo.currentIndex >= 0
+                                    text: appBackend.uiTrigger, "🗣️ " + appBackend.getTextWithDefault("btn_create_ui_lang", "Create language")
+                                    onClicked: {
+                                        uiLangCard.busy = true
+                                        uiLangCard.statusText = appBackend.getTextWithDefault("ui_lang_working", "Translating the interface... this can take a few minutes.")
+                                        appBackend.createUiLanguage(uiLangTargetCombo.currentValue)
+                                    }
+                                    background: Rectangle {
+                                        radius: 10; color: parent.hovered ? clrCardHover : clrInput
+                                        border.color: parent.hovered ? "#38BDF8" : clrCardBorder; border.width: 1
+                                    }
+                                    contentItem: Label { text: parent.text; color: "#38BDF8"; font.pixelSize: 12; font.bold: true; horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter; elide: Text.ElideRight }
+                                }
+                                Button {
+                                    Layout.fillWidth: true; height: root.responsiveButtonHeight
+                                    text: appBackend.uiTrigger, "📂 " + appBackend.getTextWithDefault("btn_open_ui_lang_folder", "Languages folder")
+                                    onClicked: Qt.openUrlExternally(appBackend.userLocalesFolderUrl())
+                                    background: Rectangle {
+                                        radius: 10; color: parent.hovered ? clrCardHover : clrInput
+                                        border.color: parent.hovered ? clrTxt2 : clrCardBorder; border.width: 1
+                                    }
+                                    contentItem: Label { text: parent.text; color: clrTxt2; font.pixelSize: 12; horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter; elide: Text.ElideRight }
+                                }
+                                Button {
+                                    Layout.preferredWidth: 38; Layout.preferredHeight: root.responsiveButtonHeight
+                                    onClicked: appBackend.reloadUserLanguages()
+                                    ToolTip.visible: hovered
+                                    ToolTip.delay: 250
+                                    ToolTip.text: appBackend.uiTrigger, appBackend.getTextWithDefault("btn_reload_ui_langs", "Reload the languages folder")
+                                    background: Rectangle {
+                                        radius: 10; color: parent.hovered ? clrCardHover : clrInput
+                                        border.color: parent.hovered ? "#38BDF8" : clrCardBorder; border.width: 1
+                                    }
+                                    contentItem: Label { text: "⟳"; color: clrTxt2; font.pixelSize: 17; horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter }
+                                }
+                            }
+
+                            Label {
+                                visible: uiLangCard.statusText.length > 0
+                                text: uiLangCard.statusText
+                                font.pixelSize: 11; color: clrTxt2; wrapMode: Text.Wrap; Layout.fillWidth: true
+                            }
+                        }
+                    }
                 }
 
                 Item { height: root.compactHeight ? 12 : 24 }
@@ -4878,10 +5115,20 @@ ApplicationWindow {
         header: null
         footer: null
         modal: true
-        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+        // Not closed by a click outside: it was easy to dismiss by accident.
+        closePolicy: Popup.CloseOnEscape
         standardButtons: Dialog.NoButton
         property string latestVersion: ""
+        property string currentVersion: ""
         property string releaseUrl: ""
+        // Automatic update (installed Windows build): download + verify + install.
+        property int progress: 0
+        property string statusText: ""
+        property bool autoFailed: false
+        readonly property bool autoMode: appBackend.canAutoUpdate && !autoFailed
+        onOpened: { progress = 0; statusText = ""; autoFailed = false }
+        // Tags are usually "v1.0.1"; the label adds its own "v".
+        function plainVersion(v) { return (v || "").replace(/^[vV]/, "") }
 
         enter: Transition {
             NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; duration: 180; easing.type: Easing.OutCubic }
@@ -4947,7 +5194,7 @@ ApplicationWindow {
                         font.pixelSize: 17; font.bold: true; color: clrTxt
                     }
                     Label {
-                        text: updateDialog.latestVersion.length > 0 ? ("v" + updateDialog.latestVersion) : ""
+                        text: updateDialog.latestVersion.length > 0 ? ("v" + updateDialog.plainVersion(updateDialog.latestVersion)) : ""
                         font.pixelSize: 12; color: clrAccent; font.bold: true
                         visible: updateDialog.latestVersion.length > 0
                     }
@@ -4993,15 +5240,34 @@ ApplicationWindow {
                     spacing: 6
 
                     Label {
-                        text: appBackend.uiTrigger, appBackend.getTextWithDefault("update_available_msg", "LinguaNova'ın yeni bir sürümü yayınlandı.")
+                        text: appBackend.uiTrigger, appBackend.getTextWithDefault("update_available_msg", "You have version {current}. Version {latest} is now available.")
+                            .replace("{current}", updateDialog.plainVersion(updateDialog.currentVersion))
+                            .replace("{latest}", updateDialog.plainVersion(updateDialog.latestVersion))
                         color: clrTxt
                         font.pixelSize: 13
                         wrapMode: Text.Wrap
                         Layout.fillWidth: true
                     }
                     Label {
-                        text: appBackend.uiTrigger, appBackend.getTextWithDefault("update_available_click", "Güncellemeyi indirmek için İndir butonuna tıklayın.")
+                        text: appBackend.uiTrigger, updateDialog.autoMode
+                              ? appBackend.getTextWithDefault("update_available_auto", "Press Update now: LinguaNova downloads the new version, checks that the file is intact and installs it in the same folder. It reopens by itself when it finishes.")
+                              : appBackend.getTextWithDefault("update_available_click", "Press the Download button to get the latest version. The download page will open in your browser.")
                         color: clrTxt2
+                        font.pixelSize: 12
+                        wrapMode: Text.Wrap
+                        Layout.fillWidth: true
+                    }
+                    ProgressBar {
+                        id: updateProgressBar
+                        Layout.fillWidth: true
+                        visible: appBackend.updateDownloading
+                        from: 0; to: 100
+                        value: updateDialog.progress
+                    }
+                    Label {
+                        visible: updateDialog.statusText.length > 0
+                        text: updateDialog.statusText
+                        color: updateDialog.autoFailed ? clrWarn : clrTxt2
                         font.pixelSize: 12
                         wrapMode: Text.Wrap
                         Layout.fillWidth: true
@@ -5021,7 +5287,10 @@ ApplicationWindow {
                     scale: down ? 0.97 : (hovered ? 1.02 : 1.0)
                     transformOrigin: Item.Center
                     Behavior on scale { NumberAnimation { duration: 140; easing.type: Easing.OutCubic } }
-                    onClicked: updateDialog.close()
+                    onClicked: {
+                        if (appBackend.updateDownloading) appBackend.cancelAutoUpdate()
+                        else updateDialog.close()
+                    }
 
                     background: Rectangle {
                         radius: 12
@@ -5031,7 +5300,9 @@ ApplicationWindow {
                         Behavior on border.color { ColorAnimation { duration: 140 } }
                     }
                     contentItem: Label {
-                        text: appBackend.uiTrigger, appBackend.getTextWithDefault("factory_restart_later", "Daha Sonra")
+                        text: appBackend.uiTrigger, appBackend.updateDownloading
+                              ? appBackend.getTextWithDefault("update_cancel_btn", "Cancel")
+                              : appBackend.getTextWithDefault("factory_restart_later", "Later")
                         color: clrTxt2
                         font.pixelSize: 13
                         horizontalAlignment: Text.AlignHCenter
@@ -5041,11 +5312,17 @@ ApplicationWindow {
 
                 Button {
                     id: updateDownloadBtn
-                    Layout.preferredWidth: 140; height: 40
+                    Layout.preferredWidth: 170; height: 40
+                    enabled: !appBackend.updateDownloading
                     scale: down ? 0.97 : (hovered ? 1.02 : 1.0)
                     transformOrigin: Item.Center
                     Behavior on scale { NumberAnimation { duration: 140; easing.type: Easing.OutCubic } }
                     onClicked: {
+                        if (updateDialog.autoMode) {
+                            updateDialog.statusText = ""
+                            appBackend.startAutoUpdate()
+                            return
+                        }
                         if (updateDialog.releaseUrl) Qt.openUrlExternally(updateDialog.releaseUrl)
                         updateDialog.close()
                     }
@@ -5061,7 +5338,9 @@ ApplicationWindow {
                         Behavior on color { ColorAnimation { duration: 140 } }
                     }
                     contentItem: Label {
-                        text: appBackend.uiTrigger, "⬇ " + appBackend.getTextWithDefault("update_download_btn", "İndir")
+                        text: appBackend.uiTrigger, updateDialog.autoMode
+                              ? "⟳ " + appBackend.getTextWithDefault("update_now_btn", "Update now")
+                              : "⬇ " + appBackend.getTextWithDefault("update_download_btn", "Download")
                         color: "#0F0D0B"
                         font.bold: true
                         font.pixelSize: 13

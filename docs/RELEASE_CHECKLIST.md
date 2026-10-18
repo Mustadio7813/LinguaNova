@@ -27,6 +27,8 @@
 
 - [ ] EXE/paquete instalable probado en instalación limpia.
 - [ ] Portable probado desde una carpeta nueva.
+- [ ] La página de discos del instalador muestra solo los discos internos (sin pendrives, discos USB ni unidades de red).
+- [ ] La actualización automática se probó con `LINGUANOVA_UPDATE_REPO` apuntando a un repositorio de prueba (Release con instalador + `SHA256SUMS.txt`).
 - [ ] Actualización de una versión anterior probada.
 - [ ] Actualización mientras LinguaNova trabaja no interrumpe la tarea activa.
 - [ ] Temporales del actualizador se limpian.
@@ -42,7 +44,7 @@
 ## Artefactos recomendados
 
 - [ ] `LinguaNova_Setup_<version>.exe`
-- [ ] `LinguaNova_Portable_<version>.zip`
+- [ ] `LinguaNova-Windows-x64.zip` (portable)
 - [ ] `LinguaNova-<version>-source.zip`
 - [ ] `SHA256SUMS.txt`
 

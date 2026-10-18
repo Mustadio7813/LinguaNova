@@ -12,6 +12,7 @@ import json
 import logging
 import locale
 import os
+import re
 import sys
 import threading
 from pathlib import Path
@@ -140,6 +141,26 @@ def _build_ui_lang_map() -> dict[str, str]:
         "zh": "zh-CN",
         "ja": "ja",
     }
+
+
+def installer_ui_language() -> str:
+    """First-run language chosen in the Windows installer, or "".
+
+    The installer writes ``linguanova_installed.json`` next to LinguaNova.exe
+    with the language its wizard used, so the program starts in the same
+    language. It is only read when no interface language is saved yet.
+    """
+    try:
+        from src.utils.path_manager import get_app_dir
+
+        marker = get_app_dir() / "linguanova_installed.json"
+        if not marker.is_file():
+            return ""
+        data = json.loads(marker.read_text(encoding="utf-8-sig"))
+        code = str(data.get("installer_language") or "").strip()
+        return code if code in {lang.value for lang in Language} else ""
+    except Exception:
+        return ""
 
 
 def detect_system_language() -> str:
@@ -598,6 +619,7 @@ class ConfigManager:
 
         # Load language files
         self._language_data = {}
+        self.user_ui_languages: Dict[str, str] = {}
         self._load_language_files()
 
         # Load glossary and critical terms
@@ -681,6 +703,48 @@ class ConfigManager:
         valid_fields = {f.name for f in fields(dataclass_type)}
         return {k: v for k, v in data.items() if k in valid_fields}
 
+    @property
+    def user_locales_dir(self) -> Path:
+        """Folder for interface languages added by the user (no rebuild needed)."""
+        return Path(self.data_dir) / "locales"
+
+    def _load_user_language_files(self) -> None:
+        """Load ``<data dir>/locales/*.json`` on top of the built-in languages.
+
+        A file named after a built-in language (``es.json``) overrides only
+        the keys it contains; any other name (``qu.json``) adds a language.
+        Keys a file does not translate fall back to English. The optional
+        ``"_language_name"`` key is the name shown in Settings.
+        """
+        self.user_ui_languages = {}
+        folder = self.user_locales_dir
+        if not folder.is_dir():
+            return
+        builtin = {lang.value.lower(): lang.value for lang in Language}
+        for json_file in sorted(folder.glob("*.json")):
+            stem = json_file.stem.strip()
+            if not re.fullmatch(r"[A-Za-z0-9_-]{1,24}", stem):
+                self.logger.warning("Ignoring user language file with an invalid name: %s", json_file.name)
+                continue
+            try:
+                data = json.loads(json_file.read_text(encoding="utf-8-sig"))
+                if not isinstance(data, dict):
+                    raise ValueError("the file must contain a JSON object")
+            except Exception as exc:
+                self.logger.warning("Could not load user language %s: %s", json_file.name, exc)
+                continue
+            code = builtin.get(stem.lower(), stem)
+            if code in self._language_data and code in builtin.values():
+                merged = dict(self._language_data[code])
+                merged.update(data)
+                self._language_data[code] = merged
+                self.logger.info("User overrides loaded for '%s' (%d keys)", code, len(data))
+                continue
+            self._language_data[code] = data
+            name = str(data.get("_language_name") or code).strip() or code
+            self.user_ui_languages[code] = name
+            self.logger.info("User interface language loaded: %s (%s)", code, name)
+
     def _load_language_files(self):
         """Load language JSON files from locales directory dynamically."""
         # Mapping from filename stem to language code (for old-style names)
@@ -733,6 +797,7 @@ class ConfigManager:
             self.logger.info(
                 f"Loaded {len(self._language_data)} language files: {list(self._language_data.keys())}"
             )
+            self._load_user_language_files()
 
         except Exception as e:
             self.logger.warning(f"Could not load language files: {e}")
@@ -904,7 +969,7 @@ class ConfigManager:
 
             # Auto-detect system language if not set or if using defaults
             if not self.app_settings.ui_language or not config_loaded:
-                detected_lang = detect_system_language()
+                detected_lang = installer_ui_language() or detect_system_language()
                 self.app_settings.ui_language = detected_lang
                 self.logger.info(f"Auto-detected system language: {detected_lang}")
 

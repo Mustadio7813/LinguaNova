@@ -53,7 +53,19 @@ LinguaNova **does not hide where it comes from**:
 - Font, glossary and diagnostic tools.
 - Interface translation MOD, separate from the normal translation flow.
 - Work queue that never cancels the running job.
-- Interface available in nine languages.
+- Interface available in nine languages, plus languages you add yourself (Utilities → *Create an interface language*).
+- Windows installer with automatic, verified updates.
+
+## 💾 Installation
+
+| System | File in each [release](https://github.com/Mustadio7813/LinguaNova/releases) | Notes |
+| --- | --- | --- |
+| Windows 10/11 (64-bit) | `LinguaNova_Setup_<version>.exe` | Installer. You choose one of the PC's internal drives and LinguaNova goes to `<drive>:\LinguaNova`. No administrator rights; desktop shortcut and Start menu entry. Updates itself. |
+| Windows (portable) | `LinguaNova-Windows-x64.zip` | Unzip and run `LinguaNova.exe`. Create an empty `.portable` file in the folder to keep settings inside it. |
+| Linux (x64) | `LinguaNova-Linux-x64.AppImage` | Built and start-up tested by GitHub Actions. |
+| macOS (Apple silicon) | `LinguaNova-macOS-arm64.dmg` | **Experimental:** built and start-up tested by GitHub Actions, not yet tried on a real Mac by the maintainer. Reports are welcome. |
+
+The installer and the program pick the Windows language automatically (English if it is not one of the nine); you can change it in Settings. Windows does not allow installers to pin programs to the taskbar: open LinguaNova, right-click its taskbar icon and choose **Pin to taskbar**.
 
 ## 🛠️ Running from source
 
@@ -99,9 +111,15 @@ Before publishing a binary:
 
 See [`SOURCE_DISTRIBUTION.md`](SOURCE_DISTRIBUTION.md) and [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md).
 
+On Windows, `build_windows.bat` builds `dist\LinguaNova\` and `build_installer.bat` turns it into the installer (needs [Inno Setup](https://jrsoftware.org/isdl.php) 6.5+), the portable ZIP and `SHA256SUMS.txt`. Pushing a `v*` tag makes GitHub Actions (`release.yml`) build all of this for Windows, Linux and macOS and publish it as a release.
+
 ## 🔄 LinguaNova updates
 
-LinguaNova checks this repository's releases (`Mustadio7813/LinguaNova`) for a newer version. When it finds one, it **only notifies you and opens the download page**: it never downloads or installs anything on its own.
+LinguaNova checks this repository's releases (`Mustadio7813/LinguaNova`) for a newer version at start-up (it can be turned off) and from **Utilities → Updates → Check for updates**.
+
+- **Installed Windows version:** the notice offers **Update now**. LinguaNova downloads `LinguaNova_Setup_<version>.exe` from the release, checks it against the release's `SHA256SUMS.txt` (a file that does not match is deleted and never run), installs it in the same folder and reopens. Nothing is installed without your click.
+- **Portable, Linux and macOS:** the notice opens the release page to download the new version.
+- If the check fails (no connection, no published release…), LinguaNova says so instead of reporting that you are up to date.
 
 The update channel never points to RenLocalizer. This concerns **updates of the LinguaNova program**, not AI models or external components, which are managed separately.
 

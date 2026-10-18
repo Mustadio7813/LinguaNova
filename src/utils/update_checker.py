@@ -13,16 +13,17 @@ variable ``LINGUANOVA_UPDATE_REPO`` with that value.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import os
 import re
-from typing import Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import requests
 
 
 # "owner/repository" of the GitHub project that publishes LinguaNova releases.
-# Empty by default: the update check is then disabled.
+# The environment variable LINGUANOVA_UPDATE_REPO overrides it (used to test
+# updates against a separate repository).
 UPDATE_REPO = "Mustadio7813/LinguaNova"
 
 NOT_CONFIGURED = "update source not configured"
@@ -55,6 +56,10 @@ class UpdateCheckResult:
     update_available: bool
     release_url: str
     error: Optional[str] = None
+    # Release files from the GitHub API: [{"name", "url", "size"}]. Empty when
+    # the API was not reachable (HTML fallback) — automatic update is then
+    # not offered and the release page is opened instead.
+    assets: List[Dict] = field(default_factory=list)
 
 
 def _parse_version(version: str) -> Tuple[int, ...]:
@@ -73,7 +78,22 @@ def _is_newer(latest: str, current: str) -> bool:
     return latest_parts > current_parts
 
 
+def _release_assets(payload: dict) -> List[Dict]:
+    assets = []
+    for item in payload.get("assets") or []:
+        name = str(item.get("name") or "").strip()
+        url = str(item.get("browser_download_url") or "").strip()
+        if name and url:
+            assets.append({"name": name, "url": url, "size": int(item.get("size") or 0)})
+    return assets
+
+
 def _fetch_latest_release(timeout: int = 10) -> Tuple[str, str]:
+    tag, url, _assets = _fetch_latest_release_full(timeout)
+    return tag, url
+
+
+def _fetch_latest_release_full(timeout: int = 10) -> Tuple[str, str, List[Dict]]:
     if not is_configured():
         raise RuntimeError(NOT_CONFIGURED)
     releases_url = _releases_url()
@@ -87,7 +107,7 @@ def _fetch_latest_release(timeout: int = 10) -> Tuple[str, str]:
             tag = (payload.get("tag_name") or payload.get("name") or "").strip()
             url = (payload.get("html_url") or releases_url).strip()
             if tag:
-                return tag, url or releases_url
+                return tag, url or releases_url, _release_assets(payload)
     except Exception:
         pass
 
@@ -100,12 +120,12 @@ def _fetch_latest_release(timeout: int = 10) -> Tuple[str, str]:
     if not match:
         raise RuntimeError("Latest release tag not found on releases page")
 
-    return match.group(1), releases_url
+    return match.group(1), releases_url, []
 
 
 def check_for_updates(current_version: str, timeout: int = 10) -> UpdateCheckResult:
     try:
-        latest_version, url = _fetch_latest_release(timeout=timeout)
+        latest_version, url, assets = _fetch_latest_release_full(timeout=timeout)
     except Exception as exc:
         return UpdateCheckResult(
             current_version=current_version,
@@ -121,4 +141,5 @@ def check_for_updates(current_version: str, timeout: int = 10) -> UpdateCheckRes
         update_available=_is_newer(latest_version, current_version),
         release_url=url or _releases_url(),
         error=None,
+        assets=assets,
     )

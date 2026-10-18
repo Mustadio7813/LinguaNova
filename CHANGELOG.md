@@ -6,6 +6,19 @@ render_with_liquid: false
 
 # RenLocalizer Changelog
 
+#### [LinguaNova 1.1.0] - 2026-10-18
+
+> **Windows installer, automatic verified updates, interface languages added by the user, reliability audit.** Details in `MODIFICATIONS_LINGUANOVA.md` (entries 29–31).
+
+- **Installer** (`installer/LinguaNova.iss`, `build_installer.bat`): the user picks one of the PC's internal drives (USB drives, memory cards and network drives are not offered) and LinguaNova is installed in `<drive>:\LinguaNova`, per user, without administrator rights; desktop and Start menu shortcuts with a stable AppUserModelID; nine languages; Windows 10/11 64-bit check; the installer's language becomes the first interface language.
+- **Automatic update** (`src/utils/auto_updater.py`): the installed Windows build downloads `LinguaNova_Setup_<version>.exe`, verifies it against `SHA256SUMS.txt`, installs it silently in the same folder and reopens. Portable, Linux and macOS builds open the release page.
+- **Utilities → Updates**: manual check, installed version, check-at-start-up option. A failed check is reported as a failure instead of "You are up to date"; the update dialog names both versions and its button.
+- **Utilities → Create an interface language**: machine-translated draft of `en.json` into any target language, without sending placeholders to the engine; user languages live in `<data dir>/locales` and can also be written by hand.
+- `release.yml` builds and publishes the installer and checksums it with the other files.
+- Reliability audit (entry 29), contribution guide with DCO and CI test fixes (entry 30).
+
+---
+
 #### [2.8.19] - 2026-10-10
 
 > **New Translation Editor, dialogue that never showed up in game fixed (Ren'Py id parity, verified on four games including `.rpyc`/`.rpa`-only ones), every `_()` string translated the way Ren'Py does it, AI engines fixed behind VPN/system proxies and failing fast instead of silently using Google, CLI on par with the GUI (#20), graphics fallback and non-admin startup fix, character names kept untranslated, Toolbox and font tools fixed for all 135 languages, faster parsing and caching, macOS-packaged games (`Game.app`) accepted and the tests run on macOS.**

@@ -11,8 +11,10 @@ Google Translate ve AI motorları (OpenAI, DeepSeek) ile
 çeviri sürecini yönetir.
 """
 
+import json
 import logging
 import os
+import re
 import sys
 import threading
 import urllib.parse
@@ -122,6 +124,14 @@ class AppBackend(QObject):
         str, str, str, arguments=["currentVersion", "latestVersion", "releaseUrl"]
     )
     updateCheckFinished = pyqtSignal(bool, str, arguments=["hasUpdate", "message"])
+    # Automatic update (installed Windows build only, src/utils/auto_updater.py)
+    autoUpdateChanged = pyqtSignal()
+    updateDownloadProgress = pyqtSignal(int, arguments=["percent"])
+    updateDownloadFinished = pyqtSignal(bool, str, arguments=["ok", "message"])
+    updateInstallerLaunched = pyqtSignal()
+    # Interface languages created by the user (<data dir>/locales)
+    uiLanguagesChanged = pyqtSignal()
+    uiLanguageGenerationFinished = pyqtSignal(bool, str, arguments=["ok", "message"])
     glossaryChanged = pyqtSignal()
     # ── Settings Signals (QML Two-way bindings) ────────────────────────
     maxThreadsChanged = pyqtSignal()
@@ -220,6 +230,19 @@ class AppBackend(QObject):
         self._mod_output_path: str = ""
         # #MOD — Ruta temporal e independiente. Nunca se guarda en configuración.
         self._mod_project_path: str = ""
+
+        # ── Automatic update state ───────────────────────────────────────
+        self._update_plan = None
+        self._update_downloading = False
+        self._update_cancel = None
+        try:
+            # Installer downloaded by a previous update (it has finished by
+            # the time LinguaNova was reopened).
+            from src.utils.auto_updater import cleanup_downloads
+
+            cleanup_downloads()
+        except Exception:
+            pass
 
         # ── Pipeline ─────────────────────────────────────────────────────
         self.pipeline: Optional[TranslationPipeline] = None
@@ -490,6 +513,15 @@ class AppBackend(QObject):
     @pyqtProperty(str, constant=True)
     def version(self) -> str:
         return self._version
+
+    @pyqtProperty(bool, notify=autoUpdateChanged)
+    def canAutoUpdate(self) -> bool:
+        """True when the found release can be downloaded and installed here."""
+        return getattr(self, "_update_plan", None) is not None
+
+    @pyqtProperty(bool, notify=autoUpdateChanged)
+    def updateDownloading(self) -> bool:
+        return bool(getattr(self, "_update_downloading", False))
 
     @pyqtProperty(bool, notify=translationStarted)
     def isTranslating(self) -> bool:
@@ -1005,6 +1037,97 @@ class AppBackend(QObject):
     @pyqtSlot(result=list)
     def getAvailableUILanguages(self) -> list:
         return self.settings.get_available_ui_languages()
+
+    @pyqtSlot(result=str)
+    def userLocalesFolderUrl(self) -> str:
+        """file:// URL of the folder for user interface languages (created if missing)."""
+        from PyQt6.QtCore import QUrl
+
+        folder = self.config.user_locales_dir
+        try:
+            folder.mkdir(parents=True, exist_ok=True)
+        except OSError:
+            pass
+        return QUrl.fromLocalFile(str(folder)).toString()
+
+    @pyqtSlot()
+    def reloadUserLanguages(self) -> None:
+        self.config._load_user_language_files()
+        self.uiLanguagesChanged.emit()
+
+    @pyqtSlot(str)
+    def createUiLanguage(self, renpy_code: str) -> None:
+        """Machine-translate en.json into ``renpy_code`` as a user language."""
+        if self._is_translating or self._mod_running or getattr(self, "_ui_lang_generating", False):
+            msg = self._t("ui_lang_busy", "Wait until the current task finishes.")
+            self.uiLanguageGenerationFinished.emit(False, msg)
+            return
+        item = next((x for x in self.config.get_all_languages() if x.get("renpy") == renpy_code), None)
+        if item is None:
+            self.uiLanguageGenerationFinished.emit(False, self._t("ui_lang_unknown", "Unknown language."))
+            return
+        builtin = {lang["code"].lower() for lang in self.settings.builtin_ui_languages()}
+        api = str(item.get("api") or "").strip()
+        if api.lower() in builtin or api.split("-")[0].lower() in {"en"}:
+            msg = self._t("ui_lang_builtin", "{lang} is already one of LinguaNova's interface languages.").replace(
+                "{lang}", item.get("native") or api)
+            self.uiLanguageGenerationFinished.emit(False, msg)
+            return
+        self._ui_lang_generating = True
+        threading.Thread(target=self._create_ui_language_thread, args=(item,), daemon=True).start()
+
+    def _create_ui_language_thread(self, item: dict) -> None:
+        from src.core.translator import TranslationRequest
+        from src.utils import ui_language_generator as gen
+
+        api = str(item.get("api")).strip()
+        name = str(item.get("native") or item.get("english") or api).strip()
+        code = re.sub(r"[^A-Za-z0-9_-]", "-", api)
+        try:
+            engine = self._selected_engine
+            self._ensure_mod_translator(engine)
+            translator = self.translation_manager.translators[engine]
+            source = json.loads((self.config.locales_dir / "en.json").read_text(encoding="utf-8"))
+
+            def translate(texts):
+                requests_ = [
+                    TranslationRequest(text=t, source_lang="en", target_lang=api, engine=engine)
+                    for t in texts
+                ]
+                results = self._run_translate_batch_sync(translator, requests_)
+                out = {}
+                for req, res in zip(requests_, results or []):
+                    if getattr(res, "success", False) and res.translated_text and res.translated_text.strip():
+                        out[req.text] = res.translated_text
+                return out
+
+            def progress(done, total):
+                self.logMessage.emit("info", self._t(
+                    "ui_lang_progress", "Interface language {lang}: {done}/{total} texts").replace(
+                    "{lang}", name).replace("{done}", str(done)).replace("{total}", str(total)))
+
+            path, done, missing = gen.generate(source, code, name, translate, self.config.user_locales_dir,
+                                               progress=progress)
+            self.config._load_user_language_files()
+            msg = self._t(
+                "ui_lang_created",
+                "{lang} created: {done} texts translated, {missing} left in English. Choose it in Settings. File: {path}",
+            ).replace("{lang}", name).replace("{done}", str(done)).replace("{missing}", str(missing)).replace(
+                "{path}", str(path))
+            self.logMessage.emit("success", "✅ " + msg)
+            self.uiLanguagesChanged.emit()
+            self.uiLanguageGenerationFinished.emit(True, msg)
+        except Exception as exc:
+            self.logger.exception("[AppBackend] Interface language generation failed")
+            msg = self._t("ui_lang_failed", "Could not create the interface language: {error}").replace(
+                "{error}", str(exc))
+            try:
+                self.logMessage.emit("error", "❌ " + msg)
+                self.uiLanguageGenerationFinished.emit(False, msg)
+            except RuntimeError:
+                pass
+        finally:
+            self._ui_lang_generating = False
 
     @pyqtSlot(result=str)
     def getCurrentUILanguage(self) -> str:
@@ -1827,8 +1950,10 @@ class AppBackend(QObject):
                 self.updateCheckFinished.emit(False, msg)
             return
 
+        from src.utils.update_checker import get_update_repo
+
         msg = self.config.get_ui_text("update_checking", "Checking for updates...")
-        self.logMessage.emit("info", f"🔍 {msg}")
+        self.logMessage.emit("info", f"🔍 {msg} ({get_update_repo()})")
         threading.Thread(
             target=self._check_updates_thread, args=(manual,), daemon=True
         ).start()
@@ -1838,7 +1963,27 @@ class AppBackend(QObject):
             from src.utils.update_checker import check_for_updates
 
             result = check_for_updates(self._version)
+            if result.error:
+                # The check did not reach a release (no network, no published
+                # release, HTTP error...). Saying "you are up to date" here
+                # hid the failure.
+                err_msg = self.config.get_ui_text(
+                    "log_update_check_failed", "Update check failed: {error}"
+                ).replace("{error}", str(result.error))
+                self.logger.warning("[AppBackend] Update check failed: %s", result.error)
+                self.logMessage.emit("warning", f"⚠️ {err_msg}")
+                self.updateCheckFinished.emit(False, err_msg)
+                return
             if result.update_available:
+                try:
+                    from src.utils.auto_updater import plan_update
+                    from src.utils.update_checker import get_update_repo
+
+                    self._update_plan = plan_update(result.assets, get_update_repo())
+                except Exception as exc:
+                    self.logger.debug("[AppBackend] No automatic update plan: %s", exc)
+                    self._update_plan = None
+                self.autoUpdateChanged.emit()
                 log_msg = self.config.get_ui_text(
                     "log_update_available", "Update available: {version}"
                 ).replace("{version}", result.latest_version)
@@ -1855,6 +2000,7 @@ class AppBackend(QObject):
                 msg = self.config.get_ui_text(
                     "update_check_no_update", "You are up to date."
                 )
+                msg = f"{msg} (v{self._version})"
                 if manual:
                     self.logMessage.emit("info", f"ℹ️ {msg}")
                 self.updateCheckFinished.emit(False, msg)
@@ -1868,6 +2014,70 @@ class AppBackend(QObject):
                 ).replace("{error}", str(exc))
                 self.logMessage.emit("error", f"❌ {err_msg}")
                 self.updateCheckFinished.emit(False, f"Update Check Failed: {exc}")
+            except RuntimeError:
+                pass
+
+    @pyqtSlot()
+    def startAutoUpdate(self) -> None:
+        """Download, verify and install the update found by the last check."""
+        plan = getattr(self, "_update_plan", None)
+        if plan is None or getattr(self, "_update_downloading", False):
+            return
+        if self._is_translating or self._mod_running or getattr(self, "_ui_lang_generating", False):
+            # Installing closes LinguaNova: never interrupt running work.
+            msg = self._t("update_busy", "Finish or stop the current translation before updating.")
+            self.logMessage.emit("warning", "⚠️ " + msg)
+            self.updateDownloadFinished.emit(False, msg)
+            return
+        self._update_cancel = threading.Event()
+        self._update_downloading = True
+        self.autoUpdateChanged.emit()
+        self.logMessage.emit("info", "⬇️ " + self._t("update_downloading", "Downloading the update..."))
+        threading.Thread(target=self._auto_update_thread, args=(plan,), daemon=True).start()
+
+    @pyqtSlot()
+    def cancelAutoUpdate(self) -> None:
+        cancel = getattr(self, "_update_cancel", None)
+        if cancel is not None:
+            cancel.set()
+
+    def _auto_update_thread(self, plan) -> None:
+        from src.utils import auto_updater
+
+        last = [-1]
+
+        def progress(done: int, total: int) -> None:
+            percent = int(done * 100 / total) if total else 0
+            if percent != last[0]:
+                last[0] = percent
+                self.updateDownloadProgress.emit(percent)
+
+        try:
+            installer = auto_updater.download_update(plan, progress, self._update_cancel)
+            self.logMessage.emit("success", "✅ " + self._t(
+                "update_verified", "Update downloaded and verified (SHA-256). Installing..."))
+            auto_updater.launch_installer(installer, plan.install_dir)
+            self.updateDownloadFinished.emit(True, self._t(
+                "update_installing", "Installing the update. LinguaNova will reopen by itself."))
+            self.updateInstallerLaunched.emit()
+        except Exception as exc:
+            reason = str(exc)
+            if reason == "cancelled":
+                msg = self._t("update_cancelled", "Update cancelled.")
+                level = "info"
+            else:
+                msg = self._t("update_failed", "Automatic update failed: {error}").replace("{error}", reason)
+                level = "warning"
+            self.logger.warning("[AppBackend] Automatic update: %s", reason)
+            try:
+                self.logMessage.emit(level, msg)
+                self.updateDownloadFinished.emit(False, msg)
+            except RuntimeError:
+                pass
+        finally:
+            self._update_downloading = False
+            try:
+                self.autoUpdateChanged.emit()
             except RuntimeError:
                 pass
 

@@ -4,7 +4,7 @@
 from datetime import datetime
 from typing import Tuple
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 __version__ = VERSION
-__version_info__: Tuple[int, int, int] = (1, 0, 0)
-__build_date__: str = datetime(2026, 10, 15).isoformat()
+__version_info__: Tuple[int, int, int] = (1, 1, 0)
+__build_date__: str = datetime(2026, 10, 18).isoformat()

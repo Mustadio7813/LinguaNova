@@ -498,8 +498,15 @@ class SettingsBackend:
     #  UI Language
     # ═══════════════════════════════════════════════════════════════════════════
 
+    def get_available_ui_languages(self) -> list:
+        languages = self.builtin_ui_languages()
+        # Languages the user added in <data dir>/locales (see ConfigManager).
+        for code, name in sorted(getattr(self.config, "user_ui_languages", {}).items(), key=lambda kv: kv[1].lower()):
+            languages.append({"code": code, "name": "✏️ " + name})
+        return languages
+
     @staticmethod
-    def get_available_ui_languages() -> list:
+    def builtin_ui_languages() -> list:
         return [
             {"code": "tr", "name": "🇹🇷 Türkçe"},
             {"code": "en", "name": "🇬🇧 English"},
@@ -519,8 +526,12 @@ class SettingsBackend:
         try:
             from src.utils.config import Language
 
-            lang = Language(lang_code)
-            self.config.load_locale(lang)
+            if lang_code in getattr(self.config, "user_ui_languages", {}):
+                # Language added by the user: not in the built-in enum.
+                self.config.app_settings.ui_language = lang_code
+            else:
+                lang = Language(lang_code)
+                self.config.load_locale(lang)
             self.config.save_config()
             self._emit("language", lang_code)
         except Exception as e:
