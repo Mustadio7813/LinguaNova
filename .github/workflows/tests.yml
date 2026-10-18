@@ -65,9 +65,15 @@ jobs:
           QSG_RHI_BACKEND: software
         run: |
           if [ "$RUNNER_OS" = "Linux" ]; then
-            xvfb-run -a python -m pytest tests/ -q --rootdir .
+            set +e
+            xvfb-run -a python -m pytest tests/ -q --rootdir . -rfE 2>&1 | tee pytest-output.log; status=${PIPESTATUS[0]}
+            grep -E '^(FAILED|ERROR) ' pytest-output.log | head -20 | sed 's/^/::error title=pytest::/' || true
+            [ "$status" -eq 0 ] || exit "$status"
           else
-            python -m pytest tests/ -q --rootdir .
+            set +e
+            python -m pytest tests/ -q --rootdir . -rfE 2>&1 | tee pytest-output.log; status=${PIPESTATUS[0]}
+            grep -E '^(FAILED|ERROR) ' pytest-output.log | head -20 | sed 's/^/::error title=pytest::/' || true
+            [ "$status" -eq 0 ] || exit "$status"
           fi
 
       - name: Smoke test source Qt startup (Linux)
@@ -119,7 +125,10 @@ jobs:
           QSG_RHI_BACKEND: software
         run: |
           . venv/bin/activate
-          xvfb-run -a python -m pytest tests/ -q --rootdir .
+          set +e
+          xvfb-run -a python -m pytest tests/ -q --rootdir . -rfE 2>&1 | tee pytest-output.log; status=${PIPESTATUS[0]}
+          grep -E '^(FAILED|ERROR) ' pytest-output.log | head -20 | sed 's/^/::error title=pytest::/' || true
+          [ "$status" -eq 0 ] || exit "$status"
 
   linux-pyqt-compat:
     name: Linux source compatibility (PyQt6 ${{ matrix.pyqt6-version }})
@@ -185,7 +194,10 @@ jobs:
           QT_QUICK_BACKEND: software
           QSG_RHI_BACKEND: software
         run: |
-          xvfb-run -a python -m pytest tests/ -q --rootdir .
+          set +e
+          xvfb-run -a python -m pytest tests/ -q --rootdir . -rfE 2>&1 | tee pytest-output.log; status=${PIPESTATUS[0]}
+          grep -E '^(FAILED|ERROR) ' pytest-output.log | head -20 | sed 's/^/::error title=pytest::/' || true
+          [ "$status" -eq 0 ] || exit "$status"
 
       - name: Smoke test source Qt startup
         run: |

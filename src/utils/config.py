@@ -717,8 +717,12 @@ class ConfigManager:
         ``"_language_name"`` key is the name shown in Settings.
         """
         self.user_ui_languages = {}
-        folder = self.user_locales_dir
-        if not folder.is_dir():
+        try:
+            folder = self.user_locales_dir
+            if not folder.is_dir():
+                return
+        except Exception:
+            # No data folder (partially built ConfigManager): built-in languages only.
             return
         builtin = {lang.value.lower(): lang.value for lang in Language}
         for json_file in sorted(folder.glob("*.json")):
@@ -797,7 +801,10 @@ class ConfigManager:
             self.logger.info(
                 f"Loaded {len(self._language_data)} language files: {list(self._language_data.keys())}"
             )
-            self._load_user_language_files()
+            try:
+                self._load_user_language_files()
+            except Exception as user_err:
+                self.logger.warning(f"Could not load user interface languages: {user_err}")
 
         except Exception as e:
             self.logger.warning(f"Could not load language files: {e}")
