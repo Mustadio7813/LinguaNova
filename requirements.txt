@@ -1,0 +1,35 @@
+# Core GUI Framework
+# Source installs are CI-smoke-tested across the PyQt6 6.6-6.10 line.
+# Packaged release builds remain pinned via constraints-release.txt.
+PyQt6>=6.6,<6.11
+
+# HTTP and async support
+aiohttp>=3.11.0
+requests>=2.32.0
+
+# Text Encoding, Serialization & Language Detection
+charset-normalizer>=3.3.0
+orjson>=3.10.0
+py3langid>=0.2.0
+
+# AI Translation Engines (OpenAI, DeepSeek)
+openai>=1.14.0
+
+# Google Gemini Translation
+google-genai>=1.0.0
+
+# RPA Extraction
+unrpa>=2.3.0
+
+# RPYC Decompilation (opsiyonel — complementary to binary AST reader)
+# unrpyc: pip install git+https://github.com/CensoredUsername/unrpyc.git (PyPI'da yok)
+# rpycdec: pip install rpycdec  (PyPI, C extension, derleme gerekebilir)
+# Kurulu degilse RPYC AST okuyucu yeterlidir.
+rpycdec>=0.1.12
+
+# Terminal UI (CLI mode)
+rich>=13.7.0
+PyYAML>=6.0.1
+
+# Font tools
+fonttools>=4.38.0

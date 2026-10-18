@@ -1,0 +1,18 @@
+name: Repository compliance sanity check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  compliance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Run LinguaNova compliance checks
+        run: python scripts/check_repository_compliance.py

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=LinguaNova
+Comment=Ren'Py game translation tool
+Exec=LinguaNova
+Icon=linguanova
+Categories=Utility;Translation;
+Terminal=false
+StartupWMClass=LinguaNova

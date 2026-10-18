@@ -1,0 +1,51 @@
+name: Informe de error
+description: Informar un problema reproducible de LinguaNova
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por informar el problema. No incluyas claves API, tokens ni datos privados.
+  - type: input
+    id: version
+    attributes:
+      label: Versión de LinguaNova
+      placeholder: "Ej.: 1.0.0 o commit"
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Sistema operativo
+      options:
+        - Windows
+        - Linux
+        - macOS
+        - Otro
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Pasos para reproducir
+      description: Explica el flujo mínimo para provocar el error.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Resultado esperado
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Resultado obtenido
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Registros relevantes
+      description: Elimina claves, tokens, rutas personales y cualquier dato sensible.

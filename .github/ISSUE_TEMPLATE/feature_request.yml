@@ -1,0 +1,24 @@
+name: Solicitud de función
+description: Proponer una mejora para LinguaNova
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema o necesidad
+      description: ¿Qué problema resolvería esta función?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Propuesta
+      description: Describe el comportamiento esperado.
+    validations:
+      required: true
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibilidad
+      description: Indica si podría afectar traducciones, MOD, instalador, portable o formatos generados.

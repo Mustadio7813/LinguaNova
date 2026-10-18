@@ -1,0 +1,328 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  # Manual trigger for testing builds WITHOUT publishing a release.
+  # Artifacts are uploaded to the run page only.
+  workflow_dispatch:
+
+jobs:
+  # ============================================
+  # Windows Build (unchanged — onedir zip)
+  # ============================================
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -c constraints-release.txt pyinstaller
+          pip install -c constraints-release.txt -r requirements.txt
+
+      - name: Build with PyInstaller
+        run: |
+          python -m PyInstaller LinguaNova.spec
+
+      - name: Create archive
+        run: |
+          cd dist
+          Compress-Archive -Path LinguaNova -DestinationPath ../LinguaNova-Windows-x64.zip
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: windows-build
+          path: LinguaNova-Windows-x64.zip
+
+  # ============================================
+  # Linux Build → AppImage
+  # ============================================
+  build-linux:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libfuse2 imagemagick xvfb \
+            libgl1 libegl1 libxkbcommon-x11-0 libdbus-1-3 \
+            libxcb-icccm4 libxcb-image0 libxcb-keysyms1 \
+            libxcb-randr0 libxcb-render-util0 libxcb-xinerama0 \
+            libxcb-xinput0 libxcb-xfixes0 libxcb-shape0 libxcb-glx0 \
+            libxcb-cursor0 \
+            fonts-noto-color-emoji
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -c constraints-release.txt pyinstaller
+          pip install -c constraints-release.txt -r requirements.txt
+
+      - name: Build with PyInstaller
+        run: |
+          python -m PyInstaller LinguaNova.spec
+
+      - name: Smoke test Qt startup (Linux native)
+        run: |
+          export LINGUANOVA_QT_SMOKE_TEST="1"
+          xvfb-run -a ./dist/LinguaNova/LinguaNova
+
+      - name: Smoke test Qt startup (Linux software fallback)
+        run: |
+          export LINGUANOVA_QT_SMOKE_TEST="1"
+          export LINGUANOVA_QT_RENDER_MODE="software"
+          xvfb-run -a ./dist/LinguaNova/LinguaNova
+
+      - name: Convert icon
+        run: |
+          convert linguanova.ico[0] -resize 256x256 linguanova.png
+
+      - name: Bundle emoji font into build output
+        run: |
+          # Copy Noto Color Emoji font so emoji icons render on all Linux systems
+          EMOJI_FONT="/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf"
+          if [ -f "$EMOJI_FONT" ]; then
+            mkdir -p dist/LinguaNova/fonts
+            cp "$EMOJI_FONT" dist/LinguaNova/fonts/
+            echo "✓ Bundled NotoColorEmoji.ttf"
+          else
+            echo "⚠ NotoColorEmoji.ttf not found at expected path, searching..."
+            FOUND=$(find /usr/share/fonts -iname 'NotoColorEmoji*' -type f | head -1)
+            if [ -n "$FOUND" ]; then
+              mkdir -p dist/LinguaNova/fonts
+              cp "$FOUND" dist/LinguaNova/fonts/NotoColorEmoji.ttf
+              echo "✓ Bundled from $FOUND"
+            else
+              echo "✗ No emoji font found — icons may not render on minimal distros"
+            fi
+          fi
+
+      - name: Create AppImage
+        run: |
+          # Create AppDir structure
+          mkdir -p LinguaNova.AppDir/usr/bin
+          
+          # Copy PyInstaller output (includes bundled fonts/)
+          cp -R dist/LinguaNova LinguaNova.AppDir/usr/bin/LinguaNova
+          
+          # Copy AppImage metadata
+          cp build/linux/AppRun LinguaNova.AppDir/AppRun
+          chmod +x LinguaNova.AppDir/AppRun
+          
+          cp build/linux/linguanova.desktop LinguaNova.AppDir/linguanova.desktop
+          cp linguanova.png LinguaNova.AppDir/linguanova.png
+          
+          # Create .DirIcon for the AppImage file itself (standard requirement)
+          cp linguanova.png LinguaNova.AppDir/.DirIcon
+          
+          # Also place .desktop and icon in standard locations for integration
+          mkdir -p LinguaNova.AppDir/usr/share/applications
+          mkdir -p LinguaNova.AppDir/usr/share/icons/hicolor/256x256/apps
+          cp build/linux/linguanova.desktop LinguaNova.AppDir/usr/share/applications/
+          cp linguanova.png LinguaNova.AppDir/usr/share/icons/hicolor/256x256/apps/linguanova.png
+          
+          # Download appimagetool
+          wget -q "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage" -O appimagetool
+          chmod +x appimagetool
+          ./appimagetool --appimage-extract
+          
+          # Build AppImage using extracted tool (avoids FUSE error)
+          ARCH=x86_64 ./squashfs-root/AppRun LinguaNova.AppDir LinguaNova-Linux-x64.AppImage
+          chmod +x LinguaNova-Linux-x64.AppImage
+
+      - name: Install portable launcher script (Linux tar.gz)
+        run: |
+          cp LinguaNova.sh dist/LinguaNova/LinguaNova.sh
+          chmod +x dist/LinguaNova/LinguaNova.sh
+
+      - name: Smoke test AppImage startup (Linux native)
+        run: |
+          export LINGUANOVA_QT_SMOKE_TEST="1"
+          export APPIMAGE_EXTRACT_AND_RUN="1"
+          xvfb-run -a ./LinguaNova-Linux-x64.AppImage
+
+      - name: Smoke test AppImage startup (Linux software fallback)
+        run: |
+          export LINGUANOVA_QT_SMOKE_TEST="1"
+          export LINGUANOVA_QT_RENDER_MODE="software"
+          export APPIMAGE_EXTRACT_AND_RUN="1"
+          xvfb-run -a ./LinguaNova-Linux-x64.AppImage
+
+      - name: Smoke test portable launcher (Linux tar.gz payload)
+        run: |
+          export LINGUANOVA_QT_SMOKE_TEST="1"
+          xvfb-run -a ./dist/LinguaNova/LinguaNova.sh
+
+      - name: Create tar.gz (Linux Portable)
+        run: |
+          cd dist
+          tar -czvf ../LinguaNova-Linux-x64.tar.gz LinguaNova
+          cd ..
+
+      - name: Upload artifact (AppImage)
+        uses: actions/upload-artifact@v7
+        with:
+          name: linux-build-appimage
+          path: LinguaNova-Linux-x64.AppImage
+
+      - name: Upload artifact (tar.gz)
+        uses: actions/upload-artifact@v7
+        with:
+          name: linux-build-targz
+          path: LinguaNova-Linux-x64.tar.gz
+
+  # ============================================
+  # macOS Build → .app bundle → DMG
+  # ============================================
+  build-macos:
+    runs-on: macos-15
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -c constraints-release.txt pyinstaller
+          pip install -c constraints-release.txt -r requirements.txt
+
+      - name: Convert linguanova_logo.png to linguanova.icns (picked up by spec BUNDLE)
+        run: |
+          mkdir -p linguanova.iconset
+          sips -z 16   16   linguanova_logo.png --out linguanova.iconset/icon_16x16.png
+          sips -z 32   32   linguanova_logo.png --out linguanova.iconset/icon_16x16@2x.png
+          sips -z 32   32   linguanova_logo.png --out linguanova.iconset/icon_32x32.png
+          sips -z 64   64   linguanova_logo.png --out linguanova.iconset/icon_32x32@2x.png
+          sips -z 128  128  linguanova_logo.png --out linguanova.iconset/icon_128x128.png
+          sips -z 256  256  linguanova_logo.png --out linguanova.iconset/icon_128x128@2x.png
+          sips -z 256  256  linguanova_logo.png --out linguanova.iconset/icon_256x256.png
+          sips -z 512  512  linguanova_logo.png --out linguanova.iconset/icon_256x256@2x.png
+          sips -z 512  512  linguanova_logo.png --out linguanova.iconset/icon_512x512.png
+          sips -z 1024 1024 linguanova_logo.png --out linguanova.iconset/icon_512x512@2x.png
+          iconutil -c icns linguanova.iconset -o linguanova.icns
+          rm -rf linguanova.iconset
+          ls -la linguanova.icns
+
+      - name: Build with PyInstaller
+        run: |
+          python -m PyInstaller LinguaNova.spec
+
+      - name: Verify .app bundle was produced
+        run: |
+          if [ ! -d "dist/LinguaNova.app" ]; then
+            echo "::error::dist/LinguaNova.app missing — spec BUNDLE block did not run"
+            ls -la dist/
+            exit 1
+          fi
+          ls -la dist/LinguaNova.app/Contents/
+
+      - name: Ad-hoc codesign (.app must be signed or Gatekeeper reports 'damaged')
+        run: |
+          codesign --force --deep --sign - dist/LinguaNova.app
+          codesign --verify --deep --strict dist/LinguaNova.app
+          echo "✓ Ad-hoc signature valid"
+
+      - name: Smoke test Qt startup (offscreen)
+        run: |
+          export LINGUANOVA_QT_SMOKE_TEST="1"
+          export QT_QPA_PLATFORM="offscreen"
+          ./dist/LinguaNova.app/Contents/MacOS/LinguaNova
+
+      - name: Smoke test Qt startup (offscreen + software rendering fallback)
+        run: |
+          export LINGUANOVA_QT_SMOKE_TEST="1"
+          export QT_QPA_PLATFORM="offscreen"
+          export QT_QUICK_BACKEND="software"
+          ./dist/LinguaNova.app/Contents/MacOS/LinguaNova
+
+      - name: Create DMG (.app + Applications symlink for drag-install)
+        run: |
+          mkdir -p dmg_contents
+          cp -R dist/LinguaNova.app dmg_contents/
+          ln -s /Applications dmg_contents/Applications
+          sync
+          sleep 3
+          hdiutil create \
+            -volname "LinguaNova" \
+            -srcfolder dmg_contents \
+            -ov \
+            -format UDZO \
+            LinguaNova-macOS-arm64.dmg
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: macos-build
+          path: LinguaNova-macOS-arm64.dmg
+
+  # ============================================
+  # Create GitHub Release
+  # ============================================
+  release:
+    needs: [build-windows, build-linux, build-macos]
+    # Manual runs (workflow_dispatch) only build and upload artifacts:
+    # a release is published only for a pushed version tag (v1.1.0, ...).
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download Windows artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: windows-build
+
+      - name: Download Linux AppImage artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: linux-build-appimage
+
+      - name: Download Linux tar.gz artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: linux-build-targz
+
+      - name: Download macOS artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: macos-build
+
+      - name: Generate SHA256 checksums
+        run: sha256sum LinguaNova-* > SHA256SUMS.txt
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: |
+            LinguaNova-Windows-x64.zip
+            LinguaNova-Linux-x64.AppImage
+            LinguaNova-Linux-x64.tar.gz
+            LinguaNova-macOS-arm64.dmg
+            SHA256SUMS.txt
+          body: ""
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
