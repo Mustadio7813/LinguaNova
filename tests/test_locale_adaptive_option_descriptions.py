@@ -22,4 +22,4 @@ def test_notification_description_stays_readable_and_wraps():
 
 def test_header_identifies_the_product_as_renpy_translator():
     qml = Path("src/gui/qml/Main.qml").read_text(encoding="utf-8")
-    assert 'getTextWithDefault("nav_workspace_label", "Ren\\\'Py Translator")' in qml
+    assert 'getTextWithDefault("nav_workspace_label", "Ren\'Py Translator")' in qml

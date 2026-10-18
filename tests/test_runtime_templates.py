@@ -207,29 +207,32 @@ def test_is_rtl_language_helper():
 
 
 def test_create_language_init_file_rtl_isolation(tmp_path):
-    """Test create_language_init_file includes RTL config ONLY for RTL languages."""
+    """RTL settings are applied ONLY for RTL languages.
+
+    The old zzz_<lang>_language.rpy file (which forced config.language) is no
+    longer written; create_language_init_file only removes it. RTL direction
+    now comes from the runtime hook, so that is what is checked here.
+    """
     from src.core.pipeline.saving import create_language_init_file
     from unittest.mock import MagicMock
 
     mock_config = MagicMock()
-    mock_config.get_ui_text.return_value = "Created: {path}"
+    mock_config.get_ui_text.side_effect = lambda key, default="": default
     mock_log = MagicMock()
 
     game_dir = tmp_path / "game"
     game_dir.mkdir()
+    legacy = game_dir / "zzz_persian_language.rpy"
+    legacy.write_text("define config.language = 'persian'\n", encoding="utf-8")
 
-    # Test RTL language (persian)
     create_language_init_file(str(game_dir), "persian", mock_config, mock_log)
-    init_file_rtl = game_dir / "zzz_persian_language.rpy"
-    assert init_file_rtl.exists()
-    content_rtl = init_file_rtl.read_text(encoding="utf-8-sig")
-    assert "define config.rtl = True" in content_rtl
+    assert not legacy.exists()
+    assert not (game_dir / "zzz_turkish_language.rpy").exists()
+
+    content_rtl = rht.render_runtime_hook_native("persian")
+    assert "config.rtl = True" in content_rtl
     assert "reading_order = 'wrtl'" in content_rtl
 
-    # Test LTR language (turkish) - MUST NOT have config.rtl = True
-    create_language_init_file(str(game_dir), "turkish", mock_config, mock_log)
-    init_file_ltr = game_dir / "zzz_turkish_language.rpy"
-    assert init_file_ltr.exists()
-    content_ltr = init_file_ltr.read_text(encoding="utf-8-sig")
-    assert "define config.rtl = True" not in content_ltr
-    assert "reading_order = 'wrtl'" not in content_ltr
+    content_ltr = rht.render_runtime_hook_native("turkish")
+    assert "config.rtl = True" not in content_ltr
+    assert "reading_order = 'wrtl'" not in content_ltr

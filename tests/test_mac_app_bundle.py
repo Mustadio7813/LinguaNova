@@ -56,7 +56,7 @@ def test_gui_accepts_the_app(tmp_path):
     app, autorun = _mac_game(tmp_path)
     logs = []
     stub = SimpleNamespace(
-        _project_path="", _tl_mode=False, _tl_source_path="",
+        _project_path="", _tl_mode=False, _tl_source_path="", _is_translating=False,
         config=SimpleNamespace(
             app_settings=SimpleNamespace(last_input_directory=""),
             save_config=lambda: None,

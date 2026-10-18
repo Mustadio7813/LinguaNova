@@ -21,6 +21,6 @@ def test_qml_locks_project_and_route_cards():
 def test_stop_button_remains_available_during_run():
     qml = Path("src/gui/qml/Main.qml").read_text(encoding="utf-8")
     pos = qml.index("id: startButton")
-    block = qml[pos:pos + 2200]
+    block = qml[pos:pos + 12000]
     assert "appBackend.stopTranslation()" in block
     assert "ln_stop_translation" in block

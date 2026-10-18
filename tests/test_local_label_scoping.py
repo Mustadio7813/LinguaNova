@@ -186,7 +186,7 @@ def test_rpyc_lines_are_only_matched_against_their_own_rpy(tmp_path, monkeypatch
     for name in ("a.rpyc", "b.rpyc", "c.rpyc"):
         (game / name).write_bytes(b"")
 
-    def fake_rpyc(self, directory, recursive=True):
+    def fake_rpyc(self, directory, recursive=True, **_kwargs):
         line = {"text": "She is so beautiful.", "character": "", "text_type": "dialogue", "is_rpyc": True}
         return {game / n: [dict(line, context="label:" + n[0])] for n in ("a.rpyc", "b.rpyc", "c.rpyc")}
 

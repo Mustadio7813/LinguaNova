@@ -52,6 +52,14 @@ def test_gui_tool_finds_game_dir_from_any_selected_path(tmp_path):
 def test_cli_activate_language_alias_now_integrates_menu(tmp_path):
     import src.cli_main as cli
     game = _game(tmp_path, "russian", "german")
+    # German must be missing from the game's selector, otherwise there is
+    # nothing to integrate (status "already_present").
+    screens = game / "screens.rpy"
+    screens.write_text(
+        screens.read_text(encoding="utf-8").replace(
+            '        textbutton "Deutsch" action Language("german")\n', ""),
+        encoding="utf-8",
+    )
 
     def run(*argv):
         with mock.patch.object(sys, "argv", ["cli", *argv]):

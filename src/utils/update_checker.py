@@ -23,7 +23,7 @@ import requests
 
 # "owner/repository" of the GitHub project that publishes LinguaNova releases.
 # Empty by default: the update check is then disabled.
-UPDATE_REPO = ""
+UPDATE_REPO = "Mustadio7813/LinguaNova"
 
 NOT_CONFIGURED = "update source not configured"
 

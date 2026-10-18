@@ -12,7 +12,10 @@ class TestUpdateChecker(unittest.TestCase):
         self.addCleanup(self._patcher.stop)
 
     def test_not_configured_is_reported_without_network(self):
-        with patch.dict("os.environ", {"LINGUANOVA_UPDATE_REPO": ""}), patch("requests.get") as mock_get:
+        # The release build sets UPDATE_REPO; the "not configured" path is
+        # tested by clearing both the constant and the environment variable.
+        with patch.dict("os.environ", {"LINGUANOVA_UPDATE_REPO": ""}), \
+                patch("src.utils.update_checker.UPDATE_REPO", ""), patch("requests.get") as mock_get:
             result = check_for_updates("2.8.5")
         mock_get.assert_not_called()
         self.assertFalse(result.update_available)
