@@ -521,3 +521,23 @@ Root causes reproduced with the strings from the user's "iNSight of you ver.13" 
 - **Utilities → Create an interface language** (`src/utils/ui_language_generator.py`, new): machine-translates `en.json` with the selected engine. Placeholders (`{x}`, `%s`, `%(x)s`, tags, line breaks, URLs) are split out and never sent, so they cannot be lost; texts whose pieces were not all translated are left out (English). The file is written atomically, keeping a `.bak` of a previous one.
 - `release.yml`: installs Inno Setup on the Windows runner, builds `LinguaNova_Setup_<version>.exe`, uploads it and includes it in `SHA256SUMS.txt`.
 - Version 1.1.0. Tests: `tests/test_updates_installer_20261018.py`.
+
+### 32. Translation cache, Ren'Py output and Windows source startup — 2026-10-20
+
+- Cache writes and every cache lookup reject blank translations and translations
+  that only repeat the source text. When loading an older cache, these source
+  copies are dropped and the cleaned cache is marked dirty so a later save
+  removes them from disk.
+- The pipeline does not accept an unchanged external-TM/cache/engine result as
+  a new translation. Empty engine results are treated as failures; unchanged
+  engine results are counted as pending and appear in the partial completion
+  status. The Ren'Py source fallback remains in place to avoid empty dialogue.
+- Existing valid manual translations are preserved when a candidate is only a
+  source copy. Supported `old`/`new` and dialogue translation lines containing
+  a trailing `#ignore` comment are parsed and rewritten without that suffix.
+- On Windows, `run.bat` recovers from `venv` failing during `ensurepip` by
+  creating the environment with `--without-pip` and installing `pip` into it
+  from the selected Python installation.
+- Regression tests cover poisoned legacy caches, retranslation, empty and
+  unchanged results, pending statistics, preserving manual text, and clean
+  `#ignore` output.
