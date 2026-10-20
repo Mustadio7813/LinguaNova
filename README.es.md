@@ -2,14 +2,16 @@ LinguaNova 🌠
 
 [English](README.md) · **Español**
 
-> \[!WARNING\] **LinguaNova está en fase beta y en desarrollo activo.**
+> \[!WARNING\]
+>  **LinguaNova está en fase beta y en desarrollo activo.**
 > Modifica archivos de traducción dentro de la carpeta del juego: **haz
 > una copia de seguridad del juego antes de traducir** y revisa el
 > resultado antes de compartirlo. Informa los problemas en
 > [Issues](../../issues), incluyendo el registro y la versión de Ren'Py
 > del juego.
 
-> \[!IMPORTANT\] **LinguaNova es un proyecto modificado e independiente
+> \[!IMPORTANT\]
+>  **LinguaNova es un proyecto modificado e independiente
 > en su identidad y mantenimiento, basado en parte en RenLocalizer
 > 2.8.19.** No es una versión oficial de RenLocalizer, no está mantenido
 > por sus autores originales y no implica afiliación, aprobación ni
