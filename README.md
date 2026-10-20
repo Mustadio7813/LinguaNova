@@ -69,33 +69,43 @@ The installer and the program pick the Windows language automatically (English i
 
 ## 🛠️ Running from source
 
-Requires Python 3.10+.
+Requires Python 3.10 or later; Python 3.12 64-bit is recommended. Extract the
+full source archive to a regular folder; do not run it from WinRAR or 7-Zip's
+temporary archive view.
+
+On Windows, run `run.bat`. The launcher creates `.venv`, installs or repairs
+the declared dependencies, then starts the application. Internet access is
+needed for the first dependency installation. If Python cannot create the
+environment with `pip`, the launcher retries without `pip` and provisions it
+from the selected Python installation.
+
+On Linux/macOS, prepare the environment and start the application manually:
 
 ```bash
-python -m venv .venv
-```
-
-Windows:
-
-```bat
-.venv\Scripts\activate
-pip install -r requirements.txt
-python run.py
-```
-
-Linux/macOS:
-
-```bash
+python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 python run.py
 ```
 
-The CLI can be started with:
+To start the CLI, activate `.venv` first and run:
 
 ```bash
 python run_cli.py --interactive
 ```
+
+The source ZIP is not an installer and does not contain a packaged executable.
+On Windows, use `run.bat`; for a packaged application, download the installer
+or portable ZIP from [Releases](https://github.com/Mustadio7813/LinguaNova/releases).
+
+## ✅ Translation results and output files
+
+An empty response or a response identical to the source is not accepted as a
+valid cached translation. The completion summary reports actual coverage and
+marks lines the engine could not change as pending. The source-text fallback is
+kept to avoid blank Ren'Py lines. When LinguaNova rewrites a supported
+translation entry, it also removes a trailing `#ignore` comment from the
+destination line.
 
 ## 📦 Building and distribution
 
