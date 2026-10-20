@@ -1,4 +1,4 @@
-LinguaNova 🌟
+LinguaNova 🌠
 
 [English](README.md) · **Español**
 
