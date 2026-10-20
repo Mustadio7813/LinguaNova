@@ -6,6 +6,23 @@ render_with_liquid: false
 
 # RenLocalizer Changelog
 
+#### [Unreleased] - LinguaNova source fixes
+
+- **Cache integrity:** empty results and results identical to the source are
+  no longer stored or reused as successful cache hits; legacy matching entries
+  are discarded on load and removed from the saved cache.
+- **Honest completion status:** unchanged engine results are not accepted as
+  new translations and are counted as pending. Coverage remains based on the
+  actual text in the generated translation files; the Ren'Py source fallback is
+  retained to prevent blank lines.
+- **Clean Ren'Py rewrites:** supported translation lines with a trailing
+  `#ignore` comment are recognized and rewritten without that invalid suffix.
+- **Windows source launcher:** when `venv` cannot bootstrap `pip` normally,
+  `run.bat` retries with `--without-pip` and provisions `pip` into the project
+  environment.
+- Regression coverage added for poisoned cache entries, unchanged/empty engine
+  results, pending status, manual translations and `#ignore` cleanup.
+
 #### [LinguaNova 1.1.0] - 2026-10-18
 
 > **Windows installer, automatic verified updates, interface languages added by the user, reliability audit.** Details in `MODIFICATIONS_LINGUANOVA.md` (entries 29–31).
