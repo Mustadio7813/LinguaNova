@@ -180,7 +180,7 @@ def _decode_source(data: bytes) -> str:
 def _language_names(language: str) -> Set[str]:
     """Folder names (casefolded) that hold ``language`` under game/tl/.
 
-    Uses the central catalogue (all 135 languages); the former 10-entry table
+    Uses the five-language MOD catalogue; the former 10-entry table
     left every other language without aliases.
     """
     from .languages import folder_aliases

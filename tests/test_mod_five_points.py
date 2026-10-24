@@ -37,8 +37,8 @@ def _no_font_downloads(monkeypatch):
 
 
 def _always(req):
-    """Simulated engine that keeps protected tokens and marks the text as Polish."""
-    return "PL " + req.text
+    """Simulated engine that keeps protected tokens and marks the text as Russian."""
+    return "РУ " + req.text
 
 
 def _accept_all(monkeypatch):
@@ -141,27 +141,27 @@ def test_tagged_mission_text_is_sent_once_and_shown_whole(tmp_path, monkeypatch)
     game.mkdir()
     (game / "story.rpyc").write_bytes(_build_rpyc(STORY))
     manager = ScriptedManager(default=_always)
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", GOOGLE, manager)
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", GOOGLE, manager)
     assert result.success, result.message
     sent = [r.text for r in manager.requests]
     quest_requests = [t for t in sent if "chave dourada" in t]
     assert len(quest_requests) == 1                         # one request, not one per fragment
     assert "{b}" not in quest_requests[0] and "[tower]" not in quest_requests[0]   # tags protected
     hook = Path(result.output_path).read_text(encoding="utf-8")
-    _ns, _config, translator, prefs = run_hook(hook, "polish")
+    _ns, _config, translator, prefs = run_hook(hook, "russian")
     shown = displayed(translator, prefs, QUEST)
-    assert shown.startswith("PL ") and "{b}Anna{/b}" in shown and "{color=#f00}" in shown and "[tower]" in shown
-    assert displayed(translator, prefs, "Pegue a chave antes de sair.") == "PL Pegue a chave antes de sair."
+    assert shown.startswith("РУ ") and "{b}Anna{/b}" in shown and "{color=#f00}" in shown and "[tower]" in shown
+    assert displayed(translator, prefs, "Pegue a chave antes de sair.") == "РУ Pegue a chave antes de sair."
 
 
 def test_game_translation_already_present_is_never_overridden(tmp_path, monkeypatch):
     _accept_all(monkeypatch)
-    _game(tmp_path, ["Menu principal"])
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", GOOGLE, ScriptedManager(default=_always))
+    game = _game(tmp_path, ["Menu principal"])
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", GOOGLE, ScriptedManager(default=_always))
     hook = Path(result.output_path).read_text(encoding="utf-8")
-    ns, _config, translator, prefs = run_hook(hook, "polish", preexisting={"polish": {"Menu principal": "OFICJALNE"}})
-    assert displayed(translator, prefs, "Menu principal") == "OFICJALNE"   # no duplicate → no crash
-    assert ns["_lnmod_registered"]["polish"] == (0, 1)
+    ns, _config, translator, prefs = run_hook(hook, "russian", preexisting={"russian": {"Menu principal": "ОФИЦИАЛЬНЫЙ"}})
+    assert displayed(translator, prefs, "Menu principal") == "ОФИЦИАЛЬНЫЙ"  # no duplicate → no crash
+    assert ns["_lnmod_registered"]["russian"] == (0, 1)
 
 
 # ── 3. fonts and RTL ─────────────────────────────────────────────────────────
@@ -188,7 +188,7 @@ def _ttf(chars: str) -> bytes:
 ASCII = "".join(chr(c) for c in range(32, 127))
 
 
-def test_font_without_polish_letters_is_replaced_only_for_polish(tmp_path, monkeypatch):
+def test_font_without_cyrillic_letters_is_replaced_only_for_russian(tmp_path, monkeypatch):
     _accept_all(monkeypatch)
     game = _game(tmp_path, ["Menu principal"])
     (game / "fonts").mkdir()
@@ -197,11 +197,11 @@ def test_font_without_polish_letters_is_replaced_only_for_polish(tmp_path, monke
 
     def fetcher(family, target_dir):
         fetched.append(family)
-        (target_dir / "Full.ttf").write_bytes(_ttf(ASCII + "ąćęłńóśźżĄĆĘŁŃÓŚŹŻ"))
+        (target_dir / "Full.ttf").write_bytes(_ttf(ASCII + "АБВГД"))
         return True, "Full.ttf"
 
-    manager = ScriptedManager({"Menu principal": "Menu główne"})
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", GOOGLE, manager, font_fetcher=fetcher)
+    manager = ScriptedManager({"Menu principal": "АБВГД"})
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", GOOGLE, manager, font_fetcher=fetcher)
     report = json.loads(Path(result.report_path).read_text(encoding="utf-8"))
     assert report["fonts"]["status"] == "ok" and report["fonts"]["replaced"] == ["fonts/Game.ttf"]
     assert report["font_replacements"]["fonts/Game.ttf"] == "linguanova_mod_fonts/Full.ttf"
@@ -209,10 +209,10 @@ def test_font_without_polish_letters_is_replaced_only_for_polish(tmp_path, monke
     assert not (game / "tl" / "linguanova_mod_fonts").exists()     # never a fake language folder
 
     hook = Path(result.output_path).read_text(encoding="utf-8")
-    assert 'translate polish python:\n    _lnmod_apply_fonts("polish")' in hook
+    assert 'translate russian python:\n    _lnmod_apply_fonts("russian")' in hook
     assert "translate None python:" in hook
-    ns, config, _t, _p = run_hook(hook, "polish")
-    ns["_lnmod_apply_fonts"]("polish")
+    ns, config, _t, _p = run_hook(hook, "russian")
+    ns["_lnmod_apply_fonts"]("russian")
     assert config.font_replacement_map[("fonts/Game.ttf", False, False)] == ("linguanova_mod_fonts/Full.ttf", False, False)
     ns["_lnmod_apply_fonts"](None)                                # back to the original language
     assert config.font_replacement_map == {}
@@ -221,9 +221,9 @@ def test_font_without_polish_letters_is_replaced_only_for_polish(tmp_path, monke
 def test_font_that_already_covers_the_language_is_kept(tmp_path, monkeypatch):
     _accept_all(monkeypatch)
     game = _game(tmp_path, ["Menu principal"])
-    (game / "Game.ttf").write_bytes(_ttf(ASCII + "ąćęłńóśźżĄĆĘŁŃÓŚŹŻ"))
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", GOOGLE,
-                                    ScriptedManager({"Menu principal": "Menu główne"}),
+    (game / "Game.ttf").write_bytes(_ttf(ASCII + "АБВГД"))
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", GOOGLE,
+                                    ScriptedManager({"Menu principal": "АБВГД"}),
                                     font_fetcher=lambda f, d: pytest.fail("no download needed"))
     report = json.loads(Path(result.report_path).read_text(encoding="utf-8"))
     assert report["font_replacements"] == {} and not (game / "linguanova_mod_fonts").exists()
@@ -231,24 +231,22 @@ def test_font_that_already_covers_the_language_is_kept(tmp_path, monkeypatch):
 
 def test_missing_font_is_reported_and_translation_still_published(tmp_path, monkeypatch):
     _accept_all(monkeypatch)
-    _game(tmp_path, ["Menu principal"])
-    result = generate_interface_mod(str(tmp_path), "portuguese", "japanese", GOOGLE,
-                                    ScriptedManager({"Menu principal": "メインメニュー"}))
+    game = _game(tmp_path, ["Menu principal"])
+    (game / "fonts").mkdir()
+    (game / "fonts" / "broken.ttf").write_bytes(b"not a font")
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", GOOGLE,
+                                    ScriptedManager({"Menu principal": "Главное меню"}))
     assert result.success
     report = json.loads(Path(result.report_path).read_text(encoding="utf-8"))
     assert report["fonts"]["status"] == "missing"
     assert any("squares" in note for note in report["notes"])
 
 
-def test_rtl_language_enables_config_rtl(tmp_path, monkeypatch):
-    _accept_all(monkeypatch)
+def test_mod_rejects_languages_outside_the_five_language_contract(tmp_path, monkeypatch):
     _game(tmp_path, ["Menu principal"])
     result = generate_interface_mod(str(tmp_path), "portuguese", "arabic", GOOGLE,
                                     ScriptedManager({"Menu principal": "القائمة الرئيسية"}))
-    report = json.loads(Path(result.report_path).read_text(encoding="utf-8"))
-    assert report["rtl"] is True
-    _ns, config, _t, _p = run_hook(Path(result.output_path).read_text(encoding="utf-8"), "arabic")
-    assert config.rtl is True
+    assert not result.success and result.message_key == "mod_msg_unknown_target"
 
 
 # ── 4. language panel ────────────────────────────────────────────────────────
@@ -257,35 +255,34 @@ def test_panel_lists_every_mod_language_with_progress_and_native_switch(tmp_path
     _accept_all(monkeypatch)
     game = _game(tmp_path, ["Menu principal", "Carregar save"])
     (game / "tl" / "french").mkdir(parents=True)                  # the game's own translation
-    generate_interface_mod(str(tmp_path), "portuguese", "polish", GOOGLE,
-                           ScriptedManager({"Menu principal": "Menu główne"}))
+    generate_interface_mod(str(tmp_path), "portuguese", "spanish", GOOGLE,
+                           ScriptedManager({"Menu principal": "Menú principal"}))
     result = generate_interface_mod(str(tmp_path), "portuguese", "russian", GOOGLE, ScriptedManager(default=_always))
     hook = Path(result.output_path).read_text(encoding="utf-8")
     assert "screen lnmod_language_panel():" in hook and "screen lnmod_language_button():" in hook
     assert 'key "shift_K_l"' in hook and "Language(None)" in hook and "Language(_lnmod_lang)" in hook
-    ns, config, translator, prefs = run_hook(hook, "polish")
+    ns, config, translator, prefs = run_hook(hook, "russian")
     assert "lnmod_language_button" in config.overlay_screens
     # 2026-10-18 audit (point 3.3): the player sees language names only; the
     # coverage numbers stay in linguanova_mod_report.json.
     rows = dict(ns["_lnmod_menu_languages"]())
-    assert rows["polish"] == "Polski"
-    assert rows["russian"] == "Russian"                            # Cyrillic → English label
+    assert rows["russian"] == "Русский"                            # Cyrillic label uses the Russian font plan
     panel = hook[hook.index("screen lnmod_language_panel():"):]
     assert "%" not in panel.split("translate ")[0] and "LinguaNova MOD" not in panel
     assert "translate french python:" in hook                      # fonts reset for the game's own language
     prefs.language = "russian"                                      # hot switch: same tables, no reload
-    assert displayed(translator, prefs, "Menu principal") == "PL Menu principal"
-    prefs.language = "polish"
-    assert displayed(translator, prefs, "Menu principal") == "Menu główne"
+    assert displayed(translator, prefs, "Menu principal") == "РУ Menu principal"
+    prefs.language = "spanish"
+    assert displayed(translator, prefs, "Menu principal") == "Menú principal"
 
 
 def test_new_players_start_in_the_mod_language_but_game_default_is_respected(tmp_path, monkeypatch):
     _accept_all(monkeypatch)
     _game(tmp_path, ["Menu principal"])
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", GOOGLE, ScriptedManager(default=_always))
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", GOOGLE, ScriptedManager(default=_always))
     hook = Path(result.output_path).read_text(encoding="utf-8")
     _ns, config, _t, _p = run_hook(hook, None)
-    assert config.default_language == "polish"
+    assert config.default_language == "russian"
     from src.ui_mod.hook_check import make_env, python_body
     ns, config, _t, _p = make_env(None)
     config.default_language = "english"                             # game already chose one
@@ -296,9 +293,9 @@ def test_new_players_start_in_the_mod_language_but_game_default_is_respected(tmp
 # ── 5. glossary ──────────────────────────────────────────────────────────────
 
 def test_glossary_helpers_round_trip():
-    text, mapping = protect_terms("Anna bebe a Poção de vida.", {"Anna": "Anna", "Poção de vida": "Eliksir życia"})
+    text, mapping = protect_terms("Anna bebe a Poção de vida.", {"Anna": "Anna", "Poção de vida": "Зелье жизни"})
     assert "Anna" not in text and "Poção" not in text and len(mapping) == 2
-    assert restore_terms(text.replace("__LNMOD_TERM_1__", "__ LNMOD_TERM_1 __"), mapping) == "Anna bebe a Eliksir życia."
+    assert restore_terms(text.replace("__LNMOD_TERM_1__", "__ LNMOD_TERM_1 __"), mapping) == "Anna bebe a Зелье жизни."
     tagged, mapping = protect_terms("__LNMOD_TOKEN_0__Anna__LNMOD_TOKEN_1__ bebe", {"Anna": "Anna"})
     assert "Anna" not in tagged and restore_terms(tagged, mapping) == "__LNMOD_TOKEN_0__Anna__LNMOD_TOKEN_1__ bebe"
     assert consistent("Anna bebe", "Anna pije", {"Anna": "Anna"})
@@ -310,51 +307,51 @@ def test_character_names_are_kept_and_glossary_terms_forced(tmp_path, monkeypatc
     game = _game(tmp_path, ["Anna", "Fale com Anna sobre a Poção de vida.", "Olá {b}Anna{/b}!"])
     (game / "characters.rpy").write_text('define a = Character("Anna")\n', encoding="utf-8")
     manager = ScriptedManager(default=_always)
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", GOOGLE, manager)
-    gloss_path = game / "tl" / "polish" / "linguanova_mod_glossary.json"
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", GOOGLE, manager)
+    gloss_path = game / "tl" / "russian" / "linguanova_mod_glossary.json"
     glossary = json.loads(gloss_path.read_text(encoding="utf-8"))
     assert glossary["terms"] == {"Anna": "Anna"}
     assert all("Anna" not in r.text for r in manager.requests)        # name protected / not sent alone
-    data = json.loads((game / "tl/polish/linguanova_mod_hook_data.json").read_text(encoding="utf-8"))
-    assert data["mapping"]["Fale com Anna sobre a Poção de vida."] == "PL Fale com Anna sobre a Poção de vida."
+    data = json.loads((game / "tl/russian/linguanova_mod_hook_data.json").read_text(encoding="utf-8"))
+    assert data["mapping"]["Fale com Anna sobre a Poção de vida."] == "РУ Fale com Anna sobre a Poção de vida."
     report = json.loads(Path(result.report_path).read_text(encoding="utf-8"))
     assert report["glossary_kept_as_is"] == 1 and report["character_names"] == ["Anna"]
 
     # The user adds a term: the cached line no longer agrees and is translated again.
-    glossary["terms"]["Poção de vida"] = "Eliksir życia"
+    glossary["terms"]["Poção de vida"] = "Зелье жизни"
     gloss_path.write_text(json.dumps(glossary, ensure_ascii=False), encoding="utf-8")
     m2 = ScriptedManager(default=_always)
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", GOOGLE, m2)
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", GOOGLE, m2)
     assert len(m2.requests) == 1 and "Poção" not in m2.requests[0].text
-    data = json.loads((game / "tl/polish/linguanova_mod_hook_data.json").read_text(encoding="utf-8"))
-    assert data["mapping"]["Fale com Anna sobre a Poção de vida."] == "PL Fale com Anna sobre a Eliksir życia."
-    assert json.loads(gloss_path.read_text(encoding="utf-8"))["terms"]["Poção de vida"] == "Eliksir życia"
+    data = json.loads((game / "tl/russian/linguanova_mod_hook_data.json").read_text(encoding="utf-8"))
+    assert data["mapping"]["Fale com Anna sobre a Poção de vida."] == "РУ Fale com Anna sobre a Зелье жизни."
+    assert json.loads(gloss_path.read_text(encoding="utf-8"))["terms"]["Poção de vida"] == "Зелье жизни"
 
 
 def test_glossary_term_as_whole_string_needs_no_engine(tmp_path, monkeypatch):
     _accept_all(monkeypatch)
     game = _game(tmp_path, ["Inventário"])
-    tl = game / "tl" / "polish"
+    tl = game / "tl" / "russian"
     tl.mkdir(parents=True)
     (tl / "linguanova_mod_glossary.json").write_text(
-        json.dumps({"schema": 1, "terms": {"Inventário": "Ekwipunek"}}), encoding="utf-8")
+        json.dumps({"schema": 1, "terms": {"Inventário": "Инвентарь"}}), encoding="utf-8")
     manager = ScriptedManager(default=_always)
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", GOOGLE, manager)
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", GOOGLE, manager)
     assert manager.requests == [] and result.translated == 1
-    show, _prefs, _ns = _hook_runtime(Path(result.output_path).read_text(encoding="utf-8"), "polish")
-    assert show("Inventário") == "Ekwipunek"
+    show, _prefs, _ns = _hook_runtime(Path(result.output_path).read_text(encoding="utf-8"), "russian")
+    assert show("Inventário") == "Инвентарь"
 
 
-# ── localized messages (9 interface languages) ───────────────────────────────
+# ── localized messages (five interface languages) ────────────────────────────
 
-UI_LANGUAGES = ["es", "en", "de", "fr", "ru", "tr", "fa", "ja", "zh-CN"]
+UI_LANGUAGES = ["es", "en", "pt", "fr", "ru"]
 
 
 def _locale(lang):
     return json.loads((Path(__file__).resolve().parents[1] / "locales" / f"{lang}.json").read_text(encoding="utf-8"))
 
 
-def test_every_mod_message_exists_in_the_nine_languages_with_same_placeholders():
+def test_every_mod_message_exists_in_the_five_languages_with_same_placeholders():
     import string
     from src.ui_mod.generator import MESSAGES
 
@@ -377,17 +374,17 @@ def test_generator_messages_follow_the_interface_language(tmp_path):
 
     (tmp_path / "game").mkdir()
     progress = []
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", GOOGLE, ScriptedManager(),
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", GOOGLE, ScriptedManager(),
                                     ui_text=ui_text)
     assert not result.success and result.message_key == "mod_msg_no_candidates"
     assert result.message == "No se detectaron textos para traducir en este juego."
     _game(tmp_path, ["Menu principal"])
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", GOOGLE,
-                                    ScriptedManager({"Menu principal": "Menu główne"}),
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", GOOGLE,
+                                    ScriptedManager({"Menu principal": "Главное меню"}),
                                     progress=lambda c, t, text: progress.append(text), ui_text=ui_text)
     assert result.message.startswith("MOD generado: 1/1") and progress[0].startswith("MOD: origen=pt")
-    broken = generate_interface_mod(str(tmp_path), "portuguese", "polish", GOOGLE,
-                                    ScriptedManager({"Menu principal": "Menu główne"}),
+    broken = generate_interface_mod(str(tmp_path), "portuguese", "russian", GOOGLE,
+                                    ScriptedManager({"Menu principal": "Главное меню"}),
                                     ui_text=lambda *a, **k: 1 / 0)          # translator failure → English
     assert broken.message.startswith("MOD generated: 1/1")
 

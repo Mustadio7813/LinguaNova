@@ -1,0 +1,334 @@
+{
+  "source_archive_sha256": "f8ed1cefe6314ecd7bb8e14b3aa76d70fdeb55be7fda0d1cc205020070d4ccf6",
+  "base_files": 899,
+  "modified": [
+    {
+      "path": "LEEME_PRIMERO.txt",
+      "size": 6241,
+      "sha256": "faf323cc076f5b5e6266b28d9dc44e2b55ef1761d38fdbddc47f51b38cf14e8f",
+      "previous_sha256": "be5b4df652c520160eb8467dd5d020e3fb49d5312e69904b64a26109314a3a9f"
+    },
+    {
+      "path": "LinguaNova_next.spec",
+      "size": 1451,
+      "sha256": "f100c23548ef42769a7db870cf3237bf44738ec979f3338fc54bf5bb6b9d324a",
+      "previous_sha256": "e2af7a3489e761f28cb3b792f082fb10ea2fcae51113fa632e612103134c5882"
+    },
+    {
+      "path": "README_EXPERIMENTAL.md",
+      "size": 10919,
+      "sha256": "a70d2a1e44ae5e49a7cdb7dfc07ac6aa921411dd0c63c840c2c7768e08a556ee",
+      "previous_sha256": "1d30efca144a3e6a72518d4e476d0cc6f90f09350aec700fccfd04d390fd9846"
+    },
+    {
+      "path": "linguanova_next/adapters/extraction_adapter.py",
+      "size": 4414,
+      "sha256": "8c844405eadcba53e9c29087fbc44f992efb70dc7790a5ee896f0124bfdb87a0",
+      "previous_sha256": "7d363fc826b84be00f943038aa47ecc8ecfd1d3b2f20ff1f4452a17876fec390"
+    },
+    {
+      "path": "linguanova_next/baseline.py",
+      "size": 2078,
+      "sha256": "16145ca8bd7b2f0ff90b9b4b84cb14d6274d62618faa2a70ccf0bed051262f27",
+      "previous_sha256": "c7e3e958410fb797a354004ef59165cbafa3e110e5a1e3d29bc419f99712eaff"
+    },
+    {
+      "path": "linguanova_next/bootstrap.py",
+      "size": 12142,
+      "sha256": "48922b672f66a7a4fb407d04c2faa4343a0690ef1c458980f59e31937a8275a1",
+      "previous_sha256": "3daa570fd35d5791b82c0df6a6e7af893281953b3aae96c66f4b62b41952577d"
+    },
+    {
+      "path": "linguanova_next/cli.py",
+      "size": 4380,
+      "sha256": "542790b004af1dbac54289530b3ee04bae46f958ae130bfeefd5604d518fbf3c",
+      "previous_sha256": "9d5f0743b9d66a27541d8bd1380c08ae27bc85e28332e032f6b1410207a0fbae"
+    },
+    {
+      "path": "linguanova_next/core/translation_job.py",
+      "size": 16650,
+      "sha256": "ed3877cafd4a10aa74aeb36d655c0ec79f0e56b32d354aa336f126db2ecb37f7",
+      "previous_sha256": "2a7136270b064c7a7d70c88790066a0dc1c364ee85df8392dabedd796a98d73c"
+    },
+    {
+      "path": "linguanova_next/dictionary/analysis.py",
+      "size": 4409,
+      "sha256": "bec2be21b0f1afb4698fe631e06c55d0ac29f556a4bb57ca17a395d9f9d28246",
+      "previous_sha256": "70dd8c056f6969bfa196604e2b588606f0ac6dc74e9687c025b4f08ccedb3831"
+    },
+    {
+      "path": "linguanova_next/image/font_resolver.py",
+      "size": 695,
+      "sha256": "4196b03a0afbe3195fb46bd254b6535173d13c7804e6147b52438a02e27029bf",
+      "previous_sha256": "498e90a44772edac160c5aca549c105baf6a1ddfabcebea3533fb5eea8fc2ec4"
+    },
+    {
+      "path": "linguanova_next/image/image_inventory.py",
+      "size": 2829,
+      "sha256": "12b12794900e6332b39f2e63993db047e2d54cb0f2227048a7f5e859441e097e",
+      "previous_sha256": "1b5d04ef32c5fbcf66fe6cb603660b63a4a47862abe69eb5e80c30df192a1821"
+    },
+    {
+      "path": "linguanova_next/image/image_reconstruction.py",
+      "size": 1631,
+      "sha256": "8a48f483516df6f93d76cd7466334808bbfc44bfdb589299f43b69f8e465efed",
+      "previous_sha256": "e97392add800f89a708bb84789e1ce8580204c56ca4abf5ff5e6705e4d2bfac9"
+    },
+    {
+      "path": "linguanova_next/image/typography_inventory.py",
+      "size": 1513,
+      "sha256": "5f2011230482c71dd4a9147527d4e2fa5e4a399d1676bba8aa28069572f60e61",
+      "previous_sha256": "d2a991c3321b080c3791f87ab485683caaa263f449bdb502c3acbd1e272f5aa8"
+    },
+    {
+      "path": "linguanova_next/image/typography_profile.py",
+      "size": 1947,
+      "sha256": "1e70676f37f48e0e54c0bcad30a3f441a475bc4b044273f296b7a006863ffd85",
+      "previous_sha256": "7b43c7f0a4372d68c6e2b35efc9edcd39b25f75d64659720918e233f37436e68"
+    },
+    {
+      "path": "linguanova_next/image/typography_validation.py",
+      "size": 433,
+      "sha256": "3028cbc78e524a59b83484c4f5a1fc3bd313ee5fb5a3f583ac824a6121480a4f",
+      "previous_sha256": "9fa5c2ff8c04ea19071e81999cfa3268748fa4b30c647fb4aacd2ece32699baf"
+    },
+    {
+      "path": "linguanova_next/image/visual_coverage_audit.py",
+      "size": 751,
+      "sha256": "01949a6cf8fa3ee166fe945fd01a726a676f793ab5dbc4b92cb8734198ac90de",
+      "previous_sha256": "527b614dcadd14dc9fed81333c8731ad96f825b17609691a0076e7edf50f6a42"
+    },
+    {
+      "path": "linguanova_next/packaging/native_export.py",
+      "size": 6211,
+      "sha256": "75bb0621d2794d949fdd5236e7a903d203cec31a4298b5fa89d07ae6580da80a",
+      "previous_sha256": "5db4848e411f46153e879e969b9203bbffa78ee186d3ccdb3d5898dbb65dea02"
+    },
+    {
+      "path": "linguanova_next/packaging/share_package_builder.py",
+      "size": 6737,
+      "sha256": "7d48b14560b760538bc29d02ed3e65a968e04e8a038a069ae1c487311c8dccf2",
+      "previous_sha256": "c870e5873ff2aab33f244d04b83501bfe75292e2a4a0991d94157bf7bb776d70"
+    },
+    {
+      "path": "linguanova_next/ui/OcrStatusPane.qml",
+      "size": 4021,
+      "sha256": "803a038e4714b6b2d491e926a22d3bc352c572847de1c0935b4b908161e9d981",
+      "previous_sha256": "1e541ce07792df6aad4f8b9afaa86a4fbc8df06c146f41bb4cf4dc1b2b69ced6"
+    },
+    {
+      "path": "linguanova_next/ui/TranslationPanel.qml",
+      "size": 11713,
+      "sha256": "eaf10002d54e48a903a0535882810448627e6cfe5ee234a0b4668490cb9928de",
+      "previous_sha256": "42838da69dbe0ba700d22ca834fb677794b9aa395e25b9bf0f46c6d4c3337416"
+    },
+    {
+      "path": "linguanova_next/ui/backend.py",
+      "size": 20502,
+      "sha256": "c0418ef956dec4cd6a4c197936db72591d22c93d79e5c1fb8656ed59d0fd010e",
+      "previous_sha256": "6f4da1abbb59b4a3d185908e8685617596e467aad0eae9cc0bd4f14dd6acfe27"
+    },
+    {
+      "path": "linguanova_next/version.py",
+      "size": 76,
+      "sha256": "4545dbe0c71825cb8b68c0652efe5b166be39d82149c3b5d79903cb342695801",
+      "previous_sha256": "314974c1574525009d1e14b7517126d5ce6615cacd1116e8d3eb7fccdc337add"
+    },
+    {
+      "path": "requirements-next.txt",
+      "size": 505,
+      "sha256": "3b28b5d0165c7a89ed65017d6f43834a25e5298f93b97dbc7f08a278375e6da3",
+      "previous_sha256": "8c1f008e38c737a77e3485ef594f63cbe8f06fa0bbf35202d2e91dcfd0b5f8c4"
+    },
+    {
+      "path": "scripts/next_connected_acceptance.py",
+      "size": 13482,
+      "sha256": "0570f45838754648cf5a07d019ad17b229cb93f53016104080f832b2de540ca3",
+      "previous_sha256": "f8be7463992c8d1ea707ddba5d0e7dd86c74c902549e8478c4a26b2ad817a9c7"
+    },
+    {
+      "path": "scripts/next_demo.py",
+      "size": 5509,
+      "sha256": "a18429058d44b0a518f33d33e19c4934d7481463b9e97fd38a6d203ea382e7ec",
+      "previous_sha256": "69121eaba68d252187500f08eae1b89d09608ba09baaa6b4a3cb88c0e3f0c298"
+    },
+    {
+      "path": "scripts/next_ui_smoke.py",
+      "size": 4128,
+      "sha256": "94ebe33a12d8a405ee09574a2b36da0f2a00a1183c85ea09063ba9e92f22f4e3",
+      "previous_sha256": "7c4d75d53dc0f984bf475a9bdf40877a044b10743031930a07e2f31771a7f60a"
+    },
+    {
+      "path": "src/gui/qml/Main.qml",
+      "size": 381311,
+      "sha256": "92d6841874b487bb3e4a91c61b78b7beb2606e3b795c380b4bb608fbcd51e435",
+      "previous_sha256": "20efd60c363ae043f709f9020be4b3cce8cfbe183fd73fc7f82442a69dae91e4"
+    },
+    {
+      "path": "tests/next/test_images_typography_and_ocr.py",
+      "size": 3961,
+      "sha256": "191777a13c139620475cb25735955f5058e7f7c53bf8a3e9f5a391d63c59713a",
+      "previous_sha256": "813e77f7158a9a8db34a2909aad6958e4e00f153b85089657b4d5313f670f866"
+    },
+    {
+      "path": "tests/next/test_pipeline_share_and_ui.py",
+      "size": 8907,
+      "sha256": "d228dbfcb646783174b599ef8cbf29591ef690200b102c505c49ab31c7b4d497",
+      "previous_sha256": "ef18cf0ca7ab7345bc9c05990f2731ca9eba8356156ce4173819f6d96480e806"
+    }
+  ],
+  "added": [
+    {
+      "path": "linguanova_next/adapters/resource_catalog.py",
+      "size": 9741,
+      "sha256": "39598f447cfc71449f8a02b6c881fbfe814390ad233c6c4301657a84af5de2c1"
+    },
+    {
+      "path": "linguanova_next/data/fonts/DejaVu-LICENSE.txt",
+      "size": 3859,
+      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+    },
+    {
+      "path": "linguanova_next/data/fonts/DejaVuSans.ttf",
+      "size": 759720,
+      "sha256": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280"
+    },
+    {
+      "path": "linguanova_next/image/automatic_typography.py",
+      "size": 3678,
+      "sha256": "f822d19795c08776cc248a4c55bb56c66d24645994eab9d3ea8318ec01d4e89e"
+    },
+    {
+      "path": "linguanova_next/image/image_formats.py",
+      "size": 7584,
+      "sha256": "db79a15cef0a73e9e4b201649f87066d603ff9aeca53dea354ab652028863419"
+    },
+    {
+      "path": "linguanova_next/image/image_processor.py",
+      "size": 15798,
+      "sha256": "a9d8d8d7b31183cd7695053b09318ca00f70fa1e4054f00140580b957220fcbd"
+    },
+    {
+      "path": "linguanova_next/image/image_references.py",
+      "size": 3446,
+      "sha256": "c1333dd6c7843c5ed4b4a388d5b9f310379665c2cacc0457dd3c3a4ec3519dde"
+    },
+    {
+      "path": "linguanova_next/packaging/image_codecs_template.py",
+      "size": 2193,
+      "sha256": "b377babad7ef46974a9e024760f1146ea51b02067b0a386cd9692adb452f2737"
+    },
+    {
+      "path": "ocr_evidence/README.md",
+      "size": 4031,
+      "sha256": "34a46414980e7e6063a5767a0b5e37f6fe4bb90d443b3af112aa83f61ab32493"
+    },
+    {
+      "path": "ocr_evidence/acceptance.json",
+      "size": 16135,
+      "sha256": "861781e820f96aef30018916cf4226432dff5af0bdce1088620d1945d3a72d8d"
+    },
+    {
+      "path": "ocr_evidence/baseline.json",
+      "size": 214,
+      "sha256": "80720e1b1460c976ddcc4f3eeff542dfda397d3e2664b36d01d56807fa47c141"
+    },
+    {
+      "path": "ocr_evidence/engine.json",
+      "size": 11016,
+      "sha256": "9e24eb713b6ba2f454fe2dea16e4d75fb15770cc23858e059f7ff9174b92ddd5"
+    },
+    {
+      "path": "ocr_evidence/engine.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ocr_evidence/engine_spec.json",
+      "size": 7675,
+      "sha256": "37952fc3907172e133afee4cd8dd38175aa2d43704721a96d2e3352a41068993"
+    },
+    {
+      "path": "ocr_evidence/original_ui_warnings.json",
+      "size": 2541,
+      "sha256": "508168c61ac268cbf88bc31132c1fe97ab96daef746455aca50adc3024c98d5a"
+    },
+    {
+      "path": "ocr_evidence/runtime.json",
+      "size": 640,
+      "sha256": "a9fd3b2b380ea8cd60a2528155684bba5ea0a104f8dcfdbcc3be53ebf8fb7014"
+    },
+    {
+      "path": "ocr_evidence/tests.xml",
+      "size": 21215,
+      "sha256": "e53d682602bbbf007581cf69dd347067beb00c4a5883018855b2228fa531cc32"
+    },
+    {
+      "path": "ocr_evidence/ui/languages_en.png",
+      "size": 104518,
+      "sha256": "fb17a02a88f04c76472959b096f47a1e90e04b36e099867710f2265f42fb1f41"
+    },
+    {
+      "path": "ocr_evidence/ui/languages_es.png",
+      "size": 109261,
+      "sha256": "70630f783e43b4d315842599b4e7035614972874097599b9f55e3f32a09d5db0"
+    },
+    {
+      "path": "ocr_evidence/ui/mod_es.png",
+      "size": 116178,
+      "sha256": "f151d5592f83db8bc4be49b5dccabaf697ca4681f273e15c8072b7d8107a34ef"
+    },
+    {
+      "path": "ocr_evidence/ui/next_creator_ui.png",
+      "size": 109619,
+      "sha256": "9d2c206821172ae65e8b16e63fac3325b1861c01b45c20001e1592e749ab6881"
+    },
+    {
+      "path": "ocr_evidence/ui/ui.json",
+      "size": 7047,
+      "sha256": "76668d96bc38788f592d7a2f255b9dfedea920f5b22f849fb4774e5732b75b48"
+    },
+    {
+      "path": "scripts/verify_localized_language_ui.py",
+      "size": 6971,
+      "sha256": "1decaf6f74e27100f9e550bf3cefcc9d661479c4f5e055c86a7940b5630b88a3"
+    },
+    {
+      "path": "scripts/verify_ocr_resources.py",
+      "size": 8320,
+      "sha256": "0fedc413c55f2fcafe45d3cb70baf3929b3016719ff084ecce2fa07d8fb1d002"
+    },
+    {
+      "path": "src/gui/qml/components/ReadableModCombo.qml",
+      "size": 2435,
+      "sha256": "8999361d0979306649613d5f18a415d2c29b91823f8329d3592290ddaf83a22c"
+    },
+    {
+      "path": "tests/next/fixtures/ocr_scripts/existing_tl.rpy",
+      "size": 65,
+      "sha256": "8e18ff6965435bbd755d1bbc6640b8a2974e858a49fe8c9e6d18b24f4f87400f"
+    },
+    {
+      "path": "tests/next/fixtures/ocr_scripts/existing_tl.rpyc",
+      "size": 868,
+      "sha256": "33edfcac64af358bea2992458622e726fbb8336041e1a65b5eb1639afa570843"
+    },
+    {
+      "path": "tests/next/fixtures/ocr_scripts/images.rpy",
+      "size": 130,
+      "sha256": "4f2cf1d0513f31453fd818722c8a6d879b67f7785f3bb8a86b776eac981784e8"
+    },
+    {
+      "path": "tests/next/fixtures/ocr_scripts/images.rpyc",
+      "size": 1686,
+      "sha256": "499c2f0b3b14507498d28db87d18472657c8b9c599db8888500259535f9f52ed"
+    },
+    {
+      "path": "tests/next/test_ocr_resource_formats.py",
+      "size": 12144,
+      "sha256": "36813a682e476f0917fbb0a804cf0bea914a835c2acaf1590deb33ecf600516c"
+    }
+  ],
+  "removed": [],
+  "self_excluded": "ocr_evidence/change_manifest.json"
+}

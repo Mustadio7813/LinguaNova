@@ -1,0 +1,562 @@
+PROMPT DE IMPLEMENTACIÓN — LINGUANOVA MULTIDIOMA
+Versión experimental sobre la base recibida, sin modificar sus archivos
+Alcance actual: español, francés, portugués, ruso e inglés
+Previsión futura: arquitectura ampliable a 139 idiomas de destino
+
+Actúa como responsable técnico de implementación, integración y pruebas de un proyecto Python/Ren’Py. Tu tarea es construir una versión experimental funcional de LinguaNova siguiendo el informe técnico adjunto. Necesito ejecutarla y comprobar cómo queda. Implementa el proyecto: no te limites a otro informe, una propuesta, fragmentos para copiar, una maqueta visual o pseudocódigo.
+
+1. ARCHIVOS DE ENTRADA Y AUTORIDAD
+
+Utiliza estos dos archivos:
+
+- LinguaNova_V2.2_Multidioma..zip: base de código autorizada. Respeta el nombre real del adjunto, aunque contenga dos puntos antes de zip.
+- Informe_Tecnico_LinguaNova_Multidioma_5_Idiomas.pdf: especificación técnica de 23 páginas, incluidos los anexos A, B y C.
+
+Si se adjunta una copia de un juego Ren’Py, úsala para verificar la integración real. El ZIP de LinguaNova no sustituye a los archivos del juego.
+
+La base descrita en el informe contiene la carpeta LinguaNova_Multidioma, declara versión interna 1.1.2 y tiene 283 archivos. SHA-256 esperado del ZIP:
+d702b683002f7cebccb92fb582c4b7ac2021b2ab0100cac41106470aaa558747
+
+Comprueba estos datos. Si el adjunto no coincide, informa la diferencia y no sustituyas silenciosamente la base ni actualices el manifiesto para aceptar una discrepancia.
+
+Lee el informe completo y examina las APIs, la interfaz, los motores, el MOD, la exportación, las fuentes y el actualizador que realmente contiene el ZIP. Los nombres nuevos del PDF son propuestas de implementación, no módulos ya existentes. Los ejemplos del informe no deben copiarse como si fueran código funcional probado.
+
+Estas instrucciones precisan el alcance del informe. Las bases anteriores, si aparecen como antecedentes, no deben reemplazar la versión Multidioma adjunta.
+
+2. REGLA OBLIGATORIA: CONSERVAR LA BASE INTACTA
+
+Conserva el ZIP original y una copia de referencia sin cambios. Extrae una copia independiente para desarrollar. Las pruebas de juegos y las exportaciones también deben realizarse sobre copias y áreas de preparación separadas.
+
+Antes de implementar, crea un manifiesto con ruta relativa, tamaño y SHA-256 de cada archivo original. Compruébalo al finalizar cada fase y antes de entregar.
+
+Dentro del conjunto original está prohibido:
+
+- Editar, borrar, renombrar, mover, reformatear o reemplazar archivos.
+- Aplicar parches, reemplazos de texto, transformaciones de código durante la compilación o correcciones manuales.
+- Sustituir funciones o métodos de LinguaNova en memoria mediante monkey-patching u otros mecanismos equivalentes.
+- Reescribir pruebas históricas para hacerlas pasar.
+- Modificar constantes, prompts, listas de idiomas o configuraciones originales para introducir las funciones nuevas.
+
+Implementa mediante archivos nuevos, composición, contratos y adaptadores. Reutiliza funciones públicas compatibles; cuando una función mezcle comportamientos incompatibles con este encargo, implementa el comportamiento necesario en código nuevo.
+
+Esta regla no prohíbe usar las APIs normales de Ren’Py ni reutilizar la protección de fuentes ya existente. Prohíbe crear nuevos parches sobre el código protegido o usar la conservación de archivos como excusa para sustituir sus implementaciones en tiempo de ejecución.
+
+Mantén registros, cachés, configuración nueva, pruebas generadas y resultados operativos fuera de los archivos protegidos. Las funciones originales con efectos de escritura solo pueden operar sobre las copias de salida previstas.
+
+El resultado final debe demostrar cero cambios, cero eliminaciones y cero renombrados en los archivos originales. Enumera por separado todos los archivos añadidos.
+
+3. ALCANCE ACTUAL: CINCO IDIOMAS DE DESTINO
+
+Habilita exactamente cinco idiomas base de destino:
+
+- Español.
+- Francés.
+- Portugués.
+- Ruso.
+- Inglés.
+
+No confundas los idiomas que puede generar LinguaNova con los idiomas de su interfaz ni con las traducciones que un juego ya tenga instaladas.
+
+El juego puede conservar y mostrar traducciones previamente instaladas en otros idiomas. Eso no autoriza a añadir destinos de generación nuevos en esta etapa.
+
+El español tiene dos perfiles dentro de una sola entrada base: LATAM y España. No conviertas los perfiles en idiomas base adicionales ni reduzcas los otros cuatro destinos.
+
+Conserva las opciones de origen y detección automática que sean compatibles con los motores de la base. No limites el origen a esos cinco idiomas por confundirlo con la lista de destinos.
+
+4. ARRANQUE NUEVO Y ORGANIZACIÓN MODULAR
+
+Añade run_next.py y el paquete linguanova_next/ junto a src/, como propone el informe. El arranque y la aplicación clásica deben conservarse y seguir disponibles.
+
+Implementa una ruta nueva completa, desde la selección del proyecto y del destino hasta la validación, exportación y presentación de resultados. Un panel que solo simule progreso o llame al flujo antiguo sin integrar estas reglas no satisface la tarea.
+
+Sigue las responsabilidades y los nombres propuestos en el PDF. Entre los componentes principales deben estar:
+
+- bootstrap.py y baseline.py.
+- contracts/job.py, entry.py, result.py, events.py y ocr_messages.py.
+- core/translation_job.py, work_queue.py, language_registry.py y translation_report.py.
+- core/text_classification.py, supplemental_extraction.py, coverage_audit.py, residual_review.py y runtime_diagnostics.py.
+- core/native_ui_policy.py, native_ui_audit.py y job_lock.py.
+- adapters/ para configuración, extracción, diagnósticos, proveedores, OCR, MOD, fuentes, exportación y Preferencias.
+- bridge/ocr_translation_bridge.py.
+- linguistic/profile_validator.py y prompt_policy.py.
+- image/ para inventario, OCR, traducción, reconstrucción, composición y validación.
+- models/model_registry.py y model_manifest.py.
+- storage/ para configuración, resultados y cachés.
+- packaging/ para preparación, exportación, manifiestos, validación, Preferencias, persistencia y migración de salidas propias.
+- ui/ para el panel nuevo del creador y sus vistas de revisión.
+- data/languages.json, provider_capabilities.json, perfiles de español y recetas de interfaz por juego.
+- tests/next/ para las pruebas nuevas.
+
+Añade los inicializadores necesarios. Importar contratos o comprobar la base no debe cargar Qt, GPU, OCR ni clientes remotos.
+
+El coordinador depende de contratos; los detalles de proveedores quedan detrás de adaptadores. Usa una autoridad de trabajo y una cola coordinada, con límites de concurrencia y cancelación. Evita dos procesos escribiendo sobre la misma copia.
+
+Si un nombre propuesto necesita un ajuste por compatibilidad real, documenta la equivalencia sin modificar la base ni perder la responsabilidad prevista. No crees módulos vacíos para aparentar que la estructura está terminada.
+
+5. INTERFAZ DE LINGUANOVA Y FLUJO REAL DEL TRABAJO
+
+Conserva Main.qml, AppBackend, los locales, los botones y las herramientas originales.
+
+El panel nuevo pertenece a LinguaNova, la herramienta del creador. Debe seguir sus convenciones visuales y permitir:
+
+- Elegir la copia del proyecto.
+- Seleccionar uno de los cinco destinos y, para español, su perfil.
+- Elegir un motor compatible y configurar el origen.
+- Activar texto, imágenes o ambos según capacidades disponibles.
+- Ver un resumen antes de iniciar.
+- Iniciar, cancelar y reanudar cuando sea seguro.
+- Ver actividad, resultados, pendientes y causas de rechazo.
+- Revisar entradas y regiones de imagen mediante identificadores estables.
+- Exportar un paquete experimental con sus limitaciones identificadas.
+
+Este panel no debe instalarse dentro del juego. La UI del creador y las Preferencias del jugador son dos interfaces distintas.
+
+Guarda la configuración nueva con esquema propio. No sobrescribas la configuración clásica. Una importación de ajustes anteriores debe ser explícita, compatible y realizada sobre una copia.
+
+6. ESPAÑOL LATAM Y ESPAÑOL DE ESPAÑA
+
+La regla editorial es obligatoria:
+
+- LATAM: español latinoamericano neutro, sin modismos ni usos propios de España.
+- España: español estándar de España, sin modismos ni usos propios de Latinoamérica.
+- El vocabulario compartido y correcto en ambos perfiles es válido.
+
+LATAM será el perfil predeterminado visible para trabajos nuevos en español. Guarda el perfil elegido.
+
+Separa idioma base, locale, perfil y carpeta Ren’Py. Como propone el informe:
+- Español LATAM: es / es-419 / spanish_latam.
+- Español de España: es / es-ES / spanish_spain.
+
+No asumas que todos los proveedores aceptan esos códigos regionales. Resuelve el código de API mediante capacidades comprobadas y transmite el perfil por los mecanismos admitidos.
+
+El perfil debe acompañar texto, MOD, regiones OCR traducidas, imágenes, lotes, reintentos, motores alternativos, glosarios, revisión y exportación. Las instrucciones personalizadas no pueden anular esta regla dentro del trabajo nuevo.
+
+Una respuesta detectada simplemente como español no demuestra que respete la variante. Implementa controles contextuales y conserva sus razones. Evita reemplazos globales ingenuos, listas absolutas de palabras compartidas o alteraciones de nombres propios y sintaxis de Ren’Py.
+
+Una infracción detectada no debe publicarse ni cachearse como traducción aceptada. Separa validación automática de revisión lingüística y no prometas detección infalible de todos los regionalismos.
+
+Las entradas heredadas identificadas solo como es o spanish conservan su procedencia y variante desconocida hasta revisión. No las renombres automáticamente como LATAM o España ni mezcles sus cachés.
+
+Francés, portugués, ruso e inglés conservan sus configuraciones regionales actuales; no inventes cambios de variante.
+
+7. CONTRATO INMUTABLE Y PUENTE EXCLUSIVO OCR–TRADUCTOR
+
+El destino se elige una vez en el menú del trabajo nuevo. Texto e imágenes deben recibir exactamente esa identidad de destino y perfil.
+
+Implementa un puente o hook nuevo y exclusivo entre OCR y traductor. Debe ser independiente del hook del juego, del hook del MOD y de los controles del jugador. Es un canal del procesamiento de LinguaNova; no instala traducción OCR durante la partida.
+
+El OCR reconoce y transcribe el idioma de origen de la imagen. No debe usar el destino como idioma de reconocimiento. Por ejemplo, una imagen japonesa puede reconocerse en japonés y traducirse al español LATAM.
+
+El resultado de traducción y composición sí debe respetar el destino elegido. La UI de OCR no tendrá un selector de destino independiente que pueda contradecirlo.
+
+Crea y persiste un contrato inmutable antes de procesar, incluyendo como mínimo:
+schema_version, job_id, project_id, base_manifest_hash, target_language_id, target_locale, renpy_id, profile_id, profile_version, catalog_version, glossary_hash y rules_hash.
+
+Los mensajes de regiones deben correlacionar además request_id, resource_id, region_id e image_hash, y conservar origen reconocido, destino y estado.
+
+Rechaza respuestas sin correlación, de una revisión distinta, de otro destino o de un trabajo cancelado. El compositor solo acepta resultados válidos del trabajo vigente.
+
+Cambiar el selector mientras se procesa prepara otra tarea; no modifica el destino del trabajo activo. La reanudación compara fuentes, perfiles, versiones y glosario antes de reutilizar resultados.
+
+Las etiquetas del mensaje no bastan: comprueba también el contenido devuelto y registra el motor efectivo.
+
+8. CONSERVAR LAS MEJORAS MULTIDIOMA RECIBIDAS
+
+Mantén los comportamientos compatibles de la versión 1.1.2:
+
+- Lista acumulativa de idiomas instalados.
+- Cambio de idioma en caliente.
+- Retorno a Original.
+- Limpieza de datos y cachés del idioma anterior.
+- Compatibilidad con los formatos JSON y recursos existentes.
+- Protección automática para que las fuentes no aparezcan como idiomas.
+- Soporte tipográfico del ruso y conservación de fuentes de otros destinos.
+- Escritura comprobada y conservación de la última salida válida.
+- Aislamiento y convivencia del MOD.
+
+No borres un recurso tipográfico para ocultarlo del menú. Conserva la protección existente para linguanova_fonts, linguanova_font y linguanova_mod_fonts y sus rutas compatibles.
+
+Las fuentes nuevas deben respetar su ubicación fuera de tl/ y las rutas antiguas admitidas. Usa las fuentes originales cuando cubran los caracteres; incorpora soporte compatible cuando sea necesario, revisando el resultado visual.
+
+9. IDIOMAS SOLO EN PREFERENCIAS, SIN ATAJOS
+
+Esta es una condición de aceptación, no una preferencia opcional.
+
+Dentro del juego, el cambio de idioma debe estar únicamente en Preferencias, Ajustes, Opciones o el apartado equivalente que ya tenga el desarrollador.
+
+Conserva sus fondos, contenedores, estilos, tipografías compatibles, colores, botones, estados visuales, navegación y acciones. Los idiomas deben verse como una función original del juego.
+
+Está prohibido generar:
+- Shift+L u otras combinaciones para abrir o cambiar idiomas.
+- Botones flotantes.
+- Overlays o paneles externos de idiomas.
+- Un menú autónomo del MOD que duplique las Preferencias.
+- Instrucciones que obliguen al jugador a recordar un atajo.
+
+Los controles normales de teclado o mando para navegar por Preferencias y los atajos originales ajenos al cambio de idioma se conservan.
+
+La base contiene generadores que añaden Shift+L. Conserva sus archivos intactos, pero no los uses para producir la UI nueva. En particular, no generes el selector heredado para luego quitarle teclas mediante un parche.
+
+Reutiliza el descubrimiento de idiomas y la protección de recursos que sean compatibles. Implementa desde código nuevo la exportación de Preferencias y su validación.
+
+Genera el auxiliar nuevo zzz_linguanova_preferences_languages.rpy. La protección automática zzz_linguanova_ocultar_fuentes.rpy debe seguir saliendo del proceso compatible, sin exigir al usuario copiar un parche manual.
+
+Inspecciona la pantalla real y usa una receta verificada por juego. No edites screens.rpy ni otros fuentes originales del desarrollador. Si no existe un punto de integración compatible sin tocar esos archivos, registra el bloqueo y el alcance; no inventes compatibilidad universal.
+
+Una interfaz desconocida no se resuelve con un atajo. Puede requerir una receta nueva y pruebas reales. Sin la copia del juego, entrega el trabajo restante y las pruebas controladas, dejando explícitamente pendiente esa validación específica.
+
+10. PERSISTENCIA AL CERRAR Y ABRIR
+
+La elección realizada por el jugador debe mantenerse al cerrar completamente el juego y abrir un proceso nuevo. No puede depender de guardar una partida.
+
+Usa las APIs de idioma y persistencia compatibles con la versión de Ren’Py del juego. No escribas directamente en _preferences.language.
+
+Guarda la selección al confirmarla y conserva también el perfil español cuando corresponda. Distingue Original elegido de ausencia de selección.
+
+La elección guardada tiene prioridad sobre el último idioma generado por LinguaNova y sobre el destino seleccionado en el programa creador. No fuerces un idioma fijo cada vez que inicia el juego.
+
+Inspecciona config.language y otras rutinas de arranque que puedan sobrescribir la preferencia. Resuelve lo compatible desde el auxiliar nuevo; si una restricción impide hacerlo sin modificar archivos originales, declara el caso pendiente.
+
+Conserva el directorio de datos persistentes al actualizar. Prueba cierre y reapertura reales para cada destino, los perfiles españoles y Original.
+
+11. DIAGNÓSTICO DEL PORCENTAJE Y COBERTURA REAL
+
+Conserva la corrección existente sobre copias del origen, entradas vacías y get_translation_stats(). No vuelvas a marcar toda respuesta no vacía como traducción exitosa ni sustituyas la contabilidad original por otra incoherente.
+
+El objetivo es explicar con evidencia por qué queda un porcentaje pendiente y qué parte necesita traducción. No ajustes denominadores ni filtros para alcanzar artificialmente 100 %.
+
+Implementa una auditoría de solo lectura que compare inventario, traducciones escritas y diagnósticos de la misma ejecución, destino y variante. No debe llamar al proveedor ni modificar cachés, traducciones o el juego.
+
+Por entrada, conserva ID, ubicación, contexto, original, resultado realmente escrito, estado, causa y procedencia. Distingue, entre otros:
+- Traducción aceptada.
+- Conservación intencional aprobada.
+- Copia del origen sin resolver.
+- Vacío o faltante.
+- Rechazo por sintaxis o validación.
+- Fallo de proveedor.
+- Error de escritura.
+- Omisión de extracción.
+- Duplicado.
+- Caso incierto.
+
+Separa el estado principal de indicadores adicionales. Un bloqueo puede pertenecer también al conjunto de copias del origen; no sumes categorías superpuestas como si fueran disjuntas.
+
+Nombres propios, vocalizaciones y cadenas cortas requieren contexto. No declares que todo el resto corresponde a nombres o sonidos sin comprobarlo, ni abras indiscriminadamente los filtros técnicos del parser.
+
+Muestra por separado:
+- Procesamiento de tareas.
+- Cambio textual respecto al origen.
+- Traducción validada sobre entradas traducibles detectadas.
+- Resolución del inventario, incluyendo conservaciones aprobadas.
+- Cobertura visual.
+- Rutas observadas y no verificadas durante pruebas del juego.
+
+Cada porcentaje debe indicar numerador y denominador. Con denominador cero, usa un estado no aplicable. Evita redondear a 100 % cuando quedan elementos pendientes dentro de esa métrica.
+
+Un trabajo terminado no equivale a todo el juego traducido. Una resolución textual completa puede incluir nombres conservados y debe mostrarlo. Las imágenes y rutas no comprobadas permanecen visibles como limitaciones independientes.
+
+Las cifras y pruebas históricas incluidas en la documentación son antecedentes, no nuevas ejecuciones. No atribuyas causas concretas a sus pendientes si no existe el registro por entrada.
+
+12. OCR, IMÁGENES Y RECONSTRUCCIÓN
+
+Implementa primero inventario, OCR real, traducción y composición clásica. No consideres terminado el OCR porque un proveedor simulado devuelva texto.
+
+Registra recursos descubiertos, formato, dimensiones, transparencia, hash y relaciones con atlas o animaciones. Informa formatos no soportados y recursos no verificables en vez de omitirlos silenciosamente.
+
+El OCR debe devolver regiones, texto reconocido, confianza y origen estimado cuando sea posible. Sin texto detectado no equivale a ausencia de texto garantizada. Usa estados de incertidumbre, revisión y segunda detección selectiva cuando proceda.
+
+Reconstruye por capas:
+1. Original conservado.
+2. Región y máscara.
+3. Fondo restaurado.
+4. Texto traducido en una capa separada.
+5. Validación y comparación.
+
+Mide el texto, evita desbordamientos y revisa legibilidad, transparencia, residuos y alteraciones fuera de la región autorizada. Conserva estados normal, hover y seleccionado en imágenes de botones.
+
+La reconstrucción generativa local es opcional para quien use el programa, pero su integración solicitada debe tener una implementación concreta. No basta con crear una interfaz vacía o dejar un TODO: implementa al menos un adaptador local real, seleccionando y documentando un modelo de inpainting compatible. Si no puede ejecutarse en el entorno, distingue código implementado de inferencia no verificada. El flujo clásico debe funcionar sin un modelo generativo instalado. Un fallo no debe destruir el original ni presentarse como éxito.
+
+Comprueba compatibilidad, versiones, hashes, requisitos y licencias antes de distribuir modelos. No incluyas pesos enormes o modelos sin licencia verificada dentro del ejecutable.
+
+El jugador no debe necesitar OCR, modelos, clientes de traducción ni LinguaNova para usar el paquete generado.
+
+12.A. APLICACIÓN FORMAL DE LA IA GENERATIVA EN EL CÓDIGO
+
+La IA se usa para restaurar el fondo de la región donde estaba el texto. La traducción procede del servicio textual y el texto final se compone de forma controlada con tipografía; no pidas al modelo de imagen que invente o dibuje la traducción.
+
+Implementa esta secuencia en el trabajo: inventario y hash del original, detección OCR, revisión de región, máscara efectiva, traducción con el destino y perfil del contrato, reconstrucción clásica o generativa del fondo, composición del texto aceptado, validación y exportación localizada. Guarda la procedencia y el método efectivo de cada resultado.
+
+Complementa los módulos del PDF con archivos nuevos cuando sea necesario:
+- models/generative_provider.py: contrato común y capacidades del proveedor.
+- adapters/generative_inpainting_adapter.py: implementación concreta que recibe imagen, máscara y parámetros y devuelve una candidata de fondo restaurado.
+- image/generative_worker.py y contracts/worker_protocol.py: proceso de inferencia y mensajes versionados con progreso, cancelación y fallos.
+- models/model_installation.py y model_compatibility.py: instalación, verificación, activación y recuperación de versiones compatibles.
+- packaging/frozen_resources.py: resolución de recursos de solo lectura y rutas externas persistentes en la aplicación empaquetada.
+
+Estos nombres son propuestas dentro de linguanova_next/. Documenta cualquier equivalencia y conecta los módulos al trabajo real, al panel, a la validación y a la exportación.
+
+Selecciona el motor y el modelo tras comprobar sus fuentes oficiales, requisitos y licencia vigente. Registra versión o revisión exacta, archivos de pesos y sus hashes, formato, motor, versión de API, entrada de máscara, tamaños admitidos, aceleradores, precisión y requisitos de memoria. Diferencia licencia del código, dependencias y pesos. No afirmes que una licencia permite redistribuirlos sin verificarla.
+
+El proveedor no decide el idioma. Un modelo de inpainting no necesita comprender los cinco destinos para restaurar el fondo; la tipografía, la traducción y la composición sí deben admitirlos.
+
+Carga la inferencia bajo demanda y fuera del hilo de interfaz. Limita concurrencia y memoria, maneja cancelación y falta de recursos. Detecta CPU/GPU y habilita solo combinaciones comprobadas. No prometas ejecución en cualquier equipo ni un tiempo universal. Si la IA no está disponible, ofrece el método clásico y deja visible el método utilizado y sus límites.
+
+Conserva los píxeles ajenos a la máscara efectiva mediante composición final sobre el original; no confíes en que el modelo los preserve por sí solo. Verifica píxeles decodificados y transparencia. Si exiges igualdad fuera de máscara, usa una exportación sin pérdidas compatible y resuelve correctamente su ruta; una recodificación JPEG puede cambiar píxeles aunque no se hayan editado de forma deliberada.
+
+Mantén máscaras pequeñas y explícitas. Una ampliación necesaria debe aprobarse y registrarse, no autoriza regenerar toda la ilustración. Conserva original, máscara y candidata para comparación y recuperación. Un resultado visual incierto permanece pendiente de revisión.
+
+La interfaz del creador permite seleccionar Clásico o IA generativa local, consultar disponibilidad y requisitos, instalar o importar el paquete de modelo, activarlo y ver el resultado. La ausencia de modelo no bloquea la traducción textual ni el flujo clásico. Estas opciones no se incorporan al juego del jugador.
+
+12.B. CONSERVAR LA TIPOGRAFÍA Y EL DISEÑO ORIGINAL EN LAS IMÁGENES
+
+El objetivo de la entrega final es que el texto traducido conserve el tratamiento gráfico de las letras originales y se integre como parte del desarrollo original del juego. La aceptación visual debe comprobar ese objetivo, además de la corrección lingüística. Un texto legible escrito con una fuente genérica no satisface por sí solo este requisito.
+
+El OCR transcribe el contenido; la recuperación del estilo tipográfico y su composición son responsabilidades explícitas adicionales. Inventaría las fuentes disponibles en la copia del juego y sus referencias, sin editarlas ni asumir que la fuente de diálogo es también la usada en una imagen. Cuando pueda identificarse y utilizarse la fuente original con cobertura de los caracteres de destino, úsala. Conserva evidencia de su identidad, versión o hash y del método de identificación.
+
+Por cada región registra un perfil tipográfico: familia y variante, peso, inclinación, tamaño, color y opacidad, borde, sombra, interlineado, espaciado, alineación, posición, línea base, orientación y transformaciones relevantes. Incluye gradientes, texturas u otros acabados cuando existan y sean reproducibles. Distingue valores comprobados de estimaciones y conserva la confianza y procedencia. Un perfil tipográfico no sustituye al perfil lingüístico LATAM/España: ambos deben permanecer separados y acompañar al resultado.
+
+El compositor debe aplicar ese perfil al texto traducido, manteniendo el lienzo, las dimensiones del recurso, la transparencia, el fondo, los elementos decorativos y la ubicación visual prevista. Preserva los estados normal, hover, seleccionado y deshabilitado que existan, así como la relación con sprites, atlas, animaciones y zonas interactivas. No rediseñes los controles ni amplíes el lienzo para ocultar un desbordamiento.
+
+Resuelve las diferencias de longitud mediante medición real y reglas de composición acotadas y registradas: saltos de línea y ajustes de tamaño o espaciado solo dentro de límites aprobados para el diseño. Evita recortes, deformación de letras, reducciones que comprometan legibilidad y abreviaturas o cambios de significado para hacer caber el texto. Si no puede conservarse el diseño con esas reglas, marca la región para revisión; no apruebes silenciosamente una alteración visual.
+
+Comprueba los caracteres realmente necesarios de cada destino y perfil, incluidos acentos y cirílico. Si la fuente original no está disponible, no puede identificarse con certeza, carece de glifos o el texto es lettering dibujado, conserva el caso como pendiente de fidelidad tipográfica. Una alternativa compatible o una recreación controlada puede proponerse en la vista de revisión, con diferencias visibles y aprobación registrada. No presentes una coincidencia estimada como identidad exacta ni cambies de fuente sin dejar constancia.
+
+Implementa estas responsabilidades con código nuevo, por ejemplo image/typography_inventory.py, text_style_estimator.py, typography_profile.py, font_resolver.py y typography_validation.py, conectados a image_compositor.py. El perfil tipográfico debe estar versionado; su identidad, la fuente efectiva y sus parámetros deben formar parte de la procedencia y de las claves de caché de composición. Los nombres son propuestas bajo linguanova_next/ y no autorizan modificar el código protegido.
+
+La IA generativa restaura el fondo delimitado; el texto final se representa con el perfil tipográfico controlado. La revisión debe comparar original y resultado a escala equivalente, mostrar diferencias y advertencias, y distinguir fidelidad comprobada, aproximación aprobada y caso sin verificar. La imagen traducida contiene palabras distintas, de modo que la comparación dentro del texto evalúa propiedades de estilo y distribución; fuera de la máscara efectiva se aplica la preservación de píxeles prevista.
+
+Añade pruebas y muestras para fuentes con bordes o sombras, transparencias, varias líneas, texto rotado cuando se admita, glifos ausentes, desbordamientos y los estados de botones. Verifica el resultado cargado dentro del juego, no solo la previsualización de la herramienta. Un error visual detectado o una sustitución tipográfica no aprobada impiden presentar ese recurso como validado. Las limitaciones lingüísticas y visuales se informan por separado.
+
+El paquete compartible incluye las imágenes finales ya compuestas con ese tratamiento gráfico, conservando sus rutas. Las fuentes utilizadas únicamente para producir una imagen rasterizada pertenecen al entorno del creador; en el paquete del jugador se incluyen las fuentes necesarias para los textos y controles que el juego dibuje en ejecución, respetando sus licencias. El destinatario no debe instalar una fuente de composición ni reconstruir la imagen para obtener el aspecto aprobado.
+
+13. MOTORES, CACHÉS Y AISLAMIENTO DEL MOD
+
+Conserva los motores y las configuraciones que realmente contiene la base actual. No elimines funciones ni reintroduzcas motores ausentes basándote en versiones antiguas.
+
+Construye una matriz de capacidades por proveedor y modelo para los cinco destinos. Distingue compatible comprobado, no compatible y no verificado. No supongas soporte universal ni cambies silenciosamente un destino no admitido a inglés u otro idioma.
+
+Un motor alternativo conserva el destino y el perfil. El modo pseudo es exclusivamente de prueba.
+
+Separa cachés de texto, MOD, OCR y composición. Las claves de traducción deben identificar contexto, origen, destino, variante, perfil y versiones relevantes, proveedor/modelo, glosario y reglas. Ningún índice aproximado puede saltarse esa separación.
+
+El reconocimiento OCR puede reutilizarse entre destinos si coinciden imagen, reconocedor y parámetros; la traducción y la composición no se comparten entre destinos incompatibles.
+
+No guardes rechazos, diagnósticos ni observaciones como traducciones aceptadas.
+
+Mantén separados parser, hook, catálogo, glosarios, correcciones y cachés del MOD. Comparte solo contratos genéricos probados. El puente OCR no se incorpora al hook del MOD.
+
+La salida nueva del MOD debe respetar las Preferencias nativas, la persistencia y la ausencia de atajos. No invoques su selector autónomo antiguo ni transformes después el código que genera para quitarle controles.
+
+14. EXPORTACIÓN SEGURA Y ACTUALIZACIÓN DEL MISMO PROYECTO
+
+Genera las salidas en staging, valida y conserva la última versión válida si algo falla. Usa un manifiesto de propiedad y hashes para cada archivo generado.
+
+Evita duplicados de traducción entre MOD, archivos nativos y recursos del motor. No publiques dos definiciones incompatibles de la misma cadena e idioma.
+
+Las migraciones solo pueden tratar salidas anteriores identificadas como propias, sobre la copia, con respaldo y manifiesto. No edites fuentes originales, traducciones manuales o archivos ajenos de propiedad incierta.
+
+Entrega por separado el paquete del jugador y los informes del creador. El paquete no debe contener credenciales nuevas, diagnósticos privados ni recursos expuestos como idiomas.
+
+Añade archivos de construcción nuevos, como requirements-next.txt, LinguaNova_next.spec y build_next.bat. Conserva los originales. El BAT debe invocar el arranque nuevo, informar fallos y dejar un resultado identificable.
+
+Mantén la identidad y el contrato de actualización del proyecto existente. Examina el repositorio configurado, los nombres de instalador, la comparación de versiones y SHA256SUMS.txt. La versión de la ampliación tendrá metadatos propios; no alteres la versión original 1.1.2.
+
+Comprueba que el modo clásico y el nuevo no produzcan bucles de actualización ni pérdida de configuración. No afirmes que el instalador, la compilación o la actualización funcionan si no pudiste ejecutarlos.
+
+Esta tarea solicita una entrega experimental local; no requiere publicar una versión, modificar el repositorio remoto ni desplegar una actualización a usuarios.
+
+14.A. COMPILACIÓN Y DISTRIBUCIÓN DE LINGUANOVA CON PROCESAMIENTO VISUAL
+
+Distingue tres productos: la aplicación del creador compilada, el paquete opcional de IA para el creador y el paquete de traducción que recibe el jugador.
+
+Empaquetar LinguaNova como ejecutable no convierte los pesos en código del programa ni elimina sus requisitos. El spec y el instalador nuevos deben incluir los módulos, recursos, bibliotecas y binarios efectivamente necesarios. Un import que funciona en desarrollo no prueba que funcione en la aplicación congelada.
+
+Define una estrategia verificable para Windows: aplicación y, si corresponde, un worker ejecutable con sus dependencias. El creador que use la distribución compilada no debe necesitar el Python del equipo ni el árbol de desarrollo. Incluye también las dependencias externas del OCR que hayas elegido o un instalador de componentes que las suministre de forma explícita y compatible.
+
+Para la inferencia puedes distribuir un componente opcional independiente con su runtime. No presupongas que un ejecutable congelado puede cargar nuevas bibliotecas Python con solo copiar un archivo o ejecutar pip sobre él.
+
+Elige y documenta una distribución por carpeta o instalador que contenga los componentes necesarios; no fuerces un único EXE gigantesco por estética. Mantén modelos y configuración persistente fuera del directorio temporal de extracción del ejecutable y de los recursos de solo lectura. No dependas del directorio desde el que se abra el programa.
+
+Define rutas distintas para recursos empaquetados, modelos instalados y datos del usuario. Si usas procesos hijos, verifica su arranque en modo congelado; sys.executable no representa un intérprete Python normal dentro de PyInstaller. Evita abrir otra GUI o iniciar procesos en bucle.
+
+Entrega manifiesto de modelos y componentes compatibles con la versión de la ampliación, tamaños, requisitos y hashes. Permite instalación/importación explícita, comprobación previa, activación y rollback. Una actualización de pesos incompatible no debe reemplazar automáticamente un modelo válido; si exige un nuevo worker o runtime, comprueba y distribuye esa dependencia.
+
+Los pesos pueden suministrarse mediante un paquete opcional u offline separado, únicamente si la licencia lo permite. El programa básico debe abrirse y funcionar sin ellos. Después de instalarlos, la inferencia local debe poder trabajar sin conexión cuando el motor elegido lo admita; compruébalo y documenta cualquier excepción.
+
+Prueba la distribución compilada en el sistema objetivo sin el entorno de desarrollo: inicio, QML, cinco destinos, OCR, reconstrucción clásica, modo generativo cuando esté instalado, cancelación y exportación. Registra versiones y aceleradores usados. Si no puedes construir o ejecutar Windows, entrega los archivos de construcción y marca esa verificación pendiente; no presentes una prueba en Linux como validación del EXE de Windows.
+
+14.B. OPCIÓN PARA EMPAQUETAR Y COMPARTIR LA TRADUCCIÓN
+
+Añade en el panel nuevo de LinguaNova una acción «Empaquetar y compartir traducción», disponible sobre resultados ya generados. Es una función de la herramienta del creador, no un panel añadido al juego.
+
+Ubica esta acción en Utilidades de la versión ampliada, como una tarjeta al final, conservando el diseño de la interfaz recibida: colores, tipografías, bordes, botones, espaciados, orden de las herramientas existentes y comportamiento adaptable. La tarjeta permite seleccionar proyecto, idiomas/perfiles y carpeta de destino, y muestra los archivos detectados y el estado de validación. La integración QML debe pertenecer a archivos nuevos y al arranque ampliado; no edites la vista principal original ni sustituyas sus métodos en memoria. No afirmes que basta con añadir un módulo Python para hacer aparecer la tarjeta.
+
+Permite seleccionar uno o varios de los cinco destinos actuales y los perfiles españoles efectivamente generados. Un paquete multidioma debe conservarlos separados y compartir una única integración compatible de Preferencias, persistencia y protección de fuentes. No incluye modelos ni instala nuevas capacidades de traducción al jugador.
+
+Antes de crear el ZIP, muestra idiomas/perfiles incluidos, compatibilidad del juego, tamaño estimado, validaciones y pendientes. Un borrador experimental se identifica como tal. Solo puede presentarse como paquete validado cuando cumpla los criterios aplicables; un porcentaje de tareas terminadas no basta.
+
+Implementa mediante código nuevo, por ejemplo:
+- packaging/share_package_builder.py: selección y construcción reproducible del ZIP desde salidas propias validadas.
+- packaging/share_package_manifest.py: versión de esquema, package_id, revisión, juego objetivo, compatibilidad Ren’Py, destinos, perfiles, procedencia, rutas, propiedad y hashes.
+- packaging/share_package_validator.py: integridad, colisiones, referencias, recursos, dependencias y nivel de validación.
+- packaging/share_package_installation.py: reglas verificables de instalación, actualización y retirada; puede producir instrucciones y metadatos sin exigir otra aplicación al jugador.
+- ui/SharePackagePanel.qml: resumen y selección de destinos, sin editar los QML originales.
+
+Conserva la estructura relativa game/tl/<renpy_id>/ para textos e imágenes localizadas y las rutas adicionales que requiera la salida real. Incluye los auxiliares propios de Preferencias y persistencia, el filtro de recursos y las fuentes necesarias con sus avisos de licencia. Incluye únicamente los datos y hooks compatibles que realmente necesite el modo nativo o MOD elegido; evita instalar dos dueños de una cadena o dos selectores.
+
+El paquete del jugador debe contener archivos finales listos para usar, manifest e instrucciones de instalación, verificación, actualización y retirada. Los originales intermedios, máscaras y pruebas detalladas quedan en el proyecto o informe del creador, salvo una opción de revisión separada.
+
+No incluyas el juego completo, sus ejecutables, partidas, persistent, claves API, cachés, rutas privadas, OCR, runtime de inferencia o pesos generativos. Comprueba permisos y licencias de los recursos y fuentes que sí se distribuyan; conservar una imagen derivada no concede automáticamente permiso para compartirla.
+
+Las imágenes traducidas se procesan una vez en LinguaNova y se exportan como recursos finales por destino. El destinatario no regenera imágenes: su juego carga las correspondientes al idioma seleccionado, incluyendo estados de botones y transparencias. Verifica recursos precargados y las limitaciones reales del juego.
+
+Distingue la compilación del programa creador de la compilación de scripts de Ren’Py. Si entregas .rpyc, genera y comprueba los archivos con una versión compatible del motor, sin reemplazar los scripts originales. No declares compatibilidad entre versiones por la extensión del archivo. Documenta la forma realmente probada de usar las traducciones y auxiliares exportados.
+
+Identifica el juego y la versión o huellas compatibles en el manifiesto; informa incompatibilidades o casos no verificables. La validación previa a exportar y las pruebas sobre una copia compatible deben comprobar conflictos y conservar traducciones ajenas. Cualquier sustitución solo puede afectar salidas propias identificadas, con respaldo y recuperación. Retirar el paquete elimina solo sus archivos y deja intactos el juego y otros idiomas.
+
+La preferencia guardada pertenece al jugador y no viaja dentro del ZIP. Instalar o actualizar una traducción no debe restablecerla ni sobrescribir sus partidas. La instalación de recursos nuevos puede requerir reinicio; después, el cambio entre destinos cargados se realiza en caliente desde Preferencias, sin atajos.
+
+Prueba el ZIP exportado en una segunda copia limpia y con datos de prueba separados: instalar, iniciar, cambiar texto e imágenes, cerrar y reabrir, actualizar, conservar otros idiomas y retirar. La prueba debe funcionar sin LinguaNova, sin Python externo y sin modelos. No presentes ese paquete como universal para cualquier versión del juego.
+
+14.C. ENTREGA LISTA PARA COPIAR Y PEGAR
+
+El resultado compartible debe poder instalarse copiando y pegando sus archivos en el destino indicado y abriendo el juego. Es un criterio obligatorio de aceptación para el juego y la versión comprobados.
+
+Para el paquete de Windows, fija un único punto de destino: la carpeta raíz del juego, donde está su ejecutable. El ZIP contiene directamente una carpeta game/ con la estructura final, acompañada de LEEME_INSTALACION.txt y el manifiesto del paquete. No añadas dentro del contenido copiable niveles extra con el nombre del juego, del proyecto de desarrollo o de la exportación.
+
+El procedimiento del destinatario debe limitarse a cerrar el juego si está abierto, descomprimir el ZIP, copiar su carpeta game/ dentro de la raíz del juego combinándola con la existente, y abrir el ejecutable habitual. La carpeta game/ del paquete no se pega dentro de la carpeta game/ del juego: eso produciría game/game/ y una instalación incorrecta. Las instrucciones deben identificar el destino sin ambigüedad.
+
+Los textos, imágenes, fuentes, datos finales y auxiliares necesarios para Preferencias y persistencia deben estar ya incluidos y conectados. No exijas al destinatario editar archivos, corregir rutas, compilar manualmente, instalar Python, ejecutar un BAT o instalador adicional, descargar dependencias, regenerar imágenes, instalar modelos o utilizar un atajo. La compilación interna que el motor realice normalmente al cargar scripts compatibles no debe exigir intervención del jugador.
+
+Conserva cada ruta relativa completa de los recursos. Por ejemplo, una traducción LATAM de game/images/capitulo_01/telefono/mensaje.png se entrega en game/tl/spanish_latam/images/capitulo_01/telefono/mensaje.png. Mantén los demás destinos y perfiles en sus carpetas correspondientes. Usa un registro de salidas y sus dependencias; no reúnas archivos solamente por nombre o extensión, ni mezcles imágenes de subcarpetas distintas. Conserva mayúsculas, nombres y extensiones cuando sean parte de las referencias; cualquier conversión debe tener una resolución compatible y probada.
+
+La exportación debe utilizar rutas relativas al destino y no depender de la ubicación del equipo creador. Valida que no falten archivos referenciados, que el ZIP tenga una sola raíz game/ y que no contenga rutas absolutas ni segmentos que salgan del destino. Las imágenes originales y los scripts del desarrollador se conservan; los recursos traducidos y los auxiliares nuevos deben aportar el comportamiento necesario sin reparaciones manuales.
+
+Separa el respaldo privado del creador del contenido que se copia al juego. El manifiesto registra qué archivos pertenecen al paquete y qué versión se probó; por sí solo no ejecuta comprobaciones ni hace un respaldo antes de una sobrescritura manual. Cualquier procedimiento de actualización o recuperación anunciado debe estar implementado o documentado con su alcance real. Un destino con archivos modificados ajenos al paquete no se considera probado automáticamente.
+
+La prueba de aceptación reproduce exactamente la instalación por copia: toma una segunda copia compatible del juego, en otra ruta, copia únicamente el contenido final distribuido y ejecútalo sin el proyecto de desarrollo ni LinguaNova. Comprueba inicio sin errores atribuibles al paquete, textos, imágenes y fuentes de cada destino incluido; Preferencias con el estilo original y sin atajos; retorno a Original; cierre completo y reapertura conservando la elección. Incluye una ruta con espacios y caracteres acentuados. Revisa duplicados de traducción y compatibilidad de los scripts o bytecode exportados.
+
+Si no se dispone del juego para esa prueba, o hay una dependencia de instalación pendiente, el paquete puede entregarse como experimental no verificado, pero no como listo para copiar y ejecutar. La validación técnica de instalación y la revisión lingüística son estados separados: ejecutar correctamente no demuestra por sí solo traducción completa o calidad editorial aprobada.
+
+15. PREPARACIÓN PARA 139 IDIOMAS EN EL FUTURO
+
+Prepara ahora contratos, catálogos externos versionados, resolución de códigos, capacidades por proveedor, separación de cachés y carga de recursos bajo demanda.
+
+No añadas los 134 destinos restantes a la lista habilitada, no crees carpetas vacías ni descargues modelos para ellos.
+
+No afirmes que 139 destinos implican todos los pares de traducción. No precalcules combinaciones. El soporte de cada destino, escritura y proveedor se comprobará al incorporarlo.
+
+Puedes usar un catálogo sintético en pruebas estructurales y de rendimiento, aislado de producción. Eso demuestra capacidad del esquema, no calidad lingüística ni soporte real.
+
+Mantén previstas fuentes, dirección de escritura y composición extensibles. No conviertas esta fase en una implementación completa de escrituras futuras ni en una ampliación de los idiomas de interfaz de LinguaNova.
+
+16. ORDEN DE IMPLEMENTACIÓN Y AUTONOMÍA
+
+Trabaja por fases, con los controles del PDF:
+
+A. Congelar la base y registrar el estado inicial.
+B. Crear arranque nuevo, contratos, configuración propia y panel funcional.
+C. Integrar los cinco destinos, capacidades y perfiles españoles.
+D. Implementar texto, clasificación, auditoría y revisión de pendientes.
+E. Implementar el puente exclusivo y OCR.
+F. Implementar reconstrucción clásica, composición y validación visual.
+G. Integrar exportación, Preferencias nativas y persistencia.
+H. Preparar construcción, distribución y pruebas de actualización.
+
+Después de cada fase, verifica integridad y pruebas relevantes, registra resultados y continúa con la siguiente. Recuperar una fase debe consistir en desactivar o retirar componentes nuevos, sin restaurar archivos originales que nunca debieron cambiarse.
+
+Resuelve decisiones rutinarias con criterio técnico. No solicites confirmación para cada módulo ni te detengas tras presentar el plan.
+
+Si faltan credenciales, un SDK, un modelo o la copia del juego, continúa con el trabajo independiente y declara exactamente qué prueba real queda bloqueada. No inventes resultados ni uses esas limitaciones para sustituir toda la implementación por simulaciones.
+
+Si una función no puede completarse, identifícala como incompleta. No la escondas detrás de un botón desactivado sin explicación ni declares finalizado todo el encargo.
+
+17. PRUEBAS Y EVIDENCIA EXIGIDAS
+
+Conserva los tests históricos y registra su resultado inicial cuando el entorno permita ejecutarlos. Distingue fallos previos de regresiones nuevas. Las cifras declaradas por documentos antiguos no cuentan como ejecución actual.
+
+Añade pruebas significativas para:
+- Integridad del conjunto original.
+- Exactamente cinco destinos base habilitados.
+- Aislamiento de perfiles españoles y datos heredados.
+- Propagación de destino y perfil en solicitudes, reintentos y cachés.
+- Puente OCR con origen distinto del destino, cancelación y respuestas tardías.
+- Auditoría de solo lectura y reconciliación de categorías.
+- Conservación multidioma, Original, JSON, fuentes y filtro automático.
+- Inventario visual, máscaras, composición, incertidumbre y fallos.
+- Fidelidad tipográfica por región, cobertura de glifos, efectos, distribución y estados de botones; sustituciones y aproximaciones identificadas y revisadas.
+- Paquetes sin duplicados ni controles de idioma externos.
+- Preferencias con estilos y navegación del juego.
+- Persistencia entre procesos nuevos, independiente de partidas guardadas.
+- Capacidad estructural del registro futuro sin habilitar destinos nuevos.
+- Arranque y recursos de la distribución compilada sin el árbol de desarrollo.
+- Inferencia generativa real con el modelo seleccionado cuando el entorno lo permita, preservación fuera de máscara y alternativa clásica sin modelo.
+- Creación del paquete compartible y uso en una segunda copia del juego sin OCR, IA ni LinguaNova.
+- Instalación exacta por copia y pegado del contenido distribuido en la raíz del juego, con todas las subcarpetas y referencias resueltas, sin correcciones manuales.
+- Actualización y retirada de salidas propias sin perder otros idiomas, partidas o preferencia del jugador.
+
+Prueba los cinco destinos y ambos perfiles españoles donde corresponda. Separa explícitamente proveedor simulado, proveedor real y ejecución real del juego.
+
+Al probar cambios entre los cinco idiomas instalados, verifica las 20 direcciones distintas y los retornos a Original cuando el entorno lo permita. Prueba además ambos perfiles españoles. No presentes esos cambios de UI como traducciones reales de todos los pares.
+
+Para persistencia: seleccionar, confirmar, cerrar totalmente, abrir otro proceso y comprobar la elección. Repetir con Original y con cada destino/perfil instalado.
+
+Para integración visual: muestra evidencia del menú anterior y del nuevo cuando haya juego disponible. Una captura de un fixture o demo debe identificarse como tal; no demuestra compatibilidad universal.
+
+Los proveedores reales solo se prueban con acceso y credenciales autorizados. Registra qué motores se probaron realmente y cuáles quedaron sin verificar.
+
+Si no puedes ejecutar una prueba, escribe “no ejecutada” y su causa. No inventes porcentajes, capturas, logs, compilaciones ni pruebas aprobadas.
+
+18. ENTREGABLES
+
+Entrega un ZIP llamado LinguaNova_Multidioma_Experimental_5_Idiomas.zip, con el proyecto completo sobre la copia de la base y todos los archivos nuevos implementados.
+
+Incluye:
+- Fuentes originales intactos y fuentes nuevos completos.
+- run_next.py y acceso documentado al modo clásico.
+- Archivos nuevos de dependencias y construcción.
+- Instrucciones exactas para iniciar y, cuando proceda, compilar.
+- README de uso experimental y ejemplos reproducibles.
+- Manifiesto inicial y comparación final de integridad.
+- Lista de archivos añadidos y responsabilidad de cada uno.
+- Resultados de pruebas con comandos, entorno y alcance.
+- Matriz de capacidades de los cinco destinos.
+- Informes de cobertura, pendientes y validación.
+- Evidencia visual disponible y su procedencia.
+- Limitaciones concretas y procedimiento de recuperación.
+- Documentación del motor generativo concreto, manifiesto de modelo, dependencias, licencia, instalación opcional y evidencia de inferencia o limitación explícita.
+- Archivos de construcción de la aplicación y del componente de inferencia si se distribuye aparte.
+- Flujo funcional de «Empaquetar y compartir traducción» y una muestra reproducible del paquete cuando exista una copia de juego o fixture compatible, indicando cuál se usó.
+- Instrucciones inequívocas de copia y pegado y evidencia de ejecución del paquete final en una segunda copia compatible del juego; si no se ejecutó, identificación explícita como no verificado.
+- Perfiles tipográficos, fuentes efectivas, ajustes de composición y evidencia visual de conservación del estilo original; relación de aproximaciones aprobadas y casos pendientes.
+
+Mantén fixtures y muestras en directorios nuevos claramente identificados. No incluyas cachés operativas, credenciales ni pesos opcionales dentro del paquete del proyecto.
+
+No entregues solo parches, diferencias, fragmentos, archivos vacíos o instrucciones para que yo complete las funciones. Si el entorno impide empaquetar, declara esa limitación y conserva los archivos completos generados; no simules un enlace de descarga.
+
+19. CRITERIO DE FINALIZACIÓN Y RESPUESTA
+
+Consideraré la versión experimental revisable cuando pueda iniciarse desde el arranque nuevo y recorrer el flujo real implementado, conservando la base y sus mejoras.
+
+En el informe final separa:
+1. Implementado.
+2. Probado y con qué evidencia.
+3. No ejecutado o pendiente de verificar.
+4. Incompleto o bloqueado, con causa y efecto.
+
+Debe quedar claro si se comprobó una integración en un juego real o solo en pruebas controladas. Ningún porcentaje global sustituye esa información.
+
+No prometas traducción perfecta, ausencia absoluta de regionalismos o compatibilidad con todos los juegos y proveedores sin evidencia. La exigencia editorial se mantiene; lo que no puede validarse se señala para revisión.
+
+Empieza examinando los adjuntos y registrando la base. Después implementa, prueba y entrega la versión experimental completa con sus límites reales.
+
+REFERENCIAS TÉCNICAS PARA VERIFICAR DURANTE LA IMPLEMENTACIÓN
+
+Consulta las versiones aplicables de la documentación oficial; estas referencias explican mecanismos, no certifican el modelo o el juego elegido:
+- PyInstaller, especificaciones, datos y binarios: https://pyinstaller.org/en/stable/spec-files.html
+- PyInstaller, rutas y ejecución congelada: https://pyinstaller.org/en/stable/runtime-information.html
+- Hugging Face Diffusers, inpainting con imagen y máscara, si se elige ese runtime: https://huggingface.co/docs/diffusers/en/using-diffusers/inpaint
+- Ren’Py, traducción de textos, imágenes, estilos e idiomas: https://www.renpy.org/doc/html/translation.html
+- Ren’Py, persistencia: https://www.renpy.org/doc/html/persistent.html
+
+La elección de un modelo y su compatibilidad compilada siguen siendo trabajo de implementación y prueba. Incluir una referencia no equivale a haberlo seleccionado, ejecutado o validado.

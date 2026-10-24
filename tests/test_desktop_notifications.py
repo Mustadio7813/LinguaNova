@@ -60,7 +60,7 @@ def test_locales_has_desktop_notification_keys():
     ]
 
     json_files = list(locales_dir.glob("*.json"))
-    assert len(json_files) >= 9, "Expected at least 9 locale files"
+    assert len(json_files) == 5, "Expected only the five supported locale files"
 
     for json_file in json_files:
         with open(json_file, "r", encoding="utf-8") as f:

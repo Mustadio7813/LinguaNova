@@ -19,6 +19,7 @@ class PipelineStage(Enum):
     PARSING = "parsing"
     TRANSLATING = "translating"
     SAVING = "saving"
+    IMAGES = "images"
     COMPLETED = "completed"
     ERROR = "error"
 

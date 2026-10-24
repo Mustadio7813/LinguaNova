@@ -73,6 +73,28 @@ def test_rewrite_keeps_valid_renpy_syntax(tmp_path):
     assert '\\"" with you."' not in out and '?" with Mr.Simmons?"' not in out
 
 
+def test_rewrite_removes_trailing_ignore_directives_from_translation_slots(tmp_path):
+    path = _write(tmp_path, '''translate spanish strings:
+    old "Start"
+    new "Comenzar" #ignore
+
+translate spanish dialogue_id:
+
+    # e "Continue?"
+    e "¿Continuar?" #ignore
+''', "ignore_directive.rpy")
+    parser = TLParser()
+    parsed = parser.parse_file(str(path))
+
+    out = parser.update_translations(parsed, {})
+
+    assert 'new "Comenzar" #ignore' not in out
+    assert 'new "Comenzar"' in out
+    assert 'e "¿Continuar?" #ignore' not in out
+    assert 'e "¿Continuar?"' in out
+    assert len(parsed.entries) == 2
+
+
 def test_lines_damaged_by_the_old_bug_are_repaired_and_retranslated(tmp_path):
     damaged = '''translate spanish chapter6_x:
 
@@ -154,6 +176,45 @@ translate spanish c:
     assert round(stats["progress"], 1) == 33.3
 
 
+def test_same_as_source_engine_results_are_reported_as_pending(tmp_path):
+    path = _write(tmp_path, '''translate spanish a:
+
+    # e "Hello there."
+    e "Hello there."
+''', "unchanged.rpy")
+    stub = _pipeline_stub()
+    stub._run_counts = {
+        "unchanged_by_engine": 1,
+        "engine_failed": 0,
+        "guard_blocked": 0,
+    }
+
+    stats = stub._completion_stats([stub.tl_parser.parse_file(str(path))])
+
+    assert stats["same_as_source"] == 1
+    assert stats["pending"] == 1
+    assert stats["partial"] is True
+
+
+def test_source_copy_candidate_does_not_override_manual_translation():
+    parser = TLParser()
+
+    selected = parser._pick_translation(
+        {"translation-id": "Hello", "Hello": "Hola"},
+        "translation-id",
+        "Hello",
+        "Traducción manual",
+    )
+
+    assert selected is None
+    assert parser._pick_translation(
+        {"translation-id": "Hello", "Hello": "Hola"},
+        "translation-id",
+        "Hello",
+        "",
+    ) == "Hola"
+
+
 # ── 3. Tag order (exe crash: "'/i' closes a text tag that isn't open") ───────
 
 CASE01_SRC = "I've found this {i}Dude's{/i} profile."
@@ -229,8 +290,8 @@ def test_mod_report_explains_counters_and_pending_files(tmp_path):
 
     _game(tmp_path, ["Menu principal", "Carregar save", "OK"])
     progress = []
-    manager = ScriptedManager({"Menu principal": "Menu główne"})
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", TranslationEngine.GOOGLE, manager,
+    manager = ScriptedManager({"Menu principal": "Главное меню"})
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", TranslationEngine.GOOGLE, manager,
                                     progress=lambda c, t, msg: progress.append((c, t, msg)))
     report = json.loads(Path(result.report_path).read_text(encoding="utf-8"))
     assert report["candidates"] == report["translated"] + report["invariant"] + report["pending"]
@@ -388,6 +449,16 @@ translate spanish strings:
 
     old "Skip"
     new "Skip"
+
+translate spanish no_translation_x:
+
+    # e "No translation returned."
+    e ""
+
+translate spanish unchanged_x:
+
+    # e "Same as source."
+    e "Same as source."
 ''', encoding="utf-8")
 
     answers = {
@@ -395,6 +466,8 @@ translate spanish strings:
         "{size=+10}{b}Get your ass back here!!{/b}{/size}": "{size=+10}{b}¡Vuelve aquí!{/b}{/size}",
         "I've found this {i}Dude's{/i} profile.": "Encontré el perfil {/i} de este {i}Dude.",   # inverted tags
         "Skip": "Saltar",
+        "No translation returned.": "",
+        "Same as source.": "Same as source.",
         # 'Still "making babies" with Mr.Simmons?' -> engine error
     }
 
@@ -403,13 +476,20 @@ translate spanish strings:
         for req in requests:
             src = (req.metadata or {}).get("original_text", req.text)
             ans = answers.get(src)
+            success = ans is not None or src == "No translation returned."
             out.append(TranslationResult(original_text=src, translated_text=ans or "", source_lang="en",
                                          target_lang="es", engine=TranslationEngine.GOOGLE,
-                                         success=ans is not None, error=None if ans else "HTTP 500",
+                                         success=success, error=None if success else "HTTP 500",
                                          metadata=dict(req.metadata or {})))
         return out
 
     monkeypatch.setattr(TranslationManager, "translate_batch", fake_batch)
+    import src.core.pipeline.orchestrator as orchestrator
+    monkeypatch.setattr(
+        orchestrator,
+        "retry_unchanged_candidate",
+        lambda _loop, _request, _entry, current, _manager, **_kwargs: (current, False),
+    )
     config = ConfigManager()
     config.translation_settings.use_global_cache = False
     manager = TranslationManager(config_manager=config)
@@ -426,14 +506,17 @@ translate spanish strings:
     assert '    s "Trae los \\"resultados\\" contigo."' in out
     assert '    s "{size=+10}{b}¡Vuelve aquí!{/b}{/size}" with vpunch' in out
     assert '    e plan "Still \\"making babies\\" with Mr.Simmons?"' in out     # failed: source kept
+    assert '    e "No translation returned."' in out                          # empty success: source kept
+    assert '    e "Same as source."' in out                                    # unchanged: not accepted
     assert "Encontré el perfil {/i}" not in out                              # blocked by the guard
     assert '    s "I\'ve found this {i}Dude\'s{/i} profile."' in out
     assert '    new "Saltar"' in out
     stats = result.stats
-    assert stats["translated"] == 3 and stats["same_as_source"] == 2
-    assert stats["engine_failed"] == 1 and stats["guard_blocked"] == 1
+    assert stats["translated"] == 3 and stats["same_as_source"] == 4
+    assert stats["engine_failed"] == 2 and stats["guard_blocked"] == 1
+    assert stats["unchanged_by_engine"] == 1 and stats["pending"] == 4
     assert stats["partial"] is True and stats["syntax_issues"] == 0
-    assert "3/5" in result.message
+    assert "3/7" in result.message
     assert TranslationPipeline._quote_balance_issues(str(tl_dir / "Chapter6.rpy")) == []
 
 

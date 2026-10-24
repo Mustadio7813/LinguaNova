@@ -16,6 +16,7 @@ import time
 from typing import Optional, List, Dict, Any
 from pathlib import Path
 import shutil
+import threading
 
 from PyQt6.QtCore import QObject, pyqtSignal
 
@@ -148,6 +149,7 @@ class TranslationPipeline(QObject):
 
         self.current_stage = PipelineStage.IDLE
         self.should_stop = False
+        self._image_cancel = threading.Event()
         self.is_running = False
 
         self._log_queue = []
@@ -170,6 +172,7 @@ class TranslationPipeline(QObject):
     # ---- Diagnostics helpers ----
 
     def _reset_translation_diagnostics(self) -> None:
+        self._no_translatable_scripts = False
         self.diagnostic_report = DiagnosticReport()
         self._last_diagnostic_path = None
         self._deep_scan_completed_in_generating = False
@@ -460,6 +463,7 @@ class TranslationPipeline(QObject):
 
     def stop(self):
         self.should_stop = True
+        self._image_cancel.set()
         self.log_message.emit("warning", self.config.get_ui_text("stop_requested"))
 
     def _set_stage(self, stage, message=""):
@@ -471,6 +475,7 @@ class TranslationPipeline(QObject):
     def run(self):
         self.is_running = True
         self.should_stop = False
+        self._image_cancel.clear()
         self._stop_reason = None
         try:
             if getattr(self, "is_tl_mode", False):
@@ -614,7 +619,12 @@ class TranslationPipeline(QObject):
         counts = dict(getattr(self, '_run_counts', None) or {})
         stats.update({k: v for k, v in counts.items() if k != 'stopped'})
         failed_writes = len(failed_paths or [])
-        pending = int(counts.get('engine_failed', 0)) + int(counts.get('guard_blocked', 0))
+        unchanged = int(counts.get('unchanged_by_engine', 0))
+        pending = (
+            int(counts.get('engine_failed', 0))
+            + int(counts.get('guard_blocked', 0))
+            + unchanged
+        )
         syntax_issues = list(getattr(self, '_last_syntax_issues', None) or [])
         stats['pending'] = pending
         stats['write_failures'] = failed_writes
@@ -622,6 +632,12 @@ class TranslationPipeline(QObject):
         stats['stopped'] = bool(stopped or counts.get('stopped'))
         stats['partial'] = bool(pending or failed_writes or stats.get('empty') or stats['stopped'] or syntax_issues)
         return stats
+
+    @staticmethod
+    def _is_usable_translation(original: str, candidate: Optional[str]) -> bool:
+        if not candidate or not candidate.strip():
+            return False
+        return candidate.strip() != (original or '').strip()
 
     def _completion_message(self, stats, saved_count):
         total = stats.get('total', 0)
@@ -690,7 +706,14 @@ class TranslationPipeline(QObject):
         manage_runtime_hook(self.project_path, self.target_language, self.config, self.log_message.emit)
 
     def _create_language_init_file(self, game_dir):
-        create_language_init_file(game_dir, self.target_language, self.config, self.log_message.emit)
+        result = create_language_init_file(
+            game_dir, self.target_language, self.config, self.log_message.emit
+        )
+        if result.get("status") == "error":
+            # The requested selector is part of the output. Never announce a
+            # successful run after a Windows lock prevented its publication.
+            raise OSError(result.get("error") or "Could not save the language selector")
+        return result
 
     def _write_atomic_segments_rpy(self, tl_dir, renpy_lang):
         write_atomic_segments_rpy(tl_dir, renpy_lang)
@@ -893,7 +916,11 @@ class TranslationPipeline(QObject):
         self._set_stage(PipelineStage.TRANSLATING, self.config.get_ui_text("stage_translating"))
         translations = self._translate_entries(all_entries)
 
-        if not translations and getattr(self, '_sent_for_translation', 1):
+        unresolved_attempts = (
+            getattr(self, '_run_counts', {}).get('unchanged_by_engine', 0)
+            or getattr(self, '_run_counts', {}).get('guard_blocked', 0)
+        )
+        if not translations and getattr(self, '_sent_for_translation', 1) and not unresolved_attempts:
             return PipelineResult(
                 success=False,
                 message=self.config.get_ui_text("pipeline_translate_failed"),
@@ -1317,7 +1344,11 @@ class TranslationPipeline(QObject):
         # slots with the source) instead of discarding the work; the result is
         # reported as partial through _completion_stats().
 
-        if not translations and getattr(self, '_sent_for_translation', 1):
+        unresolved_attempts = (
+            getattr(self, '_run_counts', {}).get('unchanged_by_engine', 0)
+            or getattr(self, '_run_counts', {}).get('guard_blocked', 0)
+        )
+        if not translations and getattr(self, '_sent_for_translation', 1) and not unresolved_attempts:
             return PipelineResult(
                 success=False,
                 message=self.config.get_ui_text("pipeline_translate_failed"),
@@ -1352,8 +1383,6 @@ class TranslationPipeline(QObject):
                     os.remove(_old_seg_rpyc)
             except Exception:
                 self.logger.debug("Failed to remove old .rpyc file")
-
-        self._create_language_init_file(game_dir)
 
         tl_files_updated = [
             tl_file for tl_file in self.tl_parser.parse_directory(tl_path, self.target_language)
@@ -1730,12 +1759,21 @@ class TranslationPipeline(QObject):
                 self.log_message.emit('warning', self.config.get_log_text('log_decompile_merge_failed', error=str(exc)))
 
             if not source_texts:
+                self._no_translatable_scripts = True
                 self.log_message.emit("warning", self.config.get_log_text('no_translatable_texts'))
                 return False
 
             self.log_message.emit("info", self.config.get_log_text('texts_found_creating', count=len(source_texts)))
 
             existing_global_strings = set()
+            # Same ownership guard as the image-capable exporter, now in the
+            # main flow: an RPA/RPYC can already own an old/new translation.
+            from linguanova_next.packaging.native_export import existing_strings
+            packed_existing, ownership_warnings = existing_strings(game_dir, renpy_lang)
+            existing_global_strings.update(packed_existing)
+            if ownership_warnings:
+                self.log_message.emit('warning', '\n'.join(ownership_warnings[:10]))
+                raise ValueError('No se pudo comprobar la unicidad de las traducciones existentes; revisa los archivos indicados antes de generar nuevos bloques.')
             try:
                 lang_tl_path = os.path.join(game_dir, 'tl', renpy_lang)
                 if os.path.isdir(lang_tl_path):
@@ -2104,6 +2142,21 @@ class TranslationPipeline(QObject):
                 self.log_message.emit("warning", self.config.get_log_text('smart_detect_fallback'))
                 api_source_lang = "auto"
 
+        self._resolved_api_source = api_source_lang
+        if api_source_lang == api_target_lang:
+            # An original-language destination needs preservation, including
+            # when it is one of the five queued languages. Never ask MT to
+            # paraphrase it or count the unchanged text as a provider failure.
+            self._run_counts['sent'] = 0
+            for entry in entries:
+                key = getattr(entry, 'translation_id', '') or TLParser.make_translation_id(
+                    entry.file_path, entry.line_number, entry.original_text)
+                translations[key] = entry.original_text
+                translations.setdefault(entry.original_text, entry.original_text)
+            loop.run_until_complete(self.translation_manager.close_all())
+            loop.close()
+            self.progress_updated.emit(total, total, self.config.get_ui_text('native_source_preserved', 'Original language preserved'))
+            return translations
         if self.engine == TranslationEngine.GOOGLE and self.engine not in self.translation_manager.translators:
             gt = GoogleTranslator(config_manager=self.config, proxy_manager=getattr(self.translation_manager, "proxy_manager", None))
             self.translation_manager.add_translator(TranslationEngine.GOOGLE, gt)
@@ -2253,7 +2306,7 @@ class TranslationPipeline(QObject):
             # 1. External TM Check
             if _external_tm is not None:
                 _tm_result = _external_tm.get_exact(entry.original_text)
-                if _tm_result is not None:
+                if self._is_usable_translation(entry.original_text, _tm_result):
                     translations[translation_id] = _tm_result
                     translations.setdefault(entry.original_text, _tm_result)
                     _tm_hit_count += 1
@@ -2271,8 +2324,8 @@ class TranslationPipeline(QObject):
                     continue
 
             # 2. Already translated in current session (e.g. repeated string)
-            if entry.original_text in translations:
-                existing_tr = translations[entry.original_text]
+            existing_tr = translations.get(entry.original_text)
+            if existing_tr is not None and self._is_usable_translation(entry.original_text, existing_tr):
                 translations[translation_id] = existing_tr
                 cache_hit_count += 1
                 try:
@@ -2308,7 +2361,7 @@ class TranslationPipeline(QObject):
                     file_path=entry.file_path,
                     translation_id=translation_id,
                 )
-                if blocked_reason is None:
+                if blocked_reason is None and self._is_usable_translation(entry.original_text, safe_text):
                     translations[translation_id] = safe_text
                     translations.setdefault(entry.original_text, safe_text)
                     cache_hit_count += 1
@@ -2384,7 +2437,7 @@ class TranslationPipeline(QObject):
 
                     if _external_tm is not None:
                         _tm_result = _external_tm.get_exact(entry.original_text)
-                        if _tm_result is not None:
+                        if self._is_usable_translation(entry.original_text, _tm_result):
                             translations[translation_id] = _tm_result
                             translations.setdefault(entry.original_text, _tm_result)
                             _tm_hit_count += 1
@@ -2697,6 +2750,10 @@ class TranslationPipeline(QObject):
                             _entry_results.append(("", None, entry, False, "missing_result", None))
 
                 for tid, restored, entry, success, error, request in _entry_results:
+                    if success and (restored is None or not restored.strip()):
+                        success = False
+                        error = error or "empty"
+
                     if success and restored is not None:
                         retry_recovered = False
                         blocked_reason = None
@@ -2761,9 +2818,14 @@ class TranslationPipeline(QObject):
                             except Exception:
                                 pass
 
-                        if restored:
+                        usable_translation = (
+                            blocked_reason is None
+                            and self._is_usable_translation(entry.original_text, restored)
+                        )
+                        if usable_translation:
                             translations[tid] = restored
                             translations.setdefault(entry.original_text, restored)
+                        if restored:
                             try:
                                 file_path = entry.file_path
                                 if blocked_reason is not None:
@@ -2789,7 +2851,7 @@ class TranslationPipeline(QObject):
                                             original_text=entry.original_text, translated_text=restored,
                                             detail=f'{retry_kind}_retry', line_number=entry.line_number,
                                         )
-                                    elif restored == entry.original_text:
+                                    elif not self._is_usable_translation(entry.original_text, restored):
                                         unchanged_reason = f'unchanged_{retry_kind}' if retry_kind else 'unchanged_other'
                                         self.diagnostic_report.mark_unchanged(file_path, tid, original_text=entry.original_text, reason=unchanged_reason)
                                         self._record_translation_guard_event(
@@ -2802,7 +2864,7 @@ class TranslationPipeline(QObject):
                             except Exception:
                                 self.logger.warning("diagnostic mark_translated failed for %s (%s)", tid, file_path)
 
-                            if restored == entry.original_text and blocked_reason is None:
+                            if not usable_translation and blocked_reason is None:
                                 unchanged_count += 1
                                 if len(sample_logs) < 5:
                                     sample_logs.append(f"UNCHANGED {entry.file_path}:{entry.line_number} -> {entry.original_text[:80]}")

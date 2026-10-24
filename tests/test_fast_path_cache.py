@@ -136,19 +136,19 @@ def test_fast_path_pipeline_resolves_all_cached(tmp_path: Path):
     cfg.get_log_text.side_effect = lambda key, *args, **kwargs: f"[{key}]"
 
     mgr = TranslationManager(config_manager=cfg)
-    mgr._cache[("google", "en", "tr", "Hello")] = TranslationResult(
+    mgr._cache[("google", "en", "es", "Hello")] = TranslationResult(
         original_text="Hello",
-        translated_text="Merhaba",
+        translated_text="Hola",
         source_lang="en",
-        target_lang="tr",
+        target_lang="es",
         engine=TranslationEngine.GOOGLE,
         success=True,
     )
-    mgr._cache[("google", "en", "tr", "Goodbye")] = TranslationResult(
+    mgr._cache[("google", "en", "es", "Goodbye")] = TranslationResult(
         original_text="Goodbye",
-        translated_text="Hoscakal",
+        translated_text="Adiós",
         source_lang="en",
-        target_lang="tr",
+        target_lang="es",
         engine=TranslationEngine.GOOGLE,
         success=True,
     )
@@ -156,7 +156,7 @@ def test_fast_path_pipeline_resolves_all_cached(tmp_path: Path):
 
     pipeline = TranslationPipeline(config=cfg, translation_manager=mgr)
     pipeline.project_path = str(tmp_path)
-    pipeline.target_language = "turkish"
+    pipeline.target_language = "spanish"
     pipeline.source_language = "en"
     pipeline.engine = TranslationEngine.GOOGLE
 
@@ -170,8 +170,8 @@ def test_fast_path_pipeline_resolves_all_cached(tmp_path: Path):
         # Batch translation loop should NOT be invoked at all
         mock_batch.assert_not_called()
 
-    assert translations["script_10_Hello"] == "Merhaba"
-    assert translations["script_20_Goodbye"] == "Hoscakal"
+    assert translations["script_10_Hello"] == "Hola"
+    assert translations["script_20_Goodbye"] == "Adiós"
     assert mgr.cache_hits == 2
 
 
@@ -187,11 +187,11 @@ def test_fast_path_pipeline_partial_cache(tmp_path: Path):
     cfg.get_log_text.side_effect = lambda key, *args, **kwargs: f"[{key}]"
 
     mgr = TranslationManager(config_manager=cfg)
-    mgr._cache[("google", "en", "tr", "Cached Line")] = TranslationResult(
+    mgr._cache[("google", "en", "es", "Cached Line")] = TranslationResult(
         original_text="Cached Line",
-        translated_text="Onbellek Satiri",
+        translated_text="Línea en caché",
         source_lang="en",
-        target_lang="tr",
+        target_lang="es",
         engine=TranslationEngine.GOOGLE,
         success=True,
     )
@@ -199,7 +199,7 @@ def test_fast_path_pipeline_partial_cache(tmp_path: Path):
 
     pipeline = TranslationPipeline(config=cfg, translation_manager=mgr)
     pipeline.project_path = str(tmp_path)
-    pipeline.target_language = "turkish"
+    pipeline.target_language = "spanish"
     pipeline.source_language = "en"
     pipeline.engine = TranslationEngine.GOOGLE
 
@@ -212,7 +212,7 @@ def test_fast_path_pipeline_partial_cache(tmp_path: Path):
         original_text="New Line",
         translated_text="Yeni Satir",
         source_lang="en",
-        target_lang="tr",
+        target_lang="es",
         engine=TranslationEngine.GOOGLE,
         success=True,
         metadata={"original_text": "New Line"},
@@ -224,7 +224,7 @@ def test_fast_path_pipeline_partial_cache(tmp_path: Path):
 
     translations = pipeline._translate_entries(entries)
 
-    assert translations["id_cached"] == "Onbellek Satiri"
+    assert translations["id_cached"] == "Línea en caché"
     assert translations["id_new"] == "Yeni Satir"
     assert mgr.cache_hits >= 1
 
@@ -241,7 +241,7 @@ def test_deep_scan_completed_flag_skips_phase4():
         # In Phase 4, the condition is:
         # if getattr(self, 'include_deep_scan', False) and not getattr(self, '_deep_scan_completed_in_generating', False):
         if getattr(pipeline, 'include_deep_scan', False) and not getattr(pipeline, '_deep_scan_completed_in_generating', False):
-            pipeline._run_deep_scan([], "game", "tl", "turkish")
+            pipeline._run_deep_scan([], "game", "tl", "spanish")
 
         mock_deep_scan.assert_not_called()
 
@@ -260,7 +260,7 @@ def test_all_technical_entries_are_not_reported_as_a_failed_translation(tmp_path
     mgr = TranslationManager(config_manager=cfg)
     pipeline = TranslationPipeline(config=cfg, translation_manager=mgr)
     pipeline.project_path = str(tmp_path)
-    pipeline.target_language = "turkish"
+    pipeline.target_language = "spanish"
     pipeline.source_language = "en"
     pipeline.engine = TranslationEngine.GOOGLE
 

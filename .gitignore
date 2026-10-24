@@ -31,8 +31,10 @@ dist/
 build/bdist.*
 build/lib
 build_log.txt
+# Keep only the current release spec in Git; next-generation specs stay local.
 *.spec
 !LinguaNova.spec
+# Test/live evidence logs stay local, including dictionary_evidence and next_evidence.
 *.log
 
 # ── IDE & Editor ──────────────────────────────────────────────────────

@@ -1,0 +1,90 @@
+LINGUANOVA · OCR NATIVO EN LA APLICACIÓN PRINCIPAL
+
+USO NORMAL
+1. Descomprime TODO el ZIP y abre run.bat.
+2. Selecciona el juego y el idioma de destino en Traducción.
+3. Pulsa EJECUTAR TRADUCCIÓN.
+
+La opción Traducir texto de imágenes (OCR) está activada por defecto.
+El mismo proceso traduce los textos y después las imágenes con el mismo motor.
+No abre otra ventana de OCR ni requiere seleccionar regiones, máscaras o fuentes.
+El botón Traducir en los cinco idiomas crea una cola de cinco trabajos.
+Si el destino coincide con el idioma original, conserva el contenido original.
+Los porcentajes de texto y los resultados de imágenes se muestran por separado.
+
+PREPARACIÓN INICIAL
+Para ejecutar las fuentes se necesita Python 3.10 o superior. No se obliga a
+instalar Python 3.12. Se usa un único entorno .venv y la aplicación run.py.
+El arranque evita ensurepip dentro del entorno, recupera pip usando el Python
+anfitrión y dispone del método oficial de PyPA como alternativa. Los errores
+internos completos se guardan en inicio_error.log, junto al programa.
+La primera instalación de librerías necesita Internet.
+Los BAT y el iniciador antiguos redirigen ahora a esta misma aplicación.
+
+El motor OCR es Tesseract. Se detecta automáticamente si está instalado o
+incluido en la distribución compilada. Si falta, usa Instalar OCR dentro de
+Traducción. En Windows utiliza winget, cuando está disponible; también puedes
+usar Localizar OCR en Opciones. En Linux instala tesseract-ocr con el gestor
+del sistema. Los modelos conocidos que falten para el idioma original se
+preparan automáticamente desde el repositorio oficial de Tesseract; esa primera
+preparación necesita Internet. El idioma OCR siempre es el de origen.
+Si falta un componente o falla el proveedor, el programa informa lo pendiente.
+
+ORÍGENES Y FORMATOS
+En Opciones puedes elegir Todos, RPA, RPY o RPYC, o un archivo individual.
+RPY y RPYC contienen referencias; las imágenes pueden estar sueltas o en RPA.
+Se leen RPA 2/3 y variantes compatibles y los RPYC admitidos por el lector.
+Se tratan PNG, JPG/JPEG, WebP, AVIF, SVG, BMP, TGA e ICO; también se analizan
+GIF/TIFF y secuencias. La reproducción de contenedores animados depende del
+motor del juego. Los formatos ilegibles se registran y no se cuentan como éxito.
+
+Los resultados se instalan en game/tl/<idioma>/ manteniendo la ruta de origen.
+Por ejemplo, game/images/menu/boton.png se traduce como:
+game/tl/spanish/images/menu/boton.png
+game/tl/french/images/menu/boton.png
+Los originales se conservan. Antes de reemplazar una imagen localizada se
+respalda su contenido en los datos del creador. Si falla o se cancela la
+instalación de imágenes, se revierte esa instalación.
+La tipografía se estima y no se garantiza una copia exacta. SVG se aplana a
+trazados a resolución nativa; JPEG/AVIF pueden recomprimir píxeles. Los informes
+registran estas limitaciones. Las imágenes que no se resuelven quedan pendientes.
+
+COMPARTIR Y RESPALDAR
+En Utilidades, Compartir o respaldar traducciones > Crear ZIP / RAR guarda
+todos los idiomas instalados, sus imágenes, subcarpetas y archivos auxiliares.
+Conserva game/tl y las rutas. ZIP no necesita otro compresor; RAR requiere
+RAR/WinRAR en el equipo creador. Sirve también para un juego traducido antes.
+El receptor cierra el juego y combina game del paquete con la raíz de la misma
+versión del juego; evita crear game/game. No necesita LinguaNova ni OCR.
+
+COMPILAR PARA USUARIOS SIN PYTHON
+Abre build_windows.bat en Windows con Python 3.10 o superior de 64 bits.
+Prepara las dependencias y copia el Tesseract instalado con sus DLL, modelos
+y avisos a components/tesseract. Si falta, lo informa antes de compilar.
+La especificación principal LinguaNova.spec incluye OCR, fuentes y códecs.
+Distribuye TODA la carpeta dist/LinguaNova, incluido _internal; no solo el EXE.
+El usuario abre LinguaNova.exe directamente. No necesita instalar Python,
+pip ni crear entornos. Los BAT son para ejecutar las fuentes o compilarlas.
+Esta entrega contiene fuentes y preparación de compilación, no un EXE Windows
+ya construido o probado en Windows.
+
+CORRECCIONES CONSERVADAS
+El MOD usa controles legibles y nombres acordes al idioma de la interfaz.
+Los textos pequeños de los selectores se actualizan sin reiniciar y mantienen
+el nombre nativo como referencia. La comprobación de traducciones existentes
+en RPA/RPYC también está ahora en el generador principal para evitar nuevos
+bloques duplicados que impidan iniciar Ren'Py. Los duplicados ya instalados
+requieren corregir los archivos afectados; un fallo concreto necesita su
+traceback.txt o log.txt para confirmar el diagnóstico.
+
+PRUEBAS
+La evidencia actual está en native_evidence. Se ejecutó la ventana principal,
+su botón normal, la cola de cinco idiomas, Tesseract real, los códecs, ZIP,
+instalación en otra copia y Ren'Py 8.3.7. Las traducciones del ensayo fueron
+respuestas controladas de un servidor HTTP local a través del cliente real.
+No certifica la disponibilidad de Google, DeepL u otro proveedor comercial.
+Se comprobó la recuperación de pip en un entorno vacío sin invocar ensurepip.
+Se ejecutó Python 3.12 en Linux y se comprobó sintaxis de Python 3.10; Windows,
+Python 3.10/3.14 y el juego del usuario necesitan sus pruebas en esos equipos.
+La documentación de ocr_evidence, next_evidence y dictionary_evidence pertenece
+a entregas anteriores. Este archivo describe el arranque y flujo actuales.

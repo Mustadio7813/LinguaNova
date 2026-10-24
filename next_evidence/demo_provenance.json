@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "provider_effective": "FixtureProvider / fixture_dictionary / controlled-dictionary-v1",
+  "live_services_executed": false,
+  "ocr": "Tesseract 5.3.4, eng",
+  "background_restoration": "OpenCV Telea classic",
+  "composition": "Pillow, identified DejaVu font/effects authored in fixture",
+  "approvals": "automated-fixture-test; not human editorial certification",
+  "jobs": [
+    {
+      "job_id": "71daef47aa4d42bd8e9dd57bf2b6e5cf",
+      "destination": "spanish_latam"
+    },
+    {
+      "job_id": "5c1589c5ecf244c18451b30b5b7d9a11",
+      "destination": "spanish_spain"
+    },
+    {
+      "job_id": "efc212ce04f843d08701f6f10e4d10d3",
+      "destination": "french"
+    },
+    {
+      "job_id": "ddf9e2925b9046d2aba2e7f8a68b8fc8",
+      "destination": "portuguese"
+    },
+    {
+      "job_id": "65f463916399406e9ed03c493bd13200",
+      "destination": "russian"
+    },
+    {
+      "job_id": "37136826dac74a02aca2fb5f5481da17",
+      "destination": "english"
+    }
+  ],
+  "image_outputs": 24,
+  "package_sha256": "30f93b1457c0147ec02f13f73fa2334bb3b2b0ddceac919b75212a9e6c39d00c",
+  "package_validation_level": "experimental_unverified",
+  "renpy_evidence": "renpy_engine/acceptance.json",
+  "rar_package_sha256": "17437ce7e28b77bc705205f20961c99103018c6dc43d8e1d77ffbf09ed935b05",
+  "rar_validation": "All member bytes equal to ZIP; actual RenPy copy-install acceptance in renpy_engine_rar/"
+}

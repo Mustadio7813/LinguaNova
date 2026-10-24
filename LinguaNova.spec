@@ -71,6 +71,9 @@ win_exe_kwargs = (
 
 # Automatically collect all submodules from src package
 hidden_imports = collect_submodules('src')
+hidden_imports += collect_submodules('linguanova_next')
+for image_package in ('PIL', 'pillow_avif', 'resvg_py', 'defusedxml', 'numpy', 'cv2', 'rarfile'):
+    hidden_imports += collect_submodules(image_package)
 
 # Aggressively collect submodules for external libraries to prevent missing imports
 hidden_imports += collect_submodules('aiohttp')
@@ -109,6 +112,7 @@ if sys.platform != 'win32':
 
 # Define datas with absolute paths to avoid not found errors
 datas_list = [
+    (os.path.join(project_dir, 'linguanova_next', 'data'), 'linguanova_next/data'),
     (os.path.join(project_dir, 'locales'), 'locales'),
     (os.path.join(project_dir, 'linguanova.ico'), '.'),
     (os.path.join(project_dir, 'linguanova_logo.png'), '.'),
@@ -117,6 +121,14 @@ datas_list = [
     # Add version.py for runtime reading
     (os.path.join(project_dir, 'src', 'version.py'), 'src'),
 ]
+
+# A compiled app carries the OCR executable, its DLLs and traineddata. No pip,
+# external Python or creator-side environment is used by the EXE.
+ocr_component = Path(project_dir) / 'components' / 'tesseract'
+if sys.platform == 'win32' and not (ocr_component / 'tesseract.exe').is_file():
+    raise RuntimeError('Prepare OCR before building: python scripts/prepare_ocr_bundle.py. The compiled app must include Tesseract.')
+if ocr_component.is_dir():
+    datas_list.append((str(ocr_component), 'components/tesseract'))
 
 # py3langid loads data/model.npz.xz at runtime and has no PyInstaller hook;
 # without it offline language detection silently never runs in the exe.

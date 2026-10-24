@@ -2,7 +2,7 @@
 """
 Tests for language persistence and dialog locale key completeness.
 Ensures that:
-1. All 9 supported locale files contain all required UI dialog keys.
+1. All 5 supported locale files contain all required UI dialog keys.
 2. QML ComboBoxes initialize with persisted settings without reverting to Turkish.
 3. ConfigManager correctly persists and reloads UI and target languages.
 """
@@ -25,11 +25,11 @@ REQUIRED_DIALOG_KEYS = [
     "update_download_btn",
 ]
 
-SUPPORTED_LANGUAGES = ["ru", "en", "tr", "de", "es", "fr", "fa", "zh-CN", "ja"]
+SUPPORTED_LANGUAGES = ["en", "es", "fr", "pt", "ru"]
 
 
 def test_all_locales_have_dialog_keys():
-    """Verify that all 9 locales contain all required dialog keys with non-empty values."""
+    """Verify that all 5 locales contain all required dialog keys with non-empty values."""
     locales_dir = Path("locales")
     assert locales_dir.exists(), "locales directory must exist"
 

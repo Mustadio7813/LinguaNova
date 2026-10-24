@@ -30,15 +30,26 @@ class ModTextCandidate:
 
 
 _SCREEN_RE = re.compile(r"^\s*screen\s+([A-Za-z_]\w*)\b.*:\s*(?:#.*)?$")
-_MARKED_RE = re.compile(r"(?<![A-Za-z0-9_])(?:_|__|___|_p)\s*\(\s*(?P<q>['\"])(?P<body>(?:\\.|(?!\1).)*)\1", re.DOTALL)
-_UI_STMT_RE = re.compile(
-    r"^\s*(?:textbutton|text|tooltip|prompt)\s+(?P<expr>.+?)(?:\s+(?:action|style|xalign|yalign|color|size|at|if|sensitive|selected|alternate|hovered)\b.*)?$"
+_STRING_PATTERN = r"(?P<q>'''|\"\"\"|'|\")(?P<body>(?:\\.|(?!\1)[\s\S])*?)\1"
+_MARKED_RE = re.compile(
+    r"(?<![A-Za-z0-9_])(?:_|__|___|_p)\s*\(\s*" + _STRING_PATTERN,
+    re.DOTALL,
 )
-_ASSIGN_RE = re.compile(r"^\s*(?:(?:default|define)\s+|\$\s*)?([A-Za-z_]\w*)\s*=\s*(.*)$")
-_SAY_RE = re.compile(r"^\s*(?:(?:[A-Za-z_]\w*)\s+)?(?P<expr>(?:['\"]).*(?:['\"]))\s*(?:with\b.*)?$")
-_MENU_CHOICE_RE = re.compile(r"^\s*(?P<expr>(?:['\"]).*(?:['\"]))\s*:\s*$")
+_UI_STMT_RE = re.compile(
+    r"^\s*(?:textbutton|text|tooltip|prompt)\s+(?P<expr>.+?)(?:\s+(?:action|style|xalign|yalign|color|size|at|if|sensitive|selected|alternate|hovered)\b.*)?$",
+    re.DOTALL,
+)
+_ASSIGN_RE = re.compile(
+    r"^\s*(?:(?:default|define)\s+|\$\s*)?([A-Za-z_]\w*)\s*=\s*(.*)$",
+    re.DOTALL,
+)
+_SAY_RE = re.compile(
+    r"^\s*(?:(?:[A-Za-z_]\w*)\s+)?(?P<expr>(?:['\"]).*(?:['\"]))\s*(?:with\b.*)?$",
+    re.DOTALL,
+)
+_MENU_CHOICE_RE = re.compile(r"^\s*(?P<expr>(?:['\"]).*(?:['\"]))\s*:\s*$", re.DOTALL)
 _PY_UI_CALL_RE = re.compile(r"\brenpy\.(?:say|notify|input|confirm|display_menu)\s*\(", re.I)
-_QUOTED_RE = re.compile(r"(?P<q>['\"])(?P<body>(?:\\.|(?!\1).)*)\1", re.DOTALL)
+_QUOTED_RE = re.compile(_STRING_PATTERN, re.DOTALL)
 _IDENTIFIER_RE = re.compile(r"\b[A-Za-z_]\w*\b")
 _IMAGE_EXT_RE = re.compile(r"\.(?:png|jpe?g|webp|gif|svg|avif|bmp|ico|ogg|opus|mp3|wav|flac|webm|mp4|mkv|avi|rpyc?|rpymc?)$", re.I)
 
@@ -108,7 +119,7 @@ def _iter_string_literals(expr: str) -> Iterable[str]:
 
 def _looks_like_ui_text(text: str) -> bool:
     s = (text or "").strip()
-    if not s or len(s) > 600 or is_junk(s):
+    if not s or is_junk(s):
         return False
     if not any(ch.isalpha() for ch in s):
         return False
@@ -123,10 +134,67 @@ def _looks_like_ui_text(text: str) -> bool:
     return True
 
 
-def _balanced_delta(text: str) -> int:
-    # Sufficient for the simple data containers we follow; quoted brackets are
-    # harmless because only a non-zero result extends the collection window.
-    return sum(text.count(ch) for ch in "([{") - sum(text.count(ch) for ch in ")]}")
+class _ExpressionState:
+    def __init__(self) -> None:
+        self.depth = 0
+        self.quote = ""
+        self.triple = False
+        self.escaped = False
+        self.comment = False
+
+    @property
+    def is_open(self) -> bool:
+        return bool(self.quote or self.depth)
+
+    def consume(self, text: str) -> None:
+        i = 0
+        while i < len(text):
+            char = text[i]
+            if self.comment:
+                if char == "\n":
+                    self.comment = False
+                i += 1
+                continue
+            if self.quote:
+                if self.escaped:
+                    self.escaped = False
+                elif char == "\\":
+                    self.escaped = True
+                elif self.triple and text.startswith(self.quote * 3, i):
+                    self.quote = ""
+                    self.triple = False
+                    i += 2
+                elif not self.triple and char == self.quote:
+                    self.quote = ""
+                elif not self.triple and char == "\n":
+                    self.quote = ""
+                i += 1
+                continue
+            if char == "#":
+                self.comment = True
+            elif char in {"'", '"'}:
+                self.quote = char
+                self.triple = text.startswith(char * 3, i)
+                if self.triple:
+                    i += 2
+            elif char in "([{":
+                self.depth += 1
+            elif char in ")]}":
+                self.depth = max(0, self.depth - 1)
+            i += 1
+
+
+def _logical_statement(lines: Sequence[str], start: int) -> Tuple[str, int]:
+    statement = lines[start]
+    state = _ExpressionState()
+    state.consume(statement)
+    end = start + 1
+    while state.is_open and end < len(lines):
+        state.consume("\n")
+        state.consume(lines[end])
+        statement += "\n" + lines[end]
+        end += 1
+    return statement, end
 
 
 class ModInterfaceParser:
@@ -134,6 +202,12 @@ class ModInterfaceParser:
 
     def parse_text(self, content: str, file_path: str, source_kind: str = "rpy") -> List[ModTextCandidate]:
         lines = content.replace("\r\n", "\n").replace("\r", "\n").split("\n")
+        logical_lines = []
+        line_index = 0
+        while line_index < len(lines):
+            statement, end_index = _logical_statement(lines, line_index)
+            logical_lines.append((line_index + 1, end_index, statement))
+            line_index = end_index
         candidates: List[ModTextCandidate] = []
         screen_blocks: List[Tuple[str, int, int]] = []
         global_variable_refs: Set[str] = set()
@@ -142,7 +216,7 @@ class ModInterfaceParser:
         screen_start = -1
 
         # Pass 1: locate screens and direct screen-language strings.
-        for idx, line in enumerate(lines, 1):
+        for idx, end_idx, line in logical_lines:
             stripped = line.strip()
             if not stripped or stripped.startswith("#"):
                 continue
@@ -205,7 +279,7 @@ class ModInterfaceParser:
         for name, start, end in screen_blocks:
             for n in range(start, end + 1):
                 line_to_screen[n] = name
-        for idx, line in enumerate(lines, 1):
+        for idx, _end_idx, line in logical_lines:
             if idx in line_to_screen or line.lstrip().startswith("#"):
                 continue
             if _PY_UI_CALL_RE.search(line):
@@ -229,31 +303,19 @@ class ModInterfaceParser:
                         referenced_by_screen.setdefault(ident, set()).add(name)
 
         if referenced_by_screen:
-            i = 0
-            while i < len(lines):
-                line = lines[i]
-                am = _ASSIGN_RE.match(line)
+            for start, _end, logical_line in logical_lines:
+                am = _ASSIGN_RE.match(logical_line)
                 if not am or am.group(1) not in referenced_by_screen:
-                    i += 1
                     continue
                 var_name = am.group(1)
-                expr_lines = [am.group(2)]
-                delta = _balanced_delta(am.group(2))
-                j = i + 1
-                while delta > 0 and j < len(lines) and j - i < 80:
-                    expr_lines.append(lines[j])
-                    delta += _balanced_delta(lines[j])
-                    j += 1
-                expr = "\n".join(expr_lines)
-                for value in _iter_string_literals(expr):
+                for value in _iter_string_literals(am.group(2)):
                     if not _looks_like_ui_text(value):
                         continue
                     for screen_name in sorted(referenced_by_screen[var_name]):
                         candidates.append(ModTextCandidate(
-                            value, file_path, i + 1, screen_name, source_kind,
+                            value, file_path, start, screen_name, source_kind,
                             "medium", f"screen_data:{var_name}"
                         ))
-                i = max(j, i + 1)
 
         # Exact de-duplication inside one source while retaining first/best location.
         seen: Set[Tuple[str, str]] = set()

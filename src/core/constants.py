@@ -120,7 +120,7 @@ RATE_LIMIT_PRIMARY_PROBE_INTERVAL = 300
 import re as _re
 
 _GENERATED_SCRIPT_RE = _re.compile(
-    r"^(?:zzz_linguanova_runtime|zzz_linguanova_font|zzz_linguanova_language_menu|zzz_[a-z0-9_\-]+_language|zz_rl_exported_.+)\.rpym?c?$",
+    r"^(?:zzz_linguanova_runtime|zzz_linguanova_font|zzz_linguanova_language_menu|zzz_linguanova_ocultar_fuentes|zzz_[a-z0-9_\-]+_language|zz_rl_exported_.+)\.rpym?c?$",
     _re.IGNORECASE,
 )
 

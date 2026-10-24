@@ -1,0 +1,22 @@
+EJEMPLOS SINTÉTICOS. NO SON TRADUCCIONES PARA OTRO JUEGO.
+
+Cinco_idiomas_UI.zip / .rar:
+Paquetes creados desde las acciones de la interfaz nueva. Contienen español
+LATAM, francés, portugués, ruso e inglés; cada idioma tiene textos y cuatro
+imágenes. El proveedor HTTP utilizó respuestas controladas. OCR, composición,
+ZIP/RAR y ejecución en Ren'Py fueron reales.
+
+Fuente_fixture_conectada:
+Copia de las fuentes exactas del juego sintético utilizado en ese ensayo.
+Necesita Ren'Py para ejecutarse. Para ensayar la copia del destinatario,
+trabaja sobre otra copia de esta carpeta y combina allí game/ del paquete.
+
+Respaldo_independiente_UI.zip / .rar:
+Respaldos creados desde la opción independiente después de copiar el paquete
+de cinco idiomas a una segunda copia del juego sintético. Conservan game/tl
+y las dependencias conocidas sin ejecutar traducción ni OCR nuevamente.
+
+Paquete_fixture_multidioma_EXPERIMENTAL.zip / .rar:
+Ejemplos anteriores de la ampliación 0.1, con ambos perfiles españoles y seis
+destinos. Permanecen como material histórico; su fuente es next_fixtures/
+native_slot_game. No sustituyen la evidencia actual de dictionary_evidence.

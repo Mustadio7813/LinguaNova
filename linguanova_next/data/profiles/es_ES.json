@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "id": "espana_estandar_sin_modismos",
+  "version": "1",
+  "editorial_rule": "Use standard Spanish of Spain. Avoid Latin American regional slang and voseo. Shared standard vocabulary is valid.",
+  "automatic_review": "contextual signals; never an exhaustive dialect certification"
+}

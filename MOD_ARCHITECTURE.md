@@ -52,8 +52,8 @@ MOD is fail-closed:
 
 ## Language contract (2026-10-17)
 
-- Every language value goes through `src/ui_mod/languages.py` (central catalogue,
-  135 languages): Ren'Py folder id for `game/tl/<folder>/`, API code for engines.
+- Every MOD language value goes through `src/ui_mod/languages.py` (the five
+  supported languages): Ren'Py folder id for `game/tl/<folder>/`, API code for engines.
 - `auto` source is resolved before translating (offline py3langid, then the
   engine detector); an undetermined source is reported, never assumed English.
 - Engine-specific codes come from `src/ui_mod/engine_support.py`.

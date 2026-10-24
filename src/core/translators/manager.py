@@ -199,21 +199,43 @@ class TranslationManager:
         async with self._cache_lock:
             # 1. Tam Eşleşme (Engine + Langs + Text)
             val = self._cache.get(key)
-            if val:
+            if self._is_usable_cache_entry(key, val):
                 self._cache.move_to_end(key)
                 return val
+            if val:
+                self._cache.pop(key, None)
 
             # 2. Akıllı Dil Eşleşmesi (aynı motor, hedef dil ve metin)
             val = self._engine_text_index.get((engine_val, tl, text))
-            if val:
+            if self._is_usable_cache_entry(key, val):
                 return val
+            if val:
+                self._discard_cache_candidate(tl, text, val)
 
             # 3. Motor Bağımsız Ebeveyn Eşleşmesi (Cross-Engine)
             val = self._text_target_index.get((tl, text))
-            if val:
+            if self._is_usable_cache_entry(key, val):
                 return val
+            if val:
+                self._discard_cache_candidate(tl, text, val)
 
             return self._scan_unindexed_cache(tl, text)
+
+    @staticmethod
+    def _is_usable_cache_entry(
+        key: Tuple[str, str, str, str],
+        val: Optional[TranslationResult],
+    ) -> bool:
+        if not val or not val.success or not val.translated_text:
+            return False
+        original = (key[3] or "").strip()
+        translated = val.translated_text.strip()
+        return bool(translated) and (not original or translated != original)
+
+    def _discard_cache_candidate(self, target_lang: str, text: str, val: TranslationResult) -> None:
+        engine = val.engine.value if isinstance(val.engine, TranslationEngine) else str(val.engine)
+        key = (engine, val.source_lang, target_lang, text)
+        self._cache.pop(key, None)
 
     def _scan_unindexed_cache(self, tl: str, text: str) -> Optional[TranslationResult]:
         """Linear lookup, only when _cache was swapped for a plain dict.
@@ -225,8 +247,10 @@ class TranslationManager:
         if isinstance(self._cache, _ObservableCacheDict):
             return None
         for k, v in reversed(list(self._cache.items())):
-            if k[2] == tl and k[3] == text and v and v.success and v.translated_text:
-                return v
+            if k[2] == tl and k[3] == text:
+                if self._is_usable_cache_entry(k, v):
+                    return v
+                self._cache.pop(k, None)
         return None
 
     def get_cached_translation(
@@ -250,24 +274,31 @@ class TranslationManager:
 
         # 1. Exact engine match
         if engine_val:
-            val = self._cache.get((engine_val, source_lang, target_lang, text))
-            if val and val.success and val.translated_text:
+            key = (engine_val, source_lang, target_lang, text)
+            val = self._cache.get(key)
+            if self._is_usable_cache_entry(key, val):
                 return val
+            if val:
+                self._cache.pop(key, None)
 
             # 2. Same engine, any source language / auto
             val = self._engine_text_index.get((engine_val, target_lang, text))
-            if val and val.success and val.translated_text:
+            if self._is_usable_cache_entry((engine_val, source_lang, target_lang, text), val):
                 return val
+            if val:
+                self._discard_cache_candidate(target_lang, text, val)
 
         # 3. Cross-engine / any engine match for target_lang + text
         val = self._text_target_index.get((target_lang, text))
-        if val and val.success and val.translated_text:
+        if self._is_usable_cache_entry(("", source_lang, target_lang, text), val):
             return val
+        if val:
+            self._discard_cache_candidate(target_lang, text, val)
 
         return self._scan_unindexed_cache(target_lang, text)
 
     async def _cache_put(self, key: Tuple[str, str, str, str], val: TranslationResult):
-        if not self.use_cache or not val.success:
+        if not self.use_cache or not self._is_usable_cache_entry(key, val):
             return
         # Do not cache corrupt translations that leaked placeholders or tokens
         if _is_corrupt_or_protected_cache_text(key[3]) or _is_corrupt_or_protected_cache_text(val.translated_text):
@@ -314,6 +345,11 @@ class TranslationManager:
     async def cache_update_text(self, key: Tuple[str, str, str, str], updated_translated_text: str):
         """Update cached translation text with cleaned/normalized output from pipeline."""
         if not self.use_cache:
+            return
+        updated = (updated_translated_text or "").strip()
+        original = (key[3] or "").strip()
+        if not updated or (original and updated == original):
+            await self.cache_remove(key)
             return
         if _is_corrupt_or_protected_cache_text(key[3]) or _is_corrupt_or_protected_cache_text(updated_translated_text):
             await self.cache_remove(key)
@@ -826,6 +862,7 @@ class TranslationManager:
             # Init aşamasında concurrency olmadığı için lock gerekmez.
             # Doğrudan senkron olarak yükle.
             skipped_protected = 0
+            skipped_unchanged = 0
             for engine_str, sl_map in data.items():
                 if not isinstance(sl_map, dict):
                     continue
@@ -837,6 +874,9 @@ class TranslationManager:
                             continue
                         for text, translated in text_map.items():
                             tr_str = str(translated) if translated is not None else ""
+                            if text and tr_str.strip() == str(text).strip():
+                                skipped_unchanged += 1
+                                continue
                             if _is_corrupt_or_protected_cache_text(text) or _is_corrupt_or_protected_cache_text(tr_str):
                                 # Written by previous builds or corrupted outputs;
                                 # drop it so clean fresh translations can be produced.
@@ -868,7 +908,12 @@ class TranslationManager:
                     "Dropped %d corrupted or placeholder-leaked cache entries",
                     skipped_protected,
                 )
-            self._is_dirty = False
+            if skipped_unchanged:
+                self.logger.info(
+                    "Dropped %d cached entries identical to their source text",
+                    skipped_unchanged,
+                )
+            self._is_dirty = bool(skipped_protected or skipped_unchanged)
             self.logger.info(f"Cache loaded: {file_path} ({count} entries)")
         except Exception as e:
             self.logger.error(f"Failed to load cache: {e}")

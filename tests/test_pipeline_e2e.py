@@ -178,7 +178,13 @@ class TestPipelineE2E:
         result_holder = []
         pipeline.finished.connect(lambda r: result_holder.append(r))
 
-        with patch.object(GoogleTranslator, "translate_batch", side_effect=mock_translator):
+        # A singleton batch uses translate_single. Keep this integration test
+        # offline for that route too, instead of accidentally contacting Google.
+        async def translate_single(request):
+            return (await mock_translator([request]))[0]
+
+        with patch.object(GoogleTranslator, "translate_batch", side_effect=mock_translator), \
+             patch.object(GoogleTranslator, "translate_single", side_effect=translate_single):
             pipeline.run()
 
         assert len(result_holder) == 1

@@ -32,42 +32,11 @@ from src.utils.constants import (
 class Language(Enum):
     """Supported UI languages."""
 
-    TURKISH = "tr"
     ENGLISH = "en"
-    GERMAN = "de"
-    FRENCH = "fr"
     SPANISH = "es"
+    PORTUGUESE = "pt"
+    FRENCH = "fr"
     RUSSIAN = "ru"
-    PERSIAN = "fa"
-    CHINESE_S = "zh-CN"
-    JAPANESE = "ja"
-
-
-TURKIC_PRIMARY_LANG_IDS = {
-    0x1F,  # Turkish
-    0x2C,  # Azerbaijani
-    0x29,  # Persian (Azeri regions often use this)
-    0x3F,  # Kazakh
-    0x40,  # Kyrgyz
-    0x42,  # Turkmen
-    0x43,  # Uzbek
-    0x44,  # Tatar
-}
-
-TURKIC_LANGUAGE_CODES = {
-    "tr",
-    "az",
-    "azb",
-    "tk",
-    "uz",
-    "kk",
-    "ky",
-    "tt",
-    "ba",
-    "ug",
-    "sah",
-    "kaa",
-}
 
 VALID_APP_THEMES: tuple[str, ...] = (
     "dark",
@@ -98,12 +67,6 @@ LEGACY_APP_SETTING_ALIASES: dict[str, str] = {
 }
 
 
-def _is_turkic_locale(code: str) -> bool:
-    normalized = (code or "").lower().replace("_", "-")
-    primary = normalized.split("-")[0]
-    return primary in TURKIC_LANGUAGE_CODES
-
-
 def normalize_engine_code(engine: Any) -> str:
     """Normalize engine enum/string values to a lowercase config code."""
     if hasattr(engine, "value"):
@@ -130,16 +93,11 @@ def get_effective_batch_size(requested: int, engine: Any) -> int:
 def _build_ui_lang_map() -> dict[str, str]:
     """Build a mapping from locale codes to available UI language codes."""
     return {
-        "tr": "tr",
-        "az": "tr",
         "en": "en",
-        "de": "de",
         "fr": "fr",
         "es": "es",
+        "pt": "pt",
         "ru": "ru",
-        "fa": "fa",
-        "zh": "zh-CN",
-        "ja": "ja",
     }
 
 
@@ -158,7 +116,7 @@ def installer_ui_language() -> str:
             return ""
         data = json.loads(marker.read_text(encoding="utf-8-sig"))
         code = str(data.get("installer_language") or "").strip()
-        return code if code in {lang.value for lang in Language} else ""
+        return code if code in {"en", "es", "fr", "pt", "ru"} else ""
     except Exception:
         return ""
 
@@ -178,16 +136,11 @@ def detect_system_language() -> str:
 
                 _WIN_LANG_MAP = {
                     0x09: "en",
-                    0x07: "de",
                     0x0C: "fr",
                     0x0A: "es",
                     0x19: "ru",
-                    0x29: "fa",
-                    0x04: "zh-CN",
-                    0x11: "ja",
+                    0x16: "pt",
                 }
-                if primary_lang in TURKIC_PRIMARY_LANG_IDS:
-                    return "tr"
                 if primary_lang in _WIN_LANG_MAP:
                     return _WIN_LANG_MAP[primary_lang]
             except Exception:
@@ -197,8 +150,6 @@ def detect_system_language() -> str:
         try:
             system_locale = locale.getlocale()[0]
             if system_locale:
-                if _is_turkic_locale(system_locale):
-                    return "tr"
                 lang_part = system_locale.split("_")[0].lower()
                 if lang_part in lang_map:
                     return lang_map[lang_part]
@@ -211,8 +162,6 @@ def detect_system_language() -> str:
                 env_value = os.environ.get(env_var, "").lower()
                 if not env_value:
                     continue
-                if _is_turkic_locale(env_value):
-                    return "tr"
                 for code, ui_code in lang_map.items():
                     if code in env_value:
                         return ui_code
@@ -229,8 +178,10 @@ class TranslationSettings:
     """Translation-related settings."""
 
     selected_engine: str = "google"  # Persisted engine selection (google, deepl, openai, gemini, libretranslate, bing, deepseek)
+    mod_selected_engine: str = "google"
+    mod_target_language: str = "spanish"
     source_language: str = "auto"
-    target_language: str = "tr"
+    target_language: str = "english"
     max_concurrent_threads: int = 8  # Lowered from 32 to prevent instant Google bans
     request_delay: float = (
         0.15  # Delay between requests (seconds) — also used by Google translator
@@ -455,6 +406,10 @@ class TranslationSettings:
         )
         if self.selected_engine not in _valid_engines:
             self.selected_engine = "google"
+        if self.mod_selected_engine not in ("google", "bing", "openai", "gemini", "deepseek", "libretranslate"):
+            self.mod_selected_engine = "google"
+        if self.mod_target_language not in ("spanish", "french", "english", "portuguese", "russian"):
+            self.mod_target_language = "spanish"
         if self.output_mode not in ("strings", "native"):
             self.output_mode = "native"
         if self.deepl_formality not in ("default", "formal", "informal"):
@@ -475,7 +430,7 @@ class TranslationSettings:
 
         # --- String sanitisation ---
         self.source_language = str(self.source_language).strip() or "auto"
-        self.target_language = str(self.target_language).strip() or "tr"
+        self.target_language = str(self.target_language).strip() or "english"
         self.openai_base_url = str(self.openai_base_url).strip()
         self.libretranslate_url = (
             str(self.libretranslate_url).strip() or "http://localhost:5000"
@@ -619,7 +574,6 @@ class ConfigManager:
 
         # Load language files
         self._language_data = {}
-        self.user_ui_languages: Dict[str, str] = {}
         self._load_language_files()
 
         # Load glossary and critical terms
@@ -709,14 +663,7 @@ class ConfigManager:
         return Path(self.data_dir) / "locales"
 
     def _load_user_language_files(self) -> None:
-        """Load ``<data dir>/locales/*.json`` on top of the built-in languages.
-
-        A file named after a built-in language (``es.json``) overrides only
-        the keys it contains; any other name (``qu.json``) adds a language.
-        Keys a file does not translate fall back to English. The optional
-        ``"_language_name"`` key is the name shown in Settings.
-        """
-        self.user_ui_languages = {}
+        """Load user overrides for the five built-in locales only."""
         try:
             folder = self.user_locales_dir
             if not folder.is_dir():
@@ -727,8 +674,12 @@ class ConfigManager:
         builtin = {lang.value.lower(): lang.value for lang in Language}
         for json_file in sorted(folder.glob("*.json")):
             stem = json_file.stem.strip()
-            if not re.fullmatch(r"[A-Za-z0-9_-]{1,24}", stem):
-                self.logger.warning("Ignoring user language file with an invalid name: %s", json_file.name)
+            code = builtin.get(stem.lower())
+            if code is None:
+                self.logger.warning(
+                    "Ignoring unsupported user interface language file: %s",
+                    json_file.name,
+                )
                 continue
             try:
                 data = json.loads(json_file.read_text(encoding="utf-8-sig"))
@@ -737,40 +688,14 @@ class ConfigManager:
             except Exception as exc:
                 self.logger.warning("Could not load user language %s: %s", json_file.name, exc)
                 continue
-            code = builtin.get(stem.lower(), stem)
-            if code in self._language_data and code in builtin.values():
+            if code in self._language_data:
                 merged = dict(self._language_data[code])
                 merged.update(data)
                 self._language_data[code] = merged
                 self.logger.info("User overrides loaded for '%s' (%d keys)", code, len(data))
-                continue
-            self._language_data[code] = data
-            name = str(data.get("_language_name") or code).strip() or code
-            self.user_ui_languages[code] = name
-            self.logger.info("User interface language loaded: %s (%s)", code, name)
 
     def _load_language_files(self):
-        """Load language JSON files from locales directory dynamically."""
-        # Mapping from filename stem to language code (for old-style names)
-        FILENAME_TO_LANG_CODE = {
-            "turkish": "tr",
-            "english": "en",
-            "spanish": "es",
-            "german": "de",
-            "french": "fr",
-            "russian": "ru",
-            "simplified_chinese": "zh-CN",
-            "chinese": "zh-CN",
-            # Direct API codes (new naming convention)
-            "tr": "tr",
-            "en": "en",
-            "es": "es",
-            "de": "de",
-            "fr": "fr",
-            "ru": "ru",
-            "zh-cn": "zh-CN",  # lowercase version for case-insensitive matching
-            "ja": "ja",
-        }
+        """Load the five built-in locale files."""
 
         try:
             self.logger.debug(f"Loading language files from: {self.locales_dir}")
@@ -780,17 +705,12 @@ class ConfigManager:
                 self._language_data = self._get_fallback_translations()
                 return
 
-            # Dynamically load all JSON files
-            for json_file in self.locales_dir.glob("*.json"):
+            supported_codes = {language.value.lower(): language.value for language in Language}
+            for json_file in sorted(self.locales_dir.glob("*.json")):
                 try:
-                    stem = json_file.stem.lower()  # e.g., "tr", "en", "zh-cn"
-
-                    # Map to proper language code
-                    if stem in FILENAME_TO_LANG_CODE:
-                        lang_code = FILENAME_TO_LANG_CODE[stem]
-                    else:
-                        # Fallback: use stem as-is for 2-letter codes, otherwise first 2 chars
-                        lang_code = stem if len(stem) <= 5 else stem[:2]
+                    lang_code = supported_codes.get(json_file.stem.lower())
+                    if lang_code is None:
+                        continue
 
                     with open(json_file, "r", encoding="utf-8") as f:
                         self._language_data[lang_code] = json.load(f)
@@ -801,10 +721,7 @@ class ConfigManager:
             self.logger.info(
                 f"Loaded {len(self._language_data)} language files: {list(self._language_data.keys())}"
             )
-            try:
-                self._load_user_language_files()
-            except Exception as user_err:
-                self.logger.warning(f"Could not load user interface languages: {user_err}")
+            self._load_user_language_files()
 
         except Exception as e:
             self.logger.warning(f"Could not load language files: {e}")
@@ -858,47 +775,11 @@ class ConfigManager:
             },
         }
         return {
-            "tr": {
-                "app_title": "LinguaNova",
-                "file_menu": "Dosya",
-                "help_menu": "Yardım",
-                "about": "Hakkında",
-                "info": "Bilgi",
-                "settings": "Ayarlar",
-                "exit": "Çıkış",
-                "start": "Başlat",
-                "stop": "Durdur",
-                "save": "Kaydet",
-                "cancel": "İptal",
-                "ok": "Tamam",
-                "close": "Kapat",
-                "error": "Hata",
-                "warning": "Uyarı",
-                "success": "Başarılı",
-                "update_checking": "Güncellemeler kontrol ediliyor...",
-                "check_updates_now_label": "Şimdi Kontrol:",
-                "check_updates_now_button": "Kontrol Et",
-                "check_updates_now_tooltip": "Güncellemeleri şimdi kontrol et",
-                "update_available_title": "Güncelleme Var",
-                "update_available_message": "Yeni sürüm mevcut: {latest} (şu an: {current}).\nSürüm sayfası açılsın mı?",
-                "update_up_to_date": "Güncelsiniz (v{current}).",
-                "update_check_failed": "Güncelleme kontrolü başarısız: {error}",
-                "update_check_unavailable": "Güncelleme kontrolü şu anda kullanılamıyor.",
-                "update_open_release": "Sürümler Sayfasını Aç",
-                "update_later": "Daha Sonra",
-                "info_dialog": {
-                    "title": "Program Bilgi Merkezi",
-                    "tabs": {"formats": "Çıktı Formatları"},
-                },
-            },
             "en": _en_core,
-            "de": dict(_en_core),
-            "fr": dict(_en_core),
             "es": dict(_en_core),
+            "pt": dict(_en_core),
+            "fr": dict(_en_core),
             "ru": dict(_en_core),
-            "fa": dict(_en_core),
-            "zh-CN": dict(_en_core),
-            "ja": dict(_en_core),
         }
 
     def load_config(self) -> bool:
@@ -916,12 +797,12 @@ class ConfigManager:
                         TranslationSettings, config_data["translation_settings"]
                     )
                     self.translation_settings = TranslationSettings(**trans_data)
-                    normalized_target = self.normalize_renpy_language_code(
+                    normalized_target = self._normalize_supported_translation_language(
                         self.translation_settings.target_language
                     )
                     normalized_source = self.translation_settings.source_language
                     if normalized_source and normalized_source != "auto":
-                        normalized_source = self.normalize_renpy_language_code(
+                        normalized_source = self._normalize_supported_translation_language(
                             normalized_source
                         )
                     if (
@@ -984,6 +865,10 @@ class ConfigManager:
                 if config_loaded:  # Only save if config was successfully loaded
                     self.save_config()
 
+            if self.app_settings.ui_language not in {"en", "es", "fr", "pt", "ru"}:
+                self.app_settings.ui_language = "en"
+                self.save_config()
+
             return config_loaded
 
         except Exception as e:
@@ -1025,14 +910,10 @@ class ConfigManager:
         return {item["api"].lower(): item["renpy"] for item in self.get_all_languages()}
 
     def normalize_renpy_language_code(self, code: Any) -> str:
-        """Normalize a language code to the Ren'Py folder key.
-
-        Accepts legacy API codes (e.g. tr, es, zh-CN) and returns the
-        Ren'Py language key used for tl/<lang>/ directories.
-        """
+        """Normalize language aliases for game-folder and legacy-code tools."""
         value = str(code or "").strip()
         if not value:
-            return "turkish"
+            return "english"
 
         lowered = value.lower()
         renpy_codes = {
@@ -1045,14 +926,20 @@ class ConfigManager:
         if lowered in api_to_renpy:
             return api_to_renpy[lowered]
 
-        # Legacy naming fallback
         legacy_map = {
             "tr": "turkish",
+            "de": "german",
+            "pl": "polish",
             "zh-cn": "chinese_s",
             "zh_tw": "chinese_t",
             "zh-tw": "chinese_t",
         }
         return legacy_map.get(lowered, value)
+
+    def _normalize_supported_translation_language(self, code: Any) -> str:
+        normalized = self.normalize_renpy_language_code(code)
+        supported = {item["renpy"] for item in self.get_all_languages()}
+        return normalized if normalized in supported else "english"
 
     def save_glossary(self) -> bool:
         """Save glossary to file."""
@@ -1117,13 +1004,13 @@ class ConfigManager:
                 return
 
             if section == "translation" and setting == "target_language":
-                value = self.normalize_renpy_language_code(value)
+                value = self._normalize_supported_translation_language(value)
             elif (
                 section == "translation"
                 and setting == "source_language"
                 and value != "auto"
             ):
-                value = self.normalize_renpy_language_code(value)
+                value = self._normalize_supported_translation_language(value)
 
             setattr(section_obj, setting, value)
             self._normalize_dataclass_instance(section_obj)
@@ -1141,386 +1028,13 @@ class ConfigManager:
         return {item["api"]: item["english"] for item in self.get_all_languages()}
 
     def get_all_languages(self) -> list:
-        """
-        Central language list - single source of truth.
-        Returns list of dicts with 'renpy', 'api', 'english', and 'native' keys.
-        """
+        """Return the five languages supported by this build."""
         return [
-            {"renpy": "turkish", "api": "tr", "english": "Turkish", "native": "Türkçe"},
-            {
-                "renpy": "english",
-                "api": "en",
-                "english": "English",
-                "native": "English",
-            },
-            {"renpy": "german", "api": "de", "english": "German", "native": "Deutsch"},
+            {"renpy": "spanish", "api": "es", "english": "Spanish", "native": "Español"},
+            {"renpy": "english", "api": "en", "english": "English", "native": "English"},
+            {"renpy": "portuguese", "api": "pt", "english": "Portuguese", "native": "Português"},
             {"renpy": "french", "api": "fr", "english": "French", "native": "Français"},
-            {
-                "renpy": "spanish",
-                "api": "es",
-                "english": "Spanish",
-                "native": "Español",
-            },
-            {
-                "renpy": "italian",
-                "api": "it",
-                "english": "Italian",
-                "native": "Italiano",
-            },
-            {
-                "renpy": "portuguese",
-                "api": "pt",
-                "english": "Portuguese",
-                "native": "Português",
-            },
-            {
-                "renpy": "russian",
-                "api": "ru",
-                "english": "Russian",
-                "native": "Русский",
-            },
-            {"renpy": "polish", "api": "pl", "english": "Polish", "native": "Polski"},
-            {"renpy": "dutch", "api": "nl", "english": "Dutch", "native": "Nederlands"},
-            {
-                "renpy": "japanese",
-                "api": "ja",
-                "english": "Japanese",
-                "native": "日本語",
-            },
-            {"renpy": "korean", "api": "ko", "english": "Korean", "native": "한국어"},
-            {
-                "renpy": "chinese_s",
-                "api": "zh-CN",
-                "english": "Chinese (Simplified)",
-                "native": "简体中文",
-            },
-            {
-                "renpy": "chinese_t",
-                "api": "zh-TW",
-                "english": "Chinese (Traditional)",
-                "native": "繁體中文",
-            },
-            {"renpy": "arabic", "api": "ar", "english": "Arabic", "native": "العربية"},
-            {"renpy": "thai", "api": "th", "english": "Thai", "native": "ไทย"},
-            {
-                "renpy": "vietnamese",
-                "api": "vi",
-                "english": "Vietnamese",
-                "native": "Tiếng Việt",
-            },
-            {
-                "renpy": "indonesian",
-                "api": "id",
-                "english": "Indonesian",
-                "native": "Bahasa Indonesia",
-            },
-            {
-                "renpy": "malay",
-                "api": "ms",
-                "english": "Malay",
-                "native": "Bahasa Melayu",
-            },
-            {"renpy": "hindi", "api": "hi", "english": "Hindi", "native": "हिन्दी"},
-            {
-                "renpy": "persian",
-                "api": "fa",
-                "english": "Persian (Farsi)",
-                "native": "فارsi",
-            },
-            {"renpy": "czech", "api": "cs", "english": "Czech", "native": "Čeština"},
-            {"renpy": "danish", "api": "da", "english": "Danish", "native": "Dansk"},
-            {"renpy": "finnish", "api": "fi", "english": "Finnish", "native": "Suomi"},
-            {"renpy": "greek", "api": "el", "english": "Greek", "native": "Ελληνικά"},
-            {"renpy": "hebrew", "api": "he", "english": "Hebrew", "native": "עברית"},
-            {
-                "renpy": "hungarian",
-                "api": "hu",
-                "english": "Hungarian",
-                "native": "Magyar",
-            },
-            {
-                "renpy": "norwegian",
-                "api": "no",
-                "english": "Norwegian",
-                "native": "Norsk",
-            },
-            {
-                "renpy": "romanian",
-                "api": "ro",
-                "english": "Romanian",
-                "native": "Română",
-            },
-            {
-                "renpy": "swedish",
-                "api": "sv",
-                "english": "Swedish",
-                "native": "Svenska",
-            },
-            {
-                "renpy": "ukrainian",
-                "api": "uk",
-                "english": "Ukrainian",
-                "native": "Українська",
-            },
-            {
-                "renpy": "bulgarian",
-                "api": "bg",
-                "english": "Bulgarian",
-                "native": "Български",
-            },
-            {"renpy": "catalan", "api": "ca", "english": "Catalan", "native": "Català"},
-            {
-                "renpy": "croatian",
-                "api": "hr",
-                "english": "Croatian",
-                "native": "Hrvatski",
-            },
-            {
-                "renpy": "slovak",
-                "api": "sk",
-                "english": "Slovak",
-                "native": "Slovenčina",
-            },
-            {
-                "renpy": "slovenian",
-                "api": "sl",
-                "english": "Slovenian",
-                "native": "Slovenščina",
-            },
-            {"renpy": "serbian", "api": "sr", "english": "Serbian", "native": "Српски"},
-            {
-                "renpy": "afrikaans",
-                "api": "af",
-                "english": "Afrikaans",
-                "native": "Afrikaans",
-            },
-            {
-                "renpy": "albanian",
-                "api": "sq",
-                "english": "Albanian",
-                "native": "Shqip",
-            },
-            {"renpy": "amharic", "api": "am", "english": "Amharic", "native": "አማርኛ"},
-            {
-                "renpy": "armenian",
-                "api": "hy",
-                "english": "Armenian",
-                "native": "Հայերեն",
-            },
-            {
-                "renpy": "azerbaijani",
-                "api": "az",
-                "english": "Azerbaijani",
-                "native": "Azərbaycanca",
-            },
-            {"renpy": "basque", "api": "eu", "english": "Basque", "native": "Euskara"},
-            {
-                "renpy": "belarusian",
-                "api": "be",
-                "english": "Belarusian",
-                "native": "Беларуская",
-            },
-            {"renpy": "bengali", "api": "bn", "english": "Bengali", "native": "বাংলা"},
-            {
-                "renpy": "bosnian",
-                "api": "bs",
-                "english": "Bosnian",
-                "native": "Bosanski",
-            },
-            {
-                "renpy": "esperanto",
-                "api": "eo",
-                "english": "Esperanto",
-                "native": "Esperanto",
-            },
-            {
-                "renpy": "estonian",
-                "api": "et",
-                "english": "Estonian",
-                "native": "Eesti",
-            },
-            {
-                "renpy": "filipino",
-                "api": "tl",
-                "english": "Filipino",
-                "native": "Filipino",
-            },
-            {
-                "renpy": "galician",
-                "api": "gl",
-                "english": "Galician",
-                "native": "Galego",
-            },
-            {
-                "renpy": "georgian",
-                "api": "ka",
-                "english": "Georgian",
-                "native": "ქართული",
-            },
-            {
-                "renpy": "gujarati",
-                "api": "gu",
-                "english": "Gujarati",
-                "native": "ગુજરાતી",
-            },
-            {
-                "renpy": "haitian_creole",
-                "api": "ht",
-                "english": "Haitian Creole",
-                "native": "Kreyòl Ayisyen",
-            },
-            {"renpy": "hausa", "api": "ha", "english": "Hausa", "native": "Hausa"},
-            {
-                "renpy": "icelandic",
-                "api": "is",
-                "english": "Icelandic",
-                "native": "Íslenska",
-            },
-            {"renpy": "igbo", "api": "ig", "english": "Igbo", "native": "Asụsụ Igbo"},
-            {"renpy": "irish", "api": "ga", "english": "Irish", "native": "Gaeilge"},
-            {
-                "renpy": "javanese",
-                "api": "jv",
-                "english": "Javanese",
-                "native": "Basa Jawa",
-            },
-            {"renpy": "kannada", "api": "kn", "english": "Kannada", "native": "ಕನ್ನಡ"},
-            {
-                "renpy": "kazakh",
-                "api": "kk",
-                "english": "Kazakh",
-                "native": "Қазақ тілі",
-            },
-            {"renpy": "khmer", "api": "km", "english": "Khmer", "native": "ភាសាខ្មែរ"},
-            {"renpy": "kurdish", "api": "ku", "english": "Kurdish", "native": "Kurdî"},
-            {"renpy": "kyrgyz", "api": "ky", "english": "Kyrgyz", "native": "Кыргызча"},
-            {"renpy": "lao", "api": "lo", "english": "Lao", "native": "ພາສາລາວ"},
-            {
-                "renpy": "latvian",
-                "api": "lv",
-                "english": "Latvian",
-                "native": "Latviešu",
-            },
-            {
-                "renpy": "lithuanian",
-                "api": "lt",
-                "english": "Lithuanian",
-                "native": "Lietuvių",
-            },
-            {
-                "renpy": "luxembourgish",
-                "api": "lb",
-                "english": "Luxembourgish",
-                "native": "Lëtzebuergesch",
-            },
-            {
-                "renpy": "macedonian",
-                "api": "mk",
-                "english": "Macedonian",
-                "native": "Македонски",
-            },
-            {
-                "renpy": "malagasy",
-                "api": "mg",
-                "english": "Malagasy",
-                "native": "Malagasy",
-            },
-            {
-                "renpy": "malayalam",
-                "api": "ml",
-                "english": "Malayalam",
-                "native": "മലയാളം",
-            },
-            {"renpy": "maltese", "api": "mt", "english": "Maltese", "native": "Malti"},
-            {"renpy": "maori", "api": "mi", "english": "Maori", "native": "Māori"},
-            {"renpy": "marathi", "api": "mr", "english": "Marathi", "native": "मराठी"},
-            {
-                "renpy": "mongolian",
-                "api": "mn",
-                "english": "Mongolian",
-                "native": "Монгол",
-            },
-            {
-                "renpy": "myanmar",
-                "api": "my",
-                "english": "Myanmar (Burmese)",
-                "native": "ဗမာ",
-            },
-            {"renpy": "nepali", "api": "ne", "english": "Nepali", "native": "नेपाली"},
-            {"renpy": "pashto", "api": "ps", "english": "Pashto", "native": "پښتو"},
-            {"renpy": "punjabi", "api": "pa", "english": "Punjabi", "native": "ਪੰਜਾਬੀ"},
-            {
-                "renpy": "samoan",
-                "api": "sm",
-                "english": "Samoan",
-                "native": "Gagana Sāmoa",
-            },
-            {
-                "renpy": "scots_gaelic",
-                "api": "gd",
-                "english": "Scots Gaelic",
-                "native": "Gàidhlig",
-            },
-            {"renpy": "shona", "api": "sn", "english": "Shona", "native": "chiShona"},
-            {"renpy": "sindhi", "api": "sd", "english": "Sindhi", "native": "سنڌي"},
-            {"renpy": "sinhala", "api": "si", "english": "Sinhala", "native": "සිංහල"},
-            {"renpy": "somali", "api": "so", "english": "Somali", "native": "Soomaali"},
-            {
-                "renpy": "swahili",
-                "api": "sw",
-                "english": "Swahili",
-                "native": "Kiswahili",
-            },
-            {"renpy": "tajik", "api": "tg", "english": "Tajik", "native": "Тоҷикӣ"},
-            {"renpy": "tamil", "api": "ta", "english": "Tamil", "native": "தமிழ்"},
-            {"renpy": "telugu", "api": "te", "english": "Telugu", "native": "తెలుగు"},
-            {"renpy": "urdu", "api": "ur", "english": "Urdu", "native": "اردو"},
-            {"renpy": "uzbek", "api": "uz", "english": "Uzbek", "native": "Oʻzbekcha"},
-            {"renpy": "welsh", "api": "cy", "english": "Welsh", "native": "Cymraeg"},
-            {"renpy": "xhosa", "api": "xh", "english": "Xhosa", "native": "isiXhosa"},
-            {"renpy": "yiddish", "api": "yi", "english": "Yiddish", "native": "ייִדיש"},
-            {"renpy": "yoruba", "api": "yo", "english": "Yoruba", "native": "Yorùbá"},
-            {"renpy": "zulu", "api": "zu", "english": "Zulu", "native": "isiZulu"},
-            {"renpy": "assamese", "api": "as", "english": "Assamese", "native": "অসমীয়া"},
-            {"renpy": "aymara", "api": "ay", "english": "Aymara", "native": "Aymar aru"},
-            {"renpy": "bambara", "api": "bm", "english": "Bambara", "native": "Bamanankan"},
-            {"renpy": "bhojpuri", "api": "bho", "english": "Bhojpuri", "native": "भोजपुरी"},
-            {"renpy": "cebuano", "api": "ceb", "english": "Cebuano", "native": "Cebuano"},
-            {"renpy": "chichewa", "api": "ny", "english": "Chichewa", "native": "ChiCheŵa"},
-            {"renpy": "corsican", "api": "co", "english": "Corsican", "native": "Corsu"},
-            {"renpy": "dhivehi", "api": "dv", "english": "Dhivehi", "native": "ދިވެހި"},
-            {"renpy": "dogri", "api": "doi", "english": "Dogri", "native": "डोगरी"},
-            {"renpy": "ewe", "api": "ee", "english": "Ewe", "native": "Èʋegbe"},
-            {"renpy": "frisian", "api": "fy", "english": "Frisian", "native": "Frysk"},
-            {"renpy": "guarani", "api": "gn", "english": "Guarani", "native": "Avañe'ẽ"},
-            {"renpy": "hawaiian", "api": "haw", "english": "Hawaiian", "native": "ʻŌlelo Hawaiʻi"},
-            {"renpy": "hmong", "api": "hmn", "english": "Hmong", "native": "Hmoob"},
-            {"renpy": "ilocano", "api": "ilo", "english": "Ilocano", "native": "Ilokano"},
-            {"renpy": "kinyarwanda", "api": "rw", "english": "Kinyarwanda", "native": "Ikinyarwanda"},
-            {"renpy": "konkani", "api": "gom", "english": "Konkani", "native": "कोंकणी"},
-            {"renpy": "krio", "api": "kri", "english": "Krio", "native": "Krio"},
-            {"renpy": "kurdish_sorani", "api": "ckb", "english": "Kurdish (Sorani)", "native": "کوردی (سۆرانی)"},
-            {"renpy": "latin", "api": "la", "english": "Latin", "native": "Latina"},
-            {"renpy": "lingala", "api": "ln", "english": "Lingala", "native": "Lingála"},
-            {"renpy": "luganda", "api": "lg", "english": "Luganda", "native": "Oluganda"},
-            {"renpy": "maithili", "api": "mai", "english": "Maithili", "native": "मैथिली"},
-            {"renpy": "meiteilon", "api": "mni-Mtei", "english": "Meiteilon (Manipuri)", "native": "ꯃꯩꯇꯩꯂꯣꯟ"},
-            {"renpy": "mizo", "api": "lus", "english": "Mizo", "native": "Mizo ṭawng"},
-            {"renpy": "odia", "api": "or", "english": "Odia (Oriya)", "native": "ଓଡ଼ିଆ"},
-            {"renpy": "oromo", "api": "om", "english": "Oromo", "native": "Afaan Oromoo"},
-            {"renpy": "quechua", "api": "qu", "english": "Quechua", "native": "Runasimi"},
-            {"renpy": "sanskrit", "api": "sa", "english": "Sanskrit", "native": "संस्कृतम्"},
-            {"renpy": "sepedi", "api": "nso", "english": "Sepedi (Northern Sotho)", "native": "Sesotho sa Leboa"},
-            {"renpy": "tatar", "api": "tt", "english": "Tatar", "native": "Татар теле"},
-            {"renpy": "tigrinya", "api": "ti", "english": "Tigrinya", "native": "ትግርኛ"},
-            {"renpy": "tsonga", "api": "ts", "english": "Tsonga", "native": "Xitsonga"},
-            {"renpy": "turkmen", "api": "tk", "english": "Turkmen", "native": "Türkmençe"},
-            {"renpy": "twi", "api": "ak", "english": "Twi (Akan)", "native": "Twi"},
-            {"renpy": "uyghur", "api": "ug", "english": "Uyghur", "native": "ئۇيغۇرچە"},
-            {"renpy": "crimean_tatar", "api": "crh", "english": "Crimean Tatar", "native": "Qırımtatarca"},
-            {"renpy": "occitan", "api": "oc", "english": "Occitan", "native": "Occitan"},
-            {"renpy": "silesian", "api": "szl", "english": "Silesian", "native": "Ślōnski"},
-            {"renpy": "tuvan", "api": "tyv", "english": "Tuvan", "native": "Тыва дыл"},
+            {"renpy": "russian", "api": "ru", "english": "Russian", "native": "Русский"},
         ]
 
     def get_renpy_to_api_map(self) -> Dict[str, str]:

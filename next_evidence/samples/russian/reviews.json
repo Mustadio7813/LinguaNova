@@ -1,0 +1,32 @@
+{
+  "0744d4f37738a7f316ba3af65c062316f0c57c8e3f795311aa7f99d7aebf3315": {
+    "decision": "preserve",
+    "editorial_approved": false,
+    "job_identity": "6a96678451dba0b871e13ed38bc0a08ceab58fe3d9cd64b6dfc5118728d57df1",
+    "occurrence_id": "0744d4f37738a7f316ba3af65c062316f0c57c8e3f795311aa7f99d7aebf3315",
+    "reason": "Known name/title in the authored test fixture",
+    "reviewer": "automated-fixture-test",
+    "source_hash": "446b41b0586a0cd416780dfab9070679436d0598037c686076cc37164499aaae",
+    "text": ""
+  },
+  "a3cb440cfe095261efff0d3a273363384d67c79a690e28c50e509fb7482aae93": {
+    "decision": "preserve",
+    "editorial_approved": false,
+    "job_identity": "6a96678451dba0b871e13ed38bc0a08ceab58fe3d9cd64b6dfc5118728d57df1",
+    "occurrence_id": "a3cb440cfe095261efff0d3a273363384d67c79a690e28c50e509fb7482aae93",
+    "reason": "Known name/title in the authored test fixture",
+    "reviewer": "automated-fixture-test",
+    "source_hash": "d979d665f004c27f80a494e525b8e5348e03691025b5c95a08612528beb9e13c",
+    "text": ""
+  },
+  "d8f63e21b1826514a71d7dc789950a9862b4a82ff66cbab6430db8530fa1d413": {
+    "decision": "preserve",
+    "editorial_approved": false,
+    "job_identity": "6a96678451dba0b871e13ed38bc0a08ceab58fe3d9cd64b6dfc5118728d57df1",
+    "occurrence_id": "d8f63e21b1826514a71d7dc789950a9862b4a82ff66cbab6430db8530fa1d413",
+    "reason": "Known name/title in the authored test fixture",
+    "reviewer": "automated-fixture-test",
+    "source_hash": "7f789ee7bb68f06f1b8fdf158dc88e1905fe39d16b8cca258a3863c6682fcdee",
+    "text": ""
+  }
+}

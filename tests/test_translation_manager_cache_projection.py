@@ -160,6 +160,65 @@ def test_corrupt_cache_entries_rejected_from_cache_put() -> None:
     assert manager._cache[key].translated_text == "Merhaba"
 
 
+def test_source_copy_is_not_stored_or_returned_as_a_cache_hit() -> None:
+    manager = TranslationManager()
+    key = ("google", "en", "tr", "Hello")
+    unchanged_result = TranslationResult(
+        original_text="Hello",
+        translated_text=" Hello ",
+        source_lang="en",
+        target_lang="tr",
+        engine=TranslationEngine.GOOGLE,
+        success=True,
+    )
+
+    asyncio.run(manager._cache_put(key, unchanged_result))
+    assert key not in manager._cache
+
+    manager._cache[key] = unchanged_result
+    assert manager.get_cached_translation("Hello", "en", "tr", TranslationEngine.GOOGLE) is None
+    assert key not in manager._cache
+
+
+def test_poisoned_legacy_cache_entry_triggers_a_fresh_translation() -> None:
+    from src.core.translator import GoogleTranslator
+
+    manager = TranslationManager()
+    key = ("google", "en", "tr", "Hello")
+    manager._cache[key] = TranslationResult(
+        original_text="Hello",
+        translated_text="Hello",
+        source_lang="en",
+        target_lang="tr",
+        engine=TranslationEngine.GOOGLE,
+        success=True,
+    )
+
+    translator = GoogleTranslator()
+    calls = []
+
+    async def translate_single(request):
+        calls.append(request.text)
+        return TranslationResult(
+            original_text=request.text,
+            translated_text="Merhaba",
+            source_lang=request.source_lang,
+            target_lang=request.target_lang,
+            engine=request.engine,
+            success=True,
+        )
+
+    translator.translate_single = translate_single
+    manager.add_translator(TranslationEngine.GOOGLE, translator)
+    request = TranslationRequest("Hello", "en", "tr", TranslationEngine.GOOGLE)
+
+    result = asyncio.run(manager.translate_with_retry(request))
+
+    assert calls == ["Hello"]
+    assert result.translated_text == "Merhaba"
+    assert manager._cache[key].translated_text == "Merhaba"
+
+
 def test_corrupt_cache_entries_dropped_on_load(tmp_path) -> None:
     import json
     cache_file = tmp_path / "translation_cache.json"
@@ -168,6 +227,7 @@ def test_corrupt_cache_entries_dropped_on_load(tmp_path) -> None:
             "en": {
                 "tr": {
                     "Hello": "Merhaba",
+                    "Unchanged": " Unchanged ",
                     "Bad Text 1": 'Bozuk <ph id="G0">tag</ph>',
                     "Bad Text 2": "Bozuk ⟦RLPH001_0⟧",
                     "Valid Text": "Gecerli",
@@ -183,8 +243,18 @@ def test_corrupt_cache_entries_dropped_on_load(tmp_path) -> None:
     assert len(manager._cache) == 2
     assert ("google", "en", "tr", "Hello") in manager._cache
     assert ("google", "en", "tr", "Valid Text") in manager._cache
+    assert ("google", "en", "tr", "Unchanged") not in manager._cache
     assert ("google", "en", "tr", "Bad Text 1") not in manager._cache
     assert ("google", "en", "tr", "Bad Text 2") not in manager._cache
+    assert manager._is_dirty is True
+
+    manager.save_cache(str(cache_file))
+
+    saved = json.loads(cache_file.read_text(encoding="utf-8"))
+    saved_texts = saved["google"]["en"]["tr"]
+    assert "Unchanged" not in saved_texts
+    assert "Bad Text 1" not in saved_texts
+    assert "Bad Text 2" not in saved_texts
 
 
 def test_cache_remove_and_update_text() -> None:
@@ -209,3 +279,20 @@ def test_cache_remove_and_update_text() -> None:
     asyncio.run(manager.cache_remove(key))
     assert key not in manager._cache
 
+
+def test_cache_update_removes_text_that_matches_the_source() -> None:
+    manager = TranslationManager()
+    key = ("google", "en", "tr", "Start")
+    result = TranslationResult(
+        original_text="Start",
+        translated_text="Basla",
+        source_lang="en",
+        target_lang="tr",
+        engine=TranslationEngine.GOOGLE,
+        success=True,
+    )
+    asyncio.run(manager._cache_put(key, result))
+
+    asyncio.run(manager.cache_update_text(key, " Start "))
+
+    assert key not in manager._cache

@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "machine": "x86_64",
+  "packages": {
+    "pytest": "9.1.1",
+    "pytest-asyncio": "1.4.0",
+    "PyQt6": "6.10.2",
+    "PyQt6-Qt6": "6.10.2",
+    "PyInstaller": "6.22.3",
+    "Pillow": "12.3.0",
+    "opencv-python-headless": "5.0.0.93",
+    "numpy": "2.3.5",
+    "fonttools": "4.61.1",
+    "py3langid": "0.4.0",
+    "openai": "3.35.1",
+    "google-genai": "2.32.0",
+    "aiohttp": "3.14.4",
+    "requests": "2.34.2",
+    "httpx": "0.28.1",
+    "socksio": "1.0.0",
+    "unrpa": null,
+    "rarfile": "4.2"
+  },
+  "tesseract_version": "tesseract 5.3.4",
+  "tesseract_languages": [
+    "eng",
+    "osd"
+  ],
+  "renpy": "8.3.7.25031702",
+  "renderer": "sw / SDL x11 / Xvfb TCP",
+  "generative_inference_executed": false,
+  "gpu_inference_measured": false,
+  "windows_build_executed": false,
+  "frozen_linux": {
+    "executable_name": "LinguaNova",
+    "sha256": "82ec490545cacf6c779a6257022ad514eb536e415a5cabc535528cf661408ff6",
+    "bytes": 30288488,
+    "cwd_used": "/tmp",
+    "verified": [
+      "baseline original bytes",
+      "creator QML load",
+      "five destination catalog",
+      "screenshot",
+      "RAR share export, exact same bytes as source exporter"
+    ],
+    "full_pipeline_tested": false,
+    "distributed_binary": false
+  },
+  "rar": {
+    "version": "7.23 Linux x64 trial",
+    "binary_sha256": "56c3c4fd46faa7a9f52264d30cb96813e19ec7c4587d9f18424d7e909cf78555",
+    "source": "https://deb.debian.org/debian/pool/non-free/r/rar/rar_7.23-1_amd64.deb",
+    "distributed_binary": false,
+    "windows_execution_tested": false
+  }
+}

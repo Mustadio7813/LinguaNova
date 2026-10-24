@@ -1,0 +1,630 @@
+{
+  "engine": "Ren'Py 8.3.7.25031702",
+  "loads": [
+    {
+      "language": null,
+      "path": "images/buttons/continue_hover.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "language": null,
+      "path": "images/buttons/continue_normal.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "language": null,
+      "path": "images/buttons/continue_selected.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "language": null,
+      "path": "images/capitulo_01/telefono/mensaje.png",
+      "size": [
+        640,
+        240
+      ]
+    },
+    {
+      "language": null,
+      "path": "images/native/native_avif.avif",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": null,
+      "path": "images/native/native_bmp.bmp",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": null,
+      "path": "images/native/native_ico.ico",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": null,
+      "path": "images/native/native_jpeg.jpeg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": null,
+      "path": "images/native/native_jpg.jpg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": null,
+      "path": "images/native/native_png.png",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": null,
+      "path": "images/native/native_svg.svg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": null,
+      "path": "images/native/native_tga.tga",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": null,
+      "path": "images/native/native_webp.webp",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "spanish_latam",
+      "path": "images/buttons/continue_hover.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "language": "spanish_latam",
+      "path": "images/buttons/continue_normal.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "language": "spanish_latam",
+      "path": "images/buttons/continue_selected.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "language": "spanish_latam",
+      "path": "images/capitulo_01/telefono/mensaje.png",
+      "size": [
+        640,
+        240
+      ]
+    },
+    {
+      "language": "spanish_latam",
+      "path": "images/native/native_avif.avif",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "spanish_latam",
+      "path": "images/native/native_bmp.bmp",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "spanish_latam",
+      "path": "images/native/native_ico.ico",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "spanish_latam",
+      "path": "images/native/native_jpeg.jpeg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "spanish_latam",
+      "path": "images/native/native_jpg.jpg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "spanish_latam",
+      "path": "images/native/native_png.png",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "spanish_latam",
+      "path": "images/native/native_svg.svg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "spanish_latam",
+      "path": "images/native/native_tga.tga",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "spanish_latam",
+      "path": "images/native/native_webp.webp",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "french",
+      "path": "images/buttons/continue_hover.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "language": "french",
+      "path": "images/buttons/continue_normal.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "language": "french",
+      "path": "images/buttons/continue_selected.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "language": "french",
+      "path": "images/capitulo_01/telefono/mensaje.png",
+      "size": [
+        640,
+        240
+      ]
+    },
+    {
+      "language": "french",
+      "path": "images/native/native_avif.avif",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "french",
+      "path": "images/native/native_bmp.bmp",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "french",
+      "path": "images/native/native_ico.ico",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "french",
+      "path": "images/native/native_jpeg.jpeg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "french",
+      "path": "images/native/native_jpg.jpg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "french",
+      "path": "images/native/native_png.png",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "french",
+      "path": "images/native/native_svg.svg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "french",
+      "path": "images/native/native_tga.tga",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "french",
+      "path": "images/native/native_webp.webp",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "portuguese",
+      "path": "images/buttons/continue_hover.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "language": "portuguese",
+      "path": "images/buttons/continue_normal.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "language": "portuguese",
+      "path": "images/buttons/continue_selected.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "language": "portuguese",
+      "path": "images/capitulo_01/telefono/mensaje.png",
+      "size": [
+        640,
+        240
+      ]
+    },
+    {
+      "language": "portuguese",
+      "path": "images/native/native_avif.avif",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "portuguese",
+      "path": "images/native/native_bmp.bmp",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "portuguese",
+      "path": "images/native/native_ico.ico",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "portuguese",
+      "path": "images/native/native_jpeg.jpeg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "portuguese",
+      "path": "images/native/native_jpg.jpg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "portuguese",
+      "path": "images/native/native_png.png",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "portuguese",
+      "path": "images/native/native_svg.svg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "portuguese",
+      "path": "images/native/native_tga.tga",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "portuguese",
+      "path": "images/native/native_webp.webp",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "russian",
+      "path": "images/buttons/continue_hover.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "language": "russian",
+      "path": "images/buttons/continue_normal.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "language": "russian",
+      "path": "images/buttons/continue_selected.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "language": "russian",
+      "path": "images/capitulo_01/telefono/mensaje.png",
+      "size": [
+        640,
+        240
+      ]
+    },
+    {
+      "language": "russian",
+      "path": "images/native/native_avif.avif",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "russian",
+      "path": "images/native/native_bmp.bmp",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "russian",
+      "path": "images/native/native_ico.ico",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "russian",
+      "path": "images/native/native_jpeg.jpeg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "russian",
+      "path": "images/native/native_jpg.jpg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "russian",
+      "path": "images/native/native_png.png",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "russian",
+      "path": "images/native/native_svg.svg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "russian",
+      "path": "images/native/native_tga.tga",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "russian",
+      "path": "images/native/native_webp.webp",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "english",
+      "path": "images/buttons/continue_hover.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "language": "english",
+      "path": "images/buttons/continue_normal.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "language": "english",
+      "path": "images/buttons/continue_selected.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "language": "english",
+      "path": "images/capitulo_01/telefono/mensaje.png",
+      "size": [
+        640,
+        240
+      ]
+    },
+    {
+      "language": "english",
+      "path": "images/native/native_avif.avif",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "english",
+      "path": "images/native/native_bmp.bmp",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "english",
+      "path": "images/native/native_ico.ico",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "english",
+      "path": "images/native/native_jpeg.jpeg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "english",
+      "path": "images/native/native_jpg.jpg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "english",
+      "path": "images/native/native_png.png",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "english",
+      "path": "images/native/native_svg.svg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "english",
+      "path": "images/native/native_tga.tga",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "language": "english",
+      "path": "images/native/native_webp.webp",
+      "size": [
+        240,
+        100
+      ]
+    }
+  ],
+  "success": true
+}

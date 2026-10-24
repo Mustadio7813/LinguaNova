@@ -1,0 +1,368 @@
+{
+  "fresh_dictionary_view_empty": true,
+  "http_requests": 85,
+  "independent_backups": [
+    "/workspace/scratch/b12dad3b8dd3/tmp/connected-ui-final/Respaldo_independiente.zip",
+    "/workspace/scratch/b12dad3b8dd3/tmp/connected-ui-final/Respaldo_independiente.rar"
+  ],
+  "ocr": "real Tesseract",
+  "ocr_cache_entries": 4,
+  "packages": [
+    "/workspace/scratch/b12dad3b8dd3/tmp/connected-ui-final/Cinco_idiomas.zip",
+    "/workspace/scratch/b12dad3b8dd3/tmp/connected-ui-final/Cinco_idiomas.rar"
+  ],
+  "passed": true,
+  "qml_warnings": [],
+  "restoration": "real OpenCV Telea and Pillow composition",
+  "source_files_unchanged": true,
+  "targets": [
+    {
+      "coverage": {
+        "editorial_review": "Required; automatic validation is not editorial certification",
+        "inventory_resolution": {
+          "denominator": 12,
+          "display": "11/12 (91.66 %)",
+          "numerator": 11,
+          "percent": 91.66
+        },
+        "job_identity": "3b87d23909688bc3424a3125dc9d5e2c2d7412cceb82139765d1b79d6ba0356b",
+        "processing": {
+          "denominator": 12,
+          "display": "12/12 (100.00 %)",
+          "numerator": 12,
+          "percent": 100.0
+        },
+        "runtime_routes": {
+          "observed": [],
+          "unverified": "No real game execution attached"
+        },
+        "schema_version": 1,
+        "status_counts": {
+          "accepted": 7,
+          "extraction_omission": 1,
+          "preserved_approved": 4
+        },
+        "target_identity": [
+          "es",
+          "es-419",
+          "spanish_latam",
+          "latam_neutro_sin_modismos",
+          "1"
+        ],
+        "textual_change": {
+          "denominator": 12,
+          "display": "7/12 (58.33 %)",
+          "numerator": 7,
+          "percent": 58.33
+        },
+        "validated_translation": {
+          "denominator": 8,
+          "display": "7/8 (87.50 %)",
+          "numerator": 7,
+          "percent": 87.5
+        },
+        "visual": {
+          "counts": {
+            "reviewed": 4
+          },
+          "coverage": {
+            "denominator": 4,
+            "display": "4/4 (100.00 %)",
+            "numerator": 4,
+            "percent": 100.0
+          },
+          "no_detection_is_not_no_text": true,
+          "unobserved_runtime_resources": "not verified"
+        },
+        "visual_coverage": {
+          "denominator": 4,
+          "display": "4/4 (100.00 %)",
+          "numerator": 4,
+          "percent": 100.0
+        }
+      },
+      "destination": "es-419",
+      "dictionary_reused": true,
+      "job_id": "56140ca1ac034c8f84049687e71e997c"
+    },
+    {
+      "coverage": {
+        "editorial_review": "Required; automatic validation is not editorial certification",
+        "inventory_resolution": {
+          "denominator": 12,
+          "display": "11/12 (91.66 %)",
+          "numerator": 11,
+          "percent": 91.66
+        },
+        "job_identity": "88ef85a9d4c5aae5716ef7d2ade0f3151f1ad14b66254ac9e38542f61759ff1d",
+        "processing": {
+          "denominator": 12,
+          "display": "12/12 (100.00 %)",
+          "numerator": 12,
+          "percent": 100.0
+        },
+        "runtime_routes": {
+          "observed": [],
+          "unverified": "No real game execution attached"
+        },
+        "schema_version": 1,
+        "status_counts": {
+          "accepted": 7,
+          "extraction_omission": 1,
+          "preserved_approved": 4
+        },
+        "target_identity": [
+          "fr",
+          "fr",
+          "french",
+          "",
+          "1"
+        ],
+        "textual_change": {
+          "denominator": 12,
+          "display": "7/12 (58.33 %)",
+          "numerator": 7,
+          "percent": 58.33
+        },
+        "validated_translation": {
+          "denominator": 8,
+          "display": "7/8 (87.50 %)",
+          "numerator": 7,
+          "percent": 87.5
+        },
+        "visual": {
+          "counts": {
+            "reviewed": 4
+          },
+          "coverage": {
+            "denominator": 4,
+            "display": "4/4 (100.00 %)",
+            "numerator": 4,
+            "percent": 100.0
+          },
+          "no_detection_is_not_no_text": true,
+          "unobserved_runtime_resources": "not verified"
+        },
+        "visual_coverage": {
+          "denominator": 4,
+          "display": "4/4 (100.00 %)",
+          "numerator": 4,
+          "percent": 100.0
+        }
+      },
+      "destination": "fr",
+      "dictionary_reused": true,
+      "job_id": "6572e05bea62456c825d3916a7929310"
+    },
+    {
+      "coverage": {
+        "editorial_review": "Required; automatic validation is not editorial certification",
+        "inventory_resolution": {
+          "denominator": 12,
+          "display": "11/12 (91.66 %)",
+          "numerator": 11,
+          "percent": 91.66
+        },
+        "job_identity": "899ac3b02072cc54573c91afe0b94f5c8a3ccf8a9be4b9573bb8da2c3b450da9",
+        "processing": {
+          "denominator": 12,
+          "display": "12/12 (100.00 %)",
+          "numerator": 12,
+          "percent": 100.0
+        },
+        "runtime_routes": {
+          "observed": [],
+          "unverified": "No real game execution attached"
+        },
+        "schema_version": 1,
+        "status_counts": {
+          "accepted": 7,
+          "extraction_omission": 1,
+          "preserved_approved": 4
+        },
+        "target_identity": [
+          "pt",
+          "pt",
+          "portuguese",
+          "",
+          "1"
+        ],
+        "textual_change": {
+          "denominator": 12,
+          "display": "7/12 (58.33 %)",
+          "numerator": 7,
+          "percent": 58.33
+        },
+        "validated_translation": {
+          "denominator": 8,
+          "display": "7/8 (87.50 %)",
+          "numerator": 7,
+          "percent": 87.5
+        },
+        "visual": {
+          "counts": {
+            "reviewed": 4
+          },
+          "coverage": {
+            "denominator": 4,
+            "display": "4/4 (100.00 %)",
+            "numerator": 4,
+            "percent": 100.0
+          },
+          "no_detection_is_not_no_text": true,
+          "unobserved_runtime_resources": "not verified"
+        },
+        "visual_coverage": {
+          "denominator": 4,
+          "display": "4/4 (100.00 %)",
+          "numerator": 4,
+          "percent": 100.0
+        }
+      },
+      "destination": "pt",
+      "dictionary_reused": true,
+      "job_id": "38e52f43bd7144ce9646cd52729dbd9a"
+    },
+    {
+      "coverage": {
+        "editorial_review": "Required; automatic validation is not editorial certification",
+        "inventory_resolution": {
+          "denominator": 12,
+          "display": "9/12 (75.00 %)",
+          "numerator": 9,
+          "percent": 75.0
+        },
+        "job_identity": "b773d1c8147da6d0056c41b90728e9c1c19b044c3df59009d0c83788f37384d6",
+        "processing": {
+          "denominator": 12,
+          "display": "12/12 (100.00 %)",
+          "numerator": 12,
+          "percent": 100.0
+        },
+        "runtime_routes": {
+          "observed": [],
+          "unverified": "No real game execution attached"
+        },
+        "schema_version": 1,
+        "status_counts": {
+          "accepted": 7,
+          "extraction_omission": 1,
+          "preserved_approved": 2,
+          "rejected_validation": 2
+        },
+        "target_identity": [
+          "ru",
+          "ru",
+          "russian",
+          "",
+          "1"
+        ],
+        "textual_change": {
+          "denominator": 12,
+          "display": "7/12 (58.33 %)",
+          "numerator": 7,
+          "percent": 58.33
+        },
+        "validated_translation": {
+          "denominator": 8,
+          "display": "7/8 (87.50 %)",
+          "numerator": 7,
+          "percent": 87.5
+        },
+        "visual": {
+          "counts": {
+            "reviewed": 4
+          },
+          "coverage": {
+            "denominator": 4,
+            "display": "4/4 (100.00 %)",
+            "numerator": 4,
+            "percent": 100.0
+          },
+          "no_detection_is_not_no_text": true,
+          "unobserved_runtime_resources": "not verified"
+        },
+        "visual_coverage": {
+          "denominator": 4,
+          "display": "4/4 (100.00 %)",
+          "numerator": 4,
+          "percent": 100.0
+        }
+      },
+      "destination": "ru",
+      "dictionary_reused": true,
+      "job_id": "23ac8b9af4814bcfa4ad6b7720ddd8f3"
+    },
+    {
+      "coverage": {
+        "editorial_review": "Required; automatic validation is not editorial certification",
+        "inventory_resolution": {
+          "denominator": 12,
+          "display": "11/12 (91.66 %)",
+          "numerator": 11,
+          "percent": 91.66
+        },
+        "job_identity": "7f7792fd94745a6f946e367708c3f292a90e93861e1b5fdf7e0bd383ea5d5cbd",
+        "processing": {
+          "denominator": 12,
+          "display": "12/12 (100.00 %)",
+          "numerator": 12,
+          "percent": 100.0
+        },
+        "runtime_routes": {
+          "observed": [],
+          "unverified": "No real game execution attached"
+        },
+        "schema_version": 1,
+        "status_counts": {
+          "accepted": 7,
+          "extraction_omission": 1,
+          "preserved_approved": 4
+        },
+        "target_identity": [
+          "en",
+          "en",
+          "english",
+          "",
+          "1"
+        ],
+        "textual_change": {
+          "denominator": 12,
+          "display": "7/12 (58.33 %)",
+          "numerator": 7,
+          "percent": 58.33
+        },
+        "validated_translation": {
+          "denominator": 8,
+          "display": "7/8 (87.50 %)",
+          "numerator": 7,
+          "percent": 87.5
+        },
+        "visual": {
+          "counts": {
+            "reviewed": 4
+          },
+          "coverage": {
+            "denominator": 4,
+            "display": "4/4 (100.00 %)",
+            "numerator": 4,
+            "percent": 100.0
+          },
+          "no_detection_is_not_no_text": true,
+          "unobserved_runtime_resources": "not verified"
+        },
+        "visual_coverage": {
+          "denominator": 4,
+          "display": "4/4 (100.00 %)",
+          "numerator": 4,
+          "percent": 100.0
+        }
+      },
+      "destination": "en",
+      "dictionary_reused": true,
+      "job_id": "d0991b58260b4fefbffb57bf54ac74d9"
+    }
+  ],
+  "translation": "controlled local HTTP responses; NOT a live translation provider",
+  "ui_actions": "shipped QML clicked/toggled handlers and QObject slots"
+}

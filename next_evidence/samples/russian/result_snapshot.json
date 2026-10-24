@@ -1,0 +1,193 @@
+[
+  {
+    "candidate": "LINGUANOVA FIXTURE",
+    "flags": [
+      "short_text_requires_context"
+    ],
+    "job_identity": "6a96678451dba0b871e13ed38bc0a08ceab58fe3d9cd64b6dfc5118728d57df1",
+    "linguistic_review": "unverified",
+    "model": "",
+    "occurrence_id": "0744d4f37738a7f316ba3af65c062316f0c57c8e3f795311aa7f99d7aebf3315",
+    "output_path": "",
+    "provenance": "review_action",
+    "provider": "human_review",
+    "reasons": [
+      "target_script_mismatch"
+    ],
+    "request_id": "",
+    "status": "rejected_validation",
+    "written": ""
+  },
+  {
+    "candidate": "Настройки",
+    "flags": [
+      "short_text_requires_context"
+    ],
+    "job_identity": "6a96678451dba0b871e13ed38bc0a08ceab58fe3d9cd64b6dfc5118728d57df1",
+    "linguistic_review": "unverified",
+    "model": "controlled-dictionary-v1",
+    "occurrence_id": "08134b0a0f964119c9a3518e51a6a5064ebf6ecb823a0c080f821f9d26dfc1ba",
+    "output_path": "game/tl/russian/linguanova_next_strings.rpy",
+    "provenance": "provider",
+    "provider": "fixture_dictionary",
+    "reasons": [],
+    "request_id": "af84406bec704acc9d12890b84fd012c",
+    "status": "accepted",
+    "written": "Настройки"
+  },
+  {
+    "candidate": "Выйти",
+    "flags": [
+      "short_text_requires_context"
+    ],
+    "job_identity": "6a96678451dba0b871e13ed38bc0a08ceab58fe3d9cd64b6dfc5118728d57df1",
+    "linguistic_review": "unverified",
+    "model": "controlled-dictionary-v1",
+    "occurrence_id": "37a0c47efd745963260032db36b053c93e612e21a9efd497178d86354b98379f",
+    "output_path": "game/tl/russian/linguanova_next_strings.rpy",
+    "provenance": "provider",
+    "provider": "fixture_dictionary",
+    "reasons": [],
+    "request_id": "f21b7a1109e04d2dbce50b127a6ffbbc",
+    "status": "accepted",
+    "written": "Выйти"
+  },
+  {
+    "candidate": "Настройки",
+    "flags": [
+      "short_text_requires_context"
+    ],
+    "job_identity": "6a96678451dba0b871e13ed38bc0a08ceab58fe3d9cd64b6dfc5118728d57df1",
+    "linguistic_review": "unverified",
+    "model": "controlled-dictionary-v1",
+    "occurrence_id": "4212aa1e1ef4feed90754ca56442f79c1701a40109a43720a393a81e14e82711",
+    "output_path": "game/tl/russian/linguanova_next_strings.rpy",
+    "provenance": "provider",
+    "provider": "fixture_dictionary",
+    "reasons": [],
+    "request_id": "ac3e51dba1ac444b84fce34c62ab3970",
+    "status": "accepted",
+    "written": "Настройки"
+  },
+  {
+    "candidate": "Начать",
+    "flags": [
+      "short_text_requires_context"
+    ],
+    "job_identity": "6a96678451dba0b871e13ed38bc0a08ceab58fe3d9cd64b6dfc5118728d57df1",
+    "linguistic_review": "unverified",
+    "model": "controlled-dictionary-v1",
+    "occurrence_id": "7ea90f9ab7141e529d75a729f80c49b93e4e683fc7304b59e4156ec55d63f016",
+    "output_path": "game/tl/russian/linguanova_next_strings.rpy",
+    "provenance": "provider",
+    "provider": "fixture_dictionary",
+    "reasons": [],
+    "request_id": "3eb3db4e509e429caf4f3dc55d3f87f2",
+    "status": "accepted",
+    "written": "Начать"
+  },
+  {
+    "candidate": "Привет, [player_name], это контролируемый тест.",
+    "flags": [
+      "short_text_requires_context"
+    ],
+    "job_identity": "6a96678451dba0b871e13ed38bc0a08ceab58fe3d9cd64b6dfc5118728d57df1",
+    "linguistic_review": "unverified",
+    "model": "controlled-dictionary-v1",
+    "occurrence_id": "92cb02bd4bff319c49f641dbaec0646dbf393405c9abdc624d7a06be50c1a46f",
+    "output_path": "game/tl/russian/linguanova_next_strings.rpy",
+    "provenance": "provider",
+    "provider": "fixture_dictionary",
+    "reasons": [],
+    "request_id": "421f9e5f72cf4df288c99e6c043f2d24",
+    "status": "accepted",
+    "written": "Привет, [player_name], это контролируемый тест."
+  },
+  {
+    "candidate": "LinguaNova Controlled Fixture",
+    "flags": [
+      "short_text_requires_context"
+    ],
+    "job_identity": "6a96678451dba0b871e13ed38bc0a08ceab58fe3d9cd64b6dfc5118728d57df1",
+    "linguistic_review": "unverified",
+    "model": "",
+    "occurrence_id": "a3cb440cfe095261efff0d3a273363384d67c79a690e28c50e509fb7482aae93",
+    "output_path": "",
+    "provenance": "review_action",
+    "provider": "human_review",
+    "reasons": [
+      "target_script_mismatch"
+    ],
+    "request_id": "",
+    "status": "rejected_validation",
+    "written": ""
+  },
+  {
+    "candidate": "Alex",
+    "flags": [
+      "short_text_requires_context"
+    ],
+    "job_identity": "6a96678451dba0b871e13ed38bc0a08ceab58fe3d9cd64b6dfc5118728d57df1",
+    "linguistic_review": "unverified",
+    "model": "",
+    "occurrence_id": "d8f63e21b1826514a71d7dc789950a9862b4a82ff66cbab6430db8530fa1d413",
+    "output_path": "game/tl/russian/linguanova_next_strings.rpy",
+    "provenance": "review_action",
+    "provider": "human_review",
+    "reasons": [],
+    "request_id": "",
+    "status": "preserved_approved",
+    "written": "Alex"
+  },
+  {
+    "candidate": "Назад",
+    "flags": [
+      "short_text_requires_context"
+    ],
+    "job_identity": "6a96678451dba0b871e13ed38bc0a08ceab58fe3d9cd64b6dfc5118728d57df1",
+    "linguistic_review": "unverified",
+    "model": "controlled-dictionary-v1",
+    "occurrence_id": "eabb40527606caa7650bc358de722664d41455fc2a0d05ce48b3a3cce62392f4",
+    "output_path": "game/tl/russian/linguanova_next_strings.rpy",
+    "provenance": "provider",
+    "provider": "fixture_dictionary",
+    "reasons": [],
+    "request_id": "35b6f23d18cb49b796ac3fd4a31b99ad",
+    "status": "accepted",
+    "written": "Назад"
+  },
+  {
+    "candidate": "",
+    "flags": [],
+    "job_identity": "6a96678451dba0b871e13ed38bc0a08ceab58fe3d9cd64b6dfc5118728d57df1",
+    "linguistic_review": "unverified",
+    "model": "",
+    "occurrence_id": "f0ab9525e7539154dedab4d5040121689524ce986967807d24caea9303c0c35b",
+    "output_path": "",
+    "provenance": "provider",
+    "provider": "",
+    "reasons": [
+      "review_candidate_not_automatically_translatable"
+    ],
+    "request_id": "",
+    "status": "extraction_omission",
+    "written": ""
+  },
+  {
+    "candidate": "Добро пожаловать в нашу тихую деревню.",
+    "flags": [
+      "language_uncertain"
+    ],
+    "job_identity": "6a96678451dba0b871e13ed38bc0a08ceab58fe3d9cd64b6dfc5118728d57df1",
+    "linguistic_review": "unverified",
+    "model": "controlled-dictionary-v1",
+    "occurrence_id": "fc2a1df096d44ff2e4e95a7b32fff40221c3290c750e4e8709ef44b683a4e4b7",
+    "output_path": "game/tl/russian/linguanova_next_strings.rpy",
+    "provenance": "provider",
+    "provider": "fixture_dictionary",
+    "reasons": [],
+    "request_id": "5ebf05a024ea4781935e7807fa02ac2b",
+    "status": "accepted",
+    "written": "Добро пожаловать в нашу тихую деревню."
+  }
+]

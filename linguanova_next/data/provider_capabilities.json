@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "catalog_version": "1",
+  "providers": {
+    "google": {
+      "targets": {
+        "es": "es",
+        "fr": "fr",
+        "pt": "pt",
+        "ru": "ru",
+        "en": "en"
+      },
+      "status": "unverified",
+      "code_evidence": "base 1.1.2 constructors and TranslationRequest inspected; no live API inference claimed",
+      "regional_api_codes": false,
+      "profile_instructions": false,
+      "test_only": false,
+      "regional_review_required": true,
+      "source_policy": "base codes and auto where service supports; errors remain failures"
+    },
+    "bing": {
+      "targets": {
+        "es": "es",
+        "fr": "fr",
+        "pt": "pt",
+        "ru": "ru",
+        "en": "en"
+      },
+      "status": "unverified",
+      "code_evidence": "base 1.1.2 constructors and TranslationRequest inspected; no live API inference claimed",
+      "regional_api_codes": false,
+      "profile_instructions": false,
+      "test_only": false,
+      "regional_review_required": true,
+      "source_policy": "base codes and auto where service supports; errors remain failures"
+    },
+    "deepl": {
+      "targets": {
+        "es": "es",
+        "fr": "fr",
+        "pt": "pt",
+        "ru": "ru",
+        "en": "en"
+      },
+      "status": "unverified",
+      "code_evidence": "base 1.1.2 constructors and TranslationRequest inspected; no live API inference claimed",
+      "regional_api_codes": false,
+      "profile_instructions": false,
+      "test_only": false,
+      "regional_review_required": true,
+      "source_policy": "base codes and auto where service supports; errors remain failures"
+    },
+    "libretranslate": {
+      "targets": {
+        "es": "es",
+        "fr": "fr",
+        "pt": "pt",
+        "ru": "ru",
+        "en": "en"
+      },
+      "status": "unverified",
+      "code_evidence": "base 1.1.2 constructors and TranslationRequest inspected; no live API inference claimed",
+      "regional_api_codes": false,
+      "profile_instructions": false,
+      "test_only": false,
+      "regional_review_required": true,
+      "source_policy": "base codes and auto where service supports; errors remain failures"
+    },
+    "openai": {
+      "targets": {
+        "es": "es",
+        "fr": "fr",
+        "pt": "pt",
+        "ru": "ru",
+        "en": "en"
+      },
+      "status": "unverified",
+      "code_evidence": "base 1.1.2 constructors and TranslationRequest inspected; no live API inference claimed",
+      "regional_api_codes": false,
+      "profile_instructions": true,
+      "test_only": false,
+      "regional_review_required": true,
+      "source_policy": "base codes and auto where service supports; errors remain failures"
+    },
+    "deepseek": {
+      "targets": {
+        "es": "es",
+        "fr": "fr",
+        "pt": "pt",
+        "ru": "ru",
+        "en": "en"
+      },
+      "status": "unverified",
+      "code_evidence": "base 1.1.2 constructors and TranslationRequest inspected; no live API inference claimed",
+      "regional_api_codes": false,
+      "profile_instructions": true,
+      "test_only": false,
+      "regional_review_required": true,
+      "source_policy": "base codes and auto where service supports; errors remain failures"
+    },
+    "gemini": {
+      "targets": {
+        "es": "es",
+        "fr": "fr",
+        "pt": "pt",
+        "ru": "ru",
+        "en": "en"
+      },
+      "status": "unverified",
+      "code_evidence": "base 1.1.2 constructors and TranslationRequest inspected; no live API inference claimed",
+      "regional_api_codes": false,
+      "profile_instructions": true,
+      "test_only": false,
+      "regional_review_required": true,
+      "source_policy": "base codes and auto where service supports; errors remain failures"
+    },
+    "pseudo": {
+      "targets": {
+        "es": "es",
+        "fr": "fr",
+        "pt": "pt",
+        "ru": "ru",
+        "en": "en"
+      },
+      "status": "test_only",
+      "code_evidence": "base 1.1.2 constructors and TranslationRequest inspected; no live API inference claimed",
+      "regional_api_codes": false,
+      "profile_instructions": false,
+      "test_only": true,
+      "regional_review_required": true,
+      "source_policy": "base codes and auto where service supports; errors remain failures"
+    }
+  }
+}

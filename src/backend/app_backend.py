@@ -15,6 +15,7 @@ import json
 import logging
 import os
 import re
+import string
 import sys
 import threading
 import urllib.parse
@@ -22,7 +23,7 @@ import urllib.request
 from pathlib import Path
 from typing import Optional, Any, Dict
 
-from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot, pyqtProperty, QUrl
+from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot, pyqtProperty, QUrl, QTimer
 from PyQt6.QtGui import QDesktopServices, QIcon
 from PyQt6.QtWidgets import QSystemTrayIcon
 
@@ -46,6 +47,8 @@ from src.backend.settings_backend import SettingsBackend
 from src.core.work_queue import SerialWorkQueue, WorkItem
 # #MOD — imported lazily inside _start_mod_job(): a broken or missing MOD package
 # must never prevent the main translator from starting.
+
+MOD_TARGET_LANGUAGE_CODES = ("spanish", "french", "english", "portuguese", "russian")
 
 
 def _normalize_path(raw: str) -> str:
@@ -81,6 +84,7 @@ class AppBackend(QObject):
     progressChanged = pyqtSignal(int, int, str, arguments=["current", "total", "text"])
     stageChanged = pyqtSignal(str, str, arguments=["stage", "displayName"])
     translationStarted = pyqtSignal()
+    projectChanged = pyqtSignal(str)
     translationFinished = pyqtSignal(bool, str, arguments=["success", "message"])
     # Serial work queue + isolated MOD signals. New requests are queued and
     # never cancel/replace the active operation.
@@ -88,6 +92,8 @@ class AppBackend(QObject):
     modRunningChanged = pyqtSignal()
     modStatusChanged = pyqtSignal()
     modStatsChanged = pyqtSignal()
+    modSettingsChanged = pyqtSignal()
+    modTranslationsChanged = pyqtSignal()
     modOutputPathChanged = pyqtSignal()
     modProjectPathChanged = pyqtSignal()
     _modWorkerFinished = pyqtSignal(object)
@@ -179,6 +185,10 @@ class AppBackend(QObject):
 
         # ── ConfigManager ────────────────────────────────────────────────
         self.config = ConfigManager()
+        self._localized_log_patterns: Dict[
+            str,
+            list[tuple[re.Pattern[str], str, tuple[tuple[str, str], ...]]],
+        ] = {}
 
         # ── Migration to 2.8.6 ───────────────────────────────────────────
         # Reset previously forced-false settings to True once.
@@ -204,7 +214,7 @@ class AppBackend(QObject):
         except Exception:
             pass
         self._target_language: str = (
-            self.config.translation_settings.target_language or "turkish"
+            self.config.translation_settings.target_language or "english"
         )
         self._is_translating: bool = False
         self._ui_trigger: bool = False
@@ -253,6 +263,7 @@ class AppBackend(QObject):
         self.proxy_manager.configure_from_settings(self.config.proxy_settings)
 
         self.translation_manager = TranslationManager(self.proxy_manager, self.config)
+        self._mod_translation_manager = TranslationManager(self.proxy_manager, self.config)
 
         # ── SettingsBackend ───────────────────────────────────────────────
         self.settings = SettingsBackend(
@@ -314,6 +325,15 @@ class AppBackend(QObject):
         self._init_system_tray()
 
     # ── Private setup ────────────────────────────────────────────────────
+
+    @pyqtSlot()
+    def startAllTranslations(self):
+        if not self._project_path:
+            self.startTranslation()
+            return
+        snapshot = self._translation_job_snapshot()
+        for language in MOD_TARGET_LANGUAGE_CODES:
+            self._submit_work("translation", dict(snapshot, target_language=language))
 
     def _setup_google_translator(self) -> None:
         """Google Translate motorunu kurar."""
@@ -386,9 +406,15 @@ class AppBackend(QObject):
         }
         return mapping.get(engine_str.lower(), TranslationEngine.GOOGLE)
 
-    def _replace_translator(self, engine: TranslationEngine, translator) -> None:
+    def _replace_translator(
+        self,
+        engine: TranslationEngine,
+        translator,
+        manager: Optional[TranslationManager] = None,
+    ) -> None:
         """Register *translator*, best-effort closing the instance it replaces."""
-        previous = self.translation_manager.translators.get(engine)
+        manager = manager or self.translation_manager
+        previous = manager.translators.get(engine)
         if previous is not None and previous is not translator and hasattr(previous, "close"):
             try:
                 import asyncio
@@ -407,7 +433,7 @@ class AppBackend(QObject):
                         temp_loop.close()
             except Exception:
                 pass  # Old instance will be GC'd; never block translation on this
-        self.translation_manager.add_translator(engine, translator)
+        manager.add_translator(engine, translator)
 
     def _refresh_active_translator(self) -> None:
         """Rebuild the active engine's translator from the CURRENT config.
@@ -1033,6 +1059,74 @@ class AppBackend(QObject):
         """
         return self.config.get_ui_text(key, default, **kwargs)
 
+    def _get_log_translation_patterns(
+        self, language: str
+    ) -> list[tuple[re.Pattern[str], str, tuple[tuple[str, str], ...]]]:
+        cached = self._localized_log_patterns.get(language)
+        if cached is not None:
+            return cached
+
+        locales = self.config.get_ui_translations()
+        english = locales.get("en", {})
+        translated = locales.get(language, {})
+        patterns = []
+        for key, source in english.items():
+            target = translated.get(key)
+            if (
+                not isinstance(source, str)
+                or not isinstance(target, str)
+                or target == source
+            ):
+                continue
+
+            parts = []
+            fields = []
+            try:
+                segments = list(string.Formatter().parse(source))
+                for index, (
+                    literal,
+                    field_name,
+                    _format_spec,
+                    _conversion,
+                ) in enumerate(segments):
+                    parts.append(re.escape(literal))
+                    if field_name is not None:
+                        group = f"value{len(fields)}"
+                        quantifier = ".*" if index == len(segments) - 1 else ".*?"
+                        parts.append(f"(?P<{group}>{quantifier})")
+                        fields.append((field_name, group))
+            except ValueError:
+                continue
+            patterns.append((re.compile("".join(parts)), target, tuple(fields)))
+
+        patterns.sort(key=lambda item: len(item[0].pattern), reverse=True)
+        self._localized_log_patterns[language] = patterns
+        return patterns
+
+    @pyqtSlot(str, result=str)
+    def localizeLogMessage(self, message: str) -> str:
+        """Localize catalog-backed text embedded in backend log messages."""
+        language = self.config.app_settings.ui_language or "en"
+        if language == "en":
+            return message
+
+        for pattern, translated, fields in self._get_log_translation_patterns(language):
+            match = pattern.search(message)
+            if match is None:
+                continue
+
+            localized = translated
+            for field_name, group in fields:
+                localized = localized.replace(
+                    "{" + field_name + "}", match.group(group), 1
+                )
+            return (
+                message[:match.start()]
+                + localized
+                + message[match.end():]
+            )
+        return message
+
     # ── UI Language Management ──
     @pyqtSlot(result=list)
     def getAvailableUILanguages(self) -> list:
@@ -1073,8 +1167,12 @@ class AppBackend(QObject):
                 "{lang}", item.get("native") or api)
             self.uiLanguageGenerationFinished.emit(False, msg)
             return
-        self._ui_lang_generating = True
-        threading.Thread(target=self._create_ui_language_thread, args=(item,), daemon=True).start()
+        msg = self._t(
+            "ui_lang_limited",
+            "This build supports only English, Spanish, French, Portuguese and Russian as interface languages.",
+        )
+        self.uiLanguageGenerationFinished.emit(False, msg)
+        return
 
     def _create_ui_language_thread(self, item: dict) -> None:
         from src.core.translator import TranslationRequest
@@ -1232,6 +1330,7 @@ class AppBackend(QObject):
             )
 
         self._project_path = path
+        self.projectChanged.emit(path)
         self._tl_mode = False
         self._tl_source_path = ""
         # No persistir la ruta del juego entre sesiones.
@@ -1351,6 +1450,47 @@ class AppBackend(QObject):
     def modProjectPath(self) -> str:
         return self._mod_project_path
 
+    @pyqtProperty(str, notify=modSettingsChanged)
+    def modSelectedEngine(self) -> str:
+        return self.config.translation_settings.mod_selected_engine
+
+    @pyqtProperty(str, notify=modSettingsChanged)
+    def modTargetLanguage(self) -> str:
+        return self.config.translation_settings.mod_target_language
+
+    @pyqtSlot(result=list)
+    def getModTargetLanguages(self) -> list:
+        return [
+            {"code": "spanish", "name": "🇪🇸 Español"},
+            {"code": "french", "name": "🇫🇷 Français"},
+            {"code": "english", "name": "🇬🇧 English"},
+            {"code": "portuguese", "name": "🇵🇹 Português"},
+            {"code": "russian", "name": "🇷🇺 Русский"},
+        ]
+
+    @pyqtSlot(str)
+    def setModSelectedEngine(self, engine_name: str) -> None:
+        allowed = {"google", "bing", "openai", "gemini", "deepseek", "libretranslate"}
+        engine_name = (engine_name or "").strip().lower()
+        if engine_name not in allowed:
+            self.logMessage.emit("error", f"Unsupported MOD engine: {engine_name}")
+            return
+        self.config.translation_settings.mod_selected_engine = engine_name
+        self.config.save_config()
+        self.modSettingsChanged.emit()
+
+    @pyqtSlot(str)
+    def setModTargetLanguage(self, language: str) -> None:
+        allowed = {"spanish", "french", "english", "portuguese", "russian"}
+        language = (language or "").strip().lower()
+        if language not in allowed:
+            self.logMessage.emit("error", f"Unsupported MOD target language: {language}")
+            return
+        self.config.translation_settings.mod_target_language = language
+        self.config.save_config()
+        self.modSettingsChanged.emit()
+        self.modTranslationsChanged.emit()
+
     @pyqtSlot(str, result=bool)
     def setModProjectPath(self, path: str) -> bool:
         """Select a Ren'Py game for MOD without changing the Translation-page project."""
@@ -1376,6 +1516,7 @@ class AppBackend(QObject):
 
         self._mod_project_path = normalized
         self.modProjectPathChanged.emit()
+        self.modTranslationsChanged.emit()
         self._mod_status = self._t(
             "mod_status_game_selected",
             "Game selected for MOD. The route is temporary and will be cleared when LinguaNova closes.",
@@ -1397,9 +1538,9 @@ class AppBackend(QObject):
     def _mod_job_snapshot(self) -> Dict[str, Any]:
         return {
             "project_path": self._mod_project_path,
-            "target_language": self.config.translation_settings.target_language or self._target_language,
-            "source_language": self.config.translation_settings.source_language or "auto",
-            "engine": self._selected_engine,
+            "target_language": self.config.translation_settings.mod_target_language,
+            "source_language": "auto",
+            "engine": self.config.translation_settings.mod_selected_engine,
         }
 
     def _submit_work(self, kind: str, payload: Dict[str, Any]) -> None:
@@ -1432,6 +1573,7 @@ class AppBackend(QObject):
             self.config.translation_settings.target_language = self._target_language
             self.config.translation_settings.source_language = payload.get("source_language", "auto")
             self._selected_engine = payload.get("engine", self._selected_engine)
+            self.refreshUI()
             self._is_translating = True
             self.translationStarted.emit()
             self._start_pipeline_translation()
@@ -1443,6 +1585,11 @@ class AppBackend(QObject):
         self._complete_active_work()
 
     def _complete_active_work(self) -> None:
+        # Keep the old QThread alive until run() has actually returned before
+        # starting the next language of the same queued batch.
+        if self.pipeline_worker is not None and self.pipeline_worker.isRunning():
+            QTimer.singleShot(25, self._complete_active_work)
+            return
         next_item = self._work_queue.complete_active()
         self.workQueueChanged.emit()
         if next_item is not None and not self._shutting_down:
@@ -1483,7 +1630,7 @@ class AppBackend(QObject):
             
             # Ensure target and source languages are freshly synced from config
             effective_target = self.config.normalize_renpy_language_code(
-                self.config.translation_settings.target_language or self._target_language or "turkish"
+                self.config.translation_settings.target_language or self._target_language or "english"
             )
             self._target_language = effective_target
             effective_source = self.config.translation_settings.source_language or "auto"
@@ -1540,13 +1687,18 @@ class AppBackend(QObject):
 
     # ── #MOD isolated work ───────────────────────────────────────────────
 
-    def _ensure_mod_translator(self, engine: TranslationEngine) -> None:
-        """Prepare the selected translator without touching the normal hook/pipeline."""
+    def _ensure_mod_translator(self, engine: TranslationEngine, engine_name: Optional[str] = None) -> None:
+        """Prepare the MOD engine without changing the normal translator registry."""
+        manager = self._mod_translation_manager
         if engine == TranslationEngine.GOOGLE:
-            if engine not in self.translation_manager.translators:
-                self._setup_google_translator()
+            if engine not in manager.translators:
+                self._replace_translator(
+                    engine,
+                    GoogleTranslator(proxy_manager=self.proxy_manager, config_manager=self.config),
+                    manager=manager,
+                )
         elif engine == TranslationEngine.DEEPL:
-            if engine not in self.translation_manager.translators:
+            if engine not in manager.translators:
                 key = getattr(self.config.api_keys, "deepl_api_key", "") or ""
                 self._replace_translator(
                     engine,
@@ -1555,22 +1707,74 @@ class AppBackend(QObject):
                         proxy_manager=self.proxy_manager,
                         config_manager=self.config,
                     ),
+                    manager=manager,
                 )
-        elif engine in (TranslationEngine.OPENAI, TranslationEngine.GEMINI):
-            self._setup_ai_translator(engine)
+        elif engine == TranslationEngine.OPENAI and engine_name == "deepseek":
+            self._replace_translator(
+                engine,
+                DeepSeekTranslator(
+                    api_key=self.config.api_keys.openai_api_key or "",
+                    proxy_manager=self.proxy_manager,
+                    config_manager=self.config,
+                ),
+                manager=manager,
+            )
+        elif engine == TranslationEngine.OPENAI and engine_name == "openai":
+            base_url = self.config.translation_settings.openai_base_url or None
+            if base_url and "deepseek" in base_url.lower():
+                base_url = None
+            self._replace_translator(
+                engine,
+                OpenAITranslator(
+                    api_key=self.config.api_keys.openai_api_key or "",
+                    proxy_manager=self.proxy_manager,
+                    config_manager=self.config,
+                    model=self.config.translation_settings.openai_model,
+                    base_url=base_url,
+                ),
+                manager=manager,
+            )
+        elif engine == TranslationEngine.GEMINI:
+            fallback = manager.translators.get(TranslationEngine.GOOGLE)
+            if fallback is None:
+                fallback = GoogleTranslator(proxy_manager=self.proxy_manager, config_manager=self.config)
+                self._replace_translator(TranslationEngine.GOOGLE, fallback, manager=manager)
+            gemini = GeminiTranslator(
+                api_key=self.config.api_keys.gemini_api_key or "",
+                proxy_manager=self.proxy_manager,
+                config_manager=self.config,
+            )
+            gemini.set_fallback_translator(fallback)
+            self._replace_translator(engine, gemini, manager=manager)
         elif engine == TranslationEngine.LIBRETRANSLATE:
-            self._setup_libretranslate()
-        elif engine == TranslationEngine.BING:
-            self._setup_bing_translator()
+            from src.core.translator import LibreTranslateTranslator
 
-        if engine not in self.translation_manager.translators:
+            self._replace_translator(
+                engine,
+                LibreTranslateTranslator(
+                    base_url=self.config.translation_settings.libretranslate_url,
+                    api_key=self.config.translation_settings.libretranslate_api_key,
+                    proxy_manager=self.proxy_manager,
+                    config_manager=self.config,
+                ),
+                manager=manager,
+            )
+        elif engine == TranslationEngine.BING:
+            from src.core.translator import BingTranslator
+
+            fallback = manager.translators.get(TranslationEngine.GOOGLE)
+            if fallback is None:
+                fallback = GoogleTranslator(proxy_manager=self.proxy_manager, config_manager=self.config)
+                self._replace_translator(TranslationEngine.GOOGLE, fallback, manager=manager)
+            bing = BingTranslator(proxy_manager=self.proxy_manager, config_manager=self.config)
+            bing.set_fallback_translator(fallback)
+            self._replace_translator(engine, bing, manager=manager)
+
+        if engine not in manager.translators:
             raise RuntimeError(f"Translation engine is not available for MOD: {getattr(engine, 'value', engine)}")
 
-        # A previous pipeline may have left its stop callback attached to the
-        # shared TranslationManager. MOD owns its own lifecycle and must never
-        # inherit a stale cancellation flag from a finished/stopped run.
-        self.translation_manager.should_stop_callback = lambda: False
-        active_translator = self.translation_manager.translators.get(engine)
+        manager.should_stop_callback = lambda: False
+        active_translator = manager.translators.get(engine)
         if active_translator is not None and hasattr(active_translator, "should_stop_callback"):
             active_translator.should_stop_callback = lambda: False
 
@@ -1598,6 +1802,65 @@ class AppBackend(QObject):
             return
         self._submit_work("mod_generate", self._mod_job_snapshot())
 
+    @pyqtSlot()
+    def generateAllModLanguages(self) -> None:
+        if not self._mod_project_path:
+            self._mod_status = self._t(
+                "mod_status_select_game",
+                "Select a Ren'Py game from the MOD page first.",
+            )
+            self.modStatusChanged.emit()
+            self.logMessage.emit("error", self._mod_status)
+            return
+        self._submit_work(
+            "mod_generate_all",
+            {**self._mod_job_snapshot(), "target_languages": MOD_TARGET_LANGUAGE_CODES},
+        )
+
+    @pyqtSlot(result=list)
+    def getModEditableTranslations(self) -> list:
+        if not self._mod_project_path:
+            return []
+        from src.ui_mod.generator import load_interface_mod_translations
+        try:
+            return load_interface_mod_translations(
+                self._mod_project_path,
+                self.config.translation_settings.mod_target_language,
+            )
+        except (OSError, ValueError) as exc:
+            self.logger.warning("[#MOD] Could not load manual corrections: %s", exc)
+            self.logMessage.emit("error", str(exc))
+            return []
+
+    @pyqtSlot(list, result=bool)
+    def saveModCorrections(self, corrections: list) -> bool:
+        if not self._mod_project_path:
+            self.logMessage.emit("error", self._t(
+                "mod_status_select_game", "Select a Ren'Py game from the MOD page first."
+            ))
+            return False
+        if self._mod_running:
+            self.logMessage.emit("warning", self._t(
+                "mod_status_generating", "Wait until MOD generation is complete."
+            ))
+            return False
+        from src.ui_mod.generator import save_interface_mod_corrections
+        try:
+            save_interface_mod_corrections(
+                self._mod_project_path,
+                self.config.translation_settings.mod_target_language,
+                corrections,
+            )
+        except (OSError, ValueError) as exc:
+            self.logger.warning("[#MOD] Could not save manual corrections: %s", exc)
+            self.logMessage.emit("error", str(exc))
+            self._mod_status = str(exc)
+            self.modStatusChanged.emit()
+            return False
+        self.modTranslationsChanged.emit()
+        self.generateMod()
+        return True
+
     def _start_mod_job(self, kind: str, payload: Dict[str, Any]) -> None:
         self._mod_running = True
         self.modRunningChanged.emit()
@@ -1608,28 +1871,49 @@ class AppBackend(QObject):
         self.modOutputPathChanged.emit()
         self._mod_status = self._t(
             "mod_status_analyzing" if kind == "mod_analyze" else "mod_status_generating",
-            "Analyzing interface..." if kind == "mod_analyze" else "Generating interface MOD...",
+            "Analyzing interface..." if kind == "mod_analyze" else (
+                "Generating all five interface languages..." if kind == "mod_generate_all"
+                else "Generating interface MOD..."
+            ),
         )
         self.modStatusChanged.emit()
 
         def _worker() -> None:
             try:
                 project_path = payload.get("project_path", "")
-                from src.ui_mod.generator import analyze_interface_mod, generate_interface_mod
+                from src.ui_mod.generator import (
+                    analyze_interface_mod,
+                    generate_interface_mod,
+                    generate_interface_mod_languages,
+                )
                 if kind == "mod_analyze":
                     result = analyze_interface_mod(project_path, ui_text=self._t)
                 else:
-                    engine = payload.get("engine", self._selected_engine)
-                    self._ensure_mod_translator(engine)
-                    result = generate_interface_mod(
-                        project_path=project_path,
-                        source_language=payload.get("source_language", "auto"),
-                        target_language=payload.get("target_language", self._target_language),
-                        engine=engine,
-                        translation_manager=self.translation_manager,
-                        progress=lambda current, total, text: self._modProgress.emit(current, total, text),
-                        ui_text=self._t,
-                    )
+                    engine_name = str(payload.get("engine", "google") or "google").lower()
+                    engine = self._engine_from_str(engine_name)
+                    self._ensure_mod_translator(engine, engine_name)
+                    progress = lambda current, total, text: self._modProgress.emit(current, total, text)
+                    if kind == "mod_generate_all":
+                        result = generate_interface_mod_languages(
+                            project_path=project_path,
+                            source_language="auto",
+                            target_languages=payload.get("target_languages", MOD_TARGET_LANGUAGE_CODES),
+                            engine=engine,
+                            translation_manager=self._mod_translation_manager,
+                            progress=progress,
+                            ui_text=self._t,
+                        )
+                    else:
+                        result = generate_interface_mod(
+                            project_path=project_path,
+                            source_language="auto",
+                            target_language=payload.get("target_language", self._target_language),
+                            engine=engine,
+                            translation_manager=self._mod_translation_manager,
+                            progress=progress,
+                            ui_text=self._t,
+                            allow_identity_language=True,
+                        )
                 self._modWorkerFinished.emit(result)
             except Exception as exc:
                 self.logger.exception("[#MOD] MOD job failed")
@@ -1661,7 +1945,31 @@ class AppBackend(QObject):
         ok = bool(getattr(result, "success", False))
         pending = int(getattr(result, "pending", 0) or 0)
         self._mod_partial = bool(ok and self._mod_output_path and (getattr(result, "partial", False) or pending > 0))
-        if self._mod_partial:
+        languages_total = int(getattr(result, "languages_total", 0) or 0)
+        languages_generated = int(getattr(result, "languages_generated", 0) or 0)
+        if ok and self._mod_output_path and languages_total:
+            if self._mod_partial:
+                self._mod_status = self._t(
+                    "mod_status_multi_partial",
+                    "MOD ready for {generated}/{total} languages. {translated} translated, "
+                    "{unchanged} unchanged and {pending} pending. See the log for failed languages.",
+                    generated=languages_generated,
+                    total=languages_total,
+                    translated=self._mod_translated_count,
+                    unchanged=self._mod_unchanged_count,
+                    pending=pending,
+                )
+            else:
+                self._mod_status = self._t(
+                    "mod_status_multi_done",
+                    "All {total} languages are in the same in-game selector. "
+                    "{translated} translated, {unchanged} unchanged ({coverage}% coverage).",
+                    total=languages_total,
+                    translated=self._mod_translated_count,
+                    unchanged=self._mod_unchanged_count,
+                    coverage=f"{self._mod_coverage:.1f}",
+                )
+        elif self._mod_partial:
             # #MOD — never report "done" while texts are still pending (2026-10-17).
             self._mod_status = self._t(
                 "mod_status_generated_partial",
@@ -2100,7 +2408,7 @@ class AppBackend(QObject):
             from src.tools.font_helper import check_font_for_project
 
             target_lang = getattr(
-                self.config.translation_settings, "target_language", "turkish"
+                self.config.translation_settings, "target_language", "english"
             )
             # The selected path may be the game's EXE; fonts live under game/.
             summary = check_font_for_project(self._tool_game_dir(), target_lang)
@@ -2141,7 +2449,7 @@ class AppBackend(QObject):
         if not self._require_tool_game_dir():
             return
         target_lang = getattr(
-            self.config.translation_settings, "target_language", "turkish"
+            self.config.translation_settings, "target_language", "english"
         )
         start_msg = self._t(
             "log_font_inject_start",
@@ -2155,7 +2463,7 @@ class AppBackend(QObject):
             from src.tools.font_injector import inject_font
 
             target_lang = getattr(
-                self.config.translation_settings, "target_language", "turkish"
+                self.config.translation_settings, "target_language", "english"
             )
             result = inject_font(self._tool_game_dir(), target_lang)
             if result.get("success"):
@@ -2430,7 +2738,7 @@ class AppBackend(QObject):
 
             ts = getattr(self.config, "translation_settings", None)
             raw_src = getattr(ts, "source_language", "auto") if ts else "auto"
-            raw_tgt = getattr(ts, "target_language", "turkish") if ts else "turkish"
+            raw_tgt = getattr(ts, "target_language", "english") if ts else "english"
             src_lang = _normalize_lang_code(raw_src) if raw_src != "auto" else "auto"
             tgt_lang = _normalize_lang_code(raw_tgt)
 

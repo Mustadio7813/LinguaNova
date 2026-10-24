@@ -1,0 +1,64 @@
+{
+  "editorial_review": "Required; automatic validation is not editorial certification",
+  "inventory_resolution": {
+    "denominator": 11,
+    "display": "10/11 (90.90 %)",
+    "numerator": 10,
+    "percent": 90.9
+  },
+  "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+  "processing": {
+    "denominator": 11,
+    "display": "11/11 (100.00 %)",
+    "numerator": 11,
+    "percent": 100.0
+  },
+  "runtime_routes": {
+    "observed": [],
+    "unverified": "No real game execution attached"
+  },
+  "schema_version": 1,
+  "status_counts": {
+    "accepted": 7,
+    "extraction_omission": 1,
+    "preserved_approved": 3
+  },
+  "target_identity": [
+    "es",
+    "es-419",
+    "spanish_latam",
+    "latam_neutro_sin_modismos",
+    "1"
+  ],
+  "textual_change": {
+    "denominator": 11,
+    "display": "7/11 (63.63 %)",
+    "numerator": 7,
+    "percent": 63.63
+  },
+  "validated_translation": {
+    "denominator": 7,
+    "display": "7/7 (100.00 %)",
+    "numerator": 7,
+    "percent": 100.0
+  },
+  "visual": {
+    "counts": {
+      "reviewed": 4
+    },
+    "coverage": {
+      "denominator": 4,
+      "display": "4/4 (100.00 %)",
+      "numerator": 4,
+      "percent": 100.0
+    },
+    "no_detection_is_not_no_text": true,
+    "unobserved_runtime_resources": "not verified"
+  },
+  "visual_coverage": {
+    "denominator": 4,
+    "display": "4/4 (100.00 %)",
+    "numerator": 4,
+    "percent": 100.0
+  }
+}

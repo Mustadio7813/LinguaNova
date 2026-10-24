@@ -40,9 +40,7 @@ _DEEPL_TARGET_OVERRIDES = {"zh-CN": "ZH-HANS", "zh-TW": "ZH-HANT", "no": "NB", "
 _DEEPL_SOURCE_OVERRIDES = {"zh-CN": "ZH", "zh-TW": "ZH", "no": "NB", "ku": "KMR"}
 
 # Codes that the AI prompt table already names (src/core/ai_translator._SUPPORTED_LANGUAGES).
-_AI_NAMED_CODES = frozenset(
-    "en tr de fr es it pt ru zh ja ko ar pl nl sv no da fi hu cs ro uk vi th".split()
-)
+_AI_NAMED_CODES = frozenset({"en", "es", "pt", "fr", "ru"})
 
 
 def _engine_key(engine) -> str:

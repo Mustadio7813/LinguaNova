@@ -145,8 +145,9 @@ class TLParser:
         )
         
         # old "..." / new "..." for strings format (supports single and double quotes)
-        self._old_re = re.compile(r'^\s*old\s+(?P<quote>["\'])(?P<text>.*)(?P=quote)\s*$')
-        self._new_re = re.compile(r'^\s*new\s+(?P<quote>["\'])(?P<text>.*)(?P=quote)\s*$')
+        _ignore_suffix = r'(?:\s+#\s*ignore\b[^\r\n]*)?\s*$'
+        self._old_re = re.compile(r'^\s*old\s+(?P<quote>["\'])(?P<text>.*)(?P=quote)' + _ignore_suffix, re.IGNORECASE)
+        self._new_re = re.compile(r'^\s*new\s+(?P<quote>["\'])(?P<text>.*)(?P=quote)' + _ignore_suffix, re.IGNORECASE)
         
         # Speaker pattern: bare identifier (with optional dot/attributes) or quoted string
         _speaker_pattern = r'(?P<speaker>[A-Za-z_][\w\.]*(?:\s+[^"\'\n]+)?|"(?:[^"\\]|\\.)*"|\'(?:[^\'\\]|\\.)*\')'
@@ -154,7 +155,10 @@ class TLParser:
         # Clauses Ren'Py allows after the text of a say statement. A menu's
         # caption is stored as 'who "what" nointeract'; without this tail the
         # line was not recognised and its translation was never filled in.
-        _say_tail = r'(?P<tail>(?:\s+(?:nointeract|with\s+[^\s(]+(?:\((?:[^()]|\([^()]*\))*\))?|id\s+\w+))*)'
+        _say_tail = (
+            r'(?P<tail>(?:\s+(?:nointeract|with\s+[^\s(]+(?:\((?:[^()]|\([^()]*\))*\))?|id\s+\w+))*)'
+            + r'(?:\s+#\s*ignore\b[^\r\n]*)?'
+        )
 
         # Body of a quoted Ren'Py string. An escaped quote (\") or any other
         # backslash escape is consumed as a unit, so the text can only end at a
@@ -633,11 +637,22 @@ class TLParser:
         hand was overwritten whenever the same sentence was translated
         somewhere else.
         """
-        by_id = translations.get(translation_id)
-        if by_id:
+        def usable(candidate: Optional[str]) -> Optional[str]:
+            if not candidate or not candidate.strip():
+                return None
+            if candidate.strip() == (original or '').strip():
+                return None
+            return candidate
+
+        by_id = usable(translations.get(translation_id))
+        if by_id is not None:
             return by_id
-        if not existing or not existing.strip() or existing.strip() == (original or '').strip():
-            return translations.get(original)
+        existing_is_translation = (
+            bool(existing and existing.strip())
+            and existing.strip() != (original or '').strip()
+        )
+        if not existing_is_translation:
+            return usable(translations.get(original))
         return None
 
     def update_translations(

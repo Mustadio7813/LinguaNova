@@ -1,0 +1,193 @@
+{
+  "images": [
+    {
+      "hashes": {
+        "Original": "123d12b1b2d4a91d289d51ff1851ac32cf9bffa623a3d4e95f56eee861829b19",
+        "french": "eaa57a07f86f9baa5a4ca8ba7217b7d2fa8745dcf77d651a2a80d537fae3cdee",
+        "portuguese": "cdcfba2eed753bffc272297f49982682f8ad34703819a0ea1b02d9228555b011",
+        "russian": "e0b0095a89fe0c10b0f22d9df51d06324ef92af979277271fa054211843173a2",
+        "spanish_latam": "cdcfba2eed753bffc272297f49982682f8ad34703819a0ea1b02d9228555b011"
+      },
+      "path": "images/buttons/continue_hover.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "hashes": {
+        "Original": "a8d8b2bc972aea86c09df5af9e40f5d97e89b4effea29e7af121742f8746303d",
+        "french": "af3006b8ce1938e408ccb24dc23456a5a0cd7267cc12ce41870ddfb8b5128d09",
+        "portuguese": "9511342b856966fd5ba56b6c956242fcc55fb4dc809b564f52afa981e1ed0419",
+        "russian": "7b12bc841e49d050d4975883d343a9fc696cb7002368eb527f817bcf3769f940",
+        "spanish_latam": "9511342b856966fd5ba56b6c956242fcc55fb4dc809b564f52afa981e1ed0419"
+      },
+      "path": "images/buttons/continue_normal.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "hashes": {
+        "Original": "abffb0272f4f6963dc100f462c0cd7db92beb295e69b3cd089627454178efbbb",
+        "french": "1bf9f49eae791cf653ac842aedf934f25ea0a79a00724868704671b57f14fea5",
+        "portuguese": "b5a57f4f59e1d3b75a4d2e74e512e00ca6b1c2c42f4a8231e54e2923a6a0f5b0",
+        "russian": "d4e028c35e9c0d4b0ca2ca5d931f3faaeda0a3a3a20a378293e94c6af91c47eb",
+        "spanish_latam": "b5a57f4f59e1d3b75a4d2e74e512e00ca6b1c2c42f4a8231e54e2923a6a0f5b0"
+      },
+      "path": "images/buttons/continue_selected.png",
+      "size": [
+        480,
+        160
+      ]
+    },
+    {
+      "hashes": {
+        "Original": "7cf5d7ee90c9b841e450fef603179521e0871459f1feca472719dc4c77af1ee9",
+        "french": "896a509c0378a5e292654d3f95cc371e40a03dec3e4290d4621b05a1d0e00f2c",
+        "portuguese": "57248e99911faa48ec5c5a8f417920174e06baa87735ab717222651e1039bd30",
+        "russian": "e3a0a4d563cae83a3b92f767be97aa4306a985f90229ec0aa4cfdd92511a0450",
+        "spanish_latam": "57248e99911faa48ec5c5a8f417920174e06baa87735ab717222651e1039bd30"
+      },
+      "path": "images/capitulo_01/telefono/mensaje.png",
+      "size": [
+        640,
+        240
+      ]
+    },
+    {
+      "hashes": {
+        "Original": "ad1c33761abad233e94bb5255c3c75655f1dda103f16edade6405f735753a90c",
+        "french": "659774476b590c646396b672ada5bd1cf6fa02b351ef09c2f7e9587052acbee6",
+        "portuguese": "4eddd980d29bc912e91bb9347719f7ffe2705a0c097fa22abe49a40671c024b6",
+        "russian": "01c6d468ff0feecc3a783e3b31a3cd16866033dc78b371a2da5afad926bd0d35",
+        "spanish_latam": "4eddd980d29bc912e91bb9347719f7ffe2705a0c097fa22abe49a40671c024b6"
+      },
+      "path": "images/native/native_avif.avif",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "hashes": {
+        "Original": "645e1a8af82f5c7dd9b96d1edcf9b6f0575fdc14b9cc82415f46b357db8f0528",
+        "french": "5e68c41098cdb4ef7006a13baf313e669aca9211934355c40484f532bc4d91d0",
+        "portuguese": "13e2cd9ac37309569546522e8154a24fcf9306cd6b8878dfc844d0d5f10b30b6",
+        "russian": "9ea22e5d31b1c747f5a22c0e0d03907e39d458027eacc2030c43467f06ab0786",
+        "spanish_latam": "13e2cd9ac37309569546522e8154a24fcf9306cd6b8878dfc844d0d5f10b30b6"
+      },
+      "path": "images/native/native_bmp.bmp",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "hashes": {
+        "Original": "0ff0f33495f79968ee7658ace92341aacd68330f1ec5a05bb62ed449478a6c27",
+        "french": "2b649d1daf04ef878e9a4c4d7e5f84f7f49ea26dfec64cb2927c6643861cd3e9",
+        "portuguese": "17a25904b57df7f478453be1b444f5527e05459673bebf62d6096c13d752e212",
+        "russian": "efb55f83f50c31cad83293de48a34ead75ef3b636493a82e3a197c1df4ade880",
+        "spanish_latam": "17a25904b57df7f478453be1b444f5527e05459673bebf62d6096c13d752e212"
+      },
+      "path": "images/native/native_ico.ico",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "hashes": {
+        "Original": "a7a01bb8f2c03bbe1018fc333b38a739d83cf1cb780f6c1c189d02e8175152ef",
+        "french": "bdecc2480ce41455f4e7bae4e7cf939f03a4c757a15fd60bbb973855340ba9ba",
+        "portuguese": "5f922b4b75bcb0eb03551b33d47753a6a66fc38da177f3fc75818de2ec40e792",
+        "russian": "42bd9dc67cf6fd11971f15cda31948af8f8f65d4becdc9da42116ac9b0df1d2b",
+        "spanish_latam": "5f922b4b75bcb0eb03551b33d47753a6a66fc38da177f3fc75818de2ec40e792"
+      },
+      "path": "images/native/native_jpeg.jpeg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "hashes": {
+        "Original": "a7a01bb8f2c03bbe1018fc333b38a739d83cf1cb780f6c1c189d02e8175152ef",
+        "french": "bdecc2480ce41455f4e7bae4e7cf939f03a4c757a15fd60bbb973855340ba9ba",
+        "portuguese": "5f922b4b75bcb0eb03551b33d47753a6a66fc38da177f3fc75818de2ec40e792",
+        "russian": "42bd9dc67cf6fd11971f15cda31948af8f8f65d4becdc9da42116ac9b0df1d2b",
+        "spanish_latam": "5f922b4b75bcb0eb03551b33d47753a6a66fc38da177f3fc75818de2ec40e792"
+      },
+      "path": "images/native/native_jpg.jpg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "hashes": {
+        "Original": "095d07d106c4cbd1ccec4d083ae1804b7fe0f7fe7eeabbb8c4f671098caa9790",
+        "french": "f1104dad2d85e44601df646f80e0a41d61a1cec4f415a425174154d22b45696c",
+        "portuguese": "9e70adfe113c3cd9841edea8200dc343608eb8dc2575a8acaea59921f7cdbd8c",
+        "russian": "002356683f6711bfd5b50eb025321b1a62d203cf4c6c4ceaf4c7c9f2d066cea9",
+        "spanish_latam": "9e70adfe113c3cd9841edea8200dc343608eb8dc2575a8acaea59921f7cdbd8c"
+      },
+      "path": "images/native/native_png.png",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "hashes": {
+        "Original": "fe356d6cdccb57e229fe98cb2d53d2b385a533448d1d7a80db85e9ca6622ef44",
+        "french": "7c979868c5959e7c6d207034656347cf31512e3b335099d1ec3944327d5c4224",
+        "portuguese": "8fd1cdbe17a3c6163b7617440511f8bed09e35269907fd1c9d992aa941ad5967",
+        "russian": "a91e7f8305e44608591728db82f2e8877ea2e417f54b52f68a4140095576e9fc",
+        "spanish_latam": "8fd1cdbe17a3c6163b7617440511f8bed09e35269907fd1c9d992aa941ad5967"
+      },
+      "path": "images/native/native_svg.svg",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "hashes": {
+        "Original": "89f616d5567a121917ea2fd94287e6b877c795dc650fa84c927f6c01b9d5b06d",
+        "french": "61188099e4aa0d4ef73fa23f4282846684f8120798be00910a6ac4efa9e6b816",
+        "portuguese": "c60d7d81cdfd66bed5d84af889446465a34c05dfd8a404a456e764acf3d2ed36",
+        "russian": "6588829ebb6e991c467ab50b36a668edff0f6cd6050b66f4a501fbe386f5c158",
+        "spanish_latam": "c60d7d81cdfd66bed5d84af889446465a34c05dfd8a404a456e764acf3d2ed36"
+      },
+      "path": "images/native/native_tga.tga",
+      "size": [
+        240,
+        100
+      ]
+    },
+    {
+      "hashes": {
+        "Original": "52fa06426d3ab9c2c02d2993451a6810d48d8448d63bdec0fdb4823619aa8047",
+        "french": "eff1d6aae886f443f126ed5042b0554cd08c99a5cd6579f8ede8f8fbdb4dc186",
+        "portuguese": "19b53aa744dfaa595f41996688a62adb8c5a9b6cfe3081799b11b683bf1c4827",
+        "russian": "c7e05af204fed19a5b9761717df55e8605d973fbf7e1c1d3a5a34f47a60d7a90",
+        "spanish_latam": "19b53aa744dfaa595f41996688a62adb8c5a9b6cfe3081799b11b683bf1c4827"
+      },
+      "path": "images/native/native_webp.webp",
+      "size": [
+        240,
+        100
+      ]
+    }
+  ],
+  "languages": [
+    "spanish_latam",
+    "french",
+    "portuguese",
+    "russian",
+    "english"
+  ]
+}

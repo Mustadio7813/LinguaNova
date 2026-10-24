@@ -1,0 +1,59 @@
+LINGUANOVA V2.2 - CORRECCIÓN MULTIDIOMA
+Versión interna del programa: 1.1.2. Base recibida: Traductor LinguaNova V2.2.rar.
+
+GESTIÓN AUTOMÁTICA DE FUENTES
+El traductor genera e instala por sí mismo game/zzz_linguanova_ocultar_fuentes.rpy.
+No debes descargar, copiar ni editar un parche aparte. La protección también se
+instala cuando desactivas la integración del menú, al generar un MOD y al usar
+la herramienta de fuentes de LinguaNova.
+Se excluyen de los menús automáticos únicamente los identificadores de recursos
+linguanova_fonts, linguanova_font y linguanova_mod_fonts. Los archivos de fuentes
+siguen disponibles: la fuente rusa conserva su ruta y su carga.
+
+PARA TU ETERNUM, QUE YA ESTÁ TRADUCIDO
+Cierra el juego. En el traductor actualizado, selecciona el juego y usa la
+utilidad «Integrar el idioma en el selector del juego» con un idioma instalado.
+El programa guarda la protección automáticamente; vuelve a abrir el juego.
+Esta utilidad no vuelve a traducir los diálogos. Si ejecutas una traducción
+nueva, el mismo guardado automático forma parte de la generación normal.
+No borres las fuentes antiguas ni zzz_linguanova_font.rpy: pueden seguir en uso.
+
+PARA USAR EL PROGRAMA CORREGIDO
+Extrae todo el ZIP en una carpeta nueva y ejecuta run.bat. Si utilizas un EXE
+compilado de la versión anterior, debes recompilar este código con build_windows.bat.
+El ZIP contiene código fuente y no un nuevo instalador compilado de Windows.
+Activa la integración del idioma si quieres que se añadan controles al menú.
+La protección de recursos se instala incluso con esa integración desactivada.
+Tras la traducción, el registro confirma el selector guardado si está activado.
+
+CÓMO SE INTEGRA EL MENÚ
+- Si el juego tiene un selector automático, se conserva ese mismo menú.
+- Si solo tiene la opción Original/English, se añaden las traducciones como
+  botones hermanos con sus estilos y acciones originales.
+- Si usa una lista o diccionario de idiomas, se agregan las traducciones allí.
+- Si tiene las Preferencias estándar sin selector, se añade el grupo de idiomas
+  dentro de sus controles nativos, con el estilo radio del juego.
+- Ante una pantalla personalizada que no se pueda reconocer con seguridad,
+  se conserva el juego y se habilita un selector alternativo con Shift+L.
+- Un solo zzz_linguanova_language_menu.rpy conserva todos los idiomas instalados;
+  generar portugués después de español mantiene ambos. Original sigue disponible.
+- Shift+L también permite cambiar durante la partida. Cuando hay un MOD de
+  LinguaNova, se usa su selector para evitar duplicar botones y atajos.
+
+FUENTES Y CAMBIO EN CALIENTE
+Las nuevas fuentes se guardan en game/linguanova_fonts/, fuera de tl/, para que
+Ren'Py no confunda recursos con idiomas. Se conservan los bloques de fuentes
+creados para otros idiomas. Las fuentes antiguas no se eliminan.
+El modo estándar carga el diccionario del idioma elegido y limpia la caché
+anterior al cambiar. Original deja de aplicar la traducción del último idioma.
+
+ALCANCE
+El traductor conserva su catálogo de inglés, español, francés, portugués y ruso.
+El selector puede mostrar otros idiomas que el juego ya tenga instalados.
+Instala los archivos de traducción antes de abrir el juego. Una vez cargados,
+puedes alternarlos durante la partida; añadir nuevos archivos requiere volver
+a abrir el juego para que Ren'Py los registre.
+Esta corrección no convierte las líneas rechazadas en traducciones válidas ni
+traduce texto incrustado en imágenes. Las protecciones del traductor se conservan.
+
+Consulta docs/VERIFICACION_MULTIDIOMA.md para las pruebas y sus límites.

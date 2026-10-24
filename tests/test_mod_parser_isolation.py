@@ -117,6 +117,26 @@ label start:
     assert data_entries and any(e.screen == "inventory" for e in data_entries)
 
 
+def test_mod_parser_preserves_multiline_text_and_long_multiline_data():
+    help_items = [f"Complete help entry {index:03}" for index in range(90)]
+    script = (
+        'screen help_menu():\n'
+        '    text """This complete interface message\n'
+        'continues on another source line without being truncated."""\n'
+        '    for item in help_items:\n'
+        '        text item\n'
+        'default help_items = [\n'
+        + "".join(f'    {item!r},\n' for item in help_items)
+        + ']\n'
+    )
+
+    entries = ModInterfaceParser().parse_text(script, "screens.rpy")
+    texts = {entry.text for entry in entries}
+
+    assert "This complete interface message\ncontinues on another source line without being truncated." in texts
+    assert set(help_items) <= texts
+
+
 
 def test_rendered_hook_reloads_external_json_when_active_language_changes():
     """The editable JSON in tl/<lang>/ wins over the embedded copy; languages the

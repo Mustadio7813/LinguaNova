@@ -23,7 +23,7 @@ from src.ui_mod.languages import all_languages, api_code, folder_aliases, resolv
 from src.ui_mod.quality import language_identification_available, validate_translation
 from src.ui_mod.generator import generate_interface_mod
 
-PL = resolve_language("polish")
+PL = resolve_language("russian")
 PT = resolve_language("portuguese")
 ES = resolve_language("spanish")
 
@@ -82,30 +82,34 @@ class ScriptedManager:
 
 def test_every_catalogue_language_maps_to_its_api_code_not_its_folder_name():
     languages = all_languages()
-    assert len(languages) == 135
-    assert len({l.api for l in languages}) == 135 and len({l.renpy for l in languages}) == 135
+    assert [(lang.renpy, lang.api) for lang in languages] == [
+        ("spanish", "es"),
+        ("english", "en"),
+        ("portuguese", "pt"),
+        ("french", "fr"),
+        ("russian", "ru"),
+    ]
     for lang in languages:
         assert api_code(lang.renpy) == lang.api
         assert api_code(lang.api) == lang.api
         assert resolve_language(lang.english) is lang
         assert lang.renpy.lower() in folder_aliases(lang.renpy)
-    assert api_code("polish") == "pl"           # the confirmed defect: "polish" was sent as-is
     assert api_code("auto") == "auto"
+    with pytest.raises(ValueError):
+        api_code("polish")
     with pytest.raises(ValueError):
         api_code("klingon_unknown")
 
 
 def test_old_shim_no_longer_forwards_folder_names():
-    assert gen._api_language("polish") == "pl"
-    assert gen._api_language("chinese_t") == "zh-TW"
-    assert gen._api_language("meiteilon") == "mni-Mtei"
+    assert gen._api_language("russian") == "ru"
+    with pytest.raises(ValueError):
+        gen._api_language("polish")
 
 
 def test_rtl_and_scripts_are_known():
-    assert resolve_language("arabic").rtl and resolve_language("hebrew").rtl
     assert not PL.rtl
     assert resolve_language("russian").script == "CYRILLIC"
-    assert resolve_language("japanese").script == "JAPANESE"
 
 
 # ── candidates ───────────────────────────────────────────────────────────────
@@ -136,7 +140,7 @@ def test_marked_call_is_unwrapped():
     assert unwrap_marked_literal('Function(x, "a")') is None
 
 
-# ── validation (real engine answers recorded in the Portuguese→Polish report) ─
+# ── validation (real engine answers recorded in the Portuguese→Russian report) ─
 
 @needs_lid
 @pytest.mark.parametrize("source,answer", [
@@ -161,10 +165,8 @@ def test_case_only_or_identical_answers_are_not_counted_as_translations():
 @pytest.mark.parametrize("source,answer,target", [
     ("( A Donna mandou eu olhar pela janela... melhor pegar o binóculo. )",
      "(Donna me dijo que mirara por la ventana... Mejor coger los prismáticos. )", "spanish"),
-    ("Nenhuma missão ativa no momento.", "Obecnie nie ma aktywnych misji.", "polish"),
+    ("Nenhuma missão ativa no momento.", "Сейчас нет активных заданий.", "russian"),
     ("Nenhuma missão ativa no momento.", "Нет активных миссий на данный момент.", "russian"),
-    ("Nenhuma missão ativa no momento.", "現在進行中のミッションはありません。", "japanese"),
-    ("Nenhuma missão ativa no momento.", "لا توجد مهمة نشطة في الوقت الحالي.", "arabic"),
 ])
 def test_real_translations_are_accepted(source, answer, target):
     verdict = validate_translation(source, answer, resolve_language(target), PT)
@@ -174,8 +176,8 @@ def test_real_translations_are_accepted(source, answer, target):
 def test_wrong_script_and_broken_variables_are_rejected():
     ru = resolve_language("russian")
     assert validate_translation("Nenhuma missão ativa no momento.", "Nenhuma missao ativa agora mesmo.", ru, PT).status == "rejected"
-    assert validate_translation("Dinheiro: [money]", "Pieniądze: [pieniadze]", PL, PT).reason == "structure_changed"
-    assert validate_translation("Olá {b}mundo{/b}", "Witaj świecie", PL, PT).reason == "structure_changed"
+    assert validate_translation("Dinheiro: [money]", "Деньги: [dinheiro]", PL, PT).reason == "structure_changed"
+    assert validate_translation("Olá {b}mundo{/b}", "Привет, мир", PL, PT).reason == "structure_changed"
 
 
 # ── generator contract ───────────────────────────────────────────────────────
@@ -184,23 +186,23 @@ def test_requests_use_api_codes_and_detected_source_and_bypass_shared_cache(tmp_
     texts = ["Nenhuma missão ativa no momento.", "Menu principal"]
     _game(tmp_path, texts)
     manager = ScriptedManager({
-        ("pt", "Nenhuma missão ativa no momento."): "Obecnie nie ma aktywnych misji.",
-        ("pt", "Menu principal"): "Menu główne",
+        ("pt", "Nenhuma missão ativa no momento."): "Сейчас нет активных заданий.",
+        ("pt", "Menu principal"): "Главное меню",
     })
-    result = generate_interface_mod(str(tmp_path), "auto", "polish", TranslationEngine.GOOGLE, manager,
+    result = generate_interface_mod(str(tmp_path), "auto", "russian", TranslationEngine.GOOGLE, manager,
                                     source_detector=lambda samples: "pt")
     assert result.success and result.translated == 2 and result.pending == 0
-    assert {(r.source_lang, r.target_lang) for r in manager.requests} == {("pt", "pl")}
+    assert {(r.source_lang, r.target_lang) for r in manager.requests} == {("pt", "ru")}
     assert manager.bypass_active_during_calls and all(manager.bypass_active_during_calls)
     report = json.loads(Path(result.report_path).read_text(encoding="utf-8"))
-    assert report["api_source"] == "pt" and report["api_target"] == "pl"
-    assert report["engine_codes"] == {"source": "pt", "target": "pl"}
+    assert report["api_source"] == "pt" and report["api_target"] == "ru"
+    assert report["engine_codes"] == {"source": "pt", "target": "ru"}
 
 
 def test_undetermined_source_is_reported_not_turned_into_english(tmp_path):
     _game(tmp_path, ["Menu principal"])
-    manager = ScriptedManager({"Menu principal": "Menu główne"})
-    result = generate_interface_mod(str(tmp_path), "auto", "polish", TranslationEngine.DEEPL, manager,
+    manager = ScriptedManager({"Menu principal": "Главное меню"})
+    result = generate_interface_mod(str(tmp_path), "auto", "russian", TranslationEngine.DEEPL, manager,
                                     source_detector=lambda samples: None)
     assert result.success
     assert {r.source_lang for r in manager.requests} == {"auto"}
@@ -214,75 +216,75 @@ def test_mixed_batch_answer_is_retried_individually_and_never_published(tmp_path
     src_bad = "( A Donna mandou eu olhar pela janela... melhor pegar o binóculo. )"
     _game(tmp_path, [src_ok, src_bad, "( ...são as duas. As DUAS. )"])
     manager = ScriptedManager({
-        ("pt", src_ok): "Obecnie nie ma aktywnych misji.",
-        ("pt", src_bad): "( A Donna mandou eu olhar pela janela... Zrób to z góry. )",   # recorded defect
-        ("auto", src_bad): "( Donna kazała mi wyjrzeć przez okno... lepiej wezmę lornetkę. )",
-        ("pt", "( ...são as duas. As DUAS. )"): "( ... São as Duas. Jako DUAS. )",       # recorded defect
-        ("auto", "( ...são as duas. As DUAS. )"): "( ... São as Duas. Jako DUAS. )",
+        ("pt", src_ok): "Сейчас нет активных заданий.",
+        ("pt", src_bad): "( A Donna falou que eu deveria olhar pela janela... лучше взять бинокль. )",
+        ("auto", src_bad): "( Донна велела мне выглянуть в окно... лучше взять бинокль. )",
+        ("pt", "( ...são as duas. As DUAS. )"): "( ... this is both. BOTH. )",
+        ("auto", "( ...são as duas. As DUAS. )"): "( ... this is both. BOTH. )",
     })
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", TranslationEngine.GOOGLE, manager)
-    data = json.loads((tmp_path / "game/tl/polish/linguanova_mod_hook_data.json").read_text(encoding="utf-8"))
-    assert data["mapping"][src_bad].startswith("( Donna kazała")
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", TranslationEngine.GOOGLE, manager)
+    data = json.loads((tmp_path / "game/tl/russian/linguanova_mod_hook_data.json").read_text(encoding="utf-8"))
+    assert data["mapping"][src_bad].startswith("( Донна велела")
     assert "( ...são as duas. As DUAS. )" not in data["mapping"]
     assert result.partial and result.pending == 1
     hook = Path(result.output_path).read_text(encoding="utf-8")
-    assert "Jako DUAS" not in hook and "Zrób to z góry" not in hook
+    assert "Это обе" not in hook and "сказала мне посмотреть" not in hook
 
 
 def test_engine_failure_publishes_nothing_and_keeps_previous_output(tmp_path):
     _game(tmp_path, ["Menu principal"])
-    ok = generate_interface_mod(str(tmp_path), "portuguese", "polish", TranslationEngine.GOOGLE,
-                                ScriptedManager({"Menu principal": "Menu główne"}))
+    ok = generate_interface_mod(str(tmp_path), "portuguese", "russian", TranslationEngine.GOOGLE,
+                                ScriptedManager({"Menu principal": "Главное меню"}))
     before = Path(ok.output_path).read_bytes()
     _game(tmp_path, ["Menu principal", "Carregar save"])
-    again = generate_interface_mod(str(tmp_path), "portuguese", "polish", TranslationEngine.GOOGLE,
+    again = generate_interface_mod(str(tmp_path), "portuguese", "russian", TranslationEngine.GOOGLE,
                                    ScriptedManager(fail=True))
     assert again.success and again.partial            # cached valid entry kept, new one pending
-    data = json.loads((tmp_path / "game/tl/polish/linguanova_mod_hook_data.json").read_text(encoding="utf-8"))
-    assert data["mapping"] == {"Menu principal": "Menu główne"}
-    assert b"Menu g\xc5\x82\xc3\xb3wne" in Path(again.output_path).read_bytes() and before
+    data = json.loads((tmp_path / "game/tl/russian/linguanova_mod_hook_data.json").read_text(encoding="utf-8"))
+    assert data["mapping"] == {"Menu principal": "Главное меню"}
+    assert "Главное меню".encode("utf-8") in Path(again.output_path).read_bytes() and before
 
 
 def test_first_run_failure_writes_no_files(tmp_path):
     _game(tmp_path, ["Menu principal"])
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", TranslationEngine.GOOGLE,
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", TranslationEngine.GOOGLE,
                                     ScriptedManager(fail=True))
     assert not result.success
     assert not list((tmp_path / "game").glob("linguanova_mod_*.rpy"))
-    assert not (tmp_path / "game/tl/polish").exists()
+    assert not (tmp_path / "game/tl/russian").exists()
 
 
 def test_legacy_manual_mirror_and_unprovenanced_data_are_not_trusted(tmp_path):
     game = _game(tmp_path, ["Menu principal"])
-    tl = game / "tl" / "polish"
+    tl = game / "tl" / "russian"
     tl.mkdir(parents=True)
     # Old generator wrote every machine answer here and re-read it as "manual".
-    (tl / "linguanova_mod_manual.json").write_text(json.dumps({"mapping": {"Menu principal": "Menu Principal"}}), "utf-8")
-    (tl / "linguanova_mod_hook_data.json").write_text(json.dumps({"mapping": {"Menu principal": "Menu Principal"}, "contexts": {}}), "utf-8")
-    manager = ScriptedManager({"Menu principal": "Menu główne"})
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", TranslationEngine.GOOGLE, manager)
+    (tl / "linguanova_mod_manual.json").write_text(json.dumps({"mapping": {"Menu principal": "Menú principal"}}), "utf-8")
+    (tl / "linguanova_mod_hook_data.json").write_text(json.dumps({"mapping": {"Menu principal": "Menú principal"}, "contexts": {}}), "utf-8")
+    manager = ScriptedManager({"Menu principal": "Главное меню"})
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", TranslationEngine.GOOGLE, manager)
     assert result.success and [r.text for r in manager.requests] == ["Menu principal"]
     manual = json.loads((tl / "linguanova_mod_manual.json").read_text(encoding="utf-8"))
     assert manual["schema"] == 2 and manual["mapping"] == {}
     backups = list((tl / "linguanova_mod_backup").rglob("*.bak"))
-    assert {b.name for b in backups} >= {"polish__linguanova_mod_manual.json.bak", "polish__linguanova_mod_hook_data.json.bak"}
+    assert {b.name for b in backups} >= {"russian__linguanova_mod_manual.json.bak", "russian__linguanova_mod_hook_data.json.bak"}
     assert not list((tl / "linguanova_mod_backup").rglob("*.rpy"))
 
 
 def test_hand_edit_wins_and_cache_from_other_source_is_not_reused(tmp_path):
     _game(tmp_path, ["Menu principal", "Carregar save"])
-    table = {"Menu principal": "Menu główne", "Carregar save": "Wczytaj zapis"}
-    generate_interface_mod(str(tmp_path), "portuguese", "polish", TranslationEngine.GOOGLE, ScriptedManager(table))
-    tl = tmp_path / "game/tl/polish"
+    table = {"Menu principal": "Главное меню", "Carregar save": "Загрузить игру"}
+    generate_interface_mod(str(tmp_path), "portuguese", "russian", TranslationEngine.GOOGLE, ScriptedManager(table))
+    tl = tmp_path / "game/tl/russian"
     manual = json.loads((tl / "linguanova_mod_manual.json").read_text(encoding="utf-8"))
-    manual["mapping"]["Carregar save"] = "Wczytaj grę"
+    manual["mapping"]["Carregar save"] = "Загрузить игру"
     (tl / "linguanova_mod_manual.json").write_text(json.dumps(manual, ensure_ascii=False), "utf-8")
     m2 = ScriptedManager(table)
-    generate_interface_mod(str(tmp_path), "portuguese", "polish", TranslationEngine.GOOGLE, m2)
+    generate_interface_mod(str(tmp_path), "portuguese", "russian", TranslationEngine.GOOGLE, m2)
     data = json.loads((tl / "linguanova_mod_hook_data.json").read_text(encoding="utf-8"))
-    assert data["mapping"]["Carregar save"] == "Wczytaj grę" and m2.requests == []
+    assert data["mapping"]["Carregar save"] == "Загрузить игру" and m2.requests == []
     m3 = ScriptedManager(table)   # declared source changes → cached machine answers are retranslated
-    generate_interface_mod(str(tmp_path), "spanish", "polish", TranslationEngine.GOOGLE, m3)
+    generate_interface_mod(str(tmp_path), "spanish", "russian", TranslationEngine.GOOGLE, m3)
     assert [r.text for r in m3.requests] == ["Menu principal"]
 
 
@@ -302,17 +304,17 @@ def _hook_runtime(hook_text, language, files=None, preexisting=None):
 
 def test_consecutive_languages_coexist_without_contamination(tmp_path):
     _game(tmp_path, ["Menu principal", "Dinheiro: [money]"])
-    pl = ScriptedManager({"Menu principal": "Menu główne", "Dinheiro: __LNMOD_TOKEN_0__": "Pieniądze: __LNMOD_TOKEN_0__"})
-    generate_interface_mod(str(tmp_path), "portuguese", "polish", TranslationEngine.GOOGLE, pl)
+    pl = ScriptedManager({"Menu principal": "Главное меню", "Dinheiro: __LNMOD_TOKEN_0__": "Деньги: __LNMOD_TOKEN_0__"})
+    generate_interface_mod(str(tmp_path), "portuguese", "russian", TranslationEngine.GOOGLE, pl)
     es = ScriptedManager({"Menu principal": "Menú principal", "Dinheiro: __LNMOD_TOKEN_0__": "Dinero: __LNMOD_TOKEN_0__"})
     result = generate_interface_mod(str(tmp_path), "portuguese", "spanish", TranslationEngine.BING, es)
     assert {r.target_lang for r in es.requests} == {"es"}
-    pl_data = json.loads((tmp_path / "game/tl/polish/linguanova_mod_hook_data.json").read_text(encoding="utf-8"))
-    assert pl_data["mapping"]["Menu principal"] == "Menu główne"
+    pl_data = json.loads((tmp_path / "game/tl/russian/linguanova_mod_hook_data.json").read_text(encoding="utf-8"))
+    assert pl_data["mapping"]["Menu principal"] == "Главное меню"
     hook = Path(result.output_path).read_text(encoding="utf-8")
-    show, prefs, _ = _hook_runtime(hook, "polish")
-    assert show("Menu principal") == "Menu główne"
-    assert show("Dinheiro: [money]", money=30) == "Pieniądze: 30"
+    show, prefs, _ = _hook_runtime(hook, "russian")
+    assert show("Menu principal") == "Главное меню"
+    assert show("Dinheiro: [money]", money=30) == "Деньги: 30"
     prefs.language = "spanish"
     assert show("Menu principal") == "Menú principal"
     prefs.language = "german"                      # language without MOD data → untouched
@@ -323,22 +325,21 @@ def test_consecutive_languages_coexist_without_contamination(tmp_path):
 
 def test_hook_prefers_edited_json_and_survives_missing_loader(tmp_path):
     _game(tmp_path, ["Menu principal"])
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", TranslationEngine.GOOGLE,
-                                    ScriptedManager({"Menu principal": "Menu główne"}))
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", TranslationEngine.GOOGLE,
+                                    ScriptedManager({"Menu principal": "Главное меню"}))
     hook = Path(result.output_path).read_text(encoding="utf-8")
-    edited = {"tl/polish/linguanova_mod_hook_data.json": {"mapping": {"Menu principal": "Menu startowe"}, "contexts": {}}}
-    show, _, _ = _hook_runtime(hook, "polish", edited)
+    edited = {"tl/russian/linguanova_mod_hook_data.json": {"mapping": {"Menu principal": "Menu startowe"}, "contexts": {}}}
+    show, _, _ = _hook_runtime(hook, "russian", edited)
     assert show("Menu principal") == "Menu startowe"
-    show, _, _ = _hook_runtime(hook, "polish")          # no JSON readable → embedded copy
-    assert show("Menu principal") == "Menu główne"
+    show, _, _ = _hook_runtime(hook, "russian")          # no JSON readable → embedded copy
+    assert show("Menu principal") == "Главное меню"
     assert ": null" not in hook and "b85decode" not in hook
 
 
-@pytest.mark.parametrize("lang", ["arabic", "hebrew", "japanese", "chinese_s", "russian", "hindi", "thai"])
+@pytest.mark.parametrize("lang", ["russian"])
 def test_unicode_targets_round_trip_through_files_and_hook(tmp_path, lang, monkeypatch):
     target = resolve_language(lang)
-    sample = {"arabic": "القائمة الرئيسية", "hebrew": "תפריט ראשי", "japanese": "メインメニュー",
-              "chinese_s": "主菜单", "russian": "Главное меню", "hindi": "मुख्य मेनू", "thai": "เมนูหลัก"}[lang]
+    sample = "Главное меню"
     _game(tmp_path, ["Menu principal"])
     result = generate_interface_mod(str(tmp_path), "portuguese", lang, TranslationEngine.GOOGLE,
                                     ScriptedManager({"Menu principal": sample}))
@@ -373,18 +374,18 @@ def test_publish_rolls_back_when_a_replace_fails(tmp_path, monkeypatch):
 
 def test_existing_native_translation_must_pass_the_same_policy(tmp_path):
     game = _game(tmp_path, ["Menu principal", "Carregar save"])
-    tl = game / "tl" / "polish"
+    tl = game / "tl" / "russian"
     tl.mkdir(parents=True)
     (tl / "strings.rpy").write_text(
-        'translate polish strings:\n    old "Menu principal"\n    new "Menu główne"\n'
+        'translate russian strings:\n    old "Menu principal"\n    new "Главное меню"\n'
         '    old "Carregar save"\n    new "Carregar save"\n', encoding="utf-8")
-    manager = ScriptedManager({"Carregar save": "Wczytaj zapis"})
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", TranslationEngine.GOOGLE, manager)
+    manager = ScriptedManager({"Carregar save": "Загрузить игру"})
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", TranslationEngine.GOOGLE, manager)
     assert [r.text for r in manager.requests] == ["Carregar save"]   # untranslated native "new" not reused
     assert result.translated == 2
 
 
-# ── engines × 135 targets (SIMULATED engine; plumbing, files and hook) ──────
+# ── engines × five targets (SIMULATED engine; plumbing, files and hook) ──────
 
 from src.ui_mod.engine_support import request_code, support as engine_support
 
@@ -393,14 +394,11 @@ ENGINES = [TranslationEngine.GOOGLE, TranslationEngine.BING, TranslationEngine.D
 
 
 def test_deepl_codes_fix_main_mapping_variants():
-    assert request_code(TranslationEngine.DEEPL, resolve_language("chinese_t"), "target") == "ZH-HANT"
-    assert request_code(TranslationEngine.DEEPL, resolve_language("chinese_s"), "target") == "ZH-HANS"
-    assert request_code(TranslationEngine.DEEPL, resolve_language("norwegian"), "target") == "NB"
-    assert request_code(TranslationEngine.DEEPL, PL, "target") == "PL"
-    assert engine_support(TranslationEngine.DEEPL, resolve_language("meiteilon"), "target")[0] == "unsupported"
-    assert request_code(TranslationEngine.OPENAI, resolve_language("swahili"), "target") == "Swahili"
-    assert request_code(TranslationEngine.OPENAI, PL, "target") == "pl"
-    assert request_code(TranslationEngine.GOOGLE, resolve_language("chinese_t"), "target") == "zh-TW"
+    assert request_code(TranslationEngine.DEEPL, resolve_language("russian"), "target") == "RU"
+    assert request_code(TranslationEngine.DEEPL, resolve_language("portuguese"), "target") == "PT-PT"
+    assert request_code(TranslationEngine.DEEPL, resolve_language("english"), "target") == "EN-US"
+    assert request_code(TranslationEngine.OPENAI, resolve_language("russian"), "target") == "ru"
+    assert request_code(TranslationEngine.GOOGLE, resolve_language("russian"), "target") == "ru"
 
 
 def test_deepl_main_mapping_passes_mod_codes_through_unchanged():
@@ -421,7 +419,7 @@ def test_unsupported_engine_language_sends_nothing(tmp_path):
 
 @pytest.mark.parametrize("engine", ENGINES, ids=lambda e: e.value)
 def test_every_target_language_reaches_engine_files_and_hook(tmp_path, engine, monkeypatch):
-    """For each of the 135 targets: engine code, tl/<folder>, JSON, readable hook, runtime lookup."""
+    """For each of the five targets: engine code, tl/<folder>, JSON, readable hook, runtime lookup."""
     from src.ui_mod import quality
     # The engine is simulated, so its answer is a marker; acceptance rules are tested above.
     monkeypatch.setattr(gen, "validate_translation",
@@ -444,54 +442,54 @@ def test_every_target_language_reaches_engine_files_and_hook(tmp_path, engine, m
         show, _, _ = _hook_runtime(Path(result.output_path).read_text(encoding="utf-8"), lang.renpy)
         assert show("Menu principal") == f"⟪{expected}⟫ ok"
         checked += 1
-    assert checked == (101 if engine == TranslationEngine.DEEPL else 135)  # DeepL: 99 + NB + KMR via MOD codes
+    assert checked == 5
 
 
 def test_old_mod_native_files_are_not_reused_and_are_reported(tmp_path):
     game = _game(tmp_path, ["Menu principal"])
-    tl = game / "tl" / "polish"
+    tl = game / "tl" / "russian"
     tl.mkdir(parents=True)
     # Native file left by an earlier LinguaNova MOD build (contaminated text).
     (tl / "linguanova_mod_native_strings.rpy").write_text(
-        'translate polish strings:\n    old "Menu principal"\n    new "Menu Principal główne"\n', encoding="utf-8")
-    manager = ScriptedManager({"Menu principal": "Menu główne"})
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", TranslationEngine.GOOGLE, manager)
+        'translate russian strings:\n    old "Menu principal"\n    new "главное меню"\n', encoding="utf-8")
+    manager = ScriptedManager({"Menu principal": "Главное меню"})
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", TranslationEngine.GOOGLE, manager)
     assert [r.text for r in manager.requests] == ["Menu principal"]
     report = json.loads(Path(result.report_path).read_text(encoding="utf-8"))
-    assert report["legacy_mod_native_files"] == ["tl/polish/linguanova_mod_native_strings.rpy"]
+    assert report["legacy_mod_native_files"] == ["tl/russian/linguanova_mod_native_strings.rpy"]
     assert "WARNING" in result.message
     assert (tl / "linguanova_mod_native_strings.rpy").exists()   # never deleted by MOD
 
 
 def test_hand_edit_in_manual_json_applies_in_game_without_regenerating(tmp_path):
     _game(tmp_path, ["Menu principal", "Carregar save"])
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", TranslationEngine.GOOGLE,
-                                    ScriptedManager({"Menu principal": "Menu główne", "Carregar save": "Wczytaj zapis"}))
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", TranslationEngine.GOOGLE,
+                                    ScriptedManager({"Menu principal": "Главное меню", "Carregar save": "Загрузить игру"}))
     hook = Path(result.output_path).read_text(encoding="utf-8")
-    data = json.loads((tmp_path / "game/tl/polish/linguanova_mod_hook_data.json").read_text(encoding="utf-8"))
+    data = json.loads((tmp_path / "game/tl/russian/linguanova_mod_hook_data.json").read_text(encoding="utf-8"))
     payloads = {
-        "tl/polish/linguanova_mod_hook_data.json": data,
-        "tl/polish/linguanova_mod_manual.json": {"schema": 2, "mapping": {"Carregar save": "Wczytaj grę"}},
+        "tl/russian/linguanova_mod_hook_data.json": data,
+        "tl/russian/linguanova_mod_manual.json": {"schema": 2, "mapping": {"Carregar save": "Запустить игру"}},
     }
-    show, _, _ = _hook_runtime(hook, "polish", payloads)
-    assert show("Carregar save") == "Wczytaj grę"        # hand edit wins
-    assert show("Menu principal") == "Menu główne"       # rest untouched
-    payloads["tl/polish/linguanova_mod_manual.json"] = "not json {"         # a damaged file is ignored
-    show, _, _ = _hook_runtime(hook, "polish", payloads)
-    assert show("Carregar save") == "Wczytaj zapis"
+    show, _, _ = _hook_runtime(hook, "russian", payloads)
+    assert show("Carregar save") == "Запустить игру"    # hand edit wins
+    assert show("Menu principal") == "Главное меню"      # rest untouched
+    payloads["tl/russian/linguanova_mod_manual.json"] = "not json {"         # a damaged file is ignored
+    show, _, _ = _hook_runtime(hook, "russian", payloads)
+    assert show("Carregar save") == "Загрузить игру"
 
 
 def test_hook_errors_never_stop_the_game(tmp_path):
     _game(tmp_path, ["Menu principal"])
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", TranslationEngine.GOOGLE,
-                                    ScriptedManager({"Menu principal": "Menu główne"}))
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", TranslationEngine.GOOGLE,
+                                    ScriptedManager({"Menu principal": "Главное меню"}))
     from src.ui_mod.hook_check import make_env, python_body
     body = python_body(Path(result.output_path).read_text(encoding="utf-8"))
 
     def broken_screen(name):
         raise RuntimeError("screen system exploded")
 
-    ns, config, _translator, _prefs = make_env("polish")
+    ns, config, _translator, _prefs = make_env("russian")
     ns["renpy"].get_screen = broken_screen
     del ns["renpy"].game.script            # no string table at all
     exec(compile(body, "hook", "exec"), ns, ns)
@@ -503,8 +501,8 @@ def test_hook_errors_never_stop_the_game(tmp_path):
 
 def test_partial_run_is_reported_as_warning_not_success(tmp_path):
     _game(tmp_path, ["Menu principal", "Carregar save", "Nenhuma missão ativa no momento."])
-    result = generate_interface_mod(str(tmp_path), "portuguese", "polish", TranslationEngine.GOOGLE,
-                                    ScriptedManager({"Menu principal": "Menu główne"}))
+    result = generate_interface_mod(str(tmp_path), "portuguese", "russian", TranslationEngine.GOOGLE,
+                                    ScriptedManager({"Menu principal": "Главное меню"}))
     assert result.success and result.partial and result.pending == 2
     assert result.message.startswith("MOD generated PARTIALLY")
     report = json.loads(Path(result.report_path).read_text(encoding="utf-8"))

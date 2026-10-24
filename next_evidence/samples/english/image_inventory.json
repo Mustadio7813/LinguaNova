@@ -1,0 +1,58 @@
+[
+  {
+    "format": "PNG",
+    "frames": 1,
+    "group": "images/buttons/continue_{state}.png",
+    "height": 160,
+    "image_hash": "123d12b1b2d4a91d289d51ff1851ac32cf9bffa623a3d4e95f56eee861829b19",
+    "path": "images/buttons/continue_hover.png",
+    "reason": "",
+    "resource_id": "1d6beca0fa23dd56afba672b0ece82d1331b81a8b7c90652aa67e941a7ca92cc",
+    "state": "hover",
+    "status": "inventoried",
+    "transparency": true,
+    "width": 480
+  },
+  {
+    "format": "PNG",
+    "frames": 1,
+    "group": "images/buttons/continue_{state}.png",
+    "height": 160,
+    "image_hash": "a8d8b2bc972aea86c09df5af9e40f5d97e89b4effea29e7af121742f8746303d",
+    "path": "images/buttons/continue_normal.png",
+    "reason": "",
+    "resource_id": "fa84a23da94cffa817c1caa5e35b51f321f41a74aff588db2257558303561af9",
+    "state": "normal",
+    "status": "inventoried",
+    "transparency": true,
+    "width": 480
+  },
+  {
+    "format": "PNG",
+    "frames": 1,
+    "group": "images/buttons/continue_{state}.png",
+    "height": 160,
+    "image_hash": "abffb0272f4f6963dc100f462c0cd7db92beb295e69b3cd089627454178efbbb",
+    "path": "images/buttons/continue_selected.png",
+    "reason": "",
+    "resource_id": "c03e03f4bdde1eb19671f4536ca283abcf4def2e33df81cca3fb45e6f8fe1b11",
+    "state": "selected",
+    "status": "inventoried",
+    "transparency": true,
+    "width": 480
+  },
+  {
+    "format": "PNG",
+    "frames": 1,
+    "group": "images/capitulo_01/telefono/mensaje.png",
+    "height": 240,
+    "image_hash": "7cf5d7ee90c9b841e450fef603179521e0871459f1feca472719dc4c77af1ee9",
+    "path": "images/capitulo_01/telefono/mensaje.png",
+    "reason": "",
+    "resource_id": "7a06ff23b53e39824e6e49b35d563c3d18c1b140ac858012963e08c73528cfbc",
+    "state": "unclassified",
+    "status": "inventoried",
+    "transparency": true,
+    "width": 640
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "platform": "Linux",
+  "build": "PyInstaller 6.22.3 folder build",
+  "source_resources_match": true,
+  "resources_checked": 111,
+  "exit_codes": {
+    "verify": 0,
+    "gui": 0,
+    "real_ocr_with_explicit_test_provider": 0
+  },
+  "windows_tested": false,
+  "recognized_images": 4,
+  "ocr_regions": {
+    "images/buttons/continue_hover.png": 1,
+    "images/capitulo_01/telefono/mensaje.png": 1,
+    "images/buttons/continue_selected.png": 1,
+    "images/buttons/continue_normal.png": 1
+  },
+  "image_statuses": {
+    "images/buttons/continue_hover.png": "pending_region_translation_or_typography_review",
+    "images/capitulo_01/telefono/mensaje.png": "pending_region_translation_or_typography_review",
+    "images/buttons/continue_selected.png": "pending_region_translation_or_typography_review",
+    "images/buttons/continue_normal.png": "pending_region_translation_or_typography_review"
+  }
+}

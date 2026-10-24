@@ -1,0 +1,2658 @@
+{
+  "counts": {
+    "no_text": 0,
+    "pending": 0,
+    "preserved": 0,
+    "total": 13,
+    "translated": 13
+  },
+  "directory": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda",
+  "game": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game",
+  "images": [
+    {
+      "candidate_hash": "e0b0095a89fe0c10b0f22d9df51d06324ef92af979277271fa054211843173a2",
+      "candidate_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/1d6beca0fa23dd56afba672b0ece82d1331b81a8b7c90652aa67e941a7ca92cc/candidate.png",
+      "candidate_preview_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/1d6beca0fa23dd56afba672b0ece82d1331b81a8b7c90652aa67e941a7ca92cc/frame_0000/candidate_preview.png",
+      "composition_key": "05465d42d345d2ee06d9078be534a9e21eed9b385ff7080edb35e1363153327f",
+      "container": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/images/buttons/continue_hover.png",
+      "encoding": {
+        "decoded_pixels_exact": true,
+        "durations": [
+          0
+        ],
+        "encoding_errors": [
+          {
+            "exact": true,
+            "maximum_channel_error": 0,
+            "mean_channel_error": 0.0
+          }
+        ],
+        "format": "PNG",
+        "frames": 1,
+        "lossy_encoding": false,
+        "svg_flattened_at_native_resolution": false
+      },
+      "frames": 1,
+      "image_hash": "123d12b1b2d4a91d289d51ff1851ac32cf9bffa623a3d4e95f56eee861829b19",
+      "mask_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/1d6beca0fa23dd56afba672b0ece82d1331b81a8b7c90652aa67e941a7ca92cc/frame_0000/mask.png",
+      "mask_status": "effective_mask",
+      "method": "classic",
+      "origin": "loose",
+      "original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/1d6beca0fa23dd56afba672b0ece82d1331b81a8b7c90652aa67e941a7ca92cc/frame_0000/original.png",
+      "output_path": "game/tl/russian/images/buttons/continue_hover.png",
+      "path": "images/buttons/continue_hover.png",
+      "pixel_validation": {
+        "alpha_outside_equal": true,
+        "dimensions_equal": true,
+        "encoded_pixels_exact": true,
+        "legibility_review": "not_executed",
+        "outside_mask_equal": true,
+        "scope": "decoded composition before native encoding"
+      },
+      "pixel_validation_frames": [
+        {
+          "alpha_outside_equal": true,
+          "dimensions_equal": true,
+          "legibility_review": "required",
+          "outside_mask_equal": true,
+          "residual_text_review": "required"
+        }
+      ],
+      "reason": "",
+      "references": [],
+      "regions": [
+        {
+          "composition_bounds": [
+            107,
+            38,
+            373,
+            105
+          ],
+          "decision": {},
+          "frame_index": 0,
+          "frame_original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/1d6beca0fa23dd56afba672b0ece82d1331b81a8b7c90652aa67e941a7ca92cc/frame_0000/original.png",
+          "region": {
+            "bounds": [
+              157,
+              57,
+              323,
+              86
+            ],
+            "confidence": 0.9671425600000001,
+            "recognition_method": "tesseract-psm11",
+            "region_id": "e72de1dc43a5da3b47eb7d18a4a45788ac4fa8fbfec4edf073e40fc72d433eca",
+            "source_language": "en",
+            "source_model": "eng",
+            "text": "Continue"
+          },
+          "response": {
+            "effective_provider": "libretranslate",
+            "reasons": [],
+            "request": {
+              "bounds": [
+                157,
+                57,
+                323,
+                86
+              ],
+              "confidence": 0.9671425600000001,
+              "image_hash": "123d12b1b2d4a91d289d51ff1851ac32cf9bffa623a3d4e95f56eee861829b19",
+              "job_id": "bc6e3a0b8aa745d3aab207907e65efda",
+              "job_identity": "f924cf167df06ef7db1ef6abe356b42b62e66bebc3a9bfd93c55c723f9c380ad",
+              "profile_id": "",
+              "profile_version": "1",
+              "recognized_source": "en",
+              "region_id": "e72de1dc43a5da3b47eb7d18a4a45788ac4fa8fbfec4edf073e40fc72d433eca",
+              "request_id": "08cb22459dcd4ed3a3f2c3669388e934",
+              "resource_id": "1d6beca0fa23dd56afba672b0ece82d1331b81a8b7c90652aa67e941a7ca92cc",
+              "revision": 1,
+              "schema_version": 1,
+              "target_language_id": "ru",
+              "target_locale": "ru",
+              "text": "Continue"
+            },
+            "status": "accepted",
+            "text": "Продолжить",
+            "validation_identity": "1704cae8f58fd800863046d0578673a574e4b04f574dc9abdbdac4a605dc88aa"
+          },
+          "status": "translated",
+          "style_estimate": {
+            "color": [
+              88,
+              109,
+              115,
+              246
+            ],
+            "confidence": 0.15,
+            "evidence": "unverified",
+            "family": "unknown",
+            "font_hash": "",
+            "font_path": "",
+            "provenance": "region average; background influences color",
+            "required": "Identify original font and effects or approve an explicit approximation",
+            "schema_version": 1,
+            "size": 23
+          },
+          "typography_estimate": {
+            "alignment": "center",
+            "approximation_approved": false,
+            "baseline": "measured_bbox",
+            "color": [
+              244,
+              247,
+              245,
+              255
+            ],
+            "confidence": 0.7649073102350893,
+            "evidence": "automatic_estimate",
+            "family": "DejaVu Sans",
+            "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+            "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+            "gradient": "",
+            "italic": false,
+            "line_spacing": 3,
+            "max_lines": 3,
+            "min_size_ratio": 0.65,
+            "provenance": "Automatic source glyph/color measurement; original typeface and visual fidelity not certified",
+            "reviewer": "",
+            "rotation": 0.0,
+            "schema_version": 1,
+            "shadow_color": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "shadow_offset": [
+              0,
+              0
+            ],
+            "size": 38,
+            "stroke_color": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "stroke_width": 0,
+            "texture": "",
+            "tracking": 0.0,
+            "variant": "Book",
+            "weight": 400
+          }
+        }
+      ],
+      "resource_id": "1d6beca0fa23dd56afba672b0ece82d1331b81a8b7c90652aa67e941a7ca92cc",
+      "review_mode": "auto",
+      "status": "exported_automatic",
+      "typography": [
+        {
+          "bounds": [
+            107,
+            38,
+            373,
+            105
+          ],
+          "fidelity": "automatic_estimate",
+          "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+          "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+          "frame_index": 0,
+          "in_game_visual_review": "not_executed",
+          "lines": [
+            "Продолжить"
+          ],
+          "profile_identity": "db56c333c155e2f1a2686b1b3e9e6025e8a054edacfe168666aa5e39cfa2f3d4",
+          "reviewer": "",
+          "rotation": 0.0,
+          "size_effective": 38
+        }
+      ],
+      "visual_review": "not_executed"
+    },
+    {
+      "candidate_hash": "7b12bc841e49d050d4975883d343a9fc696cb7002368eb527f817bcf3769f940",
+      "candidate_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/fa84a23da94cffa817c1caa5e35b51f321f41a74aff588db2257558303561af9/candidate.png",
+      "candidate_preview_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/fa84a23da94cffa817c1caa5e35b51f321f41a74aff588db2257558303561af9/frame_0000/candidate_preview.png",
+      "composition_key": "1b5fd8af73b4c98f79901defe08874e625cb5c07315fb9d714c14e8c5a034a5e",
+      "container": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/images/buttons/continue_normal.png",
+      "encoding": {
+        "decoded_pixels_exact": true,
+        "durations": [
+          0
+        ],
+        "encoding_errors": [
+          {
+            "exact": true,
+            "maximum_channel_error": 0,
+            "mean_channel_error": 0.0
+          }
+        ],
+        "format": "PNG",
+        "frames": 1,
+        "lossy_encoding": false,
+        "svg_flattened_at_native_resolution": false
+      },
+      "frames": 1,
+      "image_hash": "a8d8b2bc972aea86c09df5af9e40f5d97e89b4effea29e7af121742f8746303d",
+      "mask_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/fa84a23da94cffa817c1caa5e35b51f321f41a74aff588db2257558303561af9/frame_0000/mask.png",
+      "mask_status": "effective_mask",
+      "method": "classic",
+      "origin": "loose",
+      "original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/fa84a23da94cffa817c1caa5e35b51f321f41a74aff588db2257558303561af9/frame_0000/original.png",
+      "output_path": "game/tl/russian/images/buttons/continue_normal.png",
+      "path": "images/buttons/continue_normal.png",
+      "pixel_validation": {
+        "alpha_outside_equal": true,
+        "dimensions_equal": true,
+        "encoded_pixels_exact": true,
+        "legibility_review": "not_executed",
+        "outside_mask_equal": true,
+        "scope": "decoded composition before native encoding"
+      },
+      "pixel_validation_frames": [
+        {
+          "alpha_outside_equal": true,
+          "dimensions_equal": true,
+          "legibility_review": "required",
+          "outside_mask_equal": true,
+          "residual_text_review": "required"
+        }
+      ],
+      "reason": "",
+      "references": [],
+      "regions": [
+        {
+          "composition_bounds": [
+            107,
+            38,
+            374,
+            105
+          ],
+          "decision": {},
+          "frame_index": 0,
+          "frame_original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/fa84a23da94cffa817c1caa5e35b51f321f41a74aff588db2257558303561af9/frame_0000/original.png",
+          "region": {
+            "bounds": [
+              157,
+              57,
+              324,
+              86
+            ],
+            "confidence": 0.9583925600000001,
+            "recognition_method": "tesseract-psm11",
+            "region_id": "416a5ac5c5790df2c6fe44ab665ee3021ea3f016705ccf2ebe908872f09aaef0",
+            "source_language": "en",
+            "source_model": "eng",
+            "text": "Continue"
+          },
+          "response": {
+            "effective_provider": "libretranslate",
+            "reasons": [],
+            "request": {
+              "bounds": [
+                157,
+                57,
+                324,
+                86
+              ],
+              "confidence": 0.9583925600000001,
+              "image_hash": "a8d8b2bc972aea86c09df5af9e40f5d97e89b4effea29e7af121742f8746303d",
+              "job_id": "bc6e3a0b8aa745d3aab207907e65efda",
+              "job_identity": "f924cf167df06ef7db1ef6abe356b42b62e66bebc3a9bfd93c55c723f9c380ad",
+              "profile_id": "",
+              "profile_version": "1",
+              "recognized_source": "en",
+              "region_id": "416a5ac5c5790df2c6fe44ab665ee3021ea3f016705ccf2ebe908872f09aaef0",
+              "request_id": "6e8cfa589bd9445ab66524cb7fe2dade",
+              "resource_id": "fa84a23da94cffa817c1caa5e35b51f321f41a74aff588db2257558303561af9",
+              "revision": 1,
+              "schema_version": 1,
+              "target_language_id": "ru",
+              "target_locale": "ru",
+              "text": "Continue"
+            },
+            "status": "accepted",
+            "text": "Продолжить",
+            "validation_identity": "ffcb6b727e335d5da53f474df8dd8a27f488f83dba1a23f9fc8495dc1616290f"
+          },
+          "status": "translated",
+          "style_estimate": {
+            "color": [
+              83,
+              99,
+              104,
+              246
+            ],
+            "confidence": 0.15,
+            "evidence": "unverified",
+            "family": "unknown",
+            "font_hash": "",
+            "font_path": "",
+            "provenance": "region average; background influences color",
+            "required": "Identify original font and effects or approve an explicit approximation",
+            "schema_version": 1,
+            "size": 23
+          },
+          "typography_estimate": {
+            "alignment": "center",
+            "approximation_approved": false,
+            "baseline": "measured_bbox",
+            "color": [
+              244,
+              247,
+              245,
+              255
+            ],
+            "confidence": 0.882170842947631,
+            "evidence": "automatic_estimate",
+            "family": "DejaVu Sans",
+            "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+            "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+            "gradient": "",
+            "italic": false,
+            "line_spacing": 3,
+            "max_lines": 3,
+            "min_size_ratio": 0.65,
+            "provenance": "Automatic source glyph/color measurement; original typeface and visual fidelity not certified",
+            "reviewer": "",
+            "rotation": 0.0,
+            "schema_version": 1,
+            "shadow_color": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "shadow_offset": [
+              0,
+              0
+            ],
+            "size": 38,
+            "stroke_color": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "stroke_width": 0,
+            "texture": "",
+            "tracking": 0.0,
+            "variant": "Book",
+            "weight": 400
+          }
+        }
+      ],
+      "resource_id": "fa84a23da94cffa817c1caa5e35b51f321f41a74aff588db2257558303561af9",
+      "review_mode": "auto",
+      "status": "exported_automatic",
+      "typography": [
+        {
+          "bounds": [
+            107,
+            38,
+            374,
+            105
+          ],
+          "fidelity": "automatic_estimate",
+          "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+          "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+          "frame_index": 0,
+          "in_game_visual_review": "not_executed",
+          "lines": [
+            "Продолжить"
+          ],
+          "profile_identity": "54d39ee3459be05e4f1b8cb56ae4bdb16978531b08c209eee207d8f0d67e8dad",
+          "reviewer": "",
+          "rotation": 0.0,
+          "size_effective": 38
+        }
+      ],
+      "visual_review": "not_executed"
+    },
+    {
+      "candidate_hash": "d4e028c35e9c0d4b0ca2ca5d931f3faaeda0a3a3a20a378293e94c6af91c47eb",
+      "candidate_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/c03e03f4bdde1eb19671f4536ca283abcf4def2e33df81cca3fb45e6f8fe1b11/candidate.png",
+      "candidate_preview_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/c03e03f4bdde1eb19671f4536ca283abcf4def2e33df81cca3fb45e6f8fe1b11/frame_0000/candidate_preview.png",
+      "composition_key": "fa5f015b679c020790819fdbb9617199aec2720cf9a7f5d4cf68d02c2c14f6bb",
+      "container": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/images/buttons/continue_selected.png",
+      "encoding": {
+        "decoded_pixels_exact": true,
+        "durations": [
+          0
+        ],
+        "encoding_errors": [
+          {
+            "exact": true,
+            "maximum_channel_error": 0,
+            "mean_channel_error": 0.0
+          }
+        ],
+        "format": "PNG",
+        "frames": 1,
+        "lossy_encoding": false,
+        "svg_flattened_at_native_resolution": false
+      },
+      "frames": 1,
+      "image_hash": "abffb0272f4f6963dc100f462c0cd7db92beb295e69b3cd089627454178efbbb",
+      "mask_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/c03e03f4bdde1eb19671f4536ca283abcf4def2e33df81cca3fb45e6f8fe1b11/frame_0000/mask.png",
+      "mask_status": "effective_mask",
+      "method": "classic",
+      "origin": "loose",
+      "original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/c03e03f4bdde1eb19671f4536ca283abcf4def2e33df81cca3fb45e6f8fe1b11/frame_0000/original.png",
+      "output_path": "game/tl/russian/images/buttons/continue_selected.png",
+      "path": "images/buttons/continue_selected.png",
+      "pixel_validation": {
+        "alpha_outside_equal": true,
+        "dimensions_equal": true,
+        "encoded_pixels_exact": true,
+        "legibility_review": "not_executed",
+        "outside_mask_equal": true,
+        "scope": "decoded composition before native encoding"
+      },
+      "pixel_validation_frames": [
+        {
+          "alpha_outside_equal": true,
+          "dimensions_equal": true,
+          "legibility_review": "required",
+          "outside_mask_equal": true,
+          "residual_text_review": "required"
+        }
+      ],
+      "reason": "",
+      "references": [],
+      "regions": [
+        {
+          "composition_bounds": [
+            107,
+            38,
+            373,
+            105
+          ],
+          "decision": {},
+          "frame_index": 0,
+          "frame_original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/c03e03f4bdde1eb19671f4536ca283abcf4def2e33df81cca3fb45e6f8fe1b11/frame_0000/original.png",
+          "region": {
+            "bounds": [
+              157,
+              57,
+              323,
+              86
+            ],
+            "confidence": 0.96697823,
+            "recognition_method": "tesseract-psm11",
+            "region_id": "703d55af87a98d3c65e7545e405bac88a3ffe86be8d89dc088cb46bd3f6424a9",
+            "source_language": "en",
+            "source_model": "eng",
+            "text": "Continue"
+          },
+          "response": {
+            "effective_provider": "libretranslate",
+            "reasons": [],
+            "request": {
+              "bounds": [
+                157,
+                57,
+                323,
+                86
+              ],
+              "confidence": 0.96697823,
+              "image_hash": "abffb0272f4f6963dc100f462c0cd7db92beb295e69b3cd089627454178efbbb",
+              "job_id": "bc6e3a0b8aa745d3aab207907e65efda",
+              "job_identity": "f924cf167df06ef7db1ef6abe356b42b62e66bebc3a9bfd93c55c723f9c380ad",
+              "profile_id": "",
+              "profile_version": "1",
+              "recognized_source": "en",
+              "region_id": "703d55af87a98d3c65e7545e405bac88a3ffe86be8d89dc088cb46bd3f6424a9",
+              "request_id": "e5a47d44810242fc815415503f720de2",
+              "resource_id": "c03e03f4bdde1eb19671f4536ca283abcf4def2e33df81cca3fb45e6f8fe1b11",
+              "revision": 1,
+              "schema_version": 1,
+              "target_language_id": "ru",
+              "target_locale": "ru",
+              "text": "Continue"
+            },
+            "status": "accepted",
+            "text": "Продолжить",
+            "validation_identity": "678105b47dd7bf380c1c23c310e82f952caebc666ab87acbecaa6bf87d72c604"
+          },
+          "status": "translated",
+          "style_estimate": {
+            "color": [
+              92,
+              113,
+              103,
+              246
+            ],
+            "confidence": 0.15,
+            "evidence": "unverified",
+            "family": "unknown",
+            "font_hash": "",
+            "font_path": "",
+            "provenance": "region average; background influences color",
+            "required": "Identify original font and effects or approve an explicit approximation",
+            "schema_version": 1,
+            "size": 23
+          },
+          "typography_estimate": {
+            "alignment": "center",
+            "approximation_approved": false,
+            "baseline": "measured_bbox",
+            "color": [
+              244,
+              247,
+              245,
+              255
+            ],
+            "confidence": 0.771676505434102,
+            "evidence": "automatic_estimate",
+            "family": "DejaVu Sans",
+            "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+            "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+            "gradient": "",
+            "italic": false,
+            "line_spacing": 3,
+            "max_lines": 3,
+            "min_size_ratio": 0.65,
+            "provenance": "Automatic source glyph/color measurement; original typeface and visual fidelity not certified",
+            "reviewer": "",
+            "rotation": 0.0,
+            "schema_version": 1,
+            "shadow_color": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "shadow_offset": [
+              0,
+              0
+            ],
+            "size": 38,
+            "stroke_color": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "stroke_width": 0,
+            "texture": "",
+            "tracking": 0.0,
+            "variant": "Book",
+            "weight": 400
+          }
+        }
+      ],
+      "resource_id": "c03e03f4bdde1eb19671f4536ca283abcf4def2e33df81cca3fb45e6f8fe1b11",
+      "review_mode": "auto",
+      "status": "exported_automatic",
+      "typography": [
+        {
+          "bounds": [
+            107,
+            38,
+            373,
+            105
+          ],
+          "fidelity": "automatic_estimate",
+          "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+          "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+          "frame_index": 0,
+          "in_game_visual_review": "not_executed",
+          "lines": [
+            "Продолжить"
+          ],
+          "profile_identity": "765d9a0093f147dcbdd1210d7bac1a53eab88ae8b52526d72d5049406c96c0e4",
+          "reviewer": "",
+          "rotation": 0.0,
+          "size_effective": 38
+        }
+      ],
+      "visual_review": "not_executed"
+    },
+    {
+      "candidate_hash": "e3a0a4d563cae83a3b92f767be97aa4306a985f90229ec0aa4cfdd92511a0450",
+      "candidate_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/7a06ff23b53e39824e6e49b35d563c3d18c1b140ac858012963e08c73528cfbc/candidate.png",
+      "candidate_preview_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/7a06ff23b53e39824e6e49b35d563c3d18c1b140ac858012963e08c73528cfbc/frame_0000/candidate_preview.png",
+      "composition_key": "656d898e5b401cdc4937a83bb1f04ace5d39ded9cd35f0873b238e959f3abe59",
+      "container": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/images/capitulo_01/telefono/mensaje.png",
+      "encoding": {
+        "decoded_pixels_exact": true,
+        "durations": [
+          0
+        ],
+        "encoding_errors": [
+          {
+            "exact": true,
+            "maximum_channel_error": 0,
+            "mean_channel_error": 0.0
+          }
+        ],
+        "format": "PNG",
+        "frames": 1,
+        "lossy_encoding": false,
+        "svg_flattened_at_native_resolution": false
+      },
+      "frames": 1,
+      "image_hash": "7cf5d7ee90c9b841e450fef603179521e0871459f1feca472719dc4c77af1ee9",
+      "mask_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/7a06ff23b53e39824e6e49b35d563c3d18c1b140ac858012963e08c73528cfbc/frame_0000/mask.png",
+      "mask_status": "effective_mask",
+      "method": "classic",
+      "origin": "loose",
+      "original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/7a06ff23b53e39824e6e49b35d563c3d18c1b140ac858012963e08c73528cfbc/frame_0000/original.png",
+      "output_path": "game/tl/russian/images/capitulo_01/telefono/mensaje.png",
+      "path": "images/capitulo_01/telefono/mensaje.png",
+      "pixel_validation": {
+        "alpha_outside_equal": true,
+        "dimensions_equal": true,
+        "encoded_pixels_exact": true,
+        "legibility_review": "not_executed",
+        "outside_mask_equal": true,
+        "scope": "decoded composition before native encoding"
+      },
+      "pixel_validation_frames": [
+        {
+          "alpha_outside_equal": true,
+          "dimensions_equal": true,
+          "legibility_review": "required",
+          "outside_mask_equal": true,
+          "residual_text_review": "required"
+        }
+      ],
+      "reason": "",
+      "references": [
+        "script.rpy"
+      ],
+      "regions": [
+        {
+          "composition_bounds": [
+            172,
+            82,
+            469,
+            156
+          ],
+          "decision": {},
+          "frame_index": 0,
+          "frame_original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/7a06ff23b53e39824e6e49b35d563c3d18c1b140ac858012963e08c73528cfbc/frame_0000/original.png",
+          "region": {
+            "bounds": [
+              228,
+              103,
+              413,
+              135
+            ],
+            "confidence": 0.95660255,
+            "recognition_method": "tesseract-psm11",
+            "region_id": "249f1b3d6565504e02735b60e29d2923462e919ba5bfe7c3a6afe6f4c80b7a4d",
+            "source_language": "en",
+            "source_model": "eng",
+            "text": "Continue"
+          },
+          "response": {
+            "effective_provider": "libretranslate",
+            "reasons": [],
+            "request": {
+              "bounds": [
+                228,
+                103,
+                413,
+                135
+              ],
+              "confidence": 0.95660255,
+              "image_hash": "7cf5d7ee90c9b841e450fef603179521e0871459f1feca472719dc4c77af1ee9",
+              "job_id": "bc6e3a0b8aa745d3aab207907e65efda",
+              "job_identity": "f924cf167df06ef7db1ef6abe356b42b62e66bebc3a9bfd93c55c723f9c380ad",
+              "profile_id": "",
+              "profile_version": "1",
+              "recognized_source": "en",
+              "region_id": "249f1b3d6565504e02735b60e29d2923462e919ba5bfe7c3a6afe6f4c80b7a4d",
+              "request_id": "9abeb42d70f4497d9103c94e28f38457",
+              "resource_id": "7a06ff23b53e39824e6e49b35d563c3d18c1b140ac858012963e08c73528cfbc",
+              "revision": 1,
+              "schema_version": 1,
+              "target_language_id": "ru",
+              "target_locale": "ru",
+              "text": "Continue"
+            },
+            "status": "accepted",
+            "text": "Продолжить",
+            "validation_identity": "44ef30d3da6659f7f5ade90d5f79f4cc12c39c4de23099820e5c328eb8733d10"
+          },
+          "status": "translated",
+          "style_estimate": {
+            "color": [
+              86,
+              103,
+              110,
+              255
+            ],
+            "confidence": 0.15,
+            "evidence": "unverified",
+            "family": "unknown",
+            "font_hash": "",
+            "font_path": "",
+            "provenance": "region average; background influences color",
+            "required": "Identify original font and effects or approve an explicit approximation",
+            "schema_version": 1,
+            "size": 25
+          },
+          "typography_estimate": {
+            "alignment": "center",
+            "approximation_approved": false,
+            "baseline": "measured_bbox",
+            "color": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "confidence": 0.8937019377946853,
+            "evidence": "automatic_estimate",
+            "family": "DejaVu Sans",
+            "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+            "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+            "gradient": "",
+            "italic": false,
+            "line_spacing": 4,
+            "max_lines": 3,
+            "min_size_ratio": 0.65,
+            "provenance": "Automatic source glyph/color measurement; original typeface and visual fidelity not certified",
+            "reviewer": "",
+            "rotation": 0.0,
+            "schema_version": 1,
+            "shadow_color": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "shadow_offset": [
+              0,
+              0
+            ],
+            "size": 42,
+            "stroke_color": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "stroke_width": 0,
+            "texture": "",
+            "tracking": 0.0,
+            "variant": "Book",
+            "weight": 400
+          }
+        }
+      ],
+      "resource_id": "7a06ff23b53e39824e6e49b35d563c3d18c1b140ac858012963e08c73528cfbc",
+      "review_mode": "auto",
+      "status": "exported_automatic",
+      "typography": [
+        {
+          "bounds": [
+            172,
+            82,
+            469,
+            156
+          ],
+          "fidelity": "automatic_estimate",
+          "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+          "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+          "frame_index": 0,
+          "in_game_visual_review": "not_executed",
+          "lines": [
+            "Продолжить"
+          ],
+          "profile_identity": "e6d81485f3b9becdbbb3e3c42581e5656c5a8a4ae161dfa2dbcd79f94cd36a26",
+          "reviewer": "",
+          "rotation": 0.0,
+          "size_effective": 42
+        }
+      ],
+      "visual_review": "not_executed"
+    },
+    {
+      "candidate_hash": "01c6d468ff0feecc3a783e3b31a3cd16866033dc78b371a2da5afad926bd0d35",
+      "candidate_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/bfbfa457f267211b49c46a30eaa15f04683c668acae01106ea80bac2cc838c8d/candidate.avif",
+      "candidate_preview_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/bfbfa457f267211b49c46a30eaa15f04683c668acae01106ea80bac2cc838c8d/frame_0000/candidate_preview.png",
+      "composition_key": "b0b95915fe2142d3da9938b9c4033063a420a8242ced6dc992adf86d52df8774",
+      "container": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/native_assets.rpa",
+      "encoding": {
+        "decoded_pixels_exact": false,
+        "durations": [
+          1000
+        ],
+        "encoding_errors": [
+          {
+            "exact": false,
+            "maximum_channel_error": 1,
+            "mean_channel_error": 0.0076458333333333335
+          }
+        ],
+        "format": "AVIF",
+        "frames": 1,
+        "lossy_encoding": true,
+        "svg_flattened_at_native_resolution": false
+      },
+      "frames": 1,
+      "image_hash": "ad1c33761abad233e94bb5255c3c75655f1dda103f16edade6405f735753a90c",
+      "mask_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/bfbfa457f267211b49c46a30eaa15f04683c668acae01106ea80bac2cc838c8d/frame_0000/mask.png",
+      "mask_status": "effective_mask",
+      "method": "classic",
+      "origin": "rpa",
+      "original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/bfbfa457f267211b49c46a30eaa15f04683c668acae01106ea80bac2cc838c8d/frame_0000/original.png",
+      "output_path": "game/tl/russian/images/native/native_avif.avif",
+      "path": "images/native/native_avif.avif",
+      "pixel_validation": {
+        "alpha_outside_equal": true,
+        "dimensions_equal": true,
+        "encoded_pixels_exact": false,
+        "legibility_review": "not_executed",
+        "outside_mask_equal": true,
+        "scope": "decoded composition before native encoding"
+      },
+      "pixel_validation_frames": [
+        {
+          "alpha_outside_equal": true,
+          "dimensions_equal": true,
+          "legibility_review": "required",
+          "outside_mask_equal": true,
+          "residual_text_review": "required"
+        }
+      ],
+      "reason": "",
+      "references": [
+        "native_image_references.rpyc"
+      ],
+      "regions": [
+        {
+          "composition_bounds": [
+            16,
+            22,
+            225,
+            75
+          ],
+          "decision": {},
+          "frame_index": 0,
+          "frame_original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/bfbfa457f267211b49c46a30eaa15f04683c668acae01106ea80bac2cc838c8d/frame_0000/original.png",
+          "region": {
+            "bounds": [
+              55,
+              37,
+              186,
+              60
+            ],
+            "confidence": 0.96627419,
+            "recognition_method": "tesseract-psm11",
+            "region_id": "01e6406bea2353c8100823b0b538e32e470331c7c33e072d0ee803747e060baa",
+            "source_language": "en",
+            "source_model": "eng",
+            "text": "Continue"
+          },
+          "response": {
+            "effective_provider": "libretranslate",
+            "reasons": [],
+            "request": {
+              "bounds": [
+                55,
+                37,
+                186,
+                60
+              ],
+              "confidence": 0.96627419,
+              "image_hash": "ad1c33761abad233e94bb5255c3c75655f1dda103f16edade6405f735753a90c",
+              "job_id": "bc6e3a0b8aa745d3aab207907e65efda",
+              "job_identity": "f924cf167df06ef7db1ef6abe356b42b62e66bebc3a9bfd93c55c723f9c380ad",
+              "profile_id": "",
+              "profile_version": "1",
+              "recognized_source": "en",
+              "region_id": "01e6406bea2353c8100823b0b538e32e470331c7c33e072d0ee803747e060baa",
+              "request_id": "998bcb0a7c5241feacaa2b18e6ea4b96",
+              "resource_id": "bfbfa457f267211b49c46a30eaa15f04683c668acae01106ea80bac2cc838c8d",
+              "revision": 1,
+              "schema_version": 1,
+              "target_language_id": "ru",
+              "target_locale": "ru",
+              "text": "Continue"
+            },
+            "status": "accepted",
+            "text": "Продолжить",
+            "validation_identity": "c03349585d62ff2acbda192e372825f0a7d885f5f5f4680acf4d41c5641d2d3b"
+          },
+          "status": "translated",
+          "style_estimate": {
+            "color": [
+              84,
+              92,
+              100,
+              255
+            ],
+            "confidence": 0.15,
+            "evidence": "unverified",
+            "family": "unknown",
+            "font_hash": "",
+            "font_path": "",
+            "provenance": "region average; background influences color",
+            "required": "Identify original font and effects or approve an explicit approximation",
+            "schema_version": 1,
+            "size": 18
+          },
+          "typography_estimate": {
+            "alignment": "center",
+            "approximation_approved": false,
+            "baseline": "measured_bbox",
+            "color": [
+              246,
+              247,
+              249,
+              255
+            ],
+            "confidence": 0.8659348537092624,
+            "evidence": "automatic_estimate",
+            "family": "DejaVu Sans",
+            "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+            "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+            "gradient": "",
+            "italic": false,
+            "line_spacing": 3,
+            "max_lines": 3,
+            "min_size_ratio": 0.65,
+            "provenance": "Automatic source glyph/color measurement; original typeface and visual fidelity not certified",
+            "reviewer": "",
+            "rotation": 0.0,
+            "schema_version": 1,
+            "shadow_color": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "shadow_offset": [
+              0,
+              0
+            ],
+            "size": 30,
+            "stroke_color": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "stroke_width": 0,
+            "texture": "",
+            "tracking": 0.0,
+            "variant": "Book",
+            "weight": 400
+          }
+        }
+      ],
+      "resource_id": "bfbfa457f267211b49c46a30eaa15f04683c668acae01106ea80bac2cc838c8d",
+      "review_mode": "auto",
+      "status": "exported_automatic",
+      "typography": [
+        {
+          "bounds": [
+            16,
+            22,
+            225,
+            75
+          ],
+          "fidelity": "automatic_estimate",
+          "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+          "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+          "frame_index": 0,
+          "in_game_visual_review": "not_executed",
+          "lines": [
+            "Продолжить"
+          ],
+          "profile_identity": "b845e834dfc7a3e8f9cf0e881365370acdb662e479ec00f06ed8e62fcc63671b",
+          "reviewer": "",
+          "rotation": 0.0,
+          "size_effective": 30
+        }
+      ],
+      "visual_review": "not_executed"
+    },
+    {
+      "candidate_hash": "9ea22e5d31b1c747f5a22c0e0d03907e39d458027eacc2030c43467f06ab0786",
+      "candidate_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/20d088f704c55d3f0bba68acc1929bb7823e2967cc42adec523f9e172c262b1e/candidate.bmp",
+      "candidate_preview_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/20d088f704c55d3f0bba68acc1929bb7823e2967cc42adec523f9e172c262b1e/frame_0000/candidate_preview.png",
+      "composition_key": "95a48d83b1ec4a5787f35e613201a802a642cd67ee04b9fc282e2a80ae0a05e7",
+      "container": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/native_assets.rpa",
+      "encoding": {
+        "decoded_pixels_exact": true,
+        "durations": [
+          0
+        ],
+        "encoding_errors": [
+          {
+            "exact": true,
+            "maximum_channel_error": 0,
+            "mean_channel_error": 0.0
+          }
+        ],
+        "format": "BMP",
+        "frames": 1,
+        "lossy_encoding": false,
+        "svg_flattened_at_native_resolution": false
+      },
+      "frames": 1,
+      "image_hash": "645e1a8af82f5c7dd9b96d1edcf9b6f0575fdc14b9cc82415f46b357db8f0528",
+      "mask_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/20d088f704c55d3f0bba68acc1929bb7823e2967cc42adec523f9e172c262b1e/frame_0000/mask.png",
+      "mask_status": "effective_mask",
+      "method": "classic",
+      "origin": "rpa",
+      "original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/20d088f704c55d3f0bba68acc1929bb7823e2967cc42adec523f9e172c262b1e/frame_0000/original.png",
+      "output_path": "game/tl/russian/images/native/native_bmp.bmp",
+      "path": "images/native/native_bmp.bmp",
+      "pixel_validation": {
+        "alpha_outside_equal": true,
+        "dimensions_equal": true,
+        "encoded_pixels_exact": true,
+        "legibility_review": "not_executed",
+        "outside_mask_equal": true,
+        "scope": "decoded composition before native encoding"
+      },
+      "pixel_validation_frames": [
+        {
+          "alpha_outside_equal": true,
+          "dimensions_equal": true,
+          "legibility_review": "required",
+          "outside_mask_equal": true,
+          "residual_text_review": "required"
+        }
+      ],
+      "reason": "",
+      "references": [
+        "native_image_references.rpyc"
+      ],
+      "regions": [
+        {
+          "composition_bounds": [
+            16,
+            22,
+            225,
+            75
+          ],
+          "decision": {},
+          "frame_index": 0,
+          "frame_original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/20d088f704c55d3f0bba68acc1929bb7823e2967cc42adec523f9e172c262b1e/frame_0000/original.png",
+          "region": {
+            "bounds": [
+              55,
+              37,
+              186,
+              60
+            ],
+            "confidence": 0.9614389799999999,
+            "recognition_method": "tesseract-psm11",
+            "region_id": "14dfa67b0e2e7415cd7d864c32e49711fdf4f025df1e3bd068ad4f5508eb9142",
+            "source_language": "en",
+            "source_model": "eng",
+            "text": "Continue"
+          },
+          "response": {
+            "effective_provider": "libretranslate",
+            "reasons": [],
+            "request": {
+              "bounds": [
+                55,
+                37,
+                186,
+                60
+              ],
+              "confidence": 0.9614389799999999,
+              "image_hash": "645e1a8af82f5c7dd9b96d1edcf9b6f0575fdc14b9cc82415f46b357db8f0528",
+              "job_id": "bc6e3a0b8aa745d3aab207907e65efda",
+              "job_identity": "f924cf167df06ef7db1ef6abe356b42b62e66bebc3a9bfd93c55c723f9c380ad",
+              "profile_id": "",
+              "profile_version": "1",
+              "recognized_source": "en",
+              "region_id": "14dfa67b0e2e7415cd7d864c32e49711fdf4f025df1e3bd068ad4f5508eb9142",
+              "request_id": "9543b37ca87d4c14a308ac7d74d87dc6",
+              "resource_id": "20d088f704c55d3f0bba68acc1929bb7823e2967cc42adec523f9e172c262b1e",
+              "revision": 1,
+              "schema_version": 1,
+              "target_language_id": "ru",
+              "target_locale": "ru",
+              "text": "Continue"
+            },
+            "status": "accepted",
+            "text": "Продолжить",
+            "validation_identity": "8176609022ff223a2487b9023a1970abea4dd8846697ece6aa8ea586dea4d5e6"
+          },
+          "status": "translated",
+          "style_estimate": {
+            "color": [
+              83,
+              92,
+              99,
+              255
+            ],
+            "confidence": 0.15,
+            "evidence": "unverified",
+            "family": "unknown",
+            "font_hash": "",
+            "font_path": "",
+            "provenance": "region average; background influences color",
+            "required": "Identify original font and effects or approve an explicit approximation",
+            "schema_version": 1,
+            "size": 18
+          },
+          "typography_estimate": {
+            "alignment": "center",
+            "approximation_approved": false,
+            "baseline": "measured_bbox",
+            "color": [
+              245,
+              247,
+              249,
+              255
+            ],
+            "confidence": 0.8659348537092624,
+            "evidence": "automatic_estimate",
+            "family": "DejaVu Sans",
+            "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+            "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+            "gradient": "",
+            "italic": false,
+            "line_spacing": 3,
+            "max_lines": 3,
+            "min_size_ratio": 0.65,
+            "provenance": "Automatic source glyph/color measurement; original typeface and visual fidelity not certified",
+            "reviewer": "",
+            "rotation": 0.0,
+            "schema_version": 1,
+            "shadow_color": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "shadow_offset": [
+              0,
+              0
+            ],
+            "size": 30,
+            "stroke_color": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "stroke_width": 0,
+            "texture": "",
+            "tracking": 0.0,
+            "variant": "Book",
+            "weight": 400
+          }
+        }
+      ],
+      "resource_id": "20d088f704c55d3f0bba68acc1929bb7823e2967cc42adec523f9e172c262b1e",
+      "review_mode": "auto",
+      "status": "exported_automatic",
+      "typography": [
+        {
+          "bounds": [
+            16,
+            22,
+            225,
+            75
+          ],
+          "fidelity": "automatic_estimate",
+          "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+          "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+          "frame_index": 0,
+          "in_game_visual_review": "not_executed",
+          "lines": [
+            "Продолжить"
+          ],
+          "profile_identity": "f814bb654762d9f7c9722ecd80dd86d48e9b86146e3d30ca782b2ff65357bf20",
+          "reviewer": "",
+          "rotation": 0.0,
+          "size_effective": 30
+        }
+      ],
+      "visual_review": "not_executed"
+    },
+    {
+      "candidate_hash": "efb55f83f50c31cad83293de48a34ead75ef3b636493a82e3a197c1df4ade880",
+      "candidate_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/0eab4aeca1f5c971eb1dbe1b9a1d985ce4c6166951dd5d2e4be549485cbbbb8c/candidate.ico",
+      "candidate_preview_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/0eab4aeca1f5c971eb1dbe1b9a1d985ce4c6166951dd5d2e4be549485cbbbb8c/frame_0000/candidate_preview.png",
+      "composition_key": "d2a9f2ae91cde14e10e186bc0a8050d8c8a8ed077c9fb790034b777e7aa82ba7",
+      "container": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/native_assets.rpa",
+      "encoding": {
+        "decoded_pixels_exact": true,
+        "durations": [
+          0
+        ],
+        "encoding_errors": [
+          {
+            "exact": true,
+            "maximum_channel_error": 0,
+            "mean_channel_error": 0.0
+          }
+        ],
+        "format": "ICO",
+        "frames": 1,
+        "lossy_encoding": false,
+        "svg_flattened_at_native_resolution": false
+      },
+      "frames": 1,
+      "image_hash": "0ff0f33495f79968ee7658ace92341aacd68330f1ec5a05bb62ed449478a6c27",
+      "mask_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/0eab4aeca1f5c971eb1dbe1b9a1d985ce4c6166951dd5d2e4be549485cbbbb8c/frame_0000/mask.png",
+      "mask_status": "effective_mask",
+      "method": "classic",
+      "origin": "rpa",
+      "original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/0eab4aeca1f5c971eb1dbe1b9a1d985ce4c6166951dd5d2e4be549485cbbbb8c/frame_0000/original.png",
+      "output_path": "game/tl/russian/images/native/native_ico.ico",
+      "path": "images/native/native_ico.ico",
+      "pixel_validation": {
+        "alpha_outside_equal": true,
+        "dimensions_equal": true,
+        "encoded_pixels_exact": true,
+        "legibility_review": "not_executed",
+        "outside_mask_equal": true,
+        "scope": "decoded composition before native encoding"
+      },
+      "pixel_validation_frames": [
+        {
+          "alpha_outside_equal": true,
+          "dimensions_equal": true,
+          "legibility_review": "required",
+          "outside_mask_equal": true,
+          "residual_text_review": "required"
+        }
+      ],
+      "reason": "",
+      "references": [
+        "native_image_references.rpyc"
+      ],
+      "regions": [
+        {
+          "composition_bounds": [
+            16,
+            22,
+            225,
+            75
+          ],
+          "decision": {},
+          "frame_index": 0,
+          "frame_original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/0eab4aeca1f5c971eb1dbe1b9a1d985ce4c6166951dd5d2e4be549485cbbbb8c/frame_0000/original.png",
+          "region": {
+            "bounds": [
+              55,
+              37,
+              186,
+              60
+            ],
+            "confidence": 0.9614389799999999,
+            "recognition_method": "tesseract-psm11",
+            "region_id": "acc5a25095078363b6e486c0d39dc6da0e80c42cc646aaf7b7c040eb6178629b",
+            "source_language": "en",
+            "source_model": "eng",
+            "text": "Continue"
+          },
+          "response": {
+            "effective_provider": "libretranslate",
+            "reasons": [],
+            "request": {
+              "bounds": [
+                55,
+                37,
+                186,
+                60
+              ],
+              "confidence": 0.9614389799999999,
+              "image_hash": "0ff0f33495f79968ee7658ace92341aacd68330f1ec5a05bb62ed449478a6c27",
+              "job_id": "bc6e3a0b8aa745d3aab207907e65efda",
+              "job_identity": "f924cf167df06ef7db1ef6abe356b42b62e66bebc3a9bfd93c55c723f9c380ad",
+              "profile_id": "",
+              "profile_version": "1",
+              "recognized_source": "en",
+              "region_id": "acc5a25095078363b6e486c0d39dc6da0e80c42cc646aaf7b7c040eb6178629b",
+              "request_id": "9846f7f13f184f458542cfee106af59f",
+              "resource_id": "0eab4aeca1f5c971eb1dbe1b9a1d985ce4c6166951dd5d2e4be549485cbbbb8c",
+              "revision": 1,
+              "schema_version": 1,
+              "target_language_id": "ru",
+              "target_locale": "ru",
+              "text": "Continue"
+            },
+            "status": "accepted",
+            "text": "Продолжить",
+            "validation_identity": "c368f0804fb7dca17e91085d62674af553a3a7effcaf9010bc5e940ccebab287"
+          },
+          "status": "translated",
+          "style_estimate": {
+            "color": [
+              83,
+              92,
+              99,
+              255
+            ],
+            "confidence": 0.15,
+            "evidence": "unverified",
+            "family": "unknown",
+            "font_hash": "",
+            "font_path": "",
+            "provenance": "region average; background influences color",
+            "required": "Identify original font and effects or approve an explicit approximation",
+            "schema_version": 1,
+            "size": 18
+          },
+          "typography_estimate": {
+            "alignment": "center",
+            "approximation_approved": false,
+            "baseline": "measured_bbox",
+            "color": [
+              245,
+              247,
+              249,
+              255
+            ],
+            "confidence": 0.8659348537092624,
+            "evidence": "automatic_estimate",
+            "family": "DejaVu Sans",
+            "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+            "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+            "gradient": "",
+            "italic": false,
+            "line_spacing": 3,
+            "max_lines": 3,
+            "min_size_ratio": 0.65,
+            "provenance": "Automatic source glyph/color measurement; original typeface and visual fidelity not certified",
+            "reviewer": "",
+            "rotation": 0.0,
+            "schema_version": 1,
+            "shadow_color": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "shadow_offset": [
+              0,
+              0
+            ],
+            "size": 30,
+            "stroke_color": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "stroke_width": 0,
+            "texture": "",
+            "tracking": 0.0,
+            "variant": "Book",
+            "weight": 400
+          }
+        }
+      ],
+      "resource_id": "0eab4aeca1f5c971eb1dbe1b9a1d985ce4c6166951dd5d2e4be549485cbbbb8c",
+      "review_mode": "auto",
+      "status": "exported_automatic",
+      "typography": [
+        {
+          "bounds": [
+            16,
+            22,
+            225,
+            75
+          ],
+          "fidelity": "automatic_estimate",
+          "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+          "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+          "frame_index": 0,
+          "in_game_visual_review": "not_executed",
+          "lines": [
+            "Продолжить"
+          ],
+          "profile_identity": "f814bb654762d9f7c9722ecd80dd86d48e9b86146e3d30ca782b2ff65357bf20",
+          "reviewer": "",
+          "rotation": 0.0,
+          "size_effective": 30
+        }
+      ],
+      "visual_review": "not_executed"
+    },
+    {
+      "candidate_hash": "42bd9dc67cf6fd11971f15cda31948af8f8f65d4becdc9da42116ac9b0df1d2b",
+      "candidate_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/48fb8a1cd09d9e3ce5b42f0c8228f447db2fb2bb2ead343a57c536fb7b8b2fd4/candidate.jpeg",
+      "candidate_preview_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/48fb8a1cd09d9e3ce5b42f0c8228f447db2fb2bb2ead343a57c536fb7b8b2fd4/frame_0000/candidate_preview.png",
+      "composition_key": "2cbe2ffd9f10255f556d9c567d25b862ba730c8c4eac2e8af90e31492d862cd3",
+      "container": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/native_assets.rpa",
+      "encoding": {
+        "decoded_pixels_exact": false,
+        "durations": [
+          0
+        ],
+        "encoding_errors": [
+          {
+            "exact": false,
+            "maximum_channel_error": 4,
+            "mean_channel_error": 0.042270833333333334
+          }
+        ],
+        "format": "JPEG",
+        "frames": 1,
+        "lossy_encoding": true,
+        "svg_flattened_at_native_resolution": false
+      },
+      "frames": 1,
+      "image_hash": "a7a01bb8f2c03bbe1018fc333b38a739d83cf1cb780f6c1c189d02e8175152ef",
+      "mask_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/48fb8a1cd09d9e3ce5b42f0c8228f447db2fb2bb2ead343a57c536fb7b8b2fd4/frame_0000/mask.png",
+      "mask_status": "effective_mask",
+      "method": "classic",
+      "origin": "rpa",
+      "original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/48fb8a1cd09d9e3ce5b42f0c8228f447db2fb2bb2ead343a57c536fb7b8b2fd4/frame_0000/original.png",
+      "output_path": "game/tl/russian/images/native/native_jpeg.jpeg",
+      "path": "images/native/native_jpeg.jpeg",
+      "pixel_validation": {
+        "alpha_outside_equal": true,
+        "dimensions_equal": true,
+        "encoded_pixels_exact": false,
+        "legibility_review": "not_executed",
+        "outside_mask_equal": true,
+        "scope": "decoded composition before native encoding"
+      },
+      "pixel_validation_frames": [
+        {
+          "alpha_outside_equal": true,
+          "dimensions_equal": true,
+          "legibility_review": "required",
+          "outside_mask_equal": true,
+          "residual_text_review": "required"
+        }
+      ],
+      "reason": "",
+      "references": [
+        "native_image_references.rpyc"
+      ],
+      "regions": [
+        {
+          "composition_bounds": [
+            16,
+            22,
+            225,
+            75
+          ],
+          "decision": {},
+          "frame_index": 0,
+          "frame_original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/48fb8a1cd09d9e3ce5b42f0c8228f447db2fb2bb2ead343a57c536fb7b8b2fd4/frame_0000/original.png",
+          "region": {
+            "bounds": [
+              55,
+              37,
+              186,
+              60
+            ],
+            "confidence": 0.96284195,
+            "recognition_method": "tesseract-psm11",
+            "region_id": "ea16678e41928702326c675549504696b18f5ba71f4cd37bb4f99bae704a2648",
+            "source_language": "en",
+            "source_model": "eng",
+            "text": "Continue"
+          },
+          "response": {
+            "effective_provider": "libretranslate",
+            "reasons": [],
+            "request": {
+              "bounds": [
+                55,
+                37,
+                186,
+                60
+              ],
+              "confidence": 0.96284195,
+              "image_hash": "a7a01bb8f2c03bbe1018fc333b38a739d83cf1cb780f6c1c189d02e8175152ef",
+              "job_id": "bc6e3a0b8aa745d3aab207907e65efda",
+              "job_identity": "f924cf167df06ef7db1ef6abe356b42b62e66bebc3a9bfd93c55c723f9c380ad",
+              "profile_id": "",
+              "profile_version": "1",
+              "recognized_source": "en",
+              "region_id": "ea16678e41928702326c675549504696b18f5ba71f4cd37bb4f99bae704a2648",
+              "request_id": "2862cd2751dd4f03b42fa1eed3316f52",
+              "resource_id": "48fb8a1cd09d9e3ce5b42f0c8228f447db2fb2bb2ead343a57c536fb7b8b2fd4",
+              "revision": 1,
+              "schema_version": 1,
+              "target_language_id": "ru",
+              "target_locale": "ru",
+              "text": "Continue"
+            },
+            "status": "accepted",
+            "text": "Продолжить",
+            "validation_identity": "cbb4236c015dd432763664c174eb4ca99c1107ecc82118b8312fb4d24ae5674c"
+          },
+          "status": "translated",
+          "style_estimate": {
+            "color": [
+              84,
+              92,
+              100,
+              255
+            ],
+            "confidence": 0.15,
+            "evidence": "unverified",
+            "family": "unknown",
+            "font_hash": "",
+            "font_path": "",
+            "provenance": "region average; background influences color",
+            "required": "Identify original font and effects or approve an explicit approximation",
+            "schema_version": 1,
+            "size": 18
+          },
+          "typography_estimate": {
+            "alignment": "center",
+            "approximation_approved": false,
+            "baseline": "measured_bbox",
+            "color": [
+              246,
+              247,
+              249,
+              255
+            ],
+            "confidence": 0.8637163986330447,
+            "evidence": "automatic_estimate",
+            "family": "DejaVu Sans",
+            "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+            "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+            "gradient": "",
+            "italic": false,
+            "line_spacing": 3,
+            "max_lines": 3,
+            "min_size_ratio": 0.65,
+            "provenance": "Automatic source glyph/color measurement; original typeface and visual fidelity not certified",
+            "reviewer": "",
+            "rotation": 0.0,
+            "schema_version": 1,
+            "shadow_color": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "shadow_offset": [
+              0,
+              0
+            ],
+            "size": 30,
+            "stroke_color": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "stroke_width": 0,
+            "texture": "",
+            "tracking": 0.0,
+            "variant": "Book",
+            "weight": 400
+          }
+        }
+      ],
+      "resource_id": "48fb8a1cd09d9e3ce5b42f0c8228f447db2fb2bb2ead343a57c536fb7b8b2fd4",
+      "review_mode": "auto",
+      "status": "exported_automatic",
+      "typography": [
+        {
+          "bounds": [
+            16,
+            22,
+            225,
+            75
+          ],
+          "fidelity": "automatic_estimate",
+          "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+          "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+          "frame_index": 0,
+          "in_game_visual_review": "not_executed",
+          "lines": [
+            "Продолжить"
+          ],
+          "profile_identity": "496043c6a084f3427ccd01334578e2865368cd22bfe5202b74e6326a1bcf0b35",
+          "reviewer": "",
+          "rotation": 0.0,
+          "size_effective": 30
+        }
+      ],
+      "visual_review": "not_executed"
+    },
+    {
+      "candidate_hash": "42bd9dc67cf6fd11971f15cda31948af8f8f65d4becdc9da42116ac9b0df1d2b",
+      "candidate_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/c0083b32a95ac152565a9d278c9d1ce06d406215d8cec08d32c1c934b183f049/candidate.jpg",
+      "candidate_preview_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/c0083b32a95ac152565a9d278c9d1ce06d406215d8cec08d32c1c934b183f049/frame_0000/candidate_preview.png",
+      "composition_key": "2cbe2ffd9f10255f556d9c567d25b862ba730c8c4eac2e8af90e31492d862cd3",
+      "container": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/native_assets.rpa",
+      "encoding": {
+        "decoded_pixels_exact": false,
+        "durations": [
+          0
+        ],
+        "encoding_errors": [
+          {
+            "exact": false,
+            "maximum_channel_error": 4,
+            "mean_channel_error": 0.042270833333333334
+          }
+        ],
+        "format": "JPEG",
+        "frames": 1,
+        "lossy_encoding": true,
+        "svg_flattened_at_native_resolution": false
+      },
+      "frames": 1,
+      "image_hash": "a7a01bb8f2c03bbe1018fc333b38a739d83cf1cb780f6c1c189d02e8175152ef",
+      "mask_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/c0083b32a95ac152565a9d278c9d1ce06d406215d8cec08d32c1c934b183f049/frame_0000/mask.png",
+      "mask_status": "effective_mask",
+      "method": "classic",
+      "origin": "rpa",
+      "original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/c0083b32a95ac152565a9d278c9d1ce06d406215d8cec08d32c1c934b183f049/frame_0000/original.png",
+      "output_path": "game/tl/russian/images/native/native_jpg.jpg",
+      "path": "images/native/native_jpg.jpg",
+      "pixel_validation": {
+        "alpha_outside_equal": true,
+        "dimensions_equal": true,
+        "encoded_pixels_exact": false,
+        "legibility_review": "not_executed",
+        "outside_mask_equal": true,
+        "scope": "decoded composition before native encoding"
+      },
+      "pixel_validation_frames": [
+        {
+          "alpha_outside_equal": true,
+          "dimensions_equal": true,
+          "legibility_review": "required",
+          "outside_mask_equal": true,
+          "residual_text_review": "required"
+        }
+      ],
+      "reason": "",
+      "references": [
+        "native_image_references.rpyc"
+      ],
+      "regions": [
+        {
+          "composition_bounds": [
+            16,
+            22,
+            225,
+            75
+          ],
+          "decision": {},
+          "frame_index": 0,
+          "frame_original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/c0083b32a95ac152565a9d278c9d1ce06d406215d8cec08d32c1c934b183f049/frame_0000/original.png",
+          "region": {
+            "bounds": [
+              55,
+              37,
+              186,
+              60
+            ],
+            "confidence": 0.96284195,
+            "recognition_method": "tesseract-psm11",
+            "region_id": "ea16678e41928702326c675549504696b18f5ba71f4cd37bb4f99bae704a2648",
+            "source_language": "en",
+            "source_model": "eng",
+            "text": "Continue"
+          },
+          "response": {
+            "effective_provider": "libretranslate",
+            "reasons": [],
+            "request": {
+              "bounds": [
+                55,
+                37,
+                186,
+                60
+              ],
+              "confidence": 0.96284195,
+              "image_hash": "a7a01bb8f2c03bbe1018fc333b38a739d83cf1cb780f6c1c189d02e8175152ef",
+              "job_id": "bc6e3a0b8aa745d3aab207907e65efda",
+              "job_identity": "f924cf167df06ef7db1ef6abe356b42b62e66bebc3a9bfd93c55c723f9c380ad",
+              "profile_id": "",
+              "profile_version": "1",
+              "recognized_source": "en",
+              "region_id": "ea16678e41928702326c675549504696b18f5ba71f4cd37bb4f99bae704a2648",
+              "request_id": "2ac5bf9afde14572b045a9b4d71f42d7",
+              "resource_id": "c0083b32a95ac152565a9d278c9d1ce06d406215d8cec08d32c1c934b183f049",
+              "revision": 1,
+              "schema_version": 1,
+              "target_language_id": "ru",
+              "target_locale": "ru",
+              "text": "Continue"
+            },
+            "status": "accepted",
+            "text": "Продолжить",
+            "validation_identity": "1747b7d8d3edb3febfaeddc9ed854ae3bf5e4bbaae91763f7564c291a9ea4d83"
+          },
+          "status": "translated",
+          "style_estimate": {
+            "color": [
+              84,
+              92,
+              100,
+              255
+            ],
+            "confidence": 0.15,
+            "evidence": "unverified",
+            "family": "unknown",
+            "font_hash": "",
+            "font_path": "",
+            "provenance": "region average; background influences color",
+            "required": "Identify original font and effects or approve an explicit approximation",
+            "schema_version": 1,
+            "size": 18
+          },
+          "typography_estimate": {
+            "alignment": "center",
+            "approximation_approved": false,
+            "baseline": "measured_bbox",
+            "color": [
+              246,
+              247,
+              249,
+              255
+            ],
+            "confidence": 0.8637163986330447,
+            "evidence": "automatic_estimate",
+            "family": "DejaVu Sans",
+            "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+            "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+            "gradient": "",
+            "italic": false,
+            "line_spacing": 3,
+            "max_lines": 3,
+            "min_size_ratio": 0.65,
+            "provenance": "Automatic source glyph/color measurement; original typeface and visual fidelity not certified",
+            "reviewer": "",
+            "rotation": 0.0,
+            "schema_version": 1,
+            "shadow_color": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "shadow_offset": [
+              0,
+              0
+            ],
+            "size": 30,
+            "stroke_color": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "stroke_width": 0,
+            "texture": "",
+            "tracking": 0.0,
+            "variant": "Book",
+            "weight": 400
+          }
+        }
+      ],
+      "resource_id": "c0083b32a95ac152565a9d278c9d1ce06d406215d8cec08d32c1c934b183f049",
+      "review_mode": "auto",
+      "status": "exported_automatic",
+      "typography": [
+        {
+          "bounds": [
+            16,
+            22,
+            225,
+            75
+          ],
+          "fidelity": "automatic_estimate",
+          "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+          "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+          "frame_index": 0,
+          "in_game_visual_review": "not_executed",
+          "lines": [
+            "Продолжить"
+          ],
+          "profile_identity": "496043c6a084f3427ccd01334578e2865368cd22bfe5202b74e6326a1bcf0b35",
+          "reviewer": "",
+          "rotation": 0.0,
+          "size_effective": 30
+        }
+      ],
+      "visual_review": "not_executed"
+    },
+    {
+      "candidate_hash": "002356683f6711bfd5b50eb025321b1a62d203cf4c6c4ceaf4c7c9f2d066cea9",
+      "candidate_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/6bf32df8fedff777fa41f6fd906078a5b3fdedc7fda9cc1db3f2c072ce46f2b7/candidate.png",
+      "candidate_preview_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/6bf32df8fedff777fa41f6fd906078a5b3fdedc7fda9cc1db3f2c072ce46f2b7/frame_0000/candidate_preview.png",
+      "composition_key": "88e5c7abf98d1241a8d47303b10d6d549ccb4cb5027a9ecdb6e2aa676aa98caa",
+      "container": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/native_assets.rpa",
+      "encoding": {
+        "decoded_pixels_exact": true,
+        "durations": [
+          0
+        ],
+        "encoding_errors": [
+          {
+            "exact": true,
+            "maximum_channel_error": 0,
+            "mean_channel_error": 0.0
+          }
+        ],
+        "format": "PNG",
+        "frames": 1,
+        "lossy_encoding": false,
+        "svg_flattened_at_native_resolution": false
+      },
+      "frames": 1,
+      "image_hash": "095d07d106c4cbd1ccec4d083ae1804b7fe0f7fe7eeabbb8c4f671098caa9790",
+      "mask_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/6bf32df8fedff777fa41f6fd906078a5b3fdedc7fda9cc1db3f2c072ce46f2b7/frame_0000/mask.png",
+      "mask_status": "effective_mask",
+      "method": "classic",
+      "origin": "rpa",
+      "original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/6bf32df8fedff777fa41f6fd906078a5b3fdedc7fda9cc1db3f2c072ce46f2b7/frame_0000/original.png",
+      "output_path": "game/tl/russian/images/native/native_png.png",
+      "path": "images/native/native_png.png",
+      "pixel_validation": {
+        "alpha_outside_equal": true,
+        "dimensions_equal": true,
+        "encoded_pixels_exact": true,
+        "legibility_review": "not_executed",
+        "outside_mask_equal": true,
+        "scope": "decoded composition before native encoding"
+      },
+      "pixel_validation_frames": [
+        {
+          "alpha_outside_equal": true,
+          "dimensions_equal": true,
+          "legibility_review": "required",
+          "outside_mask_equal": true,
+          "residual_text_review": "required"
+        }
+      ],
+      "reason": "",
+      "references": [
+        "native_image_references.rpyc"
+      ],
+      "regions": [
+        {
+          "composition_bounds": [
+            16,
+            22,
+            225,
+            75
+          ],
+          "decision": {},
+          "frame_index": 0,
+          "frame_original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/6bf32df8fedff777fa41f6fd906078a5b3fdedc7fda9cc1db3f2c072ce46f2b7/frame_0000/original.png",
+          "region": {
+            "bounds": [
+              55,
+              37,
+              186,
+              60
+            ],
+            "confidence": 0.9614389799999999,
+            "recognition_method": "tesseract-psm11",
+            "region_id": "589e1fbbf70340b49068c0fdd7a6a2b22f2d66332c3c1cda71d8b55328a3d48c",
+            "source_language": "en",
+            "source_model": "eng",
+            "text": "Continue"
+          },
+          "response": {
+            "effective_provider": "libretranslate",
+            "reasons": [],
+            "request": {
+              "bounds": [
+                55,
+                37,
+                186,
+                60
+              ],
+              "confidence": 0.9614389799999999,
+              "image_hash": "095d07d106c4cbd1ccec4d083ae1804b7fe0f7fe7eeabbb8c4f671098caa9790",
+              "job_id": "bc6e3a0b8aa745d3aab207907e65efda",
+              "job_identity": "f924cf167df06ef7db1ef6abe356b42b62e66bebc3a9bfd93c55c723f9c380ad",
+              "profile_id": "",
+              "profile_version": "1",
+              "recognized_source": "en",
+              "region_id": "589e1fbbf70340b49068c0fdd7a6a2b22f2d66332c3c1cda71d8b55328a3d48c",
+              "request_id": "182f2cae9d68451aae856a1f84c3d293",
+              "resource_id": "6bf32df8fedff777fa41f6fd906078a5b3fdedc7fda9cc1db3f2c072ce46f2b7",
+              "revision": 1,
+              "schema_version": 1,
+              "target_language_id": "ru",
+              "target_locale": "ru",
+              "text": "Continue"
+            },
+            "status": "accepted",
+            "text": "Продолжить",
+            "validation_identity": "25da1db8b7a5c90cc351fe3429fa16958a79ced20074a2a05446c55fbe456a76"
+          },
+          "status": "translated",
+          "style_estimate": {
+            "color": [
+              83,
+              92,
+              99,
+              255
+            ],
+            "confidence": 0.15,
+            "evidence": "unverified",
+            "family": "unknown",
+            "font_hash": "",
+            "font_path": "",
+            "provenance": "region average; background influences color",
+            "required": "Identify original font and effects or approve an explicit approximation",
+            "schema_version": 1,
+            "size": 18
+          },
+          "typography_estimate": {
+            "alignment": "center",
+            "approximation_approved": false,
+            "baseline": "measured_bbox",
+            "color": [
+              245,
+              247,
+              249,
+              255
+            ],
+            "confidence": 0.8659348537092624,
+            "evidence": "automatic_estimate",
+            "family": "DejaVu Sans",
+            "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+            "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+            "gradient": "",
+            "italic": false,
+            "line_spacing": 3,
+            "max_lines": 3,
+            "min_size_ratio": 0.65,
+            "provenance": "Automatic source glyph/color measurement; original typeface and visual fidelity not certified",
+            "reviewer": "",
+            "rotation": 0.0,
+            "schema_version": 1,
+            "shadow_color": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "shadow_offset": [
+              0,
+              0
+            ],
+            "size": 30,
+            "stroke_color": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "stroke_width": 0,
+            "texture": "",
+            "tracking": 0.0,
+            "variant": "Book",
+            "weight": 400
+          }
+        }
+      ],
+      "resource_id": "6bf32df8fedff777fa41f6fd906078a5b3fdedc7fda9cc1db3f2c072ce46f2b7",
+      "review_mode": "auto",
+      "status": "exported_automatic",
+      "typography": [
+        {
+          "bounds": [
+            16,
+            22,
+            225,
+            75
+          ],
+          "fidelity": "automatic_estimate",
+          "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+          "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+          "frame_index": 0,
+          "in_game_visual_review": "not_executed",
+          "lines": [
+            "Продолжить"
+          ],
+          "profile_identity": "f814bb654762d9f7c9722ecd80dd86d48e9b86146e3d30ca782b2ff65357bf20",
+          "reviewer": "",
+          "rotation": 0.0,
+          "size_effective": 30
+        }
+      ],
+      "visual_review": "not_executed"
+    },
+    {
+      "candidate_hash": "a91e7f8305e44608591728db82f2e8877ea2e417f54b52f68a4140095576e9fc",
+      "candidate_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/78d37a74b486f96f5e12cdd152fd23acb0b5dc6d6e016a542837f57485200294/candidate.svg",
+      "candidate_preview_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/78d37a74b486f96f5e12cdd152fd23acb0b5dc6d6e016a542837f57485200294/frame_0000/candidate_preview.png",
+      "composition_key": "95f148a9cf1b4a8432303ecb0b895813138228b54bc37255d9673a6f3168f71d",
+      "container": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/native_assets.rpa",
+      "encoding": {
+        "decoded_pixels_exact": true,
+        "durations": [
+          0
+        ],
+        "encoding_errors": [
+          {
+            "exact": true,
+            "maximum_channel_error": 0,
+            "mean_channel_error": 0.0
+          }
+        ],
+        "format": "SVG",
+        "frames": 1,
+        "lossy_encoding": false,
+        "svg_flattened_at_native_resolution": true
+      },
+      "frames": 1,
+      "image_hash": "fe356d6cdccb57e229fe98cb2d53d2b385a533448d1d7a80db85e9ca6622ef44",
+      "mask_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/78d37a74b486f96f5e12cdd152fd23acb0b5dc6d6e016a542837f57485200294/frame_0000/mask.png",
+      "mask_status": "effective_mask",
+      "method": "classic",
+      "origin": "rpa",
+      "original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/78d37a74b486f96f5e12cdd152fd23acb0b5dc6d6e016a542837f57485200294/frame_0000/original.png",
+      "output_path": "game/tl/russian/images/native/native_svg.svg",
+      "path": "images/native/native_svg.svg",
+      "pixel_validation": {
+        "alpha_outside_equal": true,
+        "dimensions_equal": true,
+        "encoded_pixels_exact": true,
+        "legibility_review": "not_executed",
+        "outside_mask_equal": true,
+        "scope": "decoded composition before native encoding"
+      },
+      "pixel_validation_frames": [
+        {
+          "alpha_outside_equal": true,
+          "dimensions_equal": true,
+          "legibility_review": "required",
+          "outside_mask_equal": true,
+          "residual_text_review": "required"
+        }
+      ],
+      "reason": "",
+      "references": [
+        "native_image_references.rpyc"
+      ],
+      "regions": [
+        {
+          "composition_bounds": [
+            16,
+            22,
+            225,
+            75
+          ],
+          "decision": {},
+          "frame_index": 0,
+          "frame_original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/78d37a74b486f96f5e12cdd152fd23acb0b5dc6d6e016a542837f57485200294/frame_0000/original.png",
+          "region": {
+            "bounds": [
+              55,
+              37,
+              186,
+              60
+            ],
+            "confidence": 0.9614389799999999,
+            "recognition_method": "tesseract-psm11",
+            "region_id": "8be5f9989395ef381daa90e1ca93dfe695c65db9a3ab3366388e566cae5cd438",
+            "source_language": "en",
+            "source_model": "eng",
+            "text": "Continue"
+          },
+          "response": {
+            "effective_provider": "libretranslate",
+            "reasons": [],
+            "request": {
+              "bounds": [
+                55,
+                37,
+                186,
+                60
+              ],
+              "confidence": 0.9614389799999999,
+              "image_hash": "fe356d6cdccb57e229fe98cb2d53d2b385a533448d1d7a80db85e9ca6622ef44",
+              "job_id": "bc6e3a0b8aa745d3aab207907e65efda",
+              "job_identity": "f924cf167df06ef7db1ef6abe356b42b62e66bebc3a9bfd93c55c723f9c380ad",
+              "profile_id": "",
+              "profile_version": "1",
+              "recognized_source": "en",
+              "region_id": "8be5f9989395ef381daa90e1ca93dfe695c65db9a3ab3366388e566cae5cd438",
+              "request_id": "746bb61168b64adebd5b9bc19c25b8cb",
+              "resource_id": "78d37a74b486f96f5e12cdd152fd23acb0b5dc6d6e016a542837f57485200294",
+              "revision": 1,
+              "schema_version": 1,
+              "target_language_id": "ru",
+              "target_locale": "ru",
+              "text": "Continue"
+            },
+            "status": "accepted",
+            "text": "Продолжить",
+            "validation_identity": "da52216972cc754d483b6481532bc55ccb90970e6b6fd4f4268899bd59054fbf"
+          },
+          "status": "translated",
+          "style_estimate": {
+            "color": [
+              83,
+              92,
+              99,
+              255
+            ],
+            "confidence": 0.15,
+            "evidence": "unverified",
+            "family": "unknown",
+            "font_hash": "",
+            "font_path": "",
+            "provenance": "region average; background influences color",
+            "required": "Identify original font and effects or approve an explicit approximation",
+            "schema_version": 1,
+            "size": 18
+          },
+          "typography_estimate": {
+            "alignment": "center",
+            "approximation_approved": false,
+            "baseline": "measured_bbox",
+            "color": [
+              245,
+              247,
+              249,
+              255
+            ],
+            "confidence": 0.8659348537092624,
+            "evidence": "automatic_estimate",
+            "family": "DejaVu Sans",
+            "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+            "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+            "gradient": "",
+            "italic": false,
+            "line_spacing": 3,
+            "max_lines": 3,
+            "min_size_ratio": 0.65,
+            "provenance": "Automatic source glyph/color measurement; original typeface and visual fidelity not certified",
+            "reviewer": "",
+            "rotation": 0.0,
+            "schema_version": 1,
+            "shadow_color": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "shadow_offset": [
+              0,
+              0
+            ],
+            "size": 30,
+            "stroke_color": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "stroke_width": 0,
+            "texture": "",
+            "tracking": 0.0,
+            "variant": "Book",
+            "weight": 400
+          }
+        }
+      ],
+      "resource_id": "78d37a74b486f96f5e12cdd152fd23acb0b5dc6d6e016a542837f57485200294",
+      "review_mode": "auto",
+      "status": "exported_automatic",
+      "typography": [
+        {
+          "bounds": [
+            16,
+            22,
+            225,
+            75
+          ],
+          "fidelity": "automatic_estimate",
+          "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+          "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+          "frame_index": 0,
+          "in_game_visual_review": "not_executed",
+          "lines": [
+            "Продолжить"
+          ],
+          "profile_identity": "f814bb654762d9f7c9722ecd80dd86d48e9b86146e3d30ca782b2ff65357bf20",
+          "reviewer": "",
+          "rotation": 0.0,
+          "size_effective": 30
+        }
+      ],
+      "visual_review": "not_executed"
+    },
+    {
+      "candidate_hash": "6588829ebb6e991c467ab50b36a668edff0f6cd6050b66f4a501fbe386f5c158",
+      "candidate_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/9a65d690d96489be0899cc271c63246f5559258900edd013f6c9b15806183014/candidate.tga",
+      "candidate_preview_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/9a65d690d96489be0899cc271c63246f5559258900edd013f6c9b15806183014/frame_0000/candidate_preview.png",
+      "composition_key": "17f8055837f16ac1de1cd75cc460f2ff6be79d480db8f772100522adaeecbb61",
+      "container": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/native_assets.rpa",
+      "encoding": {
+        "decoded_pixels_exact": true,
+        "durations": [
+          0
+        ],
+        "encoding_errors": [
+          {
+            "exact": true,
+            "maximum_channel_error": 0,
+            "mean_channel_error": 0.0
+          }
+        ],
+        "format": "TGA",
+        "frames": 1,
+        "lossy_encoding": false,
+        "svg_flattened_at_native_resolution": false
+      },
+      "frames": 1,
+      "image_hash": "89f616d5567a121917ea2fd94287e6b877c795dc650fa84c927f6c01b9d5b06d",
+      "mask_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/9a65d690d96489be0899cc271c63246f5559258900edd013f6c9b15806183014/frame_0000/mask.png",
+      "mask_status": "effective_mask",
+      "method": "classic",
+      "origin": "rpa",
+      "original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/9a65d690d96489be0899cc271c63246f5559258900edd013f6c9b15806183014/frame_0000/original.png",
+      "output_path": "game/tl/russian/images/native/native_tga.tga",
+      "path": "images/native/native_tga.tga",
+      "pixel_validation": {
+        "alpha_outside_equal": true,
+        "dimensions_equal": true,
+        "encoded_pixels_exact": true,
+        "legibility_review": "not_executed",
+        "outside_mask_equal": true,
+        "scope": "decoded composition before native encoding"
+      },
+      "pixel_validation_frames": [
+        {
+          "alpha_outside_equal": true,
+          "dimensions_equal": true,
+          "legibility_review": "required",
+          "outside_mask_equal": true,
+          "residual_text_review": "required"
+        }
+      ],
+      "reason": "",
+      "references": [
+        "native_image_references.rpyc"
+      ],
+      "regions": [
+        {
+          "composition_bounds": [
+            16,
+            22,
+            225,
+            75
+          ],
+          "decision": {},
+          "frame_index": 0,
+          "frame_original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/9a65d690d96489be0899cc271c63246f5559258900edd013f6c9b15806183014/frame_0000/original.png",
+          "region": {
+            "bounds": [
+              55,
+              37,
+              186,
+              60
+            ],
+            "confidence": 0.9614389799999999,
+            "recognition_method": "tesseract-psm11",
+            "region_id": "37a30cb8346394e6dfcb36185d1cfe102d16339368df6a4a57c96ff17bc9fad2",
+            "source_language": "en",
+            "source_model": "eng",
+            "text": "Continue"
+          },
+          "response": {
+            "effective_provider": "libretranslate",
+            "reasons": [],
+            "request": {
+              "bounds": [
+                55,
+                37,
+                186,
+                60
+              ],
+              "confidence": 0.9614389799999999,
+              "image_hash": "89f616d5567a121917ea2fd94287e6b877c795dc650fa84c927f6c01b9d5b06d",
+              "job_id": "bc6e3a0b8aa745d3aab207907e65efda",
+              "job_identity": "f924cf167df06ef7db1ef6abe356b42b62e66bebc3a9bfd93c55c723f9c380ad",
+              "profile_id": "",
+              "profile_version": "1",
+              "recognized_source": "en",
+              "region_id": "37a30cb8346394e6dfcb36185d1cfe102d16339368df6a4a57c96ff17bc9fad2",
+              "request_id": "1fd355ccb7ed443bbc09545ffcd70125",
+              "resource_id": "9a65d690d96489be0899cc271c63246f5559258900edd013f6c9b15806183014",
+              "revision": 1,
+              "schema_version": 1,
+              "target_language_id": "ru",
+              "target_locale": "ru",
+              "text": "Continue"
+            },
+            "status": "accepted",
+            "text": "Продолжить",
+            "validation_identity": "042c18af7df9d4a8fa46654b37b07c4557a9e1023a94e981175e5ed2e5024539"
+          },
+          "status": "translated",
+          "style_estimate": {
+            "color": [
+              83,
+              92,
+              99,
+              255
+            ],
+            "confidence": 0.15,
+            "evidence": "unverified",
+            "family": "unknown",
+            "font_hash": "",
+            "font_path": "",
+            "provenance": "region average; background influences color",
+            "required": "Identify original font and effects or approve an explicit approximation",
+            "schema_version": 1,
+            "size": 18
+          },
+          "typography_estimate": {
+            "alignment": "center",
+            "approximation_approved": false,
+            "baseline": "measured_bbox",
+            "color": [
+              245,
+              247,
+              249,
+              255
+            ],
+            "confidence": 0.8659348537092624,
+            "evidence": "automatic_estimate",
+            "family": "DejaVu Sans",
+            "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+            "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+            "gradient": "",
+            "italic": false,
+            "line_spacing": 3,
+            "max_lines": 3,
+            "min_size_ratio": 0.65,
+            "provenance": "Automatic source glyph/color measurement; original typeface and visual fidelity not certified",
+            "reviewer": "",
+            "rotation": 0.0,
+            "schema_version": 1,
+            "shadow_color": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "shadow_offset": [
+              0,
+              0
+            ],
+            "size": 30,
+            "stroke_color": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "stroke_width": 0,
+            "texture": "",
+            "tracking": 0.0,
+            "variant": "Book",
+            "weight": 400
+          }
+        }
+      ],
+      "resource_id": "9a65d690d96489be0899cc271c63246f5559258900edd013f6c9b15806183014",
+      "review_mode": "auto",
+      "status": "exported_automatic",
+      "typography": [
+        {
+          "bounds": [
+            16,
+            22,
+            225,
+            75
+          ],
+          "fidelity": "automatic_estimate",
+          "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+          "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+          "frame_index": 0,
+          "in_game_visual_review": "not_executed",
+          "lines": [
+            "Продолжить"
+          ],
+          "profile_identity": "f814bb654762d9f7c9722ecd80dd86d48e9b86146e3d30ca782b2ff65357bf20",
+          "reviewer": "",
+          "rotation": 0.0,
+          "size_effective": 30
+        }
+      ],
+      "visual_review": "not_executed"
+    },
+    {
+      "candidate_hash": "c7e05af204fed19a5b9761717df55e8605d973fbf7e1c1d3a5a34f47a60d7a90",
+      "candidate_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/f43d8697a2f91c6e51a66f6a262bc26a6b8b2ef096cc28d238e20043d300fcbe/candidate.webp",
+      "candidate_preview_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/f43d8697a2f91c6e51a66f6a262bc26a6b8b2ef096cc28d238e20043d300fcbe/frame_0000/candidate_preview.png",
+      "composition_key": "5a48d56dc7f31e60c04bad3cf7d1106dd8986a7b67bf6b0704141fd196889028",
+      "container": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/native_assets.rpa",
+      "encoding": {
+        "decoded_pixels_exact": true,
+        "durations": [
+          0
+        ],
+        "encoding_errors": [
+          {
+            "exact": true,
+            "maximum_channel_error": 0,
+            "mean_channel_error": 0.0
+          }
+        ],
+        "format": "WEBP",
+        "frames": 1,
+        "lossy_encoding": false,
+        "svg_flattened_at_native_resolution": false
+      },
+      "frames": 1,
+      "image_hash": "52fa06426d3ab9c2c02d2993451a6810d48d8448d63bdec0fdb4823619aa8047",
+      "mask_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/f43d8697a2f91c6e51a66f6a262bc26a6b8b2ef096cc28d238e20043d300fcbe/frame_0000/mask.png",
+      "mask_status": "effective_mask",
+      "method": "classic",
+      "origin": "rpa",
+      "original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/f43d8697a2f91c6e51a66f6a262bc26a6b8b2ef096cc28d238e20043d300fcbe/frame_0000/original.png",
+      "output_path": "game/tl/russian/images/native/native_webp.webp",
+      "path": "images/native/native_webp.webp",
+      "pixel_validation": {
+        "alpha_outside_equal": true,
+        "dimensions_equal": true,
+        "encoded_pixels_exact": true,
+        "legibility_review": "not_executed",
+        "outside_mask_equal": true,
+        "scope": "decoded composition before native encoding"
+      },
+      "pixel_validation_frames": [
+        {
+          "alpha_outside_equal": true,
+          "dimensions_equal": true,
+          "legibility_review": "required",
+          "outside_mask_equal": true,
+          "residual_text_review": "required"
+        }
+      ],
+      "reason": "",
+      "references": [
+        "native_image_references.rpyc"
+      ],
+      "regions": [
+        {
+          "composition_bounds": [
+            16,
+            22,
+            225,
+            75
+          ],
+          "decision": {},
+          "frame_index": 0,
+          "frame_original_path": "/tmp/linguanova_native_acceptance_final/creator/LinguaNova/images/jobs/bc6e3a0b8aa745d3aab207907e65efda/images/f43d8697a2f91c6e51a66f6a262bc26a6b8b2ef096cc28d238e20043d300fcbe/frame_0000/original.png",
+          "region": {
+            "bounds": [
+              55,
+              37,
+              186,
+              60
+            ],
+            "confidence": 0.9614389799999999,
+            "recognition_method": "tesseract-psm11",
+            "region_id": "250d1c22f3da844430c4d9d06812ce414ec8fd12d2d5d14a4fc50d4cee5e66da",
+            "source_language": "en",
+            "source_model": "eng",
+            "text": "Continue"
+          },
+          "response": {
+            "effective_provider": "libretranslate",
+            "reasons": [],
+            "request": {
+              "bounds": [
+                55,
+                37,
+                186,
+                60
+              ],
+              "confidence": 0.9614389799999999,
+              "image_hash": "52fa06426d3ab9c2c02d2993451a6810d48d8448d63bdec0fdb4823619aa8047",
+              "job_id": "bc6e3a0b8aa745d3aab207907e65efda",
+              "job_identity": "f924cf167df06ef7db1ef6abe356b42b62e66bebc3a9bfd93c55c723f9c380ad",
+              "profile_id": "",
+              "profile_version": "1",
+              "recognized_source": "en",
+              "region_id": "250d1c22f3da844430c4d9d06812ce414ec8fd12d2d5d14a4fc50d4cee5e66da",
+              "request_id": "62f4e6322d6944d2a06a645eb0cb636d",
+              "resource_id": "f43d8697a2f91c6e51a66f6a262bc26a6b8b2ef096cc28d238e20043d300fcbe",
+              "revision": 1,
+              "schema_version": 1,
+              "target_language_id": "ru",
+              "target_locale": "ru",
+              "text": "Continue"
+            },
+            "status": "accepted",
+            "text": "Продолжить",
+            "validation_identity": "bdfdaa32ad2f142694787ca1e2d9f29f3488c88a7eae2bc754c8363e3f68d637"
+          },
+          "status": "translated",
+          "style_estimate": {
+            "color": [
+              83,
+              92,
+              99,
+              255
+            ],
+            "confidence": 0.15,
+            "evidence": "unverified",
+            "family": "unknown",
+            "font_hash": "",
+            "font_path": "",
+            "provenance": "region average; background influences color",
+            "required": "Identify original font and effects or approve an explicit approximation",
+            "schema_version": 1,
+            "size": 18
+          },
+          "typography_estimate": {
+            "alignment": "center",
+            "approximation_approved": false,
+            "baseline": "measured_bbox",
+            "color": [
+              245,
+              247,
+              249,
+              255
+            ],
+            "confidence": 0.8659348537092624,
+            "evidence": "automatic_estimate",
+            "family": "DejaVu Sans",
+            "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+            "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+            "gradient": "",
+            "italic": false,
+            "line_spacing": 3,
+            "max_lines": 3,
+            "min_size_ratio": 0.65,
+            "provenance": "Automatic source glyph/color measurement; original typeface and visual fidelity not certified",
+            "reviewer": "",
+            "rotation": 0.0,
+            "schema_version": 1,
+            "shadow_color": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "shadow_offset": [
+              0,
+              0
+            ],
+            "size": 30,
+            "stroke_color": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "stroke_width": 0,
+            "texture": "",
+            "tracking": 0.0,
+            "variant": "Book",
+            "weight": 400
+          }
+        }
+      ],
+      "resource_id": "f43d8697a2f91c6e51a66f6a262bc26a6b8b2ef096cc28d238e20043d300fcbe",
+      "review_mode": "auto",
+      "status": "exported_automatic",
+      "typography": [
+        {
+          "bounds": [
+            16,
+            22,
+            225,
+            75
+          ],
+          "fidelity": "automatic_estimate",
+          "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+          "font_path": "/tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/fonts/DejaVuSans.ttf",
+          "frame_index": 0,
+          "in_game_visual_review": "not_executed",
+          "lines": [
+            "Продолжить"
+          ],
+          "profile_identity": "f814bb654762d9f7c9722ecd80dd86d48e9b86146e3d30ca782b2ff65357bf20",
+          "reviewer": "",
+          "rotation": 0.0,
+          "size_effective": 30
+        }
+      ],
+      "visual_review": "not_executed"
+    }
+  ],
+  "installed": [
+    "tl/russian/images/buttons/continue_hover.png",
+    "tl/russian/images/buttons/continue_normal.png",
+    "tl/russian/images/buttons/continue_selected.png",
+    "tl/russian/images/capitulo_01/telefono/mensaje.png",
+    "tl/russian/images/native/native_avif.avif",
+    "tl/russian/images/native/native_bmp.bmp",
+    "tl/russian/images/native/native_ico.ico",
+    "tl/russian/images/native/native_jpeg.jpeg",
+    "tl/russian/images/native/native_jpg.jpg",
+    "tl/russian/images/native/native_png.png",
+    "tl/russian/images/native/native_svg.svg",
+    "tl/russian/images/native/native_tga.tga",
+    "tl/russian/images/native/native_webp.webp",
+    "zzz_linguanova_image_codecs.rpy",
+    "zzz_linguanova_ocultar_fuentes.rpy"
+  ],
+  "limitations": [
+    "Automatically exported typography is estimated; human visual review not executed",
+    "JPEG/AVIF/GIF native encoding may change decoded pixels; encoding errors are recorded",
+    "Translated SVG is flattened to paths at its native resolution"
+  ],
+  "renpy_id": "russian",
+  "source_models": "eng",
+  "status": "completed"
+}

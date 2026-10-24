@@ -31,7 +31,7 @@ def _run(coro):
         loop.close()
 
 
-@pytest.mark.parametrize("lang", ["polish", "chinese_t", "arabic", "meiteilon"])
+@pytest.mark.parametrize("lang", ["spanish", "english", "portuguese", "french", "russian"])
 def test_google_batch_fallbacks_keep_source_and_target(lang):
     tl = resolve_language(lang).api
     g = GoogleTranslator(config_manager=None)
@@ -86,7 +86,10 @@ def test_google_lingva_fallback_keeps_languages():
     assert urls and "/api/v1/pt/pl/" in urls[0]
 
 
-@pytest.mark.parametrize("lang,expected", [("polish", "pl"), ("chinese_t", "zh-Hant"), ("norwegian", "nb"), ("filipino", "fil")])
+@pytest.mark.parametrize("lang,expected", [
+    ("spanish", "es"), ("english", "en"), ("portuguese", "pt"),
+    ("french", "fr"), ("russian", "ru"),
+])
 def test_bing_sends_mapped_codes_and_fallback_gets_identical_requests(lang, expected):
     api = resolve_language(lang).api
     b = BingTranslator()

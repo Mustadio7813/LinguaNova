@@ -16,6 +16,7 @@ import logging
 import zipfile
 import io
 import shutil
+import re
 from pathlib import Path
 from typing import Dict, Optional, Tuple, List, Any
 
@@ -191,7 +192,17 @@ def inject_font(game_dir: str, lang_code: str) -> Dict[str, Any]:
     if (game_path / "game").exists():
         game_path = game_path / "game"
 
-    fonts_dir = game_path / "tl" / "linguanova_fonts"
+    # Install protection here too: this utility can run without a translation
+    # job, and legacy font resources may still be under tl/.
+    from src.core.language_menu_template import install_resource_filter
+    try:
+        resource_filter = install_resource_filter(str(game_path))
+    except Exception as exc:
+        return {"success": False, "message": "No se pudo proteger el selector de idiomas: " + str(exc)}
+
+    # Resources must live outside tl/: Ren'Py may otherwise expose the folder
+    # as a language, which falls back to English when selected.
+    fonts_dir = game_path / "linguanova_fonts"
     fonts_dir.mkdir(parents=True, exist_ok=True)
 
     font_family = candidates[0][0]
@@ -210,7 +221,7 @@ def inject_font(game_dir: str, lang_code: str) -> Dict[str, Any]:
         return {"success": False, "message": "No se pudo descargar ninguna fuente compatible."}
 
     rpy_path = game_path / "zzz_linguanova_font.rpy"
-    font_rel = f"tl/linguanova_fonts/{font_filename}"
+    font_rel = f"linguanova_fonts/{font_filename}"
 
     rtl_snippet = ""
     if is_rtl:
@@ -265,12 +276,32 @@ translate {lang_code} python:
     except Exception: pass
 '''
 
-    with open(rpy_path, 'w', encoding='utf-8') as f:
-        f.write(block)
+    # Preserve font translation blocks added for other installed languages.
+    # Older blocks may still refer to tl/linguanova_fonts; those assets stay
+    # intact and the shared selector hides that legacy resource-folder name.
+    if rpy_path.is_file():
+        existing = rpy_path.read_text(encoding="utf-8-sig")
+        if "linguanova_get_font_hook" in existing:
+            pattern = re.compile(r"^translate\s+(\w+)\s+python\s*:\s*\n", re.M)
+            matches = list(pattern.finditer(existing))
+            retained = []
+            for index, match in enumerate(matches):
+                if match.group(1) == lang_code:
+                    continue
+                end = matches[index + 1].start() if index + 1 < len(matches) else len(existing)
+                retained.append(existing[match.start():end].rstrip() + "\n")
+            if retained:
+                block += "\n" + "\n".join(retained)
+
+    from src.utils.encoding import save_text_safely
+    if not save_text_safely(rpy_path, block, encoding="utf-8", newline="\n"):
+        return {"success": False, "message": "No se pudo guardar el archivo de fuentes: " + str(rpy_path)}
+    Path(str(rpy_path) + "c").unlink(missing_ok=True)
 
     return {
         "success": True,
         "message": f"Fuente {font_family} inyectada para {lang_code}",
         "font": font_family,
         "path": str(rpy_path),
+        "resource_filter": str(resource_filter),
     }

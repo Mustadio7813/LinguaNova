@@ -499,24 +499,16 @@ class SettingsBackend:
     # ═══════════════════════════════════════════════════════════════════════════
 
     def get_available_ui_languages(self) -> list:
-        languages = self.builtin_ui_languages()
-        # Languages the user added in <data dir>/locales (see ConfigManager).
-        for code, name in sorted(getattr(self.config, "user_ui_languages", {}).items(), key=lambda kv: kv[1].lower()):
-            languages.append({"code": code, "name": "✏️ " + name})
-        return languages
+        return self.builtin_ui_languages()
 
     @staticmethod
     def builtin_ui_languages() -> list:
         return [
-            {"code": "tr", "name": "🇹🇷 Türkçe"},
-            {"code": "en", "name": "🇬🇧 English"},
-            {"code": "de", "name": "🇩🇪 Deutsch"},
-            {"code": "fr", "name": "🇫🇷 Français"},
             {"code": "es", "name": "🇪🇸 Español"},
+            {"code": "en", "name": "🇬🇧 English"},
+            {"code": "pt", "name": "🇵🇹 Português"},
+            {"code": "fr", "name": "🇫🇷 Français"},
             {"code": "ru", "name": "🇷🇺 Русский"},
-            {"code": "fa", "name": "🇮🇷 فارسی"},
-            {"code": "zh-CN", "name": "🇨🇳 中文 (简体)"},
-            {"code": "ja", "name": "🇯🇵 日本語"},
         ]
 
     def get_current_ui_language(self) -> str:
@@ -526,12 +518,10 @@ class SettingsBackend:
         try:
             from src.utils.config import Language
 
-            if lang_code in getattr(self.config, "user_ui_languages", {}):
-                # Language added by the user: not in the built-in enum.
-                self.config.app_settings.ui_language = lang_code
-            else:
-                lang = Language(lang_code)
-                self.config.load_locale(lang)
+            if lang_code not in {"en", "es", "fr", "pt", "ru"}:
+                raise ValueError(f"Unsupported interface language: {lang_code}")
+            lang = Language(lang_code)
+            self.config.load_locale(lang)
             self.config.save_config()
             self._emit("language", lang_code)
         except Exception as e:
@@ -571,10 +561,14 @@ class SettingsBackend:
         return languages
 
     def get_target_language(self) -> str:
-        return self.config.translation_settings.target_language or "turkish"
+        return self.config.translation_settings.target_language or "english"
 
     def set_target_language(self, lang: str) -> None:
         normalized = self.config.normalize_renpy_language_code(lang)
+        supported = {code for code, _name in self.config.get_target_languages_for_ui()}
+        if normalized not in supported:
+            self.logger.warning("Ignoring unsupported target language: %s", lang)
+            return
         self.config.translation_settings.target_language = normalized
         self.config.save_config()
         self.logger.info("[SettingsBackend] Target language: %s", normalized)
@@ -593,11 +587,16 @@ class SettingsBackend:
         return self.config.translation_settings.source_language or "auto"
 
     def set_source_language(self, lang: str) -> None:
-        self.config.translation_settings.source_language = (
-            lang.strip() if lang.strip() else "auto"
-        )
+        normalized = (lang or "").strip() or "auto"
+        if normalized != "auto":
+            normalized = self.config.normalize_renpy_language_code(normalized)
+            supported = {code for code, _name in self.config.get_target_languages_for_ui()}
+            if normalized not in supported:
+                self.logger.warning("Ignoring unsupported source language: %s", lang)
+                return
+        self.config.translation_settings.source_language = normalized
         self.config.save_config()
-        self.logger.info("[SettingsBackend] Source language: %s", lang or "auto")
+        self.logger.info("[SettingsBackend] Source language: %s", normalized)
 
     # ═══════════════════════════════════════════════════════════════════════════
     #  Glossary Management

@@ -541,3 +541,133 @@ Root causes reproduced with the strings from the user's "iNSight of you ver.13" 
 - Regression tests cover poisoned legacy caches, retranslation, empty and
   unchanged results, pending statistics, preserving manual text, and clean
   `#ignore` output.
+
+### 33. Preserve generated language-menu helpers — 2026-10-20
+
+- Runtime-hook cleanup matched every `*_linguanova_*.rpy` file, deleting the
+  standalone language-menu picker (and font-injection scripts) immediately
+  after generation. It now targets only stale runtime-hook filenames while
+  preserving other generated scripts.
+- Added a regression test that creates the fallback picker, runs hook cleanup
+  in native output mode, and verifies the picker and font helper remain while
+  an obsolete runtime hook is removed.
+
+### 34. RenLocalizer 2.8.20 comparison and update availability — 2026-10-20
+
+This is a comparison record, not a claim that RenLocalizer 2.8.20 was merged
+or that a new LinguaNova release was published.
+
+- **Behaviors already present in LinguaNova:** escape-aware parsing of quoted
+  Ren'Py strings (`src/core/tl_parser.py` and
+  `src/core/pipeline/extraction.py`); mixed UTF-8/Windows-1252 input handling
+  (`src/utils/encoding.py`); syntax-placeholder protection and restoration
+  (`src/core/syntax_guard.py`); and source-text fallback when a translation is
+  missing. These are equivalent protections observed in the compared code,
+  not newly ported changes attributed to 2.8.20.
+- **AI batch concurrency is not ported:** RenLocalizer 2.8.20 sizes each
+  pipeline step to hold multiple AI request chunks, bounded by the configured
+  concurrency. LinguaNova's `get_effective_translation_batch_size()` still
+  returns one requested batch for OpenAI/Gemini, and the AI request batching
+  does not yet expand the step size to fill the configured parallel slots.
+  The upstream regression tests for scene/JSON/XML modes have not been added
+  to LinguaNova. This improvement remains a candidate for a separately tested
+  change; it is not included in version 1.1.0 or the archive created on
+  2026-10-20.
+- **Update mechanism:** generating an update package is possible, but the
+  existing automatic updater requires a published GitHub Release with a
+  versioned `LinguaNova_Setup_<version>.exe` and `SHA256SUMS.txt`. The
+  configured repository is `Mustadio7813/LinguaNova`. On the date of this
+  check, the GitHub Releases page had no published latest release and the
+  `/releases/latest` API request returned HTTP 404, so the updater had no
+  installer asset to offer. A source ZIP or a branch archive is not a
+  substitute for the checksum-verified installer. After publishing a release
+  and its required assets, the existing update flow can discover and verify
+  the installer; until then, the updater cannot deliver an automatic install.
+- No source code or version number was changed as part of this comparison.
+  The application version remains 1.1.0. The 2.8.20 review was selective and
+  does not certify that every upstream change has been compared or ported.
+
+### 35. Five-language V2.0 variant — 2026-10-20
+
+The requested archive name is **`Traductor Renpy modificado (5 diomas) V2.0.rar`**.
+This isolated variant limits both the interface and normal Translation menu to
+English, Spanish, French, Portuguese and Russian; the previous 135-language
+catalogue and unrelated locale files are not included.
+
+- The five built-in interface locales use identical key sets. MOD-specific
+  controls/messages are translated for all five languages. The Portuguese
+  locale preserves English text for general application keys that were not
+  part of the MOD localization pass.
+- The MOD page has independent engine and destination settings. Its five
+  destinations are Spanish, French, English, Portuguese and Russian; source
+  language is always automatic. The normal translation engine/language
+  settings and runtime hook are not reused or overwritten by the MOD job.
+- MOD engine instances use a separate `TranslationManager`, so selecting
+  OpenAI, DeepSeek, Gemini, Google, Bing or LibreTranslate for the MOD does
+  not replace a translator registered for the normal translation flow.
+- The MOD can generate all five target languages sequentially with the same
+  engine after one shared project scan, then merge their data into one live
+  language-switch Hook. Its in-game selector labels follow the active language.
+- The read-only scanner prefers visible `.rpy`/`.rpym` files, fills missing
+  sources from `.rpa` script members and extracts orphan `.rpyc` text when the
+  available AST reader supports it. The parser now consumes complete
+  multiline expressions and screen-data collections without a fixed 80-line
+  cutoff; regression tests verify intact multiline text and collections of
+  more than 80 entries.
+- After the first MOD generation, users can edit detected translations in
+  the in-app MOD editor. Saving writes managed manual corrections and queues
+  a regeneration; direct JSON editing is not required.
+- Existing native translations in `game/tl/<language>/` remain protected by
+  the MOD generator's existing reuse/precedence behavior. Russian continues
+  to use Cyrillic-aware validation and font handling.
+- The full source tree and feature set are retained. Regression coverage
+  includes the independent MOD settings/engine, five UI locales, manual
+  corrections, existing translations and QML loading.
+
+
+### 38. Persistent multilingual native menu and hot switching — 2026-10-20
+
+- Extended the existing native language controls for all installed translations
+  together, including a game with a single original-language button. Successive
+  generations retain previous targets. Standard Preferences without a language
+  section gain a native radio group; recognised automatic selectors are kept.
+- A reusable shared picker provides Shift+L during gameplay. Unrecognised custom
+  layouts get a working fallback. Existing MOD panels keep ownership of their
+  own button and hotkey. Column-zero comments no longer truncate copied screens.
+- Replacements are written and verified atomically before stale compiled helper
+  files are removed. Failed writes retain the previous working selector and are
+  reported as errors by the main pipeline. Duplicate selector generation in the
+  main save flow was removed.
+- Standard runtime dictionaries follow the active language, including None for
+  Original. Language changes clear text/miss/alias caches immediately. Both flat
+  JSON and the current translations/dynamic payload are accepted. Explicit Python
+  builtin type checks support Ren'Py's rollback-aware store aliases.
+- Runtime synchronization uses interaction callbacks and does not destructively
+  rewrite displayable.text. A cached say-filter counter now uses its global.
+- Own font-resource folders are filtered before the game's language list is
+  built. New font downloads live outside tl/, previous language font blocks are
+  retained, and legacy font files/paths are preserved. An independent .rpy repair
+  can hide the resource entry in an already translated game without replacing
+  its native menu or regenerating its translations.
+- The five translation languages, the GUI layout, engines, quality guards and
+  update repository URL are retained. Application patch version: 1.1.1.
+- Regression and engine validation details: docs/VERIFICACION_MULTIDIOMA.md.
+
+### 39. Automatic font-resource protection in every generation path — 2026-10-20
+
+- Version 1.1.2 generates and installs `zzz_linguanova_ocultar_fuentes.rpy`
+  automatically. The normal translator also installs it when optional menu
+  integration is disabled. The font utility installs it on its own, and the MOD
+  generator publishes it in the same transaction as its outputs.
+- The filter excludes only LinguaNova resource identifiers from automatic
+  language menus. It never renames, deletes or hides font files, changes legacy
+  paths, or disables Russian translation/font blocks.
+- Resource-filter writes are atomic and verified. A failed update retains the
+  previous file and bytecode; identical regeneration leaves bytecode intact.
+  Generated-script recognition excludes this helper from translation extraction.
+- The separate manual repair file and its copy instructions were removed from
+  the source package. Existing translated games can use the in-app language
+  integration utility without repeating the dialogue translation.
+- Regression tests cover automatic installation with menu on/off, legacy font
+  preservation, the independent font utility and MOD output, idempotence and
+  failed writes. SDK validation includes actual Cyrillic font loading.

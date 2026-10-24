@@ -264,11 +264,23 @@ def test_utilities_page_has_update_and_language_cards():
     qml = Path("src/gui/qml/Main.qml").read_text(encoding="utf-8")
     tools = qml[qml.index("id: viewToolbox"):qml.index("SEKME 4: GLOSSARY")]
     assert "appBackend.checkForUpdates(true)" in tools
-    assert "appBackend.checkForUpdatesOnStartup = checked" in tools
+    assert "toolUpdatesStartupCheck" not in tools
     assert "appBackend.createUiLanguage(" in tools and "userLocalesFolderUrl()" in tools
     dialog = qml[qml.index("id: updateDialog"):qml.index("id: updateDialog") + 12000]
     assert "appBackend.startAutoUpdate()" in dialog and "ProgressBar" in dialog
     assert "function onUpdateInstallerLaunched()" in qml
+
+
+def test_windows_launcher_bootstraps_pip_without_failing_ensurepip_first():
+    launcher = Path("run.bat").read_text(encoding="utf-8")
+    create_environment = launcher[
+        launcher.index('if not exist "%VENV_PY%" ('):
+        launcher.index(') else (\n    echo [1/4] Entorno virtual local encontrado.')
+    ]
+    assert "%PY_CMD% -m venv --without-pip \"%VENV_DIR%\"" in create_environment
+    assert "%PY_CMD% -m pip --python \"%VENV_PY%\" install --upgrade pip" in create_environment
+    assert "%PY_CMD% -m venv \"%VENV_DIR%\"" not in create_environment
+    assert "-m ensurepip" not in launcher
 
 
 # ── user interface languages ──────────────────────────────────────────────
@@ -295,7 +307,7 @@ def test_every_english_text_keeps_its_placeholders():
         assert sorted(gen.PROTECTED.findall(out)) == sorted(gen.PROTECTED.findall(text)), path
 
 
-def test_user_languages_are_loaded_listed_and_selectable(tmp_path, monkeypatch):
+def test_only_five_built_in_ui_languages_are_selectable(tmp_path, monkeypatch):
     from src.utils.config import ConfigManager
     from src.backend.settings_backend import SettingsBackend
 
@@ -308,10 +320,8 @@ def test_user_languages_are_loaded_listed_and_selectable(tmp_path, monkeypatch):
     (user / "es.json").write_text(json.dumps({"btn_check_updates": "Buscar ya"}), encoding="utf-8")
     (user / "bad name!.json").write_text("{}", encoding="utf-8")
     config = ConfigManager()
-    assert config.user_ui_languages == {"qu": "Runa Simi"}
     config.app_settings.ui_language = "qu"
-    assert config.get_ui_text("btn_check_updates") == "Musuqchay"
-    assert config.get_ui_text("update_now_btn") == "Update now"      # untranslated -> English
+    assert config.get_ui_text("btn_check_updates") != "Musuqchay"
     config.app_settings.ui_language = "es"
     assert config.get_ui_text("btn_check_updates") == "Buscar ya"    # override of a built-in key
     assert config.get_ui_text("update_now_btn") == "Actualizar ahora"
@@ -321,19 +331,20 @@ def test_user_languages_are_loaded_listed_and_selectable(tmp_path, monkeypatch):
     settings.logger = mock.MagicMock()
     settings._emit = lambda *a: None
     codes = [x["code"] for x in settings.get_available_ui_languages()]
-    assert codes[-1] == "qu" and len(codes) == 10
+    assert codes == ["es", "en", "pt", "fr", "ru"]
+    current_language = config.app_settings.ui_language
     with mock.patch.object(config, "save_config"):
         settings.set_ui_language("qu")
-    assert config.app_settings.ui_language == "qu"
+    assert config.app_settings.ui_language == current_language
 
 
 def test_installer_language_is_used_on_first_run(tmp_path, monkeypatch):
     from src.utils import config as config_mod
 
     (tmp_path / "linguanova_installed.json").write_text(
-        json.dumps({"installer_language": "ja"}), encoding="utf-8-sig")
+        json.dumps({"installer_language": "pt"}), encoding="utf-8-sig")
     monkeypatch.setattr("src.utils.path_manager.get_app_dir", lambda: tmp_path)
-    assert config_mod.installer_ui_language() == "ja"
+    assert config_mod.installer_ui_language() == "pt"
     (tmp_path / "linguanova_installed.json").write_text(json.dumps({"installer_language": "xx"}), encoding="utf-8")
     assert config_mod.installer_ui_language() == ""
 

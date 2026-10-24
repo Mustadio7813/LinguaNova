@@ -1,0 +1,27 @@
+{
+  "python": "3.12.14",
+  "system": "Linux",
+  "packages": {
+    "pytest": "9.1.1",
+    "Pillow": "13.0.0",
+    "PyQt6": "6.11.0",
+    "numpy": "2.5.4",
+    "opencv-python-headless": "5.0.0.93",
+    "resvg-py": "0.5.0",
+    "pillow-avif-plugin": "1.6.0",
+    "defusedxml": "0.7.1",
+    "requests": "2.34.2"
+  },
+  "tesseract": "tesseract 5.3.4",
+  "ocr_engine_trial": "/tmp/linguanova_ocr_acceptance_v7",
+  "native_formats": 9,
+  "image_exports": 52,
+  "same_language_preserved": 13,
+  "engine_loads": 78,
+  "ui_confirmation": {
+    "PyQt6": "6.10.2",
+    "Qt": "6.10.0",
+    "matches_declared_dependency": true,
+    "success": true
+  }
+}

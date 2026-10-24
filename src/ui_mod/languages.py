@@ -2,14 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # MOD
 # #MOD — single language contract for the isolated MOD subsystem.
-"""Resolve any language value used by MOD against LinguaNova's central catalogue.
-
-Root-cause note (2026-10-17): the previous MOD kept its own 10-language table,
-so 125 of the 135 catalogue languages reached the translation engines as Ren'Py
-folder names (``"polish"``) instead of API codes (``"pl"``). This module reads the
-same catalogue as the normal pipeline (``ConfigManager.get_all_languages``) without
-instantiating ConfigManager (no disk access, no settings side effects).
-"""
+"""Resolve the five supported MOD languages through the central language catalogue."""
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -19,35 +12,17 @@ from typing import Dict, FrozenSet, List, Optional, Tuple
 
 # Writing system expected for target text (catalogue API code -> script tag).
 # Anything not listed is Latin. Tags are matched against Unicode character names.
-_SCRIPT_BY_API: Dict[str, str] = {
-    "ru": "CYRILLIC", "uk": "CYRILLIC", "bg": "CYRILLIC", "be": "CYRILLIC",
-    "sr": "CYRILLIC", "mk": "CYRILLIC", "kk": "CYRILLIC", "ky": "CYRILLIC",
-    "mn": "CYRILLIC", "tg": "CYRILLIC", "tt": "CYRILLIC", "tyv": "CYRILLIC",
-    "el": "GREEK",
-    "ar": "ARABIC", "fa": "ARABIC", "ur": "ARABIC", "ps": "ARABIC", "sd": "ARABIC",
-    "ug": "ARABIC", "ckb": "ARABIC",
-    "he": "HEBREW", "yi": "HEBREW",
-    "dv": "THAANA",
-    "hi": "DEVANAGARI", "mr": "DEVANAGARI", "ne": "DEVANAGARI", "sa": "DEVANAGARI",
-    "mai": "DEVANAGARI", "bho": "DEVANAGARI", "doi": "DEVANAGARI", "gom": "DEVANAGARI",
-    "bn": "BENGALI", "as": "BENGALI",
-    "gu": "GUJARATI", "pa": "GURMUKHI", "or": "ORIYA", "ta": "TAMIL", "te": "TELUGU",
-    "kn": "KANNADA", "ml": "MALAYALAM", "si": "SINHALA", "th": "THAI", "lo": "LAO",
-    "km": "KHMER", "my": "MYANMAR", "ka": "GEORGIAN", "hy": "ARMENIAN",
-    "am": "ETHIOPIC", "ti": "ETHIOPIC",
-    "ja": "JAPANESE", "ko": "HANGUL", "zh-CN": "HAN", "zh-TW": "HAN",
-    "mni-Mtei": "MEETEI MAYEK",
-}
-_RTL_API = frozenset({"ar", "fa", "ur", "ps", "sd", "ug", "ckb", "he", "yi", "dv"})
-# Scripts written without spaces between words (word-count heuristics do not apply).
-_UNSPACED_SCRIPTS = frozenset({"JAPANESE", "HAN", "THAI", "LAO", "KHMER", "MYANMAR"})
+_SCRIPT_BY_API: Dict[str, str] = {"ru": "CYRILLIC"}
+_RTL_API = frozenset()
+_UNSPACED_SCRIPTS = frozenset()
 
 # Minimal offline fallback; used only if the central catalogue cannot be imported.
 _FALLBACK_CATALOGUE: Tuple[Dict[str, str], ...] = (
     {"renpy": "english", "api": "en", "english": "English", "native": "English"},
     {"renpy": "spanish", "api": "es", "english": "Spanish", "native": "Español"},
     {"renpy": "portuguese", "api": "pt", "english": "Portuguese", "native": "Português"},
-    {"renpy": "polish", "api": "pl", "english": "Polish", "native": "Polski"},
+    {"renpy": "french", "api": "fr", "english": "French", "native": "Français"},
+    {"renpy": "russian", "api": "ru", "english": "Russian", "native": "Русский"},
 )
 
 
@@ -114,21 +89,6 @@ class _Registry:
         for lang in self.languages:
             for alias in sorted(lang.aliases):
                 self.by_key.setdefault(alias, lang)
-        # Common legacy spellings used by Ren'Py games and older MOD versions.
-        legacy = {
-            "chinese": "zh-CN", "schinese": "zh-CN", "simplified_chinese": "zh-CN",
-            "zh": "zh-CN", "zh_hans": "zh-CN", "tchinese": "zh-TW",
-            "traditional_chinese": "zh-TW", "zh_hant": "zh-TW", "farsi": "fa",
-            "brazilian": "pt", "pt_br": "pt", "portuguese_br": "pt", "nb": "no",
-            "norwegian_bokmal": "no", "iw": "he", "jw": "jv", "fil": "tl",
-        }
-        api_index = {lang.api.lower(): lang for lang in self.languages}
-        for alias, api in legacy.items():
-            target = api_index.get(api.lower())
-            if target is not None:
-                self.by_key.setdefault(alias, target)
-
-
 _REGISTRY: Optional[_Registry] = None
 
 

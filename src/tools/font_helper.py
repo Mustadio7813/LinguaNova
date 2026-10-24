@@ -221,7 +221,7 @@ class FontHelper:
 
         # What to test, most precise first: the translation's own characters,
         # the hand-made table (language-specific letters such as ğ ş ı), or a
-        # sample of the language's writing system — so all 135 languages work
+        # sample of the language's writing system — beyond the built-in locales
         # instead of only the ~21 in the table.
         strict = bool(required_chars)
         table_key = _lang_key(language)

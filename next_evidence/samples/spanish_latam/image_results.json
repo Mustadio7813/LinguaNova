@@ -1,0 +1,682 @@
+{
+  "1d6beca0fa23dd56afba672b0ece82d1331b81a8b7c90652aa67e941a7ca92cc": {
+    "candidate_hash": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+    "candidate_path": "<CONTROLLED_DEMO_WORKSPACE>/creator_data/jobs/71daef47aa4d42bd8e9dd57bf2b6e5cf/images/1d6beca0fa23dd56afba672b0ece82d1331b81a8b7c90652aa67e941a7ca92cc/candidate.png",
+    "composition_key": "15770db407ec644fa4be154c54920e37240d88d7fdaaecc60a1f2f3762a63157",
+    "image_hash": "123d12b1b2d4a91d289d51ff1851ac32cf9bffa623a3d4e95f56eee861829b19",
+    "mask_path": "<CONTROLLED_DEMO_WORKSPACE>/creator_data/jobs/71daef47aa4d42bd8e9dd57bf2b6e5cf/images/1d6beca0fa23dd56afba672b0ece82d1331b81a8b7c90652aa67e941a7ca92cc/mask.png",
+    "mask_status": "reviewed_effective_mask",
+    "method": "classic",
+    "original_path": "<CONTROLLED_DEMO_WORKSPACE>/creator_data/jobs/71daef47aa4d42bd8e9dd57bf2b6e5cf/images/1d6beca0fa23dd56afba672b0ece82d1331b81a8b7c90652aa67e941a7ca92cc/original.png",
+    "output_path": "game/tl/spanish_latam/images/buttons/continue_hover.png",
+    "path": "images/buttons/continue_hover.png",
+    "pixel_validation": {
+      "alpha_outside_equal": true,
+      "dimensions_equal": true,
+      "legibility_review": "required",
+      "outside_mask_equal": true,
+      "residual_text_review": "required"
+    },
+    "regions": [
+      {
+        "decision": {
+          "approved": true,
+          "bounds": [
+            75,
+            18,
+            405,
+            126
+          ],
+          "image_hash": "123d12b1b2d4a91d289d51ff1851ac32cf9bffa623a3d4e95f56eee861829b19",
+          "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+          "large_mask_approved": true,
+          "reason": "Authored fixture geometry, not automatic font identification",
+          "recognized_text": "Continue",
+          "reviewer": "automated-fixture-test",
+          "typography": {
+            "alignment": "center",
+            "approximation_approved": false,
+            "baseline": "measured_bbox",
+            "color": [
+              244,
+              247,
+              245,
+              255
+            ],
+            "confidence": 1,
+            "evidence": "identified",
+            "family": "DejaVu Sans",
+            "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+            "font_path": "fonts/DejaVuSans.ttf",
+            "gradient": "",
+            "italic": false,
+            "line_spacing": 4,
+            "max_lines": 4,
+            "min_size_ratio": 0.85,
+            "provenance": "Exact font and effects known from fixture source",
+            "reviewer": "automated-fixture-test",
+            "rotation": 0.0,
+            "schema_version": 1,
+            "shadow_color": [
+              0,
+              0,
+              0,
+              180
+            ],
+            "shadow_offset": [
+              2,
+              2
+            ],
+            "size": 38,
+            "stroke_color": [
+              17,
+              28,
+              34,
+              255
+            ],
+            "stroke_width": 1,
+            "texture": "",
+            "tracking": 0.0,
+            "variant": "Regular",
+            "weight": 400
+          }
+        },
+        "region": {
+          "bounds": [
+            75,
+            18,
+            405,
+            126
+          ],
+          "confidence": 0.9680156700000001,
+          "recognition_method": "tesseract-psm11",
+          "region_id": "8db0cf4e9a921377bb1bc9f484bf292fccd6f60d0e99c420eb150a5170b690ea",
+          "source_language": "en",
+          "source_model": "eng",
+          "text": "Continue"
+        },
+        "response": {
+          "effective_provider": "google",
+          "reasons": [],
+          "request": {
+            "bounds": [
+              75,
+              18,
+              405,
+              126
+            ],
+            "confidence": 0.9680156700000001,
+            "image_hash": "123d12b1b2d4a91d289d51ff1851ac32cf9bffa623a3d4e95f56eee861829b19",
+            "job_id": "71daef47aa4d42bd8e9dd57bf2b6e5cf",
+            "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+            "profile_id": "latam_neutro_sin_modismos",
+            "profile_version": "1",
+            "recognized_source": "en",
+            "region_id": "8db0cf4e9a921377bb1bc9f484bf292fccd6f60d0e99c420eb150a5170b690ea",
+            "request_id": "3cb68680210f4fe181edd3c76888021a",
+            "resource_id": "1d6beca0fa23dd56afba672b0ece82d1331b81a8b7c90652aa67e941a7ca92cc",
+            "revision": 1,
+            "schema_version": 1,
+            "target_language_id": "es",
+            "target_locale": "es-419",
+            "text": "Continue"
+          },
+          "status": "accepted",
+          "text": "Continuar",
+          "validation_identity": "292ee37d310902ccecb76241ffb2f7a133fa4b70bef3a6aadb685e9f8fe6312b"
+        },
+        "status": "translated",
+        "style_estimate": {
+          "color": [
+            48,
+            85,
+            97,
+            253
+          ],
+          "confidence": 0.15,
+          "evidence": "unverified",
+          "family": "unknown",
+          "font_hash": "",
+          "font_path": "",
+          "provenance": "region average; background influences color",
+          "required": "Identify original font and effects or approve an explicit approximation",
+          "schema_version": 1,
+          "size": 86
+        }
+      }
+    ],
+    "resource_id": "1d6beca0fa23dd56afba672b0ece82d1331b81a8b7c90652aa67e941a7ca92cc",
+    "status": "reviewed",
+    "typography": [
+      {
+        "bounds": [
+          75,
+          18,
+          405,
+          126
+        ],
+        "fidelity": "verified_identity",
+        "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+        "font_path": "<CONTROLLED_DEMO_WORKSPACE>/Fuente de prueba á/game/fonts/DejaVuSans.ttf",
+        "in_game_visual_review": "not_executed",
+        "lines": [
+          "Continuar"
+        ],
+        "profile_identity": "ba5d0bfdd08e22bda22410524b05be6f6e004c604cf1a12719f6bd0daaa5ed84",
+        "reviewer": "automated-fixture-test",
+        "rotation": 0.0,
+        "size_effective": 38
+      }
+    ]
+  },
+  "7a06ff23b53e39824e6e49b35d563c3d18c1b140ac858012963e08c73528cfbc": {
+    "candidate_hash": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59",
+    "candidate_path": "<CONTROLLED_DEMO_WORKSPACE>/creator_data/jobs/71daef47aa4d42bd8e9dd57bf2b6e5cf/images/7a06ff23b53e39824e6e49b35d563c3d18c1b140ac858012963e08c73528cfbc/candidate.png",
+    "composition_key": "16c11047454ac974eac00ea7d629926bbb8d00bcb183f48ee9b694e323743ec3",
+    "image_hash": "7cf5d7ee90c9b841e450fef603179521e0871459f1feca472719dc4c77af1ee9",
+    "mask_path": "<CONTROLLED_DEMO_WORKSPACE>/creator_data/jobs/71daef47aa4d42bd8e9dd57bf2b6e5cf/images/7a06ff23b53e39824e6e49b35d563c3d18c1b140ac858012963e08c73528cfbc/mask.png",
+    "mask_status": "reviewed_effective_mask",
+    "method": "classic",
+    "original_path": "<CONTROLLED_DEMO_WORKSPACE>/creator_data/jobs/71daef47aa4d42bd8e9dd57bf2b6e5cf/images/7a06ff23b53e39824e6e49b35d563c3d18c1b140ac858012963e08c73528cfbc/original.png",
+    "output_path": "game/tl/spanish_latam/images/capitulo_01/telefono/mensaje.png",
+    "path": "images/capitulo_01/telefono/mensaje.png",
+    "pixel_validation": {
+      "alpha_outside_equal": true,
+      "dimensions_equal": true,
+      "legibility_review": "required",
+      "outside_mask_equal": true,
+      "residual_text_review": "required"
+    },
+    "regions": [
+      {
+        "decision": {
+          "approved": true,
+          "bounds": [
+            160,
+            55,
+            480,
+            185
+          ],
+          "image_hash": "7cf5d7ee90c9b841e450fef603179521e0871459f1feca472719dc4c77af1ee9",
+          "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+          "large_mask_approved": true,
+          "reason": "Authored fixture geometry, not automatic font identification",
+          "recognized_text": "Continue",
+          "reviewer": "automated-fixture-test",
+          "typography": {
+            "alignment": "center",
+            "approximation_approved": false,
+            "baseline": "measured_bbox",
+            "color": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "confidence": 1,
+            "evidence": "identified",
+            "family": "DejaVu Sans",
+            "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+            "font_path": "fonts/DejaVuSans.ttf",
+            "gradient": "",
+            "italic": false,
+            "line_spacing": 4,
+            "max_lines": 4,
+            "min_size_ratio": 0.85,
+            "provenance": "Exact font and effects known from fixture source",
+            "reviewer": "automated-fixture-test",
+            "rotation": 0.0,
+            "schema_version": 1,
+            "shadow_color": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "shadow_offset": [
+              0,
+              0
+            ],
+            "size": 42,
+            "stroke_color": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "stroke_width": 1,
+            "texture": "",
+            "tracking": 0.0,
+            "variant": "Regular",
+            "weight": 400
+          }
+        },
+        "region": {
+          "bounds": [
+            160,
+            55,
+            480,
+            185
+          ],
+          "confidence": 0.95660255,
+          "recognition_method": "tesseract-psm11",
+          "region_id": "26ca261874ff54f290589f87e016c7146581dae38f40964e770c1d2b893d0604",
+          "source_language": "en",
+          "source_model": "eng",
+          "text": "Continue"
+        },
+        "response": {
+          "effective_provider": "google",
+          "reasons": [],
+          "request": {
+            "bounds": [
+              160,
+              55,
+              480,
+              185
+            ],
+            "confidence": 0.95660255,
+            "image_hash": "7cf5d7ee90c9b841e450fef603179521e0871459f1feca472719dc4c77af1ee9",
+            "job_id": "71daef47aa4d42bd8e9dd57bf2b6e5cf",
+            "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+            "profile_id": "latam_neutro_sin_modismos",
+            "profile_version": "1",
+            "recognized_source": "en",
+            "region_id": "26ca261874ff54f290589f87e016c7146581dae38f40964e770c1d2b893d0604",
+            "request_id": "ac1bde48cbac4b7d9edcd71795dcf0e3",
+            "resource_id": "7a06ff23b53e39824e6e49b35d563c3d18c1b140ac858012963e08c73528cfbc",
+            "revision": 1,
+            "schema_version": 1,
+            "target_language_id": "es",
+            "target_locale": "es-419",
+            "text": "Continue"
+          },
+          "status": "accepted",
+          "text": "Continuar",
+          "validation_identity": "89ac16fcff8891367aa3297e69a15ff91fc8ac63374ff8f55be37ba469e517d6"
+        },
+        "status": "translated",
+        "style_estimate": {
+          "color": [
+            39,
+            67,
+            78,
+            255
+          ],
+          "confidence": 0.15,
+          "evidence": "unverified",
+          "family": "unknown",
+          "font_hash": "",
+          "font_path": "",
+          "provenance": "region average; background influences color",
+          "required": "Identify original font and effects or approve an explicit approximation",
+          "schema_version": 1,
+          "size": 104
+        }
+      }
+    ],
+    "resource_id": "7a06ff23b53e39824e6e49b35d563c3d18c1b140ac858012963e08c73528cfbc",
+    "status": "reviewed",
+    "typography": [
+      {
+        "bounds": [
+          160,
+          55,
+          480,
+          185
+        ],
+        "fidelity": "verified_identity",
+        "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+        "font_path": "<CONTROLLED_DEMO_WORKSPACE>/Fuente de prueba á/game/fonts/DejaVuSans.ttf",
+        "in_game_visual_review": "not_executed",
+        "lines": [
+          "Continuar"
+        ],
+        "profile_identity": "a14a100b3557acc67036f94101e6c9c6e767056b61e223c7147ec5ed95955d98",
+        "reviewer": "automated-fixture-test",
+        "rotation": 0.0,
+        "size_effective": 42
+      }
+    ]
+  },
+  "c03e03f4bdde1eb19671f4536ca283abcf4def2e33df81cca3fb45e6f8fe1b11": {
+    "candidate_hash": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+    "candidate_path": "<CONTROLLED_DEMO_WORKSPACE>/creator_data/jobs/71daef47aa4d42bd8e9dd57bf2b6e5cf/images/c03e03f4bdde1eb19671f4536ca283abcf4def2e33df81cca3fb45e6f8fe1b11/candidate.png",
+    "composition_key": "e53f9e6cf7557ca5282944d139002ef242e0d8b271d303500e9d7e0ddf82211f",
+    "image_hash": "abffb0272f4f6963dc100f462c0cd7db92beb295e69b3cd089627454178efbbb",
+    "mask_path": "<CONTROLLED_DEMO_WORKSPACE>/creator_data/jobs/71daef47aa4d42bd8e9dd57bf2b6e5cf/images/c03e03f4bdde1eb19671f4536ca283abcf4def2e33df81cca3fb45e6f8fe1b11/mask.png",
+    "mask_status": "reviewed_effective_mask",
+    "method": "classic",
+    "original_path": "<CONTROLLED_DEMO_WORKSPACE>/creator_data/jobs/71daef47aa4d42bd8e9dd57bf2b6e5cf/images/c03e03f4bdde1eb19671f4536ca283abcf4def2e33df81cca3fb45e6f8fe1b11/original.png",
+    "output_path": "game/tl/spanish_latam/images/buttons/continue_selected.png",
+    "path": "images/buttons/continue_selected.png",
+    "pixel_validation": {
+      "alpha_outside_equal": true,
+      "dimensions_equal": true,
+      "legibility_review": "required",
+      "outside_mask_equal": true,
+      "residual_text_review": "required"
+    },
+    "regions": [
+      {
+        "decision": {
+          "approved": true,
+          "bounds": [
+            75,
+            18,
+            405,
+            126
+          ],
+          "image_hash": "abffb0272f4f6963dc100f462c0cd7db92beb295e69b3cd089627454178efbbb",
+          "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+          "large_mask_approved": true,
+          "reason": "Authored fixture geometry, not automatic font identification",
+          "recognized_text": "Continue",
+          "reviewer": "automated-fixture-test",
+          "typography": {
+            "alignment": "center",
+            "approximation_approved": false,
+            "baseline": "measured_bbox",
+            "color": [
+              244,
+              247,
+              245,
+              255
+            ],
+            "confidence": 1,
+            "evidence": "identified",
+            "family": "DejaVu Sans",
+            "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+            "font_path": "fonts/DejaVuSans.ttf",
+            "gradient": "",
+            "italic": false,
+            "line_spacing": 4,
+            "max_lines": 4,
+            "min_size_ratio": 0.85,
+            "provenance": "Exact font and effects known from fixture source",
+            "reviewer": "automated-fixture-test",
+            "rotation": 0.0,
+            "schema_version": 1,
+            "shadow_color": [
+              0,
+              0,
+              0,
+              180
+            ],
+            "shadow_offset": [
+              2,
+              2
+            ],
+            "size": 38,
+            "stroke_color": [
+              17,
+              28,
+              34,
+              255
+            ],
+            "stroke_width": 1,
+            "texture": "",
+            "tracking": 0.0,
+            "variant": "Regular",
+            "weight": 400
+          }
+        },
+        "region": {
+          "bounds": [
+            75,
+            18,
+            405,
+            126
+          ],
+          "confidence": 0.9660584299999999,
+          "recognition_method": "tesseract-psm11",
+          "region_id": "dca847ab76b1a3f077b15d689f74632c7c00824afb69d80cda833c466beb805e",
+          "source_language": "en",
+          "source_model": "eng",
+          "text": "Continue"
+        },
+        "response": {
+          "effective_provider": "google",
+          "reasons": [],
+          "request": {
+            "bounds": [
+              75,
+              18,
+              405,
+              126
+            ],
+            "confidence": 0.9660584299999999,
+            "image_hash": "abffb0272f4f6963dc100f462c0cd7db92beb295e69b3cd089627454178efbbb",
+            "job_id": "71daef47aa4d42bd8e9dd57bf2b6e5cf",
+            "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+            "profile_id": "latam_neutro_sin_modismos",
+            "profile_version": "1",
+            "recognized_source": "en",
+            "region_id": "dca847ab76b1a3f077b15d689f74632c7c00824afb69d80cda833c466beb805e",
+            "request_id": "a4fef9631e904ccca2bc12f5321cca50",
+            "resource_id": "c03e03f4bdde1eb19671f4536ca283abcf4def2e33df81cca3fb45e6f8fe1b11",
+            "revision": 1,
+            "schema_version": 1,
+            "target_language_id": "es",
+            "target_locale": "es-419",
+            "text": "Continue"
+          },
+          "status": "accepted",
+          "text": "Continuar",
+          "validation_identity": "10c81c7ddaf9d0a4bc992abfa6c1fafc6a20c490ded39767b1f37affc5860b62"
+        },
+        "status": "translated",
+        "style_estimate": {
+          "color": [
+            57,
+            95,
+            73,
+            253
+          ],
+          "confidence": 0.15,
+          "evidence": "unverified",
+          "family": "unknown",
+          "font_hash": "",
+          "font_path": "",
+          "provenance": "region average; background influences color",
+          "required": "Identify original font and effects or approve an explicit approximation",
+          "schema_version": 1,
+          "size": 86
+        }
+      }
+    ],
+    "resource_id": "c03e03f4bdde1eb19671f4536ca283abcf4def2e33df81cca3fb45e6f8fe1b11",
+    "status": "reviewed",
+    "typography": [
+      {
+        "bounds": [
+          75,
+          18,
+          405,
+          126
+        ],
+        "fidelity": "verified_identity",
+        "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+        "font_path": "<CONTROLLED_DEMO_WORKSPACE>/Fuente de prueba á/game/fonts/DejaVuSans.ttf",
+        "in_game_visual_review": "not_executed",
+        "lines": [
+          "Continuar"
+        ],
+        "profile_identity": "ba5d0bfdd08e22bda22410524b05be6f6e004c604cf1a12719f6bd0daaa5ed84",
+        "reviewer": "automated-fixture-test",
+        "rotation": 0.0,
+        "size_effective": 38
+      }
+    ]
+  },
+  "fa84a23da94cffa817c1caa5e35b51f321f41a74aff588db2257558303561af9": {
+    "candidate_hash": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+    "candidate_path": "<CONTROLLED_DEMO_WORKSPACE>/creator_data/jobs/71daef47aa4d42bd8e9dd57bf2b6e5cf/images/fa84a23da94cffa817c1caa5e35b51f321f41a74aff588db2257558303561af9/candidate.png",
+    "composition_key": "04bb9822f31db1247ed97f14149a7d8607744669cb33d2f7ee61ddcb6954c3a0",
+    "image_hash": "a8d8b2bc972aea86c09df5af9e40f5d97e89b4effea29e7af121742f8746303d",
+    "mask_path": "<CONTROLLED_DEMO_WORKSPACE>/creator_data/jobs/71daef47aa4d42bd8e9dd57bf2b6e5cf/images/fa84a23da94cffa817c1caa5e35b51f321f41a74aff588db2257558303561af9/mask.png",
+    "mask_status": "reviewed_effective_mask",
+    "method": "classic",
+    "original_path": "<CONTROLLED_DEMO_WORKSPACE>/creator_data/jobs/71daef47aa4d42bd8e9dd57bf2b6e5cf/images/fa84a23da94cffa817c1caa5e35b51f321f41a74aff588db2257558303561af9/original.png",
+    "output_path": "game/tl/spanish_latam/images/buttons/continue_normal.png",
+    "path": "images/buttons/continue_normal.png",
+    "pixel_validation": {
+      "alpha_outside_equal": true,
+      "dimensions_equal": true,
+      "legibility_review": "required",
+      "outside_mask_equal": true,
+      "residual_text_review": "required"
+    },
+    "regions": [
+      {
+        "decision": {
+          "approved": true,
+          "bounds": [
+            75,
+            18,
+            405,
+            126
+          ],
+          "image_hash": "a8d8b2bc972aea86c09df5af9e40f5d97e89b4effea29e7af121742f8746303d",
+          "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+          "large_mask_approved": true,
+          "reason": "Authored fixture geometry, not automatic font identification",
+          "recognized_text": "Continue",
+          "reviewer": "automated-fixture-test",
+          "typography": {
+            "alignment": "center",
+            "approximation_approved": false,
+            "baseline": "measured_bbox",
+            "color": [
+              244,
+              247,
+              245,
+              255
+            ],
+            "confidence": 1,
+            "evidence": "identified",
+            "family": "DejaVu Sans",
+            "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+            "font_path": "fonts/DejaVuSans.ttf",
+            "gradient": "",
+            "italic": false,
+            "line_spacing": 4,
+            "max_lines": 4,
+            "min_size_ratio": 0.85,
+            "provenance": "Exact font and effects known from fixture source",
+            "reviewer": "automated-fixture-test",
+            "rotation": 0.0,
+            "schema_version": 1,
+            "shadow_color": [
+              0,
+              0,
+              0,
+              180
+            ],
+            "shadow_offset": [
+              2,
+              2
+            ],
+            "size": 38,
+            "stroke_color": [
+              17,
+              28,
+              34,
+              255
+            ],
+            "stroke_width": 1,
+            "texture": "",
+            "tracking": 0.0,
+            "variant": "Regular",
+            "weight": 400
+          }
+        },
+        "region": {
+          "bounds": [
+            75,
+            18,
+            405,
+            126
+          ],
+          "confidence": 0.96059059,
+          "recognition_method": "tesseract-psm11",
+          "region_id": "1f52eeea86cc307458e07fa4696e1354833eaa51a19e10f166fed1f44067cc2d",
+          "source_language": "en",
+          "source_model": "eng",
+          "text": "Continue"
+        },
+        "response": {
+          "effective_provider": "google",
+          "reasons": [],
+          "request": {
+            "bounds": [
+              75,
+              18,
+              405,
+              126
+            ],
+            "confidence": 0.96059059,
+            "image_hash": "a8d8b2bc972aea86c09df5af9e40f5d97e89b4effea29e7af121742f8746303d",
+            "job_id": "71daef47aa4d42bd8e9dd57bf2b6e5cf",
+            "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+            "profile_id": "latam_neutro_sin_modismos",
+            "profile_version": "1",
+            "recognized_source": "en",
+            "region_id": "1f52eeea86cc307458e07fa4696e1354833eaa51a19e10f166fed1f44067cc2d",
+            "request_id": "7448eb0239624e0f983cd205f6984c8f",
+            "resource_id": "fa84a23da94cffa817c1caa5e35b51f321f41a74aff588db2257558303561af9",
+            "revision": 1,
+            "schema_version": 1,
+            "target_language_id": "es",
+            "target_locale": "es-419",
+            "text": "Continue"
+          },
+          "status": "accepted",
+          "text": "Continuar",
+          "validation_identity": "2bbf455fc94754570369e4915034d4febd4056007cfd76f5e1e0035336f0af77"
+        },
+        "status": "translated",
+        "style_estimate": {
+          "color": [
+            38,
+            66,
+            76,
+            253
+          ],
+          "confidence": 0.15,
+          "evidence": "unverified",
+          "family": "unknown",
+          "font_hash": "",
+          "font_path": "",
+          "provenance": "region average; background influences color",
+          "required": "Identify original font and effects or approve an explicit approximation",
+          "schema_version": 1,
+          "size": 86
+        }
+      }
+    ],
+    "resource_id": "fa84a23da94cffa817c1caa5e35b51f321f41a74aff588db2257558303561af9",
+    "status": "reviewed",
+    "typography": [
+      {
+        "bounds": [
+          75,
+          18,
+          405,
+          126
+        ],
+        "fidelity": "verified_identity",
+        "font_hash": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+        "font_path": "<CONTROLLED_DEMO_WORKSPACE>/Fuente de prueba á/game/fonts/DejaVuSans.ttf",
+        "in_game_visual_review": "not_executed",
+        "lines": [
+          "Continuar"
+        ],
+        "profile_identity": "ba5d0bfdd08e22bda22410524b05be6f6e004c604cf1a12719f6bd0daaa5ed84",
+        "reviewer": "automated-fixture-test",
+        "rotation": 0.0,
+        "size_effective": 38
+      }
+    ]
+  }
+}

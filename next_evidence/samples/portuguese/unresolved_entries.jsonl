@@ -1,0 +1,1 @@
+{"occurrence_id": "f0ab9525e7539154dedab4d5040121689524ce986967807d24caea9303c0c35b", "path": "options.rpy", "line": 5, "context": "define config.save_directory = \"LinguaNovaNextFixtureOnly\"", "original": "LinguaNovaNextFixtureOnly", "candidate": "", "status": "extraction_omission", "reasons": ["review_candidate_not_automatically_translatable"], "provenance": "base_parser"}

@@ -1,3 +1,19 @@
+# LinguaNova 1.2.0 · OCR in the main application
+
+Open **run.bat** with Python **3.10 or newer**. Text and image translation now
+run from the same main-window button, with OCR enabled by default. Utilities
+also creates ZIP/RAR packages of installed languages and translated images.
+The old launchers are compatibility aliases; a second OCR application is not
+opened. See [LEEME_PRIMERO.txt](LEEME_PRIMERO.txt) for current instructions and
+[native_evidence/README.md](native_evidence/README.md) for validation.
+
+A complete Windows PyInstaller distribution includes Python and the prepared
+OCR runtime. Source setup and compiled-user setup are described separately in
+the current instructions. The documentation below retains the prior project
+history and is superseded where its startup instructions differ.
+
+---
+
 # LinguaNova 🌠
 
 **English** · [Español](README.es.md)
@@ -53,8 +69,12 @@ LinguaNova **does not hide where it comes from**:
 - Font, glossary and diagnostic tools.
 - Interface translation MOD, separate from the normal translation flow.
 - Work queue that never cancels the running job.
-- Interface available in nine languages, plus languages you add yourself (Utilities → *Create an interface language*).
+- This variant's interface is available in English, Spanish, French, Portuguese and Russian. Portuguese currently falls back to English text.
+- The MOD has its own engine and target-language selectors (Spanish, French, English, Portuguese or Russian), plus in-app manual corrections.
+- The MOD can generate all five destinations in one operation with the same engine and combines them into one live language-switch Hook with localized in-game controls.
 - Windows installer with automatic, verified updates.
+
+On the **MOD** page, select the game and its independent translation engine without changing the Translation page settings. Choose one target or generate Spanish, French, English, Portuguese and Russian in one operation; source language is detected automatically. Scanning prioritizes visible `.rpy`/`.rpym` files, fills gaps from source scripts in `.rpa` archives and extracts text from `.rpyc` files without a matching source when the available reader can interpret them. Game files are read without being modified; multiline strings and expressions are kept as whole units, without the former 80-line limit on screen data. Generate the MOD before opening **Review and edit translations**; saving corrections applies them and regenerates the MOD, with no manual JSON editing required.
 
 ## 💾 Installation
 
@@ -65,7 +85,7 @@ LinguaNova **does not hide where it comes from**:
 | Linux (x64) | `LinguaNova-Linux-x64.AppImage` | Built and start-up tested by GitHub Actions. |
 | macOS (Apple silicon) | `LinguaNova-macOS-arm64.dmg` | **Experimental:** built and start-up tested by GitHub Actions, not yet tried on a real Mac by the maintainer. Reports are welcome. |
 
-The installer and the program pick the Windows language automatically (English if it is not one of the nine); you can change it in Settings. Windows does not allow installers to pin programs to the taskbar: open LinguaNova, right-click its taskbar icon and choose **Pin to taskbar**.
+The installer and the program pick the Windows language automatically (English if it is not one of the five); you can change it in Settings. Windows does not allow installers to pin programs to the taskbar: open LinguaNova, right-click its taskbar icon and choose **Pin to taskbar**.
 
 ## 🛠️ Running from source
 
@@ -73,11 +93,10 @@ Requires Python 3.10 or later; Python 3.12 64-bit is recommended. Extract the
 full source archive to a regular folder; do not run it from WinRAR or 7-Zip's
 temporary archive view.
 
-On Windows, run `run.bat`. The launcher creates `.venv`, installs or repairs
-the declared dependencies, then starts the application. Internet access is
-needed for the first dependency installation. If Python cannot create the
-environment with `pip`, the launcher retries without `pip` and provisions it
-from the selected Python installation.
+On Windows, run `run.bat`. The launcher creates `.venv` without `pip`, bootstraps
+`pip` from the selected Python installation, installs or repairs the declared
+dependencies, then starts the application. Internet access is needed for the
+first dependency installation.
 
 On Linux/macOS, prepare the environment and start the application manually:
 

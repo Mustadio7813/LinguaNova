@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "scope": "Controlled fixture only",
+  "archive": "examples/Paquete_fixture_multidioma_EXPERIMENTAL.rar",
+  "archive_sha256": "17437ce7e28b77bc705205f20961c99103018c6dc43d8e1d77ffbf09ed935b05",
+  "archive_bytes": 502545,
+  "all_members_equal_to_zip": true,
+  "zip_sha256": "30f93b1457c0147ec02f13f73fa2334bb3b2b0ddceac919b75212a9e6c39d00c",
+  "fresh_processes": 15,
+  "localized_images": 24,
+  "engine": "8.3.7.25031702",
+  "frozen_export_identical_archive": true,
+  "frozen_export_sha256": "17437ce7e28b77bc705205f20961c99103018c6dc43d8e1d77ffbf09ed935b05"
+}

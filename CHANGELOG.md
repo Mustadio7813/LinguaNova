@@ -6,6 +6,21 @@ render_with_liquid: false
 
 # RenLocalizer Changelog
 
+#### [Five-language package V2.2] - 2026-10-20
+
+- Compact source and target language pickers; popup height follows the visible
+  language rows instead of reserving a large empty area.
+- Complete the five interface catalogs and translate the native-mode
+  recommendation badge.
+- Localize catalog-backed log and toast text using the selected interface
+  language while preserving technical details from external errors.
+- Translate the Portuguese product label and recommendation badge, size the
+  interface-language popup to its five options, and disable update checks at
+  startup while retaining manual checks and the GitHub update source.
+- Create the Windows virtual environment without `ensurepip` and bootstrap
+  `pip` explicitly, so a recoverable `ensurepip` failure no longer appears as
+  an error during startup.
+
 #### [Unreleased] - LinguaNova source fixes
 
 - **Cache integrity:** empty results and results identical to the source are
@@ -20,6 +35,8 @@ render_with_liquid: false
 - **Windows source launcher:** when `venv` cannot bootstrap `pip` normally,
   `run.bat` retries with `--without-pip` and provisions `pip` into the project
   environment.
+- **Language-menu helper preservation:** runtime-hook cleanup removes only
+  stale runtime hooks, not the standalone language picker or font helper.
 - Regression coverage added for poisoned cache entries, unchanged/empty engine
   results, pending status, manual translations and `#ignore` cleanup.
 

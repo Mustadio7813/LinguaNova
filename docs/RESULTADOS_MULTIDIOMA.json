@@ -1,0 +1,872 @@
+{
+  "validation_date": "2026-10-20",
+  "base_archive": "Traductor LinguaNova V2.2.rar",
+  "base_archive_sha256": "6e8bb476e7b657dded66cfa186be39172cc58f35dbec9f5aeb80778dbe658211",
+  "application_version": "1.1.2",
+  "pytest": {
+    "passed": 243,
+    "skipped": 12,
+    "failed": 0,
+    "duration_seconds": 34.85
+  },
+  "renpy": {
+    "directed_switches": 140,
+    "fixtures": [
+      {
+        "engine": "Ren'Py 8.3.7.25031702",
+        "directions": 20,
+        "results": [
+          [
+            "english",
+            "spanish",
+            "Original"
+          ],
+          [
+            "english",
+            "french",
+            "Original"
+          ],
+          [
+            "english",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "english",
+            "russian",
+            "Original"
+          ],
+          [
+            "spanish",
+            "english",
+            "Original"
+          ],
+          [
+            "spanish",
+            "french",
+            "Original"
+          ],
+          [
+            "spanish",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "spanish",
+            "russian",
+            "Original"
+          ],
+          [
+            "french",
+            "english",
+            "Original"
+          ],
+          [
+            "french",
+            "spanish",
+            "Original"
+          ],
+          [
+            "french",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "french",
+            "russian",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "english",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "spanish",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "french",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "russian",
+            "Original"
+          ],
+          [
+            "russian",
+            "english",
+            "Original"
+          ],
+          [
+            "russian",
+            "spanish",
+            "Original"
+          ],
+          [
+            "russian",
+            "french",
+            "Original"
+          ],
+          [
+            "russian",
+            "portuguese",
+            "Original"
+          ]
+        ],
+        "languages": [
+          "english",
+          "french",
+          "portuguese",
+          "russian",
+          "spanish"
+        ],
+        "font_preserved": true,
+        "fixture": "native_standard"
+      },
+      {
+        "engine": "Ren'Py 8.3.7.25031702",
+        "directions": 20,
+        "results": [
+          [
+            "english",
+            "spanish",
+            "Original"
+          ],
+          [
+            "english",
+            "french",
+            "Original"
+          ],
+          [
+            "english",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "english",
+            "russian",
+            "Original"
+          ],
+          [
+            "spanish",
+            "english",
+            "Original"
+          ],
+          [
+            "spanish",
+            "french",
+            "Original"
+          ],
+          [
+            "spanish",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "spanish",
+            "russian",
+            "Original"
+          ],
+          [
+            "french",
+            "english",
+            "Original"
+          ],
+          [
+            "french",
+            "spanish",
+            "Original"
+          ],
+          [
+            "french",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "french",
+            "russian",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "english",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "spanish",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "french",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "russian",
+            "Original"
+          ],
+          [
+            "russian",
+            "english",
+            "Original"
+          ],
+          [
+            "russian",
+            "spanish",
+            "Original"
+          ],
+          [
+            "russian",
+            "french",
+            "Original"
+          ],
+          [
+            "russian",
+            "portuguese",
+            "Original"
+          ]
+        ],
+        "languages": [
+          "english",
+          "french",
+          "portuguese",
+          "russian",
+          "spanish"
+        ],
+        "font_preserved": true,
+        "fixture": "native_original"
+      },
+      {
+        "engine": "Ren'Py 8.3.7.25031702",
+        "directions": 20,
+        "results": [
+          [
+            "english",
+            "spanish",
+            "Original"
+          ],
+          [
+            "english",
+            "french",
+            "Original"
+          ],
+          [
+            "english",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "english",
+            "russian",
+            "Original"
+          ],
+          [
+            "spanish",
+            "english",
+            "Original"
+          ],
+          [
+            "spanish",
+            "french",
+            "Original"
+          ],
+          [
+            "spanish",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "spanish",
+            "russian",
+            "Original"
+          ],
+          [
+            "french",
+            "english",
+            "Original"
+          ],
+          [
+            "french",
+            "spanish",
+            "Original"
+          ],
+          [
+            "french",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "french",
+            "russian",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "english",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "spanish",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "french",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "russian",
+            "Original"
+          ],
+          [
+            "russian",
+            "english",
+            "Original"
+          ],
+          [
+            "russian",
+            "spanish",
+            "Original"
+          ],
+          [
+            "russian",
+            "french",
+            "Original"
+          ],
+          [
+            "russian",
+            "portuguese",
+            "Original"
+          ]
+        ],
+        "languages": [
+          "english",
+          "french",
+          "portuguese",
+          "russian",
+          "spanish"
+        ],
+        "font_preserved": true,
+        "fixture": "native_auto"
+      },
+      {
+        "engine": "Ren'Py 8.3.7.25031702",
+        "directions": 20,
+        "results": [
+          [
+            "english",
+            "spanish",
+            "Original"
+          ],
+          [
+            "english",
+            "french",
+            "Original"
+          ],
+          [
+            "english",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "english",
+            "russian",
+            "Original"
+          ],
+          [
+            "spanish",
+            "english",
+            "Original"
+          ],
+          [
+            "spanish",
+            "french",
+            "Original"
+          ],
+          [
+            "spanish",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "spanish",
+            "russian",
+            "Original"
+          ],
+          [
+            "french",
+            "english",
+            "Original"
+          ],
+          [
+            "french",
+            "spanish",
+            "Original"
+          ],
+          [
+            "french",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "french",
+            "russian",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "english",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "spanish",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "french",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "russian",
+            "Original"
+          ],
+          [
+            "russian",
+            "english",
+            "Original"
+          ],
+          [
+            "russian",
+            "spanish",
+            "Original"
+          ],
+          [
+            "russian",
+            "french",
+            "Original"
+          ],
+          [
+            "russian",
+            "portuguese",
+            "Original"
+          ]
+        ],
+        "languages": [
+          "english",
+          "french",
+          "portuguese",
+          "russian",
+          "spanish"
+        ],
+        "font_preserved": true,
+        "fixture": "native_dynamic"
+      },
+      {
+        "engine": "Ren'Py 8.3.7.25031702",
+        "directions": 20,
+        "results": [
+          [
+            "english",
+            "spanish",
+            "Original"
+          ],
+          [
+            "english",
+            "french",
+            "Original"
+          ],
+          [
+            "english",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "english",
+            "russian",
+            "Original"
+          ],
+          [
+            "spanish",
+            "english",
+            "Original"
+          ],
+          [
+            "spanish",
+            "french",
+            "Original"
+          ],
+          [
+            "spanish",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "spanish",
+            "russian",
+            "Original"
+          ],
+          [
+            "french",
+            "english",
+            "Original"
+          ],
+          [
+            "french",
+            "spanish",
+            "Original"
+          ],
+          [
+            "french",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "french",
+            "russian",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "english",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "spanish",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "french",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "russian",
+            "Original"
+          ],
+          [
+            "russian",
+            "english",
+            "Original"
+          ],
+          [
+            "russian",
+            "spanish",
+            "Original"
+          ],
+          [
+            "russian",
+            "french",
+            "Original"
+          ],
+          [
+            "russian",
+            "portuguese",
+            "Original"
+          ]
+        ],
+        "languages": [
+          "english",
+          "french",
+          "portuguese",
+          "russian",
+          "spanish"
+        ],
+        "font_preserved": true,
+        "fixture": "standard_json"
+      },
+      {
+        "engine": "Ren'Py 8.3.7.25031702",
+        "directions": 20,
+        "results": [
+          [
+            "english",
+            "spanish",
+            "Original"
+          ],
+          [
+            "english",
+            "french",
+            "Original"
+          ],
+          [
+            "english",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "english",
+            "russian",
+            "Original"
+          ],
+          [
+            "spanish",
+            "english",
+            "Original"
+          ],
+          [
+            "spanish",
+            "french",
+            "Original"
+          ],
+          [
+            "spanish",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "spanish",
+            "russian",
+            "Original"
+          ],
+          [
+            "french",
+            "english",
+            "Original"
+          ],
+          [
+            "french",
+            "spanish",
+            "Original"
+          ],
+          [
+            "french",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "french",
+            "russian",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "english",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "spanish",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "french",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "russian",
+            "Original"
+          ],
+          [
+            "russian",
+            "english",
+            "Original"
+          ],
+          [
+            "russian",
+            "spanish",
+            "Original"
+          ],
+          [
+            "russian",
+            "french",
+            "Original"
+          ],
+          [
+            "russian",
+            "portuguese",
+            "Original"
+          ]
+        ],
+        "languages": [
+          "english",
+          "french",
+          "portuguese",
+          "russian",
+          "spanish"
+        ],
+        "font_preserved": true,
+        "fixture": "automatic_no_menu",
+        "cyrillic_font_loaded": true,
+        "cyrillic_glyphs_processed": "Привет"
+      },
+      {
+        "engine": "Ren'Py 8.3.7.25031702",
+        "directions": 20,
+        "results": [
+          [
+            "english",
+            "spanish",
+            "Original"
+          ],
+          [
+            "english",
+            "french",
+            "Original"
+          ],
+          [
+            "english",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "english",
+            "russian",
+            "Original"
+          ],
+          [
+            "spanish",
+            "english",
+            "Original"
+          ],
+          [
+            "spanish",
+            "french",
+            "Original"
+          ],
+          [
+            "spanish",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "spanish",
+            "russian",
+            "Original"
+          ],
+          [
+            "french",
+            "english",
+            "Original"
+          ],
+          [
+            "french",
+            "spanish",
+            "Original"
+          ],
+          [
+            "french",
+            "portuguese",
+            "Original"
+          ],
+          [
+            "french",
+            "russian",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "english",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "spanish",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "french",
+            "Original"
+          ],
+          [
+            "portuguese",
+            "russian",
+            "Original"
+          ],
+          [
+            "russian",
+            "english",
+            "Original"
+          ],
+          [
+            "russian",
+            "spanish",
+            "Original"
+          ],
+          [
+            "russian",
+            "french",
+            "Original"
+          ],
+          [
+            "russian",
+            "portuguese",
+            "Original"
+          ]
+        ],
+        "languages": [
+          "english",
+          "french",
+          "portuguese",
+          "russian",
+          "spanish"
+        ],
+        "font_preserved": true,
+        "fixture": "native_font",
+        "cyrillic_font_loaded": true,
+        "cyrillic_glyphs_processed": "Привет"
+      }
+    ],
+    "lint": [
+      {
+        "fixture": "native_standard",
+        "exit_code": 0
+      },
+      {
+        "fixture": "native_original",
+        "exit_code": 0
+      },
+      {
+        "fixture": "native_auto",
+        "exit_code": 0
+      },
+      {
+        "fixture": "native_dynamic",
+        "exit_code": 0
+      },
+      {
+        "fixture": "standard_json",
+        "exit_code": 0
+      },
+      {
+        "fixture": "automatic_no_menu",
+        "exit_code": 0
+      },
+      {
+        "fixture": "native_font",
+        "exit_code": 0
+      }
+    ]
+  },
+  "limitations": [
+    "Synthetic fixtures derived from the SDK example, not the user's Eternum installation.",
+    "Visual capture unavailable in this environment: SDL dummy driver could not create a window.",
+    "No Windows executable build or live translation-provider validation.",
+    "The unchanged historical structure verifier reports five locale files missing in both the supplied base and this copy."
+  ],
+  "timezone": "America/Santiago",
+  "automatic_resource_protection": {
+    "file": "zzz_linguanova_ocultar_fuentes.rpy",
+    "translator_menu_enabled": true,
+    "translator_menu_disabled": true,
+    "font_utility": true,
+    "mod_generator": true,
+    "manual_copy_required": false,
+    "legacy_fonts_preserved": true
+  }
+}

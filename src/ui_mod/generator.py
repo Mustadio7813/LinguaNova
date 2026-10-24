@@ -6,8 +6,8 @@
 
 Corrections of 2026-10-17 (root causes confirmed on the Portuguese→Polish case):
 
-1. Language codes: target/source now go through ``languages.api_code`` (central
-   catalogue, 135 languages). The old 10-entry table forwarded Ren'Py folder
+1. Language codes: target/source now go through ``languages.api_code`` (the
+   five-language catalogue). The old 10-entry table forwarded Ren'Py folder
    names such as ``"polish"`` to the engines.
 2. Source language: ``auto`` is resolved like the main pipeline (offline
    py3langid, then the engine's own detector). Before, ``sl=auto`` went to
@@ -55,7 +55,7 @@ from .protect import is_junk, preserve_edge_whitespace, protect_mod_text, restor
 from .quality import (
     VALIDATION_VERSION, QualityVerdict, language_identification_available, summarise, validate_translation,
 )
-from .scanner import ModProjectScanner, find_legacy_mod_tl_files, resolve_game_dir
+from .scanner import ModProjectScanner, ModScanReport, find_legacy_mod_tl_files, resolve_game_dir
 from .ui_mod_hook_template import MOD_HOOK_FORMAT, render_ui_mod_hook_multi
 
 logger = logging.getLogger("LinguaNova")
@@ -81,11 +81,8 @@ EXPANSION_REPORT_MIN_CHARS = 40
 
 
 def _api_language(value: str) -> str:
-    """Compatibility shim: engine code for any catalogue language ('auto' stays)."""
-    try:
-        return api_code(value)
-    except ValueError:
-        return (value or "auto").strip().lower()
+    """Return an engine code only for the five supported languages."""
+    return api_code(value)
 
 
 @dataclass
@@ -109,6 +106,8 @@ class ModGenerationResult:
     target_language: str = ""
     report_path: str = ""
     message_key: str = ""
+    languages_generated: int = 0
+    languages_total: int = 0
 
 
 # ── user-facing messages ─────────────────────────────────────────────────────
@@ -363,6 +362,74 @@ def _load_manual(path: Path) -> Tuple[Dict[str, str], bool]:
     return {k: v for k, v in mapping.items() if isinstance(k, str) and isinstance(v, str)}, False
 
 
+def load_interface_mod_translations(project_path: str, target_language: str) -> List[Dict[str, str]]:
+    """Load generated MOD text and its optional manual edits for the in-app editor."""
+    target = resolve_language(target_language)
+    if target is None:
+        raise ValueError(f"Unsupported MOD target language: {target_language}")
+    scanner = ModProjectScanner()
+    game_dir = resolve_game_dir(project_path)
+    language_id = scanner.language_id(project_path, target.renpy)
+    data_dir = game_dir / "tl" / language_id
+    payload = _read_json(data_dir / DATA_FILE)
+    if payload is None:
+        return []
+    mapping = payload.get("mapping")
+    if not isinstance(mapping, dict):
+        raise ValueError(f"MOD data does not contain a valid translation mapping: {data_dir / DATA_FILE}")
+    manual, _legacy = _load_manual(data_dir / MANUAL_FILE)
+    return [
+        {"source": source, "target": manual.get(source, translated)}
+        for source, translated in sorted(mapping.items())
+        if isinstance(source, str) and isinstance(translated, str)
+    ]
+
+
+def save_interface_mod_corrections(
+    project_path: str,
+    target_language: str,
+    corrections: Sequence[Dict[str, str]],
+) -> int:
+    """Persist only edits made in the MOD editor; machine data remains optional."""
+    target = resolve_language(target_language)
+    if target is None:
+        raise ValueError(f"Unsupported MOD target language: {target_language}")
+    scanner = ModProjectScanner()
+    game_dir = resolve_game_dir(project_path)
+    language_id = scanner.language_id(project_path, target.renpy)
+    data_dir = game_dir / "tl" / language_id
+    data_path = data_dir / DATA_FILE
+    payload = _read_json(data_path)
+    if payload is None:
+        raise FileNotFoundError("Generate the interface MOD before saving manual corrections.")
+    mapping = payload.get("mapping")
+    if not isinstance(mapping, dict):
+        raise ValueError(f"MOD data does not contain a valid translation mapping: {data_path}")
+
+    manual_path = data_dir / MANUAL_FILE
+    manual, legacy = _load_manual(manual_path)
+    if legacy:
+        manual = {}
+    for row in corrections:
+        source = row.get("source")
+        translated = row.get("target")
+        if not isinstance(source, str) or source not in mapping:
+            raise ValueError("A correction refers to text that is not in the generated MOD.")
+        if not isinstance(translated, str):
+            raise ValueError("Manual corrections must be text.")
+        if not translated.strip() or translated == mapping[source]:
+            manual.pop(source, None)
+        else:
+            manual[source] = translated
+
+    _write_json_atomic(manual_path, {
+        "schema": DATA_SCHEMA,
+        "help": "Managed by LinguaNova's MOD editor. These corrections take priority on regeneration.",
+        "mapping": manual,
+    })
+    return len(manual)
+
+
 # ── publishing ───────────────────────────────────────────────────────────────
 
 def _publish(files: Dict[Path, str], backup_root: Path) -> List[str]:
@@ -423,20 +490,23 @@ def _discover_other_languages(game_dir: Path, current_folder: str) -> Dict[str, 
 
 def _game_tl_languages(game_dir: Path, mod_languages) -> List[str]:
     """tl/ folders the game itself ships (not MOD languages): fonts are reset for them."""
+    from src.core.language_menu_template import RESOURCE_FOLDERS
     tl_root = game_dir / "tl"
     if not tl_root.is_dir():
         return []
     taken = {lang.casefold() for lang in mod_languages}
-    return sorted(p.name for p in tl_root.iterdir()
-                  if p.is_dir() and p.name.casefold() not in taken and p.name.casefold() != "none")
+    return sorted(path.name for path in tl_root.iterdir()
+                  if path.is_dir() and path.name.casefold() not in taken
+                  and path.name.casefold() not in RESOURCE_FOLDERS
+                  and path.name.casefold() != "none" and not path.name.startswith("."))
 
 
 def _panel_label(folder: str, language: Optional[ModLanguage]) -> str:
-    """Native name when the game's font can surely draw it (Latin), else the English name."""
+    """Use native names for Latin targets and Russian after Cyrillic font planning."""
     if language is None:
         return folder
     native = language.native or language.english
-    if all(char_script(c) in ("", "LATIN") for c in native):
+    if language.api == "ru" or all(char_script(c) in ("", "LATIN") for c in native):
         return native
     return language.english or folder
 
@@ -498,6 +568,8 @@ def generate_interface_mod(
     source_detector: Optional[Callable[[Sequence[str]], Optional[str]]] = None,
     font_fetcher: Optional[FontFetcher] = None,
     ui_text: Optional[UiText] = None,
+    allow_identity_language: bool = False,
+    scan_report: Optional[ModScanReport] = None,
 ) -> ModGenerationResult:
     """Scan, translate, validate and publish one language of the multilang interface MOD."""
     target = resolve_language(target_language)
@@ -513,7 +585,7 @@ def generate_interface_mod(
                 message_key="mod_msg_unknown_source")
 
     scanner = ModProjectScanner()
-    report = scanner.scan(project_path)
+    report = scan_report if scan_report is not None else scanner.scan(project_path)
     originals, contexts, excluded = _collect_candidates(report.unique_texts())
     total = len(originals)
     base_kwargs = dict(
@@ -542,7 +614,8 @@ def generate_interface_mod(
         source, source_method = _resolve_source_language(
             requested_source, originals, target, engine, translation_manager, loop, source_detector
         )
-        if source is not None and source.api == target.api:
+        identity_language = source is not None and source.api == target.api
+        if identity_language and not allow_identity_language:
             return ModGenerationResult(
                 False,
                 _message(ui_text, "mod_msg_same_language", source=source.renpy, target=target.renpy),
@@ -649,6 +722,12 @@ def generate_interface_mod(
 
         # 5) Machine translation of what is still missing.
         same_set = set(glossary_same)
+        identity_sources = set()
+        if identity_language:
+            for src in originals:
+                if src not in entries:
+                    entries[src] = _Entry(src, "identity", engine_name, api_source, target.api, status="invariant")
+                    identity_sources.add(src)
         pending = [src for src in originals if src not in entries and src not in same_set]
         verdicts: Dict[str, QualityVerdict] = {}
         failures: Dict[str, str] = {}
@@ -731,18 +810,24 @@ def generate_interface_mod(
         loop.close()
         asyncio.set_event_loop(None)
 
-    invariant = sorted(s for s in originals if s not in entries and (
-        s in same_set or (verdicts.get(s) and verdicts[s].status == "invariant")))
+    identity_sources.update(src for src, entry in entries.items() if entry.origin == "identity")
+    invariant = sorted(identity_sources | {
+        s for s in originals if s not in entries and (
+            s in same_set or (verdicts.get(s) and verdicts[s].status == "invariant")
+        )
+    })
     invariant_set = set(invariant)
     pending_final = {s: failures.get(s, "not_translated") for s in originals
                      if s not in entries and s not in invariant_set}
     mapping = {src: e.translation for src, e in entries.items()}
+    translated_count = sum(1 for entry in entries.values() if entry.origin != "identity")
+    coverage = translated_count / total * 100.0
     if progress:
         # Last progress line = final result. Before, the monitor kept showing
         # "MOD: retrying N rejected strings individually" after the run ended.
-        progress(total, total, _message(ui_text, "mod_progress_done", translated=len(mapping),
+        progress(total, total, _message(ui_text, "mod_progress_done", translated=translated_count,
                                         unchanged=len(invariant), pending=len(pending_final), total=total))
-    if not mapping:
+    if not mapping and not identity_language:
         return ModGenerationResult(
             False,
             _message(ui_text, "mod_msg_all_rejected", pending=len(pending_final)),
@@ -764,7 +849,7 @@ def generate_interface_mod(
             f"No font able to draw every {target.renpy} character could be obtained; some letters may "
             "show as squares. Put a suitable .ttf in game/linguanova_mod_fonts/ and generate again."
         )
-    language_stats = [len(mapping), total, len(pending_final)]
+    language_stats = [translated_count, total, len(pending_final)]
     data_payload = {
         "schema": DATA_SCHEMA, "hook_format": MOD_HOOK_FORMAT, "validation": VALIDATION_VERSION,
         "language": language_id, "api_target": target.api,
@@ -827,7 +912,6 @@ def generate_interface_mod(
 
     game_name = _project_game_name(project_path, game_dir)
     out_path = game_dir / f"linguanova_mod_{game_name}_multilang.rpy"
-    coverage = len(mapping) / total * 100.0
     game_tl_languages = _game_tl_languages(game_dir, languages)
     hook = render_ui_mod_hook_multi(
         languages, language_id, aliases,
@@ -840,6 +924,10 @@ def generate_interface_mod(
     check_hook(hook)
 
     files[out_path] = hook
+    # Publish resource protection with the MOD, including when the main
+    # translator's optional language-menu integration was never used.
+    from src.core.language_menu_template import RESOURCE_FILTER_FILE, render_resource_filter
+    files[game_dir / RESOURCE_FILTER_FILE] = render_resource_filter()
     files[data_path] = _json_dumps(data_payload)
     if glossary_changed:
         files[glossary_path] = _json_dumps(glossary_payload)
@@ -910,7 +998,7 @@ def generate_interface_mod(
             "translation_pipeline": "the Translation page counts tl/ lines per occurrence (dialogue + strings); "
                                     "it is a different population and is not comparable with these numbers",
         },
-        "candidates": total, "translated": len(mapping), "coverage_percent": round(coverage, 2),
+        "candidates": total, "translated": translated_count, "coverage_percent": round(coverage, 2),
         "partial": bool(pending_final), "pending": len(pending_final), "pending_reasons": reason_counts,
         "pending_texts": pending_final, "invariant": len(invariant), "invariant_texts": invariant,
         "excluded_not_text": len(excluded), "excluded_texts": excluded,
@@ -918,7 +1006,7 @@ def generate_interface_mod(
         "pending_files": len(pending_by_file), "pending_by_file": pending_by_file,
         "long_expansions": long_expansions[:300], "long_expansions_total": len(long_expansions),
         "origins": {o: sum(1 for e in entries.values() if e.origin == o)
-                    for o in ("manual", "reused", "existing_tl", "glossary", "machine")},
+                    for o in ("manual", "reused", "existing_tl", "glossary", "machine", "identity")},
         "manual_entries_used": stats["manual"], "manual_entries_unchecked": stats["manual_unchecked"],
         "manual_entries_rejected": stats["manual_rejected"],
         "cache_entries_dropped": stats["reuse_dropped"],
@@ -955,10 +1043,105 @@ def generate_interface_mod(
     if legacy_native:
         message += " " + _message(ui_text, "mod_msg_legacy_warning", count=len(legacy_native), folder=language_id)
     return ModGenerationResult(
-        True, message, str(out_path), total, len(mapping), len(pending_final), coverage,
+        True, message, str(out_path), total, translated_count, len(pending_final), coverage,
         report.visible_rpy_files, report.decompiled_rpyc_files, report.archive_script_files,
         report.skipped_compiled_files, pending=len(pending_final), excluded=len(excluded),
         partial=bool(pending_final), unchanged=len(invariant),
         source_language=source.renpy if source else "auto",
         target_language=target.renpy, report_path=str(report_path), message_key=message_key,
+    )
+
+
+def generate_interface_mod_languages(
+    project_path: str,
+    source_language: str,
+    target_languages: Sequence[str],
+    engine,
+    translation_manager,
+    progress: Optional[Callable[[int, int, str], None]] = None,
+    source_detector: Optional[Callable[[Sequence[str]], Optional[str]]] = None,
+    font_fetcher: Optional[FontFetcher] = None,
+    ui_text: Optional[UiText] = None,
+) -> ModGenerationResult:
+    """Generate a set of MOD languages with one engine into the same runtime hook."""
+    targets: List[ModLanguage] = []
+    seen = set()
+    for value in target_languages:
+        target = resolve_language(value)
+        if target is None:
+            return ModGenerationResult(
+                False, _message(ui_text, "mod_msg_unknown_target", language=repr(value)),
+                message_key="mod_msg_unknown_target",
+            )
+        if target.renpy not in seen:
+            targets.append(target)
+            seen.add(target.renpy)
+    if not targets:
+        return ModGenerationResult(False, "No target languages were selected.")
+
+    scan_report = ModProjectScanner().scan(project_path)
+    results: List[ModGenerationResult] = []
+    for index, target in enumerate(targets, 1):
+        def report_progress(current: int, total: int, message: str, language=target, position=index):
+            if progress:
+                progress(current, total, f"{language.native} ({position}/{len(targets)}): {message}")
+
+        results.append(generate_interface_mod(
+            project_path=project_path,
+            source_language=source_language,
+            target_language=target.renpy,
+            engine=engine,
+            translation_manager=translation_manager,
+            progress=report_progress,
+            source_detector=source_detector,
+            font_fetcher=font_fetcher,
+            ui_text=ui_text,
+            allow_identity_language=True,
+            scan_report=scan_report,
+        ))
+
+    completed = [result for result in results if result.success and result.output_path]
+    output_path = completed[-1].output_path if completed else ""
+    candidates = sum(result.candidates for result in results)
+    translated = sum(result.translated for result in results)
+    pending = sum(result.pending for result in results)
+    unchanged = sum(result.unchanged for result in results)
+    coverage = translated / candidates * 100.0 if candidates else 0.0
+    failed = [
+        f"{target.native}: {result.message}"
+        for target, result in zip(targets, results)
+        if not result.success
+    ]
+    if completed:
+        names = ", ".join(target.native for target, result in zip(targets, results) if result.success)
+        message = (
+            f"Generated MOD languages {len(completed)}/{len(targets)}: {names}. "
+            f"All generated languages share {Path(output_path).name}."
+        )
+        if failed:
+            message += " Failed: " + " | ".join(failed)
+    else:
+        message = "No MOD language was generated. " + " | ".join(failed)
+
+    return ModGenerationResult(
+        success=bool(completed),
+        message=message,
+        output_path=output_path,
+        candidates=candidates,
+        translated=translated,
+        rejected=pending,
+        coverage=coverage,
+        visible_rpy_files=sum(result.visible_rpy_files for result in results),
+        decompiled_rpyc_files=sum(result.decompiled_rpyc_files for result in results),
+        archive_script_files=sum(result.archive_script_files for result in results),
+        skipped_compiled_files=sum(result.skipped_compiled_files for result in results),
+        pending=pending,
+        excluded=sum(result.excluded for result in results),
+        partial=len(completed) != len(targets) or any(result.partial for result in completed),
+        unchanged=unchanged,
+        source_language=source_language or "auto",
+        target_language=", ".join(target.renpy for target in targets),
+        report_path=completed[-1].report_path if completed else "",
+        languages_generated=len(completed),
+        languages_total=len(targets),
     )

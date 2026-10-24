@@ -1,0 +1,199 @@
+[
+  {
+    "candidate": "LINGUANOVA FIXTURE",
+    "flags": [
+      "short_text_requires_context",
+      "dialect_requires_editorial_review"
+    ],
+    "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+    "linguistic_review": "unverified",
+    "model": "",
+    "occurrence_id": "0744d4f37738a7f316ba3af65c062316f0c57c8e3f795311aa7f99d7aebf3315",
+    "output_path": "game/tl/spanish_latam/linguanova_next_strings.rpy",
+    "provenance": "review_action",
+    "provider": "human_review",
+    "reasons": [],
+    "request_id": "",
+    "status": "preserved_approved",
+    "written": "LINGUANOVA FIXTURE"
+  },
+  {
+    "candidate": "Preferencias",
+    "flags": [
+      "short_text_requires_context",
+      "dialect_requires_editorial_review"
+    ],
+    "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+    "linguistic_review": "unverified",
+    "model": "controlled-dictionary-v1",
+    "occurrence_id": "08134b0a0f964119c9a3518e51a6a5064ebf6ecb823a0c080f821f9d26dfc1ba",
+    "output_path": "game/tl/spanish_latam/linguanova_next_strings.rpy",
+    "provenance": "provider",
+    "provider": "fixture_dictionary",
+    "reasons": [],
+    "request_id": "fb9a490a712740288a4332ae5c7de3fe",
+    "status": "accepted",
+    "written": "Preferencias"
+  },
+  {
+    "candidate": "Salir",
+    "flags": [
+      "short_text_requires_context",
+      "dialect_requires_editorial_review"
+    ],
+    "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+    "linguistic_review": "unverified",
+    "model": "controlled-dictionary-v1",
+    "occurrence_id": "37a0c47efd745963260032db36b053c93e612e21a9efd497178d86354b98379f",
+    "output_path": "game/tl/spanish_latam/linguanova_next_strings.rpy",
+    "provenance": "provider",
+    "provider": "fixture_dictionary",
+    "reasons": [],
+    "request_id": "1936546fdc4045c29bbb2447d6763b63",
+    "status": "accepted",
+    "written": "Salir"
+  },
+  {
+    "candidate": "Preferencias",
+    "flags": [
+      "short_text_requires_context",
+      "dialect_requires_editorial_review"
+    ],
+    "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+    "linguistic_review": "unverified",
+    "model": "controlled-dictionary-v1",
+    "occurrence_id": "4212aa1e1ef4feed90754ca56442f79c1701a40109a43720a393a81e14e82711",
+    "output_path": "game/tl/spanish_latam/linguanova_next_strings.rpy",
+    "provenance": "provider",
+    "provider": "fixture_dictionary",
+    "reasons": [],
+    "request_id": "5e354eff3cee46a392d9024f558cbc85",
+    "status": "accepted",
+    "written": "Preferencias"
+  },
+  {
+    "candidate": "Iniciar",
+    "flags": [
+      "short_text_requires_context",
+      "dialect_requires_editorial_review"
+    ],
+    "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+    "linguistic_review": "unverified",
+    "model": "controlled-dictionary-v1",
+    "occurrence_id": "7ea90f9ab7141e529d75a729f80c49b93e4e683fc7304b59e4156ec55d63f016",
+    "output_path": "game/tl/spanish_latam/linguanova_next_strings.rpy",
+    "provenance": "provider",
+    "provider": "fixture_dictionary",
+    "reasons": [],
+    "request_id": "8da8364775224ab5891319a2efeaaaab",
+    "status": "accepted",
+    "written": "Iniciar"
+  },
+  {
+    "candidate": "Hola [player_name], esta es una prueba controlada.",
+    "flags": [
+      "short_text_requires_context",
+      "dialect_requires_editorial_review"
+    ],
+    "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+    "linguistic_review": "unverified",
+    "model": "controlled-dictionary-v1",
+    "occurrence_id": "92cb02bd4bff319c49f641dbaec0646dbf393405c9abdc624d7a06be50c1a46f",
+    "output_path": "game/tl/spanish_latam/linguanova_next_strings.rpy",
+    "provenance": "provider",
+    "provider": "fixture_dictionary",
+    "reasons": [],
+    "request_id": "182b9e3864f241e3ac210130cc184e18",
+    "status": "accepted",
+    "written": "Hola [player_name], esta es una prueba controlada."
+  },
+  {
+    "candidate": "LinguaNova Controlled Fixture",
+    "flags": [
+      "short_text_requires_context",
+      "dialect_requires_editorial_review"
+    ],
+    "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+    "linguistic_review": "unverified",
+    "model": "",
+    "occurrence_id": "a3cb440cfe095261efff0d3a273363384d67c79a690e28c50e509fb7482aae93",
+    "output_path": "game/tl/spanish_latam/linguanova_next_strings.rpy",
+    "provenance": "review_action",
+    "provider": "human_review",
+    "reasons": [],
+    "request_id": "",
+    "status": "preserved_approved",
+    "written": "LinguaNova Controlled Fixture"
+  },
+  {
+    "candidate": "Alex",
+    "flags": [
+      "short_text_requires_context",
+      "dialect_requires_editorial_review"
+    ],
+    "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+    "linguistic_review": "unverified",
+    "model": "",
+    "occurrence_id": "d8f63e21b1826514a71d7dc789950a9862b4a82ff66cbab6430db8530fa1d413",
+    "output_path": "game/tl/spanish_latam/linguanova_next_strings.rpy",
+    "provenance": "review_action",
+    "provider": "human_review",
+    "reasons": [],
+    "request_id": "",
+    "status": "preserved_approved",
+    "written": "Alex"
+  },
+  {
+    "candidate": "Volver",
+    "flags": [
+      "short_text_requires_context",
+      "dialect_requires_editorial_review"
+    ],
+    "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+    "linguistic_review": "unverified",
+    "model": "controlled-dictionary-v1",
+    "occurrence_id": "eabb40527606caa7650bc358de722664d41455fc2a0d05ce48b3a3cce62392f4",
+    "output_path": "game/tl/spanish_latam/linguanova_next_strings.rpy",
+    "provenance": "provider",
+    "provider": "fixture_dictionary",
+    "reasons": [],
+    "request_id": "0e441b07a15e4a9e9aedfcf662a73ad4",
+    "status": "accepted",
+    "written": "Volver"
+  },
+  {
+    "candidate": "",
+    "flags": [],
+    "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+    "linguistic_review": "unverified",
+    "model": "",
+    "occurrence_id": "f0ab9525e7539154dedab4d5040121689524ce986967807d24caea9303c0c35b",
+    "output_path": "",
+    "provenance": "provider",
+    "provider": "",
+    "reasons": [
+      "review_candidate_not_automatically_translatable"
+    ],
+    "request_id": "",
+    "status": "extraction_omission",
+    "written": ""
+  },
+  {
+    "candidate": "Te damos la bienvenida a nuestro tranquilo pueblo.",
+    "flags": [
+      "language_uncertain",
+      "dialect_requires_editorial_review"
+    ],
+    "job_identity": "8a81b136bfb5629b4df3c915f154831d27794e7597783e4531ca29dd8d6e1056",
+    "linguistic_review": "unverified",
+    "model": "controlled-dictionary-v1",
+    "occurrence_id": "fc2a1df096d44ff2e4e95a7b32fff40221c3290c750e4e8709ef44b683a4e4b7",
+    "output_path": "game/tl/spanish_latam/linguanova_next_strings.rpy",
+    "provenance": "provider",
+    "provider": "fixture_dictionary",
+    "reasons": [],
+    "request_id": "7b9bfa11cc47407ab41e4b28317be51f",
+    "status": "accepted",
+    "written": "Te damos la bienvenida a nuestro tranquilo pueblo."
+  }
+]

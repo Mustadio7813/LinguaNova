@@ -12,6 +12,7 @@ placeholders happened to work, which is why the loss was easy to miss.
 
 import asyncio
 import os
+import re
 import tempfile
 from types import SimpleNamespace
 
@@ -59,7 +60,13 @@ def _openai_translator(config, calls):
 
     async def fake_call_api(system_prompt, user_content, **kwargs):
         calls.append(user_content)
-        return "\n".join(f"[{i}] ceviri{i}" for i in range(user_content.count("[")))
+        scene = user_content.split("### SCENE START ###", 1)[1].split("### SCENE END ###", 1)[0]
+        translations = []
+        for line in scene.splitlines():
+            match = re.match(r"\[(\d+)\]\s+(.*)", line)
+            if match:
+                translations.append(f"[{match.group(1)}] çeviri {match.group(2)}")
+        return "\n".join(translations)
 
     translator._call_api = fake_call_api
     return translator

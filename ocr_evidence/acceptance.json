@@ -1,0 +1,773 @@
+{
+  "commercial_provider_verified": false,
+  "jobs": [
+    {
+      "coverage": {
+        "automatic_exports": 13,
+        "counts": {
+          "exported_automatic": 13
+        },
+        "coverage": {
+          "denominator": 13,
+          "display": "13/13 (100.00 %)",
+          "numerator": 13,
+          "percent": 100.0
+        },
+        "human_reviewed_coverage": {
+          "denominator": 13,
+          "display": "0/13 (0.00 %)",
+          "numerator": 0,
+          "percent": 0.0
+        },
+        "no_detection_is_not_no_text": true,
+        "same_language_preserved": 0,
+        "unobserved_runtime_resources": "not verified"
+      },
+      "images": 13,
+      "status": "exported_automatic",
+      "target": "spanish_latam"
+    },
+    {
+      "coverage": {
+        "automatic_exports": 13,
+        "counts": {
+          "exported_automatic": 13
+        },
+        "coverage": {
+          "denominator": 13,
+          "display": "13/13 (100.00 %)",
+          "numerator": 13,
+          "percent": 100.0
+        },
+        "human_reviewed_coverage": {
+          "denominator": 13,
+          "display": "0/13 (0.00 %)",
+          "numerator": 0,
+          "percent": 0.0
+        },
+        "no_detection_is_not_no_text": true,
+        "same_language_preserved": 0,
+        "unobserved_runtime_resources": "not verified"
+      },
+      "images": 13,
+      "status": "exported_automatic",
+      "target": "french"
+    },
+    {
+      "coverage": {
+        "automatic_exports": 13,
+        "counts": {
+          "exported_automatic": 13
+        },
+        "coverage": {
+          "denominator": 13,
+          "display": "13/13 (100.00 %)",
+          "numerator": 13,
+          "percent": 100.0
+        },
+        "human_reviewed_coverage": {
+          "denominator": 13,
+          "display": "0/13 (0.00 %)",
+          "numerator": 0,
+          "percent": 0.0
+        },
+        "no_detection_is_not_no_text": true,
+        "same_language_preserved": 0,
+        "unobserved_runtime_resources": "not verified"
+      },
+      "images": 13,
+      "status": "exported_automatic",
+      "target": "portuguese"
+    },
+    {
+      "coverage": {
+        "automatic_exports": 13,
+        "counts": {
+          "exported_automatic": 13
+        },
+        "coverage": {
+          "denominator": 13,
+          "display": "13/13 (100.00 %)",
+          "numerator": 13,
+          "percent": 100.0
+        },
+        "human_reviewed_coverage": {
+          "denominator": 13,
+          "display": "0/13 (0.00 %)",
+          "numerator": 0,
+          "percent": 0.0
+        },
+        "no_detection_is_not_no_text": true,
+        "same_language_preserved": 0,
+        "unobserved_runtime_resources": "not verified"
+      },
+      "images": 13,
+      "status": "exported_automatic",
+      "target": "russian"
+    },
+    {
+      "coverage": {
+        "automatic_exports": 0,
+        "counts": {
+          "preserved_source_language": 13
+        },
+        "coverage": {
+          "denominator": 13,
+          "display": "0/13 (0.00 %)",
+          "numerator": 0,
+          "percent": 0.0
+        },
+        "human_reviewed_coverage": {
+          "denominator": 13,
+          "display": "0/13 (0.00 %)",
+          "numerator": 0,
+          "percent": 0.0
+        },
+        "no_detection_is_not_no_text": true,
+        "same_language_preserved": 13,
+        "unobserved_runtime_resources": "not verified"
+      },
+      "images": 13,
+      "status": "preserved_source_language",
+      "target": "english"
+    }
+  ],
+  "original_sources_unchanged": true,
+  "package": {
+    "path": "/tmp/linguanova_ocr_acceptance_v7/LinguaNova_cinco_idiomas.zip",
+    "sha256": "936e4b8fbf6902b0827d150fedc52b39f34872459a54cae7861b5d0108b9bdf5"
+  },
+  "provider": "real LibreTranslate HTTP adapter, local controlled responses",
+  "renpy": {
+    "engine": "Ren'Py 8.3.7.25031702",
+    "loads": [
+      {
+        "language": null,
+        "path": "images/buttons/continue_hover.png",
+        "size": [
+          480,
+          160
+        ]
+      },
+      {
+        "language": null,
+        "path": "images/buttons/continue_normal.png",
+        "size": [
+          480,
+          160
+        ]
+      },
+      {
+        "language": null,
+        "path": "images/buttons/continue_selected.png",
+        "size": [
+          480,
+          160
+        ]
+      },
+      {
+        "language": null,
+        "path": "images/capitulo_01/telefono/mensaje.png",
+        "size": [
+          640,
+          240
+        ]
+      },
+      {
+        "language": null,
+        "path": "images/native/native_avif.avif",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": null,
+        "path": "images/native/native_bmp.bmp",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": null,
+        "path": "images/native/native_ico.ico",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": null,
+        "path": "images/native/native_jpeg.jpeg",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": null,
+        "path": "images/native/native_jpg.jpg",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": null,
+        "path": "images/native/native_png.png",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": null,
+        "path": "images/native/native_svg.svg",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": null,
+        "path": "images/native/native_tga.tga",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": null,
+        "path": "images/native/native_webp.webp",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "spanish_latam",
+        "path": "images/buttons/continue_hover.png",
+        "size": [
+          480,
+          160
+        ]
+      },
+      {
+        "language": "spanish_latam",
+        "path": "images/buttons/continue_normal.png",
+        "size": [
+          480,
+          160
+        ]
+      },
+      {
+        "language": "spanish_latam",
+        "path": "images/buttons/continue_selected.png",
+        "size": [
+          480,
+          160
+        ]
+      },
+      {
+        "language": "spanish_latam",
+        "path": "images/capitulo_01/telefono/mensaje.png",
+        "size": [
+          640,
+          240
+        ]
+      },
+      {
+        "language": "spanish_latam",
+        "path": "images/native/native_avif.avif",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "spanish_latam",
+        "path": "images/native/native_bmp.bmp",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "spanish_latam",
+        "path": "images/native/native_ico.ico",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "spanish_latam",
+        "path": "images/native/native_jpeg.jpeg",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "spanish_latam",
+        "path": "images/native/native_jpg.jpg",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "spanish_latam",
+        "path": "images/native/native_png.png",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "spanish_latam",
+        "path": "images/native/native_svg.svg",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "spanish_latam",
+        "path": "images/native/native_tga.tga",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "spanish_latam",
+        "path": "images/native/native_webp.webp",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "french",
+        "path": "images/buttons/continue_hover.png",
+        "size": [
+          480,
+          160
+        ]
+      },
+      {
+        "language": "french",
+        "path": "images/buttons/continue_normal.png",
+        "size": [
+          480,
+          160
+        ]
+      },
+      {
+        "language": "french",
+        "path": "images/buttons/continue_selected.png",
+        "size": [
+          480,
+          160
+        ]
+      },
+      {
+        "language": "french",
+        "path": "images/capitulo_01/telefono/mensaje.png",
+        "size": [
+          640,
+          240
+        ]
+      },
+      {
+        "language": "french",
+        "path": "images/native/native_avif.avif",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "french",
+        "path": "images/native/native_bmp.bmp",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "french",
+        "path": "images/native/native_ico.ico",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "french",
+        "path": "images/native/native_jpeg.jpeg",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "french",
+        "path": "images/native/native_jpg.jpg",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "french",
+        "path": "images/native/native_png.png",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "french",
+        "path": "images/native/native_svg.svg",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "french",
+        "path": "images/native/native_tga.tga",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "french",
+        "path": "images/native/native_webp.webp",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "portuguese",
+        "path": "images/buttons/continue_hover.png",
+        "size": [
+          480,
+          160
+        ]
+      },
+      {
+        "language": "portuguese",
+        "path": "images/buttons/continue_normal.png",
+        "size": [
+          480,
+          160
+        ]
+      },
+      {
+        "language": "portuguese",
+        "path": "images/buttons/continue_selected.png",
+        "size": [
+          480,
+          160
+        ]
+      },
+      {
+        "language": "portuguese",
+        "path": "images/capitulo_01/telefono/mensaje.png",
+        "size": [
+          640,
+          240
+        ]
+      },
+      {
+        "language": "portuguese",
+        "path": "images/native/native_avif.avif",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "portuguese",
+        "path": "images/native/native_bmp.bmp",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "portuguese",
+        "path": "images/native/native_ico.ico",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "portuguese",
+        "path": "images/native/native_jpeg.jpeg",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "portuguese",
+        "path": "images/native/native_jpg.jpg",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "portuguese",
+        "path": "images/native/native_png.png",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "portuguese",
+        "path": "images/native/native_svg.svg",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "portuguese",
+        "path": "images/native/native_tga.tga",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "portuguese",
+        "path": "images/native/native_webp.webp",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "russian",
+        "path": "images/buttons/continue_hover.png",
+        "size": [
+          480,
+          160
+        ]
+      },
+      {
+        "language": "russian",
+        "path": "images/buttons/continue_normal.png",
+        "size": [
+          480,
+          160
+        ]
+      },
+      {
+        "language": "russian",
+        "path": "images/buttons/continue_selected.png",
+        "size": [
+          480,
+          160
+        ]
+      },
+      {
+        "language": "russian",
+        "path": "images/capitulo_01/telefono/mensaje.png",
+        "size": [
+          640,
+          240
+        ]
+      },
+      {
+        "language": "russian",
+        "path": "images/native/native_avif.avif",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "russian",
+        "path": "images/native/native_bmp.bmp",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "russian",
+        "path": "images/native/native_ico.ico",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "russian",
+        "path": "images/native/native_jpeg.jpeg",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "russian",
+        "path": "images/native/native_jpg.jpg",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "russian",
+        "path": "images/native/native_png.png",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "russian",
+        "path": "images/native/native_svg.svg",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "russian",
+        "path": "images/native/native_tga.tga",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "russian",
+        "path": "images/native/native_webp.webp",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "english",
+        "path": "images/buttons/continue_hover.png",
+        "size": [
+          480,
+          160
+        ]
+      },
+      {
+        "language": "english",
+        "path": "images/buttons/continue_normal.png",
+        "size": [
+          480,
+          160
+        ]
+      },
+      {
+        "language": "english",
+        "path": "images/buttons/continue_selected.png",
+        "size": [
+          480,
+          160
+        ]
+      },
+      {
+        "language": "english",
+        "path": "images/capitulo_01/telefono/mensaje.png",
+        "size": [
+          640,
+          240
+        ]
+      },
+      {
+        "language": "english",
+        "path": "images/native/native_avif.avif",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "english",
+        "path": "images/native/native_bmp.bmp",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "english",
+        "path": "images/native/native_ico.ico",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "english",
+        "path": "images/native/native_jpeg.jpeg",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "english",
+        "path": "images/native/native_jpg.jpg",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "english",
+        "path": "images/native/native_png.png",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "english",
+        "path": "images/native/native_svg.svg",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "english",
+        "path": "images/native/native_tga.tga",
+        "size": [
+          240,
+          100
+        ]
+      },
+      {
+        "language": "english",
+        "path": "images/native/native_webp.webp",
+        "size": [
+          240,
+          100
+        ]
+      }
+    ],
+    "success": true
+  },
+  "requests": 48,
+  "windows_verified": false
+}

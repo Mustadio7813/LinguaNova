@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "scope": "Controlled fixture, binds current ZIP image bytes to actual engine snapshots; no commercial-game assertion",
+  "player_package": "examples/Paquete_fixture_multidioma_EXPERIMENTAL.zip",
+  "player_package_sha256": "30f93b1457c0147ec02f13f73fa2334bb3b2b0ddceac919b75212a9e6c39d00c",
+  "player_package_bytes": 502725,
+  "manifest_package_id": "0141d3e0e069b208311a6ff34beb5dade49b8e7bc7997842277918f30827fa56",
+  "fresh_processes": 15,
+  "image_snapshot_checks": 86,
+  "localized_images": 24,
+  "all_image_hashes_match": true,
+  "all_manifest_file_hashes_match": true,
+  "acceptance_driver_sha256": "3358bdebe925fbfb7aba18dcec9e8d57907cea7bb9ba76e5ff10a2a99a05bf56"
+}

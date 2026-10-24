@@ -39,7 +39,7 @@ def test_quick_config_localization_keys():
         "gemini_safety_only_high",
         "gemini_safety_standard",
     ]
-    all_locales = ["de", "en", "es", "fa", "fr", "ja", "ru", "tr", "zh-CN"]
+    all_locales = ["en", "es", "pt", "fr", "ru"]
     
     for loc in all_locales:
         file_path = locales_dir / f"{loc}.json"
@@ -48,4 +48,3 @@ def test_quick_config_localization_keys():
         for key in required_keys:
             assert key in data, f"Missing key '{key}' in locales/{loc}.json"
             assert len(data[key]) > 0, f"Empty key '{key}' in locales/{loc}.json"
-

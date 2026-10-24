@@ -1,0 +1,85 @@
+{
+  "base_language_directions_per_archive": 20,
+  "base_languages": 5,
+  "connected_ui_passed": true,
+  "controlled_http_requests": 85,
+  "examples": {
+    "Cinco_idiomas_UI.rar": {
+      "bytes": 419796,
+      "sha256": "df2651f1fdc6c21e7b8a9ebae5ebb50b160a5b29f2563ba1ca9c271bf90cbf36"
+    },
+    "Cinco_idiomas_UI.zip": {
+      "bytes": 419973,
+      "sha256": "98b756f08150418c4ac49efcbeca740a22320e32fd02f5cbf00d78bb94147c75"
+    },
+    "Respaldo_independiente_UI.rar": {
+      "bytes": 418146,
+      "sha256": "fb2d85466482a93ebedf25dde02d5ca4aaba6c0bf2f0e062b5526bb751f3db17"
+    },
+    "Respaldo_independiente_UI.zip": {
+      "bytes": 418361,
+      "sha256": "24c22db1c22a0a92df19060f71c8c17279632be1798f6c1185d28abad90e3f57"
+    }
+  },
+  "exported_images": 20,
+  "frozen_linux": {
+    "build": "PyInstaller 6.22.3 folder build",
+    "exit_codes": {
+      "gui": 0,
+      "real_ocr_with_explicit_test_provider": 0,
+      "verify": 0
+    },
+    "image_statuses": {
+      "images/buttons/continue_hover.png": "pending_region_translation_or_typography_review",
+      "images/buttons/continue_normal.png": "pending_region_translation_or_typography_review",
+      "images/buttons/continue_selected.png": "pending_region_translation_or_typography_review",
+      "images/capitulo_01/telefono/mensaje.png": "pending_region_translation_or_typography_review"
+    },
+    "ocr_regions": {
+      "images/buttons/continue_hover.png": 1,
+      "images/buttons/continue_normal.png": 1,
+      "images/buttons/continue_selected.png": 1,
+      "images/capitulo_01/telefono/mensaje.png": 1
+    },
+    "platform": "Linux",
+    "recognized_images": 4,
+    "resources_checked": 111,
+    "source_resources_match": true,
+    "windows_tested": false
+  },
+  "limits": [
+    "Windows not executed",
+    "User game not supplied/tested",
+    "Generative inference not executed"
+  ],
+  "live_google": {
+    "exception": "ProviderError",
+    "executed": true,
+    "fixture": "one synthetic public sentence",
+    "provider": "google",
+    "provider_statuses": [],
+    "reason": "Provider returned failure; engine=google",
+    "seconds": 8.71,
+    "source": "en",
+    "status": "failed",
+    "target": "fr"
+  },
+  "native_engine_version": "8.3.7.25031702",
+  "ocr_original_images": 4,
+  "real_engine_fresh_processes": 26,
+  "source": {
+    "changed": [],
+    "manifest_hash": "5de0222d532824549fd0db093d886b14bec7f45d735618d80889ff01ee7fb9df",
+    "missing": [],
+    "protected_count": 283,
+    "valid": true
+  },
+  "translation_provider_evidence": "Controlled HTTP server; not live MT",
+  "unit_tests": {
+    "passed": 62,
+    "skip_reason": "Optional generative weights/inference unavailable",
+    "skipped": 1,
+    "warning_scope": "Deprecation in original aiohttp client",
+    "warnings": 1
+  }
+}

@@ -1,0 +1,10 @@
+# Optional SEPARATE worker. Not installed into a frozen EXE through pip.
+# Windows Python 3.12 is the proposed build target; build not executed here.
+torch==2.8.0
+diffusers==0.35.1
+transformers==4.56.2
+accelerate==1.10.1
+safetensors==0.6.2
+Pillow>=10,<13
+numpy>=2,<3
+pyinstaller>=6.12,<7

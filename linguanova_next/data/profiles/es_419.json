@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "id": "latam_neutro_sin_modismos",
+  "version": "1",
+  "editorial_rule": "Use neutral Latin American Spanish. Do not use regional slang, vosotros or Spain-specific constructions. Shared standard vocabulary is valid.",
+  "automatic_review": "contextual signals; never an exhaustive dialect certification"
+}

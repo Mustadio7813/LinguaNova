@@ -1,0 +1,5 @@
+# Keep distribution source files; ignore generated PyInstaller work directories.
+*
+!.gitignore
+!linux/
+!linux/**

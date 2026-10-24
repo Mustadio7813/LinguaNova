@@ -10,7 +10,9 @@ import re
 from pathlib import Path
 
 
-EXPECTED_MAIN_HOOK_SHA256 = "bee504f9327f240b7714949615b4077a5687feb7583e00ab9fa7e5f08782132a"
+# Baseline updated for the authorized 1.1.1 core hot-switch fix; the MOD
+# must continue to leave that new core implementation untouched.
+EXPECTED_MAIN_HOOK_SHA256 = "cb112d59634f56a9ee9a418565963ccaaaeeb252af91e6a33d3d5457e67dd9fc"
 
 
 def test_mod_does_not_change_main_runtime_hook():

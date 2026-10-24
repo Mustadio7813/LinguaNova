@@ -1,0 +1,57 @@
+[
+  {
+    "renpy_id": "english",
+    "counts": {
+      "no_text": 0,
+      "pending": 0,
+      "preserved": 13,
+      "total": 13,
+      "translated": 0
+    },
+    "source_models": "eng"
+  },
+  {
+    "renpy_id": "french",
+    "counts": {
+      "no_text": 0,
+      "pending": 0,
+      "preserved": 0,
+      "total": 13,
+      "translated": 13
+    },
+    "source_models": "eng"
+  },
+  {
+    "renpy_id": "russian",
+    "counts": {
+      "no_text": 0,
+      "pending": 0,
+      "preserved": 0,
+      "total": 13,
+      "translated": 13
+    },
+    "source_models": "eng"
+  },
+  {
+    "renpy_id": "portuguese",
+    "counts": {
+      "no_text": 0,
+      "pending": 0,
+      "preserved": 0,
+      "total": 13,
+      "translated": 13
+    },
+    "source_models": "eng"
+  },
+  {
+    "renpy_id": "spanish",
+    "counts": {
+      "no_text": 0,
+      "pending": 0,
+      "preserved": 0,
+      "total": 13,
+      "translated": 13
+    },
+    "source_models": "eng"
+  }
+]

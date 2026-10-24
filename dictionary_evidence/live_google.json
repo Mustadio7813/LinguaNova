@@ -1,0 +1,12 @@
+{
+  "exception": "ProviderError",
+  "executed": true,
+  "fixture": "one synthetic public sentence",
+  "provider": "google",
+  "provider_statuses": [],
+  "reason": "Provider returned failure; engine=google",
+  "seconds": 8.71,
+  "source": "en",
+  "status": "failed",
+  "target": "fr"
+}

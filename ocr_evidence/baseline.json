@@ -1,0 +1,10 @@
+{
+  "valid": true,
+  "protected_count": 283,
+  "changed": [],
+  "missing": [],
+  "patched": [
+    "src/gui/qml/Main.qml"
+  ],
+  "manifest_hash": "0e9b3a3b3c12a0ddc3ac3d47bcd5462c309048c59914e074ca3cc379b5cee171"
+}

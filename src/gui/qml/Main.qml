@@ -304,12 +304,15 @@ ApplicationWindow {
                                              nativeName || fallbackName || code || "Language")
     }
 
+    function languagePrimaryName(fallbackName, code) {
+        if (code === "auto") return displayLanguageName(code, fallbackName)
+        return languageNativeName(fallbackName, code) || displayLanguageName(code, fallbackName)
+    }
+
     function languageSecondaryName(fallbackName, code) {
         if (code === "auto") return ""
-        var nativeName = languageNativeName(fallbackName, code)
-        var primaryName = displayLanguageName(code, fallbackName)
-        if (normalizeLanguageSearch(nativeName) === normalizeLanguageSearch(primaryName)) return ""
-        return nativeName
+        // Read uiTrigger through displayLanguageName so open popups update too.
+        return displayLanguageName(code, fallbackName)
     }
 
     function normalizeLanguageSearch(value) {
@@ -331,7 +334,7 @@ ApplicationWindow {
         var code = item.code || ""
         var nativeName = languageNativeName(item.name || "", code)
         var haystack = displayLanguageName(code, item.name || "") + " " + nativeName + " " +
-                       (item.name || "") + " " + code + " " + languageIsoCode(code)
+                       (item.name || "") + " " + code + " " + languageIsoCode(code) + " " + languageSecondaryName(item.name || "", code)
         return normalizeLanguageSearch(haystack).indexOf(q) !== -1
     }
 
@@ -371,24 +374,25 @@ ApplicationWindow {
         if (sourceLangCombo && sourceLangCombo.syncSourceLanguage) sourceLangCombo.syncSourceLanguage()
         if (uiLanguageCombo && uiLanguageCombo.syncUILanguage) uiLanguageCombo.syncUILanguage()
 
-        appBackend.checkForUpdates(false)
     }
 
     // ── Backend Sinyalleri ────────────────────────────────────────────────
     Connections {
         target: appBackend
+        function onProjectChanged(path) { projectPathField.text = path }
 
         function onLogMessage(level, message) {
-            appendLog(level, message)
+            var displayMessage = appBackend.localizeLogMessage(message)
+            appendLog(level, displayMessage)
             if (message.indexOf("❌") >= 0 && (message.indexOf("select a game") >= 0 || message.indexOf("not found") >= 0 || message.indexOf("game folder") >= 0 || message.indexOf("oyun") >= 0))
                 projectPathField.triggerShake()
             // Show toast for toolbox operations and key events
             if (message.indexOf("✅") === 0 && (message.indexOf("Font") >= 0 || message.indexOf("Lint") >= 0 || message.indexOf("terms") >= 0 || message.indexOf("imported") >= 0 || message.indexOf("exported") >= 0 || message.indexOf("filled") >= 0 || message.indexOf("translated") >= 0))
-                showToast(message.replace("✅ ", ""), "success")
+                showToast(displayMessage.replace("✅ ", ""), "success")
             else if (message.indexOf("⚠️") === 0 && (message.indexOf("failed") >= 0 || message.indexOf("not found") >= 0))
-                showToast(message.replace("⚠️ ", ""), "warning")
+                showToast(displayMessage.replace("⚠️ ", ""), "warning")
             else if (message.indexOf("🔤") === 0 || message.indexOf("🩺") === 0 || message.indexOf("📚") === 0)
-                showToast(message, "info")
+                showToast(displayMessage, "info")
         }
 
         function onProgressChanged(current, total, text) {
@@ -1342,15 +1346,19 @@ ApplicationWindow {
                                         }
                                         popup: Popup {
                                             id: sourceLangPopup
-                                            y: sourceLangCombo.height + 6
-                                            width: Math.min(760, Math.max(430, root.width - 100))
-                                            height: Math.min(468, Math.max(320, root.height - 210))
+                                            parent: Overlay.overlay
+                                            property point anchorPosition: Qt.point(0, 0)
+                                            x: Math.max(12, Math.min(root.width - width - 12, anchorPosition.x))
+                                            y: Math.max(12, Math.min(root.height - height - 12, anchorPosition.y + 6))
+                                            width: Math.min(760, root.width - 24)
+                                            height: Math.min(350, Math.max(184, Math.min(148 + sourceLangPopup.visibleRows * 46, root.height - 210)))
                                             padding: 12
                                             closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
 
                                             property string searchFilter: ""
                                             property var allLanguages: []
-                                            readonly property int columns: width >= 700 ? 4 : (width >= 520 ? 3 : 2)
+                                            readonly property int columns: width >= 700 ? 5 : (width >= 520 ? 4 : 3)
+                                            readonly property int visibleRows: Math.max(1, Math.ceil(getFilteredList().length / columns))
 
                                             function refreshLanguages() {
                                                 allLanguages = appBackend.getSourceLanguages() || []
@@ -1367,6 +1375,7 @@ ApplicationWindow {
                                             }
 
                                             onAboutToShow: {
+                                                anchorPosition = sourceLangCombo.mapToItem(Overlay.overlay, 0, sourceLangCombo.height)
                                                 refreshLanguages()
                                                 searchFilter = ""
                                                 sourceSearchInput.text = ""
@@ -1457,7 +1466,7 @@ ApplicationWindow {
                                                     Layout.fillHeight: true
                                                     clip: true
                                                     cellWidth: Math.floor(width / sourceLangPopup.columns)
-                                                    cellHeight: 54
+                                                    cellHeight: 46
                                                     model: sourceLangPopup.getFilteredList()
                                                     boundsBehavior: Flickable.StopAtBounds
                                                     ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
@@ -1468,8 +1477,8 @@ ApplicationWindow {
 
                                                         Rectangle {
                                                             anchors.fill: parent
-                                                            anchors.margins: 3
-                                                            radius: 11
+                                                            anchors.margins: 2
+                                                            radius: 9
                                                             color: sourceLangCombo.currentValue === modelData.code
                                                                    ? Qt.rgba(167/255, 139/255, 250/255, 0.13)
                                                                    : (sourceTileMouse.containsMouse ? "#1B2229" : "#151B21")
@@ -1478,11 +1487,11 @@ ApplicationWindow {
 
                                                             RowLayout {
                                                                 anchors.fill: parent
-                                                                anchors.leftMargin: 9; anchors.rightMargin: 9
-                                                                spacing: 8
+                                                                anchors.leftMargin: 7; anchors.rightMargin: 7
+                                                                spacing: 6
 
                                                                 Rectangle {
-                                                                    width: 34; height: 30; radius: 8
+                                                                    width: 30; height: 26; radius: 7
                                                                     color: sourceLangCombo.currentValue === modelData.code ? clrAccent2 : "#222A32"
                                                                     Label {
                                                                         anchors.centerIn: parent
@@ -1497,7 +1506,7 @@ ApplicationWindow {
                                                                     spacing: 0
                                                                     Label {
                                                                         Layout.fillWidth: true
-                                                                        text: root.displayLanguageName(modelData.code, modelData.name)
+                                                                        text: root.languagePrimaryName(modelData.name, modelData.code)
                                                                         color: sourceLangCombo.currentValue === modelData.code ? clrAccent2 : clrTxt
                                                                         font.pixelSize: 10; font.bold: true
                                                                         elide: Text.ElideRight
@@ -1506,7 +1515,7 @@ ApplicationWindow {
                                                                         Layout.fillWidth: true
                                                                         visible: root.languageSecondaryName(modelData.name, modelData.code).length > 0
                                                                         text: root.languageSecondaryName(modelData.name, modelData.code)
-                                                                        color: "#707B85"; font.pixelSize: 8
+                                                                        color: clrTxt2; font.pixelSize: 9
                                                                         elide: Text.ElideRight
                                                                     }
                                                                 }
@@ -1663,15 +1672,19 @@ ApplicationWindow {
                                         }
                                         popup: Popup {
                                             id: targetLangPopup
-                                            y: targetLangCombo.height + 6
-                                            width: Math.min(760, Math.max(430, root.width - 100))
-                                            height: Math.min(468, Math.max(320, root.height - 210))
+                                            parent: Overlay.overlay
+                                            property point anchorPosition: Qt.point(0, 0)
+                                            x: Math.max(12, Math.min(root.width - width - 12, anchorPosition.x))
+                                            y: Math.max(12, Math.min(root.height - height - 12, anchorPosition.y + 6))
+                                            width: Math.min(760, root.width - 24)
+                                            height: Math.min(350, Math.max(184, Math.min(148 + targetLangPopup.visibleRows * 46, root.height - 210)))
                                             padding: 12
                                             closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
 
                                             property string searchFilter: ""
                                             property var allLanguages: []
-                                            readonly property int columns: width >= 700 ? 4 : (width >= 520 ? 3 : 2)
+                                            readonly property int columns: width >= 700 ? 5 : (width >= 520 ? 4 : 3)
+                                            readonly property int visibleRows: Math.max(1, Math.ceil(getFilteredList().length / columns))
 
                                             function refreshLanguages() {
                                                 allLanguages = appBackend.getTargetLanguages() || []
@@ -1688,6 +1701,7 @@ ApplicationWindow {
                                             }
 
                                             onAboutToShow: {
+                                                anchorPosition = targetLangCombo.mapToItem(Overlay.overlay, 0, targetLangCombo.height)
                                                 refreshLanguages()
                                                 searchFilter = ""
                                                 targetSearchInput.text = ""
@@ -1778,7 +1792,7 @@ ApplicationWindow {
                                                     Layout.fillHeight: true
                                                     clip: true
                                                     cellWidth: Math.floor(width / targetLangPopup.columns)
-                                                    cellHeight: 54
+                                                    cellHeight: 46
                                                     model: targetLangPopup.getFilteredList()
                                                     boundsBehavior: Flickable.StopAtBounds
                                                     ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
@@ -1789,8 +1803,8 @@ ApplicationWindow {
 
                                                         Rectangle {
                                                             anchors.fill: parent
-                                                            anchors.margins: 3
-                                                            radius: 11
+                                                            anchors.margins: 2
+                                                            radius: 9
                                                             color: targetLangCombo.currentValue === modelData.code
                                                                    ? Qt.rgba(184/255, 243/255, 107/255, 0.13)
                                                                    : (targetTileMouse.containsMouse ? "#1B2229" : "#151B21")
@@ -1799,11 +1813,11 @@ ApplicationWindow {
 
                                                             RowLayout {
                                                                 anchors.fill: parent
-                                                                anchors.leftMargin: 9; anchors.rightMargin: 9
-                                                                spacing: 8
+                                                                anchors.leftMargin: 7; anchors.rightMargin: 7
+                                                                spacing: 6
 
                                                                 Rectangle {
-                                                                    width: 34; height: 30; radius: 8
+                                                                    width: 30; height: 26; radius: 7
                                                                     color: targetLangCombo.currentValue === modelData.code ? clrAccent : "#222A32"
                                                                     Label {
                                                                         anchors.centerIn: parent
@@ -1818,7 +1832,7 @@ ApplicationWindow {
                                                                     spacing: 0
                                                                     Label {
                                                                         Layout.fillWidth: true
-                                                                        text: root.displayLanguageName(modelData.code, modelData.name)
+                                                                        text: root.languagePrimaryName(modelData.name, modelData.code)
                                                                         color: targetLangCombo.currentValue === modelData.code ? clrAccent : clrTxt
                                                                         font.pixelSize: 10; font.bold: true
                                                                         elide: Text.ElideRight
@@ -1827,7 +1841,7 @@ ApplicationWindow {
                                                                         Layout.fillWidth: true
                                                                         visible: root.languageSecondaryName(modelData.name, modelData.code).length > 0
                                                                         text: root.languageSecondaryName(modelData.name, modelData.code)
-                                                                        color: "#707B85"; font.pixelSize: 8
+                                                                        color: clrTxt2; font.pixelSize: 9
                                                                         elide: Text.ElideRight
                                                                     }
                                                                 }
@@ -2012,6 +2026,7 @@ ApplicationWindow {
                     // ── ANA AKSİYON BUTONU (NEON CYAN -> BLUE GRADIENT) ───
                     Button {
                         id: startButton
+                        objectName: "mainTranslateButton"
                         Layout.fillWidth: true
                         Layout.preferredHeight: 52
                         enabled: !isTranslating || currentStage !== "idle"
@@ -2688,8 +2703,8 @@ ApplicationWindow {
                                     background: Rectangle { radius: 10; color: clrInput; border.color: clrCardBorder; border.width: 1 }
                                     contentItem: Label { leftPadding: 14; text: uiLanguageCombo.displayText; color: clrTxt; font.pixelSize: 12; verticalAlignment: Text.AlignVCenter }
                                     onActivated: appBackend.setUILanguage(currentValue)
-                                    delegate: ItemDelegate { width: uiLanguageCombo.width; contentItem: Label { text: modelData.name; color: clrTxt; font.pixelSize: 12; leftPadding: 14 } background: Rectangle { color: hovered ? Qt.rgba(184, 243, 107, 0.12) : "transparent" } }
-                                    popup: Popup { y: uiLanguageCombo.height; width: uiLanguageCombo.width; implicitHeight: 240; padding: 4; contentItem: ListView { clip: true; model: uiLanguageCombo.delegateModel; ScrollBar.vertical: ScrollBar {} } background: Rectangle { color: clrCard; radius: 10; border.color: clrCardBorder; border.width: 1 } }
+                                    delegate: ItemDelegate { width: uiLanguageCombo.width; height: 36; contentItem: Label { text: modelData.name; color: clrTxt; font.pixelSize: 12; leftPadding: 14 } background: Rectangle { color: hovered ? Qt.rgba(184, 243, 107, 0.12) : "transparent" } }
+                                    popup: Popup { y: uiLanguageCombo.height; width: uiLanguageCombo.width; implicitHeight: Math.min(contentItem.implicitHeight + padding * 2, 188); padding: 4; contentItem: ListView { clip: true; implicitHeight: contentHeight; model: uiLanguageCombo.delegateModel; ScrollBar.vertical: ScrollBar {} } background: Rectangle { color: clrCard; radius: 10; border.color: clrCardBorder; border.width: 1 } }
                                 }
                                 Item { Layout.fillWidth: true }
                             }
@@ -3690,6 +3705,11 @@ ApplicationWindow {
                     }
                 }
 
+                NativePackageCard {
+                    Layout.fillWidth: true
+                    ui: root
+                }
+
                 // 2-Sütunlu Dengeli Araç Kutusu Izgarası
                 GridLayout {
                     Layout.fillWidth: true
@@ -4086,20 +4106,6 @@ ApplicationWindow {
                                 font.pixelSize: root.compactHeight ? 11 : 12; color: clrTxt2; wrapMode: Text.Wrap; Layout.fillWidth: true
                             }
 
-                            CheckBox {
-                                id: updatesStartupCheck
-                                objectName: "toolUpdatesStartupCheck"
-                                Layout.fillWidth: true
-                                checked: appBackend.checkForUpdatesOnStartup
-                                onToggled: appBackend.checkForUpdatesOnStartup = checked
-                                contentItem: Label {
-                                    leftPadding: updatesStartupCheck.indicator.width + 8
-                                    text: appBackend.uiTrigger, appBackend.getTextWithDefault("tool_updates_startup", "Check for updates when LinguaNova starts")
-                                    color: clrTxt2; font.pixelSize: 12; wrapMode: Text.Wrap
-                                    verticalAlignment: Text.AlignVCenter
-                                }
-                            }
-
                             Button {
                                 id: btnCheckUpdates
                                 objectName: "toolCheckUpdatesButton"
@@ -4130,6 +4136,7 @@ ApplicationWindow {
                     Rectangle {
                         id: uiLangCard
                         objectName: "toolUiLanguageCard"
+                        visible: false
                         Layout.fillWidth: true
                         Layout.preferredHeight: uiLangCardCol.implicitHeight + (root.compactHeight ? 24 : 36)
                         radius: 18; color: clrCard; border.color: clrCardBorder; border.width: 1
@@ -4694,8 +4701,83 @@ ApplicationWindow {
                                 Layout.fillWidth: true
                                 text: appBackend.uiTrigger, appBackend.getTextWithDefault(
                                           "mod_actions_desc",
-                                          "Choose the game directly from this MOD page. LinguaNova inspects its interface text and uses the currently selected source language, target language and translation service. Story and dialogue are not translated by this MOD.")
+                                          "Choose the game directly from this MOD page. LinguaNova detects the source language automatically and uses the independent MOD target language and translation engine selected below. Generate one target or all five with that same engine; all generated languages share the in-game real-time selector. Story and dialogue are not translated by this MOD.")
                                 color: clrTxt2; font.pixelSize: 11; wrapMode: Text.WordWrap; lineHeight: 1.2
+                            }
+
+                            GridLayout {
+                                Layout.fillWidth: true
+                                columns: root.narrowWidth ? 1 : 2
+                                columnSpacing: 12
+                                rowSpacing: 8
+
+                                ColumnLayout {
+                                    Layout.fillWidth: true
+                                    spacing: 5
+                                    Label {
+                                        text: appBackend.uiTrigger, appBackend.getTextWithDefault("mod_target_label", "MOD target language")
+                                        color: clrTxt; font.pixelSize: 12; font.bold: true
+                                    }
+                                    ReadableModCombo {
+                                        id: modTargetCombo
+                                        objectName: "modTargetCombo"
+                                        Layout.fillWidth: true
+                                        model: {
+                                            var refresh = appBackend.uiTrigger
+                                            return appBackend.getModTargetLanguages().map(function(item) {
+                                                var label = root.displayLanguageName(item.code, item.name)
+                                                return {code:item.code, name:label.charAt(0).toUpperCase()+label.slice(1)}
+                                            })
+                                        }
+                                        textRole: "name"
+                                        valueRole: "code"
+                                        currentIndex: {
+                                            for (var i = 0; i < model.length; i++)
+                                                if (model[i].code === appBackend.modTargetLanguage) return i
+                                            return 0
+                                        }
+                                        onActivated: appBackend.setModTargetLanguage(currentValue)
+                                        fieldColor: clrInput
+                                        popupColor: clrCard
+                                        textColor: clrTxt
+                                        borderColor: clrCardBorder
+                                        accentColor: clrAccent
+                                    }
+                                }
+                                ColumnLayout {
+                                    Layout.fillWidth: true
+                                    spacing: 5
+                                    Label {
+                                        text: appBackend.uiTrigger, appBackend.getTextWithDefault("mod_engine_label", "Independent MOD engine")
+                                        color: clrTxt; font.pixelSize: 12; font.bold: true
+                                    }
+                                    ReadableModCombo {
+                                        id: modEngineCombo
+                                        objectName: "modEngineCombo"
+                                        Layout.fillWidth: true
+                                        model: [
+                                            { code: "google", name: "Google" },
+                                            { code: "bing", name: "Bing" },
+                                            { code: "openai", name: "OpenAI" },
+                                            { code: "gemini", name: "Gemini" },
+                                            { code: "deepseek", name: "DeepSeek" },
+                                            { code: "libretranslate", name: "LibreTranslate" }
+                                        ]
+                                        textRole: "name"
+                                        valueRole: "code"
+                                        currentIndex: {
+                                            for (var i = 0; i < model.length; i++)
+                                                if (model[i].code === appBackend.modSelectedEngine) return i
+                                            return 0
+                                        }
+                                        onActivated: appBackend.setModSelectedEngine(currentValue)
+                                        fieldColor: clrInput
+                                        popupColor: clrCard
+                                        textColor: clrTxt
+                                        borderColor: clrCardBorder
+                                        accentColor: clrAccent
+                                    }
+                                }
                             }
 
                             Label {
@@ -4766,6 +4848,14 @@ ApplicationWindow {
                                     text: appBackend.uiTrigger, appBackend.getTextWithDefault("mod_generate_btn", "Generate MOD")
                                     onClicked: appBackend.generateMod()
                                 }
+                                Button {
+                                    Layout.preferredWidth: root.compactWidth ? 210 : 245
+                                    Layout.preferredHeight: root.responsiveButtonHeight
+                                    enabled: appBackend.modProjectPath.length > 0 && !appBackend.modRunning
+                                    text: appBackend.uiTrigger, appBackend.getTextWithDefault(
+                                              "mod_generate_all_btn", "Generate all five languages")
+                                    onClicked: appBackend.generateAllModLanguages()
+                                }
                                 BusyIndicator {
                                     running: appBackend.modRunning
                                     visible: running
@@ -4805,6 +4895,132 @@ ApplicationWindow {
                                 visible: appBackend.modOutputPath.length > 0
                                 text: appBackend.uiTrigger, appBackend.getTextWithDefault("mod_output_label", "Output") + ": " + appBackend.modOutputPath
                                 color: clrTxt2; font.pixelSize: 10; wrapMode: Text.WrapAnywhere
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        id: modCorrectionsCard
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: modCorrectionsCol.implicitHeight + (root.compactHeight ? 24 : 40)
+                        radius: 16; color: clrCard; border.color: clrCardBorder; border.width: 1
+
+                        function reloadRows() {
+                            modCorrectionsModel.clear()
+                            var rows = appBackend.getModEditableTranslations()
+                            for (var i = 0; i < rows.length; i++)
+                                modCorrectionsModel.append(rows[i])
+                        }
+
+                        ListModel { id: modCorrectionsModel }
+                        Connections {
+                            target: appBackend
+                            function onModTranslationsChanged() { modCorrectionsCard.reloadRows() }
+                        }
+
+                        ColumnLayout {
+                            id: modCorrectionsCol
+                            anchors.left: parent.left; anchors.right: parent.right; anchors.top: parent.top
+                            anchors.margins: root.compactHeight ? 12 : 20
+                            spacing: root.compactHeight ? 8 : 12
+                            Label {
+                                text: appBackend.uiTrigger, appBackend.getTextWithDefault("mod_manual_title", "Manual interface corrections")
+                                color: clrTxt; font.bold: true; font.pixelSize: 15
+                            }
+                            Label {
+                                Layout.fillWidth: true
+                                text: appBackend.uiTrigger, appBackend.getTextWithDefault(
+                                          "mod_manual_desc",
+                                          "After generating the MOD, choose a target above to edit its translations here. Saving applies your corrections and regenerates the shared MOD. No JSON editing is required.")
+                                color: clrTxt2; font.pixelSize: 11; wrapMode: Text.WordWrap
+                            }
+                            Button {
+                                Layout.fillWidth: true
+                                Layout.preferredHeight: root.responsiveButtonHeight
+                                enabled: appBackend.modProjectPath.length > 0 && !appBackend.modRunning
+                                text: appBackend.uiTrigger, appBackend.getTextWithDefault("mod_manual_open", "Review and edit translations")
+                                onClicked: {
+                                    modCorrectionsCard.reloadRows()
+                                    modCorrectionsDialog.open()
+                                }
+                            }
+                        }
+
+                        Dialog {
+                            id: modCorrectionsDialog
+                            parent: Overlay.overlay
+                            anchors.centerIn: parent
+                            modal: true
+                            title: appBackend.uiTrigger, appBackend.getTextWithDefault("mod_manual_dialog_title", "Edit MOD translations")
+                            standardButtons: Dialog.NoButton
+                            width: Math.min(root.width - 40, 900)
+                            height: Math.min(root.height - 50, 680)
+                            onOpened: modCorrectionsCard.reloadRows()
+                            background: Rectangle { color: clrCard; radius: 16; border.color: clrCardBorder; border.width: 1 }
+                            contentItem: ColumnLayout {
+                                spacing: 10
+                                Label {
+                                    Layout.fillWidth: true
+                                    text: modCorrectionsModel.count > 0
+                                          ? modCorrectionsModel.count + " " + appBackend.getTextWithDefault("mod_manual_count", "interface texts")
+                                          : appBackend.getTextWithDefault("mod_manual_empty", "Generate the interface MOD first to load editable translations.")
+                                    color: clrTxt2; wrapMode: Text.WordWrap
+                                }
+                                ListView {
+                                    id: modCorrectionsList
+                                    Layout.fillWidth: true
+                                    Layout.fillHeight: true
+                                    clip: true
+                                    spacing: 6
+                                    model: modCorrectionsModel
+                                    ScrollBar.vertical: ScrollBar {}
+                                    delegate: RowLayout {
+                                        width: modCorrectionsList.width
+                                        spacing: 8
+                                        Label {
+                                            Layout.preferredWidth: modCorrectionsDialog.width * 0.38
+                                            text: model.source
+                                            color: clrTxt2
+                                            font.pixelSize: 11
+                                            wrapMode: Text.WordWrap
+                                        }
+                                        TextField {
+                                            Layout.fillWidth: true
+                                            text: model.target
+                                            selectByMouse: true
+                                            color: clrTxt
+                                            placeholderText: model.source
+                                            onTextEdited: modCorrectionsModel.setProperty(index, "target", text)
+                                            background: Rectangle {
+                                                radius: 8; color: clrInput
+                                                border.color: parent.activeFocus ? clrAccent : clrCardBorder
+                                                border.width: 1
+                                            }
+                                        }
+                                    }
+                                }
+                                RowLayout {
+                                    Layout.fillWidth: true
+                                    Item { Layout.fillWidth: true }
+                                    Button {
+                                        text: appBackend.getTextWithDefault("btn_cancel", "Cancel")
+                                        onClicked: modCorrectionsDialog.close()
+                                    }
+                                    Button {
+                                        enabled: modCorrectionsModel.count > 0 && !appBackend.modRunning
+                                        text: appBackend.uiTrigger, appBackend.getTextWithDefault("mod_manual_save", "Save and regenerate")
+                                        onClicked: {
+                                            var corrections = []
+                                            for (var i = 0; i < modCorrectionsModel.count; i++)
+                                                corrections.push({
+                                                    source: modCorrectionsModel.get(i).source,
+                                                    target: modCorrectionsModel.get(i).target
+                                                })
+                                            if (appBackend.saveModCorrections(corrections))
+                                                modCorrectionsDialog.close()
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

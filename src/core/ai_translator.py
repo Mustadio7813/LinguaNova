@@ -85,12 +85,11 @@ _XML_ITEM_RE = re.compile(r'<item\s+id="(\d+)">(.*?)</item>', re.DOTALL)
 
 _SUPPORTED_LANGUAGES: Dict[str, str] = {
     "auto": "Auto-detect",
-    "en": "English", "tr": "Turkish", "de": "German", "fr": "French",
-    "es": "Spanish", "it": "Italian", "pt": "Portuguese", "ru": "Russian",
-    "zh": "Chinese", "ja": "Japanese", "ko": "Korean", "ar": "Arabic",
-    "pl": "Polish", "nl": "Dutch", "sv": "Swedish", "no": "Norwegian",
-    "da": "Danish", "fi": "Finnish", "hu": "Hungarian", "cs": "Czech",
-    "ro": "Romanian", "uk": "Ukrainian", "vi": "Vietnamese", "th": "Thai",
+    "es": "Spanish",
+    "en": "English",
+    "pt": "Portuguese",
+    "fr": "French",
+    "ru": "Russian",
 }
 
 
@@ -1872,4 +1871,3 @@ class GeminiTranslator(BaseTranslator):
             "ar": "Arabic", "fa": "Persian", "it": "Italian",
             "pt": "Portuguese", "nl": "Dutch", "pl": "Polish",
         }
-

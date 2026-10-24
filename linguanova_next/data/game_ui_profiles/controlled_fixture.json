@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "game_id": "controlled-native-slot-fixture-1",
+  "strategy": "existing_use_slot",
+  "screen": "preferences",
+  "source_path": "screens.rpy",
+  "source_sha256": "446b41b0586a0cd416780dfab9070679436d0598037c686076cc37164499aaae",
+  "styles": {
+    "prefix": "pref"
+  },
+  "visual_review": "verified",
+  "persistence_review": "verified",
+  "provenance": "Synthetic fixture created for this implementation; not a commercial game",
+  "validation_scope": "Controlled fixture only, RenPy 8.3.7.25031702; see next_evidence/renpy_engine/acceptance.json"
+}

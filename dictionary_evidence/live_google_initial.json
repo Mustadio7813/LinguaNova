@@ -1,0 +1,11 @@
+{
+  "exception": "AttributeError",
+  "executed": true,
+  "fixture": "synthetic public sentence",
+  "provider": "google",
+  "reason": "get_ui_text",
+  "seconds": 8.72,
+  "source": "en",
+  "status": "failed",
+  "target": "fr"
+}

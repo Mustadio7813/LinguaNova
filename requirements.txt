@@ -25,7 +25,7 @@ unrpa>=2.3.0
 # unrpyc: pip install git+https://github.com/CensoredUsername/unrpyc.git (PyPI'da yok)
 # rpycdec: pip install rpycdec  (PyPI, C extension, derleme gerekebilir)
 # Kurulu degilse RPYC AST okuyucu yeterlidir.
-rpycdec>=0.1.12
+# rpycdec is optional; the built-in RPYC reader works without a C compiler.
 
 # Terminal UI (CLI mode)
 rich>=13.7.0
@@ -33,3 +33,12 @@ PyYAML>=6.0.1
 
 # Font tools
 fonttools>=4.38.0
+
+# Native OCR, image composition and ZIP/RAR support in the main application.
+Pillow>=11.3,<14
+pillow-avif-plugin>=1.5,<2
+resvg-py>=0.4,<1
+defusedxml>=0.7,<1
+numpy>=2,<3
+opencv-python-headless>=4.10,<6
+rarfile==4.2

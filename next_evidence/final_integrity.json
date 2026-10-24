@@ -1,0 +1,19 @@
+{
+  "valid": true,
+  "protected_count": 283,
+  "changed": [],
+  "missing": [],
+  "manifest_hash": "5de0222d532824549fd0db093d886b14bec7f45d735618d80889ff01ee7fb9df",
+  "schema_version": 1,
+  "original_zip_sha256": "d702b683002f7cebccb92fb582c4b7ac2021b2ab0100cac41106470aaa558747",
+  "base_version": "1.1.2",
+  "zero_original_modifications": true,
+  "changed_originals_count": 0,
+  "deleted_originals_count": 0,
+  "renamed_originals_count": 0,
+  "original_paths_preserved": true,
+  "added_files_count": 616,
+  "added_files_manifest": "next_evidence/added_files.json",
+  "syntax_checked_new_python_files": 117,
+  "scope": "Filesystem check before final archive creation. Delivery process separately reopens the final ZIP and verifies every original and new-file hash."
+}

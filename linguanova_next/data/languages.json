@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "catalog_version": "1",
+  "languages": [
+    {
+      "id": "es",
+      "name": "Español",
+      "locale": "es",
+      "renpy_id": "spanish",
+      "enabled": true,
+      "profiles": [
+        {
+          "id": "latam_neutro_sin_modismos",
+          "name": "Español LATAM",
+          "locale": "es-419",
+          "renpy_id": "spanish_latam",
+          "version": "1"
+        },
+        {
+          "id": "espana_estandar_sin_modismos",
+          "name": "Español de España",
+          "locale": "es-ES",
+          "renpy_id": "spanish_spain",
+          "version": "1"
+        }
+      ]
+    },
+    {
+      "id": "fr",
+      "name": "Français",
+      "locale": "fr",
+      "renpy_id": "french",
+      "enabled": true
+    },
+    {
+      "id": "pt",
+      "name": "Português",
+      "locale": "pt",
+      "renpy_id": "portuguese",
+      "enabled": true
+    },
+    {
+      "id": "ru",
+      "name": "Русский",
+      "locale": "ru",
+      "renpy_id": "russian",
+      "enabled": true
+    },
+    {
+      "id": "en",
+      "name": "English",
+      "locale": "en",
+      "renpy_id": "english",
+      "enabled": true
+    }
+  ]
+}

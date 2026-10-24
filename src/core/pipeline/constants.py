@@ -15,16 +15,11 @@ def _get_renpy_to_api_lang():
         return config.get_renpy_to_api_map()
     except Exception:
         return {
-            "turkish": "tr", "english": "en", "german": "de", "french": "fr",
-            "spanish": "es", "italian": "it", "portuguese": "pt", "russian": "ru",
-            "polish": "pl", "dutch": "nl", "japanese": "ja", "korean": "ko",
-            "chinese": "zh", "chinese_s": "zh-CN", "chinese_t": "zh-TW",
-            "thai": "th", "vietnamese": "vi", "indonesian": "id", "malay": "ms",
-            "hindi": "hi", "persian": "fa", "arabic": "ar", "czech": "cs",
-            "danish": "da", "finnish": "fi", "greek": "el", "hebrew": "he",
-            "hungarian": "hu", "norwegian": "no", "romanian": "ro", "swedish": "sv",
-            "ukrainian": "uk", "bulgarian": "bg", "catalan": "ca", "croatian": "hr",
-            "slovak": "sk", "slovenian": "sl", "serbian": "sr",
+            "spanish": "es",
+            "english": "en",
+            "portuguese": "pt",
+            "french": "fr",
+            "russian": "ru",
         }
 
 

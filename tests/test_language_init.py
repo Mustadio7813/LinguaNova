@@ -4,8 +4,11 @@
 # See LICENSE/COPYING, NOTICE.md and MODIFICATIONS_LINGUANOVA.md.
 """Tests for native language-menu integration."""
 
+import pytest
+
 from src.core.pipeline.saving import (
     create_language_init_file,
+    manage_runtime_hook,
     remove_all_language_integration_files,
 )
 from src.utils.config import ConfigManager
@@ -54,6 +57,41 @@ def test_integration_preserves_original_script(tmp_path):
         str(game), "spanish", ConfigManager(), lambda *args: None
     )
     assert (game / "screens.rpy").read_bytes() == original
+
+
+@pytest.mark.parametrize("output_mode", ["native", "strings"])
+def test_runtime_hook_cleanup_preserves_language_and_font_helpers(tmp_path, output_mode):
+    project = tmp_path / output_mode
+    game = project / "game"
+    (game / "tl" / "spanish").mkdir(parents=True)
+    (game / "tl" / "spanish" / "script.rpy").write_text(
+        "translate spanish strings:\n", encoding="utf-8"
+    )
+    (game / "screens.rpy").write_text(
+        'screen preferences():\n    text "Settings"\n', encoding="utf-8"
+    )
+    (game / "zzz_linguanova_font.rpy").write_text(
+        "# generated font helper\n", encoding="utf-8"
+    )
+    (game / "zzz_linguanova_font.rpyc").write_bytes(b"compiled font helper")
+    (game / "old_linguanova_runtime.rpy").write_text(
+        "# stale runtime hook\n", encoding="utf-8"
+    )
+
+    config = ConfigManager()
+    config.translation_settings.output_mode = output_mode
+    result = create_language_init_file(
+        str(game), "spanish", config, lambda *args: None
+    )
+    assert result["status"] == "fallback_picker"
+
+    manage_runtime_hook(str(project), "spanish", config, lambda *args: None)
+
+    assert (game / "zzz_linguanova_language_menu.rpy").exists()
+    assert (game / "zzz_linguanova_font.rpy").exists()
+    assert (game / "zzz_linguanova_font.rpyc").exists()
+    assert not (game / "old_linguanova_runtime.rpy").exists()
+    assert (game / "zzz_linguanova_runtime.rpy").exists() is (output_mode == "strings")
 
 
 def test_integration_can_be_disabled_and_removes_legacy_forcer(tmp_path):
@@ -107,7 +145,7 @@ screen language_settings():
     assert "config.language" not in helper
 
 
-def test_unsupported_custom_menu_is_not_modified(tmp_path):
+def test_unsupported_custom_menu_keeps_original_and_adds_shared_picker(tmp_path):
     game = tmp_path / "game"
     (game / "tl" / "spanish").mkdir(parents=True)
     (game / "tl" / "spanish" / "script.rpy").write_text(
@@ -126,8 +164,10 @@ def test_unsupported_custom_menu_is_not_modified(tmp_path):
     result = create_language_init_file(
         str(game), "spanish", ConfigManager(), lambda *args: None
     )
-    assert result["status"] == "not_found"
-    assert not (game / "zzz_linguanova_language_menu.rpy").exists()
+    assert result["status"] == "fallback_picker"
+    helper = game / "zzz_linguanova_language_menu.rpy"
+    assert helper.exists()
+    assert 'key "shift_K_l"' in helper.read_text(encoding="utf-8-sig")
     assert (game / "screens.rpy").read_bytes() == original
 
 

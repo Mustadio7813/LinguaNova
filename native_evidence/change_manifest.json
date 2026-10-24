@@ -1,0 +1,311 @@
+{
+  "previous_delivery_sha256": "58674adda960c467b7dcf36cd7123c75f2ec138b163e0bc676452ecd8d8cb271",
+  "original_archive_sha256": "f8ed1cefe6314ecd7bb8e14b3aa76d70fdeb55be7fda0d1cc205020070d4ccf6",
+  "compared_with": "LinguaNova_OCR_MOD_Corregido.zip",
+  "modified": [
+    {
+      "path": "INICIAR_LINGUANOVA.bat",
+      "sha256": "91e0f14df7e0d052fb4c9edbdcb6e43d307386d31756fa611d54c07bee716b48",
+      "size": 57
+    },
+    {
+      "path": "LEEME_PRIMERO.txt",
+      "sha256": "ef179913915b22b323ebe5e1cad98d49fb7527377ba8c7614e7f228d1a024a30",
+      "size": 5475
+    },
+    {
+      "path": "LinguaNova.spec",
+      "sha256": "1e7a32961b73c19785762b58c683484df182ff1470523a12521dc1997cfbe9ba",
+      "size": 11768
+    },
+    {
+      "path": "README.es.md",
+      "sha256": "7170fcfcc80dfe115ae17e20f45a90f384e95cf32519e044e9b269d81afba3fb",
+      "size": 11568
+    },
+    {
+      "path": "README.md",
+      "sha256": "2fd69ee608f7a1027e8f2d6a3674a8ee713b6a109811263f4de6c62ea2e0e295",
+      "size": 10668
+    },
+    {
+      "path": "README_EXPERIMENTAL.md",
+      "sha256": "97260d29db9787b3257209929214d3ed5823c3549af4e2557ca85d7ac9fb4244",
+      "size": 11712
+    },
+    {
+      "path": "build_next.bat",
+      "sha256": "2670a98a54bd93afb945d6b92a2933c2f2eb2f59d5197a07737a90f242779ab0",
+      "size": 67
+    },
+    {
+      "path": "build_windows.bat",
+      "sha256": "d2945e811ea0320bb4ee78b9c0bd3f23b7effc3d3839fbdfff86fba80b4a5b41",
+      "size": 630
+    },
+    {
+      "path": "linguanova_next/adapters/ocr_provider.py",
+      "sha256": "efb89f4abe171f7f8b3c342aa9645c26cd46ef56b6358dd6b809f1a3fee20529",
+      "size": 6198
+    },
+    {
+      "path": "linguanova_next/baseline.py",
+      "sha256": "c20b0d3b2b9b136f14b53fb13d00f76d4805f07de9ceca9194aa3260d13e09bd",
+      "size": 3931
+    },
+    {
+      "path": "linguanova_next/image/image_references.py",
+      "sha256": "e47e3a913e4775abc520df99982d4e62c83d036365ea77c79ba4a283c68694a8",
+      "size": 3505
+    },
+    {
+      "path": "linguanova_next/packaging/image_codecs_template.py",
+      "sha256": "303431c9fab0d3be54c538a7a8a0c0ff72e0c402cdecabaca3ba4fd01e63012a",
+      "size": 2305
+    },
+    {
+      "path": "linguanova_next/packaging/translation_backup.py",
+      "sha256": "a70d3bb972b10df8829e2723ad21d6a0ba151d7301345d5c6fdb13175724d6e7",
+      "size": 6704
+    },
+    {
+      "path": "linguanova_next/version.py",
+      "sha256": "0f718df79d0439aaddaaf97aba186caf6066d15d387d1e5e5ea031aee8600342",
+      "size": 69
+    },
+    {
+      "path": "locales/en.json",
+      "sha256": "a06ff0d114a72fa375a103cb9fd899e0c98c9449a17e3820856cf5aa040d7f80",
+      "size": 110863
+    },
+    {
+      "path": "locales/es.json",
+      "sha256": "6b3b769fe11e92fca64d6f7df82b9354b9a28054d78ac58947199f1cd479f2ff",
+      "size": 120744
+    },
+    {
+      "path": "locales/fr.json",
+      "sha256": "d44bf6cee45458e6eb354579636d627ac13bb1b692f5886282e78ff1a31a4ec0",
+      "size": 125660
+    },
+    {
+      "path": "locales/pt.json",
+      "sha256": "4aafea4e069a174309cbf8a00b48a4939793d67a3079b27286fc3b52b13ce422",
+      "size": 119903
+    },
+    {
+      "path": "locales/ru.json",
+      "sha256": "18476b0255a93169d4dc3dce6b09f942c5b402992af0e79d1d3261786c52a64f",
+      "size": 146611
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "9766fc06861215f5e59a36e03877ce170e37691589d0012f7867694eabcb7648",
+      "size": 1142
+    },
+    {
+      "path": "run.bat",
+      "sha256": "a7c14e5046ee8bcdcb1d3b692be76fd33e69a85f1f00526d76209e9298a857e9",
+      "size": 760
+    },
+    {
+      "path": "run_next.bat",
+      "sha256": "91e0f14df7e0d052fb4c9edbdcb6e43d307386d31756fa611d54c07bee716b48",
+      "size": 57
+    },
+    {
+      "path": "run_next.py",
+      "sha256": "14f36148b8c916fb9458ecc5fcb6e978f7ab27baac58c1b1929d3fa05f5a13e7",
+      "size": 423
+    },
+    {
+      "path": "src/backend/app_backend.py",
+      "sha256": "8d77aa937108ebecc01fb2984e811965662ee9dc1def797de2b4e79bf18c17b5",
+      "size": 125101
+    },
+    {
+      "path": "src/core/pipeline/base.py",
+      "sha256": "04d02e7a0c07ed2be441f2ab464d003a0065727366529c16312350dc64954dc0",
+      "size": 2185
+    },
+    {
+      "path": "src/core/pipeline/orchestrator.py",
+      "sha256": "d7b48a3eadb93612f6e6f2b45c2d5a17dfdd64145808dfda08aea770c25e7b2d",
+      "size": 157049
+    },
+    {
+      "path": "src/gui/qml/Main.qml",
+      "sha256": "169f0162ff3ad290208a7fcc4f6668856b83f6581cd4bf7674d781f4628c7efb",
+      "size": 381852
+    },
+    {
+      "path": "src/utils/config.py",
+      "sha256": "136df587de0d75fb6991289245f2e844431eb7c83f0a7d449579db1a3df9ecd6",
+      "size": 48455
+    },
+    {
+      "path": "src/version.py",
+      "sha256": "1ef8a4b6824b5d4ec94747530b913693d65d12b7a57ceb3f3af17f50e23df5e6",
+      "size": 409
+    },
+    {
+      "path": "start_next.py",
+      "sha256": "edb20457f9fefc7cec76b21935e050fe3594e7ef00f82315c81664e05c9bbe26",
+      "size": 161
+    }
+  ],
+  "added": [
+    {
+      "path": "native_evidence/README.md",
+      "sha256": "42044dcb56769365f4a8ba1b3a4fcf5db73c66c57f40ce2acd03e2bdf9308969",
+      "size": 5097
+    },
+    {
+      "path": "native_evidence/acceptance.json",
+      "sha256": "7382d3e7852e37a0b90d747957169eddb34b708c598ce8a893ab78bce0cb4192",
+      "size": 13470
+    },
+    {
+      "path": "native_evidence/baseline.json",
+      "sha256": "7ea62b7048061a9811596b186a23715730534b168102d2a87e0f575f638696b6",
+      "size": 610
+    },
+    {
+      "path": "native_evidence/bootstrap.json",
+      "sha256": "9f3b3639fedd60c1d34872016f39caca2319349f7d30e355537a2cc0680e0890",
+      "size": 123
+    },
+    {
+      "path": "native_evidence/creator_log.json",
+      "sha256": "167fda7ccb0e11a570ca12f632732551e1ec579449e6926eb4798197cfc3861b",
+      "size": 24533
+    },
+    {
+      "path": "native_evidence/engine.json",
+      "sha256": "4d2fd4a34edbeb289a434ab16df64ff75d35316359f116e63e9aea9be85ee24e",
+      "size": 10938
+    },
+    {
+      "path": "native_evidence/engine.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "native_evidence/final_tests.xml",
+      "sha256": "fc1c6fab839b6c83741b43b7e72093c66f7fb6a3ae76c05640545d380f8d431c",
+      "size": 27810
+    },
+    {
+      "path": "native_evidence/five_languages.json",
+      "sha256": "8187a67e679e00052a77b5b991361465b75dc4dd752df1c1276d19ae6767060b",
+      "size": 955
+    },
+    {
+      "path": "native_evidence/main_regressions.xml",
+      "sha256": "b04dc9fd175c434d5d7d92915e02cd16146f59383edd9c96bf4bec6a011e5aba",
+      "size": 5132
+    },
+    {
+      "path": "native_evidence/native_final.xml",
+      "sha256": "742100fca298f6c4292e26692613cae48a53b6d6e1d23a62b06195689372d49e",
+      "size": 1757
+    },
+    {
+      "path": "native_evidence/native_images.json",
+      "sha256": "4a592897932eb79ef8ae4905a09baa3a4cf485e7791878a33424340116f32d00",
+      "size": 102399
+    },
+    {
+      "path": "native_evidence/native_main.png",
+      "sha256": "426e93b77dbd087a9918ec32dc91f67a9de46d3f2769bfbbf681f9a9f5a9371d",
+      "size": 116255
+    },
+    {
+      "path": "native_evidence/runtime.json",
+      "sha256": "820d67c229e6f6bd3a0e2054833af5d778c6bc54f03672a7ac8f2b4f5c73b27e",
+      "size": 383
+    },
+    {
+      "path": "native_evidence/test_summary.json",
+      "sha256": "080068a21a581b6edf79dd5c1bab986ab4cca2637fc908e5eaa9af0f3e3ca405",
+      "size": 178
+    },
+    {
+      "path": "native_evidence/ui/languages_en.png",
+      "sha256": "d032ea8015daffac35b8a79f7dab03ec49fd833b98a5fe5dfe01101ec2a3fde5",
+      "size": 115226
+    },
+    {
+      "path": "native_evidence/ui/languages_es.png",
+      "sha256": "fa31d2e410d3a503a53e150cb4aa6608e0415a41799f9fb604929172ca9408ac",
+      "size": 117707
+    },
+    {
+      "path": "native_evidence/ui/mod_es.png",
+      "sha256": "7b63fba80712ee3415d64816c766c6c3419e3c976aab764b538193667164e483",
+      "size": 116237
+    },
+    {
+      "path": "native_evidence/ui/ui.json",
+      "sha256": "ff85a3649e1cd6f94ae49bfc90f3961b53a7643af1e75265d1d8b8657a8c5376",
+      "size": 7047
+    },
+    {
+      "path": "scripts/build_main.py",
+      "sha256": "a630a036f37f6a63ed3c961338628a4c04b3026ede5baf529f4ddf78c0f15ac6",
+      "size": 1180
+    },
+    {
+      "path": "scripts/prepare_ocr_bundle.py",
+      "sha256": "696c5c24f2736886385c973fb31334cb6cff047247d5880e9e5f41e740be91e5",
+      "size": 1898
+    },
+    {
+      "path": "scripts/verify_native_main.py",
+      "sha256": "b0ded935c7036c6b5a6c1a9725f791cb9603107eec1aa97bcae1ead256f79072",
+      "size": 10396
+    },
+    {
+      "path": "src/backend/image_backend.py",
+      "sha256": "7fefeaecbad14906ece3bc4f612eb38efae584de541b2ce93b1b4941a3a54ba2",
+      "size": 8308
+    },
+    {
+      "path": "src/core/native_image_pipeline.py",
+      "sha256": "e8bc9957a367831ab42e47cd003b0793b3db46a42a41d7f88e688e36fdf5aba1",
+      "size": 14584
+    },
+    {
+      "path": "src/gui/qml/components/NativeActionButton.qml",
+      "sha256": "9af0b522617c4fa7370fb4b5047489aed45240fc0d08520868bd25066b17ac02",
+      "size": 746
+    },
+    {
+      "path": "src/gui/qml/components/NativeOcrCard.qml",
+      "sha256": "b7c7fd17f5b59a83d64719af770b8b4b56f660468ebb8b438dd8e0c947a1f381",
+      "size": 7017
+    },
+    {
+      "path": "src/gui/qml/components/NativePackageCard.qml",
+      "sha256": "608e6414a451e3eed287240b8845e7a30529d2c482157f4ce927daf77e89c6e6",
+      "size": 1982
+    },
+    {
+      "path": "start.py",
+      "sha256": "1abdc1c43957e02b0bedd458b232e61b5808366d3ccf1fabd66f35f050a38796",
+      "size": 4364
+    },
+    {
+      "path": "tests/test_native_images.py",
+      "sha256": "1add518710448c7fc1eeeee0f3cd3d9b249833891f591f150c79efa08ecc69ec",
+      "size": 6977
+    },
+    {
+      "path": "tests/test_source_bootstrap.py",
+      "sha256": "bb4b2bf8b920ef8d97d88d0489ccf3d0f7e4972091d0acfaa053ebfc7dd35e40",
+      "size": 1464
+    }
+  ],
+  "removed": [],
+  "self_excluded": "native_evidence/change_manifest.json"
+}

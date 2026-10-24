@@ -38,6 +38,48 @@ MOD_HOOK_STATUS = "functional_isolated"
 MOD_HOOK_FORMAT = 4
 
 _IDENTIFIER_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
+_MOD_PANEL_LABELS = {
+    "english": {
+        "button": "Language",
+        "title": "Choose language",
+        "original": "Original",
+        "show_button": "Show button in menus",
+        "hide_button": "Hide button (Shift+L)",
+        "close": "Close",
+    },
+    "spanish": {
+        "button": "Idioma",
+        "title": "Elegir idioma",
+        "original": "Original",
+        "show_button": "Mostrar botón en los menús",
+        "hide_button": "Ocultar botón (Mayús+L)",
+        "close": "Cerrar",
+    },
+    "french": {
+        "button": "Langue",
+        "title": "Choisir la langue",
+        "original": "Original",
+        "show_button": "Afficher le bouton dans les menus",
+        "hide_button": "Masquer le bouton (Maj+L)",
+        "close": "Fermer",
+    },
+    "portuguese": {
+        "button": "Idioma",
+        "title": "Escolher idioma",
+        "original": "Original",
+        "show_button": "Mostrar botão nos menus",
+        "hide_button": "Ocultar botão (Shift+L)",
+        "close": "Fechar",
+    },
+    "russian": {
+        "button": "Язык",
+        "title": "Выбрать язык",
+        "original": "Оригинал",
+        "show_button": "Показывать кнопку в меню",
+        "hide_button": "Скрыть кнопку (Shift+L)",
+        "close": "Закрыть",
+    },
+}
 
 
 def mod_hook_is_isolated() -> bool:
@@ -164,6 +206,8 @@ def render_ui_mod_hook_multi(
         + "\n"
         + _dict_block("_lnmod_labels", "Nombre que muestra el panel de idiomas.", label_map)
         + "\n"
+        + _dict_block("_lnmod_ui_labels", "Textos del selector traducidos por idioma.", _MOD_PANEL_LABELS)
+        + "\n"
         + _dict_block("_lnmod_extra_labels", "Otros idiomas tl/ del juego (nombre visible).", extra_label_map)
         + "\n"
         + _dict_block("_lnmod_stats", "[traducidos, total, pendientes] según la última generación.", stat_map)
@@ -238,6 +282,12 @@ _RUNTIME = r'''
             if folded == key.lower() or folded in names:
                 return key
         return None
+
+    def _lnmod_ui_text(key):
+        # El selector se muestra en el idioma elegido, no en el idioma de la app.
+        language = _lnmod_resolve(_lnmod_current_language())
+        labels = _lnmod_ui_labels.get(language or "", _lnmod_ui_labels["english"])
+        return labels.get(key, _lnmod_ui_labels["english"].get(key, key))
 
     def _lnmod_valid(data):
         return isinstance(data, dict) and isinstance(data.get("mapping"), dict) \
@@ -482,7 +532,7 @@ screen lnmod_language_button():
     zorder 190
     key "shift_K_l" action ToggleScreen("lnmod_language_panel")
     if _lnmod_show_button() and not renpy.get_screen("lnmod_language_panel"):
-        textbutton "Idioma / Language":
+        textbutton _lnmod_ui_text("button"):
             xalign 1.0
             yalign 1.0
             xoffset -12
@@ -508,9 +558,9 @@ screen lnmod_language_panel():
         padding (int(config.screen_height * 0.03), int(config.screen_height * 0.025))
         vbox:
             spacing int(config.screen_height * 0.012)
-            text "Idioma / Language" size max(18, int(config.screen_height * 0.036)) color "#e6eaf2"
+            text _lnmod_ui_text("title") size max(18, int(config.screen_height * 0.036)) color "#e6eaf2"
             null height int(config.screen_height * 0.01)
-            textbutton "Original":
+            textbutton _lnmod_ui_text("original"):
                 action Language(None)
                 selected (_preferences.language is None)
                 text_size max(14, int(config.screen_height * 0.026))
@@ -534,12 +584,13 @@ screen lnmod_language_panel():
             null height int(config.screen_height * 0.01)
             hbox:
                 spacing int(config.screen_width * 0.02)
-                textbutton ("Mostrar botón en menús" if getattr(persistent, "_lnmod_hide_button", False) else "Ocultar botón (Mayús+L)"):
+                textbutton (_lnmod_ui_text("show_button") if getattr(persistent, "_lnmod_hide_button", False)
+                            else _lnmod_ui_text("hide_button")):
                     action ToggleField(persistent, "_lnmod_hide_button")
                     text_size max(12, int(config.screen_height * 0.02))
                     text_color "#9aa3b7"
                     text_hover_color "#ffffff"
-                textbutton "Cerrar / Close":
+                textbutton _lnmod_ui_text("close"):
                     action Hide("lnmod_language_panel")
                     text_size max(12, int(config.screen_height * 0.02))
                     text_color "#9aa3b7"

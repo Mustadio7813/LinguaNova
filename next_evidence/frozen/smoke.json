@@ -1,0 +1,20 @@
+{
+  "baseline": {
+    "changed": [],
+    "manifest_hash": "5de0222d532824549fd0db093d886b14bec7f45d735618d80889ff01ee7fb9df",
+    "missing": [],
+    "protected_count": 283,
+    "valid": true
+  },
+  "destinations": [
+    "es",
+    "fr",
+    "pt",
+    "ru",
+    "en"
+  ],
+  "frozen": true,
+  "image_saved": true,
+  "inference_required": false,
+  "ui_loaded": true
+}

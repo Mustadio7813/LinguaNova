@@ -1,0 +1,834 @@
+[
+  {
+    "level": "info",
+    "message": "🚀 Iniciando traducción..."
+  },
+  {
+    "level": "info",
+    "message": "📥 Petición añadida a la cola como #2. Trabajos pendientes: 1."
+  },
+  {
+    "level": "info",
+    "message": "📥 Petición añadida a la cola como #3. Trabajos pendientes: 2."
+  },
+  {
+    "level": "info",
+    "message": "📥 Petición añadida a la cola como #4. Trabajos pendientes: 3."
+  },
+  {
+    "level": "info",
+    "message": "📥 Petición añadida a la cola como #5. Trabajos pendientes: 4."
+  },
+  {
+    "level": "info",
+    "message": "[✅ Validando...] 🔍 Validando..."
+  },
+  {
+    "level": "debug",
+    "message": "Skipping .rpymc scan (scan_rpym_files disabled)"
+  },
+  {
+    "level": "info",
+    "message": "[GENERATING] 📝 Generando archivos de traducción..."
+  },
+  {
+    "level": "info",
+    "message": "1 archivos fuente hechos traducibles"
+  },
+  {
+    "level": "info",
+    "message": "[GENERATING] 📝 Generando archivos de traducción... (spanish)"
+  },
+  {
+    "level": "info",
+    "message": "Full extraction mode enabled: running translation template generation on every run."
+  },
+  {
+    "level": "info",
+    "message": "Creando archivos de traducción: spanish"
+  },
+  {
+    "level": "info",
+    "message": "Escaneando archivos fuente .rpy..."
+  },
+  {
+    "level": "info",
+    "message": "Progreso del escaneo fuente: 70/100 (options.rpy)"
+  },
+  {
+    "level": "info",
+    "message": "Progreso del escaneo fuente: 100/100 (game)"
+  },
+  {
+    "level": "info",
+    "message": "Escaneo fuente completado. 3 archivos procesados."
+  },
+  {
+    "level": "info",
+    "message": "9 textos encontrados, creando archivos traducción..."
+  },
+  {
+    "level": "info",
+    "message": "Native TLID: 6 UI entries reserved for native screen/dialogue translation."
+  },
+  {
+    "level": "info",
+    "message": "Generating 3 separate translation files for spanish..."
+  },
+  {
+    "level": "success",
+    "message": "Successfully created 3 translation files (8 unique strings total)."
+  },
+  {
+    "level": "info",
+    "message": "[🔍 Analizando...] 📖 Leyendo archivos..."
+  },
+  {
+    "level": "info",
+    "message": "Entradas para traducir: 8"
+  },
+  {
+    "level": "info",
+    "message": "[🌐 Traduciendo...] 🌐 Traduciendo..."
+  },
+  {
+    "level": "info",
+    "message": "Using global data cache: [renpy_LinguaNovaNextFixtureOnly]"
+  },
+  {
+    "level": "info",
+    "message": "Idioma: spanish -> API: es"
+  },
+  {
+    "level": "info",
+    "message": "[Detección inteligente] Detectando idioma de origen..."
+  },
+  {
+    "level": "warning",
+    "message": "[Detección inteligente] Umbral de confianza no alcanzado; se continúa en modo 'auto'."
+  },
+  {
+    "level": "info",
+    "message": "Traducido: 8/8"
+  },
+  {
+    "level": "warning",
+    "message": "Traducciones sin cambios: 2 / 12"
+  },
+  {
+    "level": "warning",
+    "message": "UNCHANGED /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/tl/spanish/options.rpy:11 -> LinguaNova Controlled Fixture"
+  },
+  {
+    "level": "warning",
+    "message": "UNCHANGED /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/tl/spanish/screens.rpy:11 -> LINGUANOVA FIXTURE"
+  },
+  {
+    "level": "info",
+    "message": "Consejo: si las traducciones vuelven sin cambios, activa 'Traducción agresiva' para métodos de reintento alternativos."
+  },
+  {
+    "level": "info",
+    "message": "Caché de traducción guardado: /tmp/linguanova_native_acceptance_final/creator/LinguaNova/cache/renpy_LinguaNovaNextFixtureOnly/spanish/translation_cache.json (12 entradas)."
+  },
+  {
+    "level": "info",
+    "message": "[💾 Guardando...] 💾 Guardando..."
+  },
+  {
+    "level": "info",
+    "message": "Se creó un selector compartido para los idiomas instalados. Usa Shift+L durante la partida o el botón «Idioma / Language» en los menús del juego."
+  },
+  {
+    "level": "info",
+    "message": "Selector de idiomas verificado: /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/zzz_linguanova_language_menu.rpy | Idiomas instalados: 1 | Shift+L"
+  },
+  {
+    "level": "info",
+    "message": "🗑️ Archivo de compatibilidad eliminado: zzz_linguanova_runtime.rpy"
+  },
+  {
+    "level": "info",
+    "message": "Informe diagnóstico escrito: /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/tl/.diagnostics/spanish/diagnostic_spanish.json"
+  },
+  {
+    "level": "info",
+    "message": "[🎉 Completado] ✅ ¡Completado!"
+  },
+  {
+    "level": "info",
+    "message": "[IMAGES] Reconociendo y traduciendo las imágenes…"
+  },
+  {
+    "level": "info",
+    "message": "OCR · eng"
+  },
+  {
+    "level": "warning",
+    "message": "Imágenes: 13/13 traducidas; 0 pendientes; 0 sin texto detectado."
+  },
+  {
+    "level": "info",
+    "message": "[🎉 Completado] Imágenes: 13/13 traducidas; 0 pendientes; 0 sin texto detectado."
+  },
+  {
+    "level": "warning",
+    "message": "📊 Líneas: 8 | traducidas: 6 | iguales al original: 2 | vacías: 0 | fallidas (motor): 0 | bloqueadas (protección): 0 | técnicas, no enviadas: 0 | desde caché: 0"
+  },
+  {
+    "level": "info",
+    "message": "▶ Iniciando la siguiente petición de la cola (translation)."
+  },
+  {
+    "level": "info",
+    "message": "🚀 Iniciando traducción..."
+  },
+  {
+    "level": "info",
+    "message": "[✅ Validando...] 🔍 Validando..."
+  },
+  {
+    "level": "debug",
+    "message": "Skipping .rpymc scan (scan_rpym_files disabled)"
+  },
+  {
+    "level": "info",
+    "message": "[GENERATING] 📝 Generando archivos de traducción..."
+  },
+  {
+    "level": "info",
+    "message": "1 archivos fuente hechos traducibles"
+  },
+  {
+    "level": "info",
+    "message": "[GENERATING] 📝 Generando archivos de traducción... (french)"
+  },
+  {
+    "level": "info",
+    "message": "Full extraction mode enabled: running translation template generation on every run."
+  },
+  {
+    "level": "info",
+    "message": "Creando archivos de traducción: french"
+  },
+  {
+    "level": "info",
+    "message": "Escaneando archivos fuente .rpy..."
+  },
+  {
+    "level": "info",
+    "message": "Progreso del escaneo fuente: 70/100 (script.rpy)"
+  },
+  {
+    "level": "info",
+    "message": "Progreso del escaneo fuente: 100/100 (game)"
+  },
+  {
+    "level": "info",
+    "message": "Escaneo fuente completado. 4 archivos procesados."
+  },
+  {
+    "level": "info",
+    "message": "9 textos encontrados, creando archivos traducción..."
+  },
+  {
+    "level": "info",
+    "message": "Native TLID: 6 UI entries reserved for native screen/dialogue translation."
+  },
+  {
+    "level": "info",
+    "message": "Generating 3 separate translation files for french..."
+  },
+  {
+    "level": "success",
+    "message": "Successfully created 3 translation files (8 unique strings total)."
+  },
+  {
+    "level": "info",
+    "message": "[🔍 Analizando...] 📖 Leyendo archivos..."
+  },
+  {
+    "level": "info",
+    "message": "Entradas para traducir: 8"
+  },
+  {
+    "level": "info",
+    "message": "[🌐 Traduciendo...] 🌐 Traduciendo..."
+  },
+  {
+    "level": "info",
+    "message": "Using global data cache: [renpy_LinguaNovaNextFixtureOnly]"
+  },
+  {
+    "level": "info",
+    "message": "Idioma: french -> API: fr"
+  },
+  {
+    "level": "info",
+    "message": "[Detección inteligente] Detectando idioma de origen..."
+  },
+  {
+    "level": "warning",
+    "message": "[Detección inteligente] Umbral de confianza no alcanzado; se continúa en modo 'auto'."
+  },
+  {
+    "level": "info",
+    "message": "Traducido: 8/8"
+  },
+  {
+    "level": "warning",
+    "message": "Traducciones sin cambios: 2 / 12"
+  },
+  {
+    "level": "warning",
+    "message": "UNCHANGED /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/tl/french/options.rpy:11 -> LinguaNova Controlled Fixture"
+  },
+  {
+    "level": "warning",
+    "message": "UNCHANGED /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/tl/french/screens.rpy:11 -> LINGUANOVA FIXTURE"
+  },
+  {
+    "level": "info",
+    "message": "Consejo: si las traducciones vuelven sin cambios, activa 'Traducción agresiva' para métodos de reintento alternativos."
+  },
+  {
+    "level": "info",
+    "message": "Caché de traducción guardado: /tmp/linguanova_native_acceptance_final/creator/LinguaNova/cache/renpy_LinguaNovaNextFixtureOnly/french/translation_cache.json (12 entradas)."
+  },
+  {
+    "level": "info",
+    "message": "[💾 Guardando...] 💾 Guardando..."
+  },
+  {
+    "level": "info",
+    "message": "Se creó un selector compartido para los idiomas instalados. Usa Shift+L durante la partida o el botón «Idioma / Language» en los menús del juego."
+  },
+  {
+    "level": "info",
+    "message": "Selector de idiomas verificado: /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/zzz_linguanova_language_menu.rpy | Idiomas instalados: 2 | Shift+L"
+  },
+  {
+    "level": "info",
+    "message": "🗑️ Archivo de compatibilidad eliminado: zzz_linguanova_runtime.rpy"
+  },
+  {
+    "level": "info",
+    "message": "Informe diagnóstico escrito: /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/tl/.diagnostics/french/diagnostic_french.json"
+  },
+  {
+    "level": "info",
+    "message": "[🎉 Completado] ✅ ¡Completado!"
+  },
+  {
+    "level": "info",
+    "message": "[IMAGES] Reconociendo y traduciendo las imágenes…"
+  },
+  {
+    "level": "info",
+    "message": "OCR · eng"
+  },
+  {
+    "level": "warning",
+    "message": "Imágenes: 13/13 traducidas; 0 pendientes; 0 sin texto detectado."
+  },
+  {
+    "level": "info",
+    "message": "[🎉 Completado] Imágenes: 13/13 traducidas; 0 pendientes; 0 sin texto detectado."
+  },
+  {
+    "level": "warning",
+    "message": "📊 Líneas: 8 | traducidas: 6 | iguales al original: 2 | vacías: 0 | fallidas (motor): 0 | bloqueadas (protección): 0 | técnicas, no enviadas: 0 | desde caché: 0"
+  },
+  {
+    "level": "info",
+    "message": "▶ Iniciando la siguiente petición de la cola (translation)."
+  },
+  {
+    "level": "info",
+    "message": "🚀 Iniciando traducción..."
+  },
+  {
+    "level": "info",
+    "message": "[✅ Validando...] 🔍 Validando..."
+  },
+  {
+    "level": "debug",
+    "message": "Skipping .rpymc scan (scan_rpym_files disabled)"
+  },
+  {
+    "level": "info",
+    "message": "[GENERATING] 📝 Generando archivos de traducción..."
+  },
+  {
+    "level": "info",
+    "message": "1 archivos fuente hechos traducibles"
+  },
+  {
+    "level": "info",
+    "message": "[GENERATING] 📝 Generando archivos de traducción... (english)"
+  },
+  {
+    "level": "info",
+    "message": "Full extraction mode enabled: running translation template generation on every run."
+  },
+  {
+    "level": "info",
+    "message": "Creando archivos de traducción: english"
+  },
+  {
+    "level": "info",
+    "message": "Escaneando archivos fuente .rpy..."
+  },
+  {
+    "level": "info",
+    "message": "Progreso del escaneo fuente: 70/100 (zzz_linguanova_image_codecs.rpy)"
+  },
+  {
+    "level": "info",
+    "message": "Progreso del escaneo fuente: 100/100 (game)"
+  },
+  {
+    "level": "info",
+    "message": "Escaneo fuente completado. 4 archivos procesados."
+  },
+  {
+    "level": "info",
+    "message": "9 textos encontrados, creando archivos traducción..."
+  },
+  {
+    "level": "info",
+    "message": "Native TLID: 6 UI entries reserved for native screen/dialogue translation."
+  },
+  {
+    "level": "info",
+    "message": "Generating 3 separate translation files for english..."
+  },
+  {
+    "level": "success",
+    "message": "Successfully created 3 translation files (8 unique strings total)."
+  },
+  {
+    "level": "info",
+    "message": "[🔍 Analizando...] 📖 Leyendo archivos..."
+  },
+  {
+    "level": "info",
+    "message": "Entradas para traducir: 8"
+  },
+  {
+    "level": "info",
+    "message": "[🌐 Traduciendo...] 🌐 Traduciendo..."
+  },
+  {
+    "level": "info",
+    "message": "Using global data cache: [renpy_LinguaNovaNextFixtureOnly]"
+  },
+  {
+    "level": "info",
+    "message": "Idioma: english -> API: en"
+  },
+  {
+    "level": "info",
+    "message": "[Detección inteligente] Detectando idioma de origen..."
+  },
+  {
+    "level": "warning",
+    "message": "[Detección inteligente] Umbral de confianza no alcanzado; se continúa en modo 'auto'."
+  },
+  {
+    "level": "info",
+    "message": "Traducido: 8/8"
+  },
+  {
+    "level": "warning",
+    "message": "Traducciones sin cambios: 2 / 12"
+  },
+  {
+    "level": "warning",
+    "message": "UNCHANGED /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/tl/english/options.rpy:11 -> LinguaNova Controlled Fixture"
+  },
+  {
+    "level": "warning",
+    "message": "UNCHANGED /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/tl/english/screens.rpy:11 -> LINGUANOVA FIXTURE"
+  },
+  {
+    "level": "info",
+    "message": "Consejo: si las traducciones vuelven sin cambios, activa 'Traducción agresiva' para métodos de reintento alternativos."
+  },
+  {
+    "level": "info",
+    "message": "Caché de traducción guardado: /tmp/linguanova_native_acceptance_final/creator/LinguaNova/cache/renpy_LinguaNovaNextFixtureOnly/english/translation_cache.json (12 entradas)."
+  },
+  {
+    "level": "info",
+    "message": "[💾 Guardando...] 💾 Guardando..."
+  },
+  {
+    "level": "info",
+    "message": "Se creó un selector compartido para los idiomas instalados. Usa Shift+L durante la partida o el botón «Idioma / Language» en los menús del juego."
+  },
+  {
+    "level": "info",
+    "message": "Selector de idiomas verificado: /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/zzz_linguanova_language_menu.rpy | Idiomas instalados: 3 | Shift+L"
+  },
+  {
+    "level": "info",
+    "message": "🗑️ Archivo de compatibilidad eliminado: zzz_linguanova_runtime.rpy"
+  },
+  {
+    "level": "info",
+    "message": "Informe diagnóstico escrito: /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/tl/.diagnostics/english/diagnostic_english.json"
+  },
+  {
+    "level": "info",
+    "message": "[🎉 Completado] ✅ ¡Completado!"
+  },
+  {
+    "level": "info",
+    "message": "[IMAGES] Reconociendo y traduciendo las imágenes…"
+  },
+  {
+    "level": "info",
+    "message": "OCR · eng"
+  },
+  {
+    "level": "warning",
+    "message": "Imágenes: 0/13 traducidas; 0 pendientes; 0 sin texto detectado."
+  },
+  {
+    "level": "info",
+    "message": "[🎉 Completado] Imágenes: 0/13 traducidas; 0 pendientes; 0 sin texto detectado."
+  },
+  {
+    "level": "warning",
+    "message": "📊 Líneas: 8 | traducidas: 6 | iguales al original: 2 | vacías: 0 | fallidas (motor): 0 | bloqueadas (protección): 0 | técnicas, no enviadas: 0 | desde caché: 0"
+  },
+  {
+    "level": "info",
+    "message": "▶ Iniciando la siguiente petición de la cola (translation)."
+  },
+  {
+    "level": "info",
+    "message": "🚀 Iniciando traducción..."
+  },
+  {
+    "level": "info",
+    "message": "[✅ Validando...] 🔍 Validando..."
+  },
+  {
+    "level": "debug",
+    "message": "Skipping .rpymc scan (scan_rpym_files disabled)"
+  },
+  {
+    "level": "info",
+    "message": "[GENERATING] 📝 Generando archivos de traducción..."
+  },
+  {
+    "level": "info",
+    "message": "1 archivos fuente hechos traducibles"
+  },
+  {
+    "level": "info",
+    "message": "[GENERATING] 📝 Generando archivos de traducción... (portuguese)"
+  },
+  {
+    "level": "info",
+    "message": "Full extraction mode enabled: running translation template generation on every run."
+  },
+  {
+    "level": "info",
+    "message": "Creando archivos de traducción: portuguese"
+  },
+  {
+    "level": "info",
+    "message": "Escaneando archivos fuente .rpy..."
+  },
+  {
+    "level": "info",
+    "message": "Progreso del escaneo fuente: 70/100 (zzz_linguanova_image_codecs.rpy)"
+  },
+  {
+    "level": "info",
+    "message": "Progreso del escaneo fuente: 100/100 (game)"
+  },
+  {
+    "level": "info",
+    "message": "Escaneo fuente completado. 4 archivos procesados."
+  },
+  {
+    "level": "info",
+    "message": "9 textos encontrados, creando archivos traducción..."
+  },
+  {
+    "level": "info",
+    "message": "Native TLID: 6 UI entries reserved for native screen/dialogue translation."
+  },
+  {
+    "level": "info",
+    "message": "Generating 3 separate translation files for portuguese..."
+  },
+  {
+    "level": "success",
+    "message": "Successfully created 3 translation files (8 unique strings total)."
+  },
+  {
+    "level": "info",
+    "message": "[🔍 Analizando...] 📖 Leyendo archivos..."
+  },
+  {
+    "level": "info",
+    "message": "Entradas para traducir: 8"
+  },
+  {
+    "level": "info",
+    "message": "[🌐 Traduciendo...] 🌐 Traduciendo..."
+  },
+  {
+    "level": "info",
+    "message": "Using global data cache: [renpy_LinguaNovaNextFixtureOnly]"
+  },
+  {
+    "level": "info",
+    "message": "Idioma: portuguese -> API: pt"
+  },
+  {
+    "level": "info",
+    "message": "[Detección inteligente] Detectando idioma de origen..."
+  },
+  {
+    "level": "warning",
+    "message": "[Detección inteligente] Umbral de confianza no alcanzado; se continúa en modo 'auto'."
+  },
+  {
+    "level": "info",
+    "message": "Traducido: 8/8"
+  },
+  {
+    "level": "warning",
+    "message": "Traducciones sin cambios: 2 / 12"
+  },
+  {
+    "level": "warning",
+    "message": "UNCHANGED /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/tl/portuguese/options.rpy:11 -> LinguaNova Controlled Fixture"
+  },
+  {
+    "level": "warning",
+    "message": "UNCHANGED /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/tl/portuguese/screens.rpy:11 -> LINGUANOVA FIXTURE"
+  },
+  {
+    "level": "info",
+    "message": "Consejo: si las traducciones vuelven sin cambios, activa 'Traducción agresiva' para métodos de reintento alternativos."
+  },
+  {
+    "level": "info",
+    "message": "Caché de traducción guardado: /tmp/linguanova_native_acceptance_final/creator/LinguaNova/cache/renpy_LinguaNovaNextFixtureOnly/portuguese/translation_cache.json (12 entradas)."
+  },
+  {
+    "level": "info",
+    "message": "[💾 Guardando...] 💾 Guardando..."
+  },
+  {
+    "level": "info",
+    "message": "Se creó un selector compartido para los idiomas instalados. Usa Shift+L durante la partida o el botón «Idioma / Language» en los menús del juego."
+  },
+  {
+    "level": "info",
+    "message": "Selector de idiomas verificado: /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/zzz_linguanova_language_menu.rpy | Idiomas instalados: 4 | Shift+L"
+  },
+  {
+    "level": "info",
+    "message": "🗑️ Archivo de compatibilidad eliminado: zzz_linguanova_runtime.rpy"
+  },
+  {
+    "level": "info",
+    "message": "Informe diagnóstico escrito: /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/tl/.diagnostics/portuguese/diagnostic_portuguese.json"
+  },
+  {
+    "level": "info",
+    "message": "[🎉 Completado] ✅ ¡Completado!"
+  },
+  {
+    "level": "info",
+    "message": "[IMAGES] Reconociendo y traduciendo las imágenes…"
+  },
+  {
+    "level": "info",
+    "message": "OCR · eng"
+  },
+  {
+    "level": "warning",
+    "message": "Imágenes: 13/13 traducidas; 0 pendientes; 0 sin texto detectado."
+  },
+  {
+    "level": "info",
+    "message": "[🎉 Completado] Imágenes: 13/13 traducidas; 0 pendientes; 0 sin texto detectado."
+  },
+  {
+    "level": "warning",
+    "message": "📊 Líneas: 8 | traducidas: 6 | iguales al original: 2 | vacías: 0 | fallidas (motor): 0 | bloqueadas (protección): 0 | técnicas, no enviadas: 0 | desde caché: 0"
+  },
+  {
+    "level": "info",
+    "message": "▶ Iniciando la siguiente petición de la cola (translation)."
+  },
+  {
+    "level": "info",
+    "message": "🚀 Iniciando traducción..."
+  },
+  {
+    "level": "info",
+    "message": "[✅ Validando...] 🔍 Validando..."
+  },
+  {
+    "level": "debug",
+    "message": "Skipping .rpymc scan (scan_rpym_files disabled)"
+  },
+  {
+    "level": "info",
+    "message": "[GENERATING] 📝 Generando archivos de traducción..."
+  },
+  {
+    "level": "info",
+    "message": "1 archivos fuente hechos traducibles"
+  },
+  {
+    "level": "info",
+    "message": "[GENERATING] 📝 Generando archivos de traducción... (russian)"
+  },
+  {
+    "level": "info",
+    "message": "Full extraction mode enabled: running translation template generation on every run."
+  },
+  {
+    "level": "info",
+    "message": "Creando archivos de traducción: russian"
+  },
+  {
+    "level": "info",
+    "message": "Escaneando archivos fuente .rpy..."
+  },
+  {
+    "level": "info",
+    "message": "Progreso del escaneo fuente: 70/100 (script.rpy)"
+  },
+  {
+    "level": "info",
+    "message": "Progreso del escaneo fuente: 100/100 (game)"
+  },
+  {
+    "level": "info",
+    "message": "Escaneo fuente completado. 4 archivos procesados."
+  },
+  {
+    "level": "info",
+    "message": "9 textos encontrados, creando archivos traducción..."
+  },
+  {
+    "level": "info",
+    "message": "Native TLID: 6 UI entries reserved for native screen/dialogue translation."
+  },
+  {
+    "level": "info",
+    "message": "Generating 3 separate translation files for russian..."
+  },
+  {
+    "level": "success",
+    "message": "Successfully created 3 translation files (8 unique strings total)."
+  },
+  {
+    "level": "info",
+    "message": "[🔍 Analizando...] 📖 Leyendo archivos..."
+  },
+  {
+    "level": "info",
+    "message": "Entradas para traducir: 8"
+  },
+  {
+    "level": "info",
+    "message": "[🌐 Traduciendo...] 🌐 Traduciendo..."
+  },
+  {
+    "level": "info",
+    "message": "Using global data cache: [renpy_LinguaNovaNextFixtureOnly]"
+  },
+  {
+    "level": "info",
+    "message": "Idioma: russian -> API: ru"
+  },
+  {
+    "level": "info",
+    "message": "[Detección inteligente] Detectando idioma de origen..."
+  },
+  {
+    "level": "warning",
+    "message": "[Detección inteligente] Umbral de confianza no alcanzado; se continúa en modo 'auto'."
+  },
+  {
+    "level": "info",
+    "message": "Traducido: 8/8"
+  },
+  {
+    "level": "warning",
+    "message": "Traducciones sin cambios: 2 / 12"
+  },
+  {
+    "level": "warning",
+    "message": "UNCHANGED /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/tl/russian/options.rpy:11 -> LinguaNova Controlled Fixture"
+  },
+  {
+    "level": "warning",
+    "message": "UNCHANGED /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/tl/russian/screens.rpy:11 -> LINGUANOVA FIXTURE"
+  },
+  {
+    "level": "info",
+    "message": "Consejo: si las traducciones vuelven sin cambios, activa 'Traducción agresiva' para métodos de reintento alternativos."
+  },
+  {
+    "level": "info",
+    "message": "Caché de traducción guardado: /tmp/linguanova_native_acceptance_final/creator/LinguaNova/cache/renpy_LinguaNovaNextFixtureOnly/russian/translation_cache.json (12 entradas)."
+  },
+  {
+    "level": "info",
+    "message": "[💾 Guardando...] 💾 Guardando..."
+  },
+  {
+    "level": "info",
+    "message": "Se creó un selector compartido para los idiomas instalados. Usa Shift+L durante la partida o el botón «Idioma / Language» en los menús del juego."
+  },
+  {
+    "level": "info",
+    "message": "Selector de idiomas verificado: /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/zzz_linguanova_language_menu.rpy | Idiomas instalados: 5 | Shift+L"
+  },
+  {
+    "level": "info",
+    "message": "🗑️ Archivo de compatibilidad eliminado: zzz_linguanova_runtime.rpy"
+  },
+  {
+    "level": "info",
+    "message": "Informe diagnóstico escrito: /tmp/linguanova_native_acceptance_final/Juego con espacios y acentos áé/game/tl/.diagnostics/russian/diagnostic_russian.json"
+  },
+  {
+    "level": "info",
+    "message": "[🎉 Completado] ✅ ¡Completado!"
+  },
+  {
+    "level": "info",
+    "message": "[IMAGES] Reconociendo y traduciendo las imágenes…"
+  },
+  {
+    "level": "info",
+    "message": "OCR · eng"
+  },
+  {
+    "level": "warning",
+    "message": "Imágenes: 13/13 traducidas; 0 pendientes; 0 sin texto detectado."
+  },
+  {
+    "level": "info",
+    "message": "[🎉 Completado] Imágenes: 13/13 traducidas; 0 pendientes; 0 sin texto detectado."
+  },
+  {
+    "level": "warning",
+    "message": "📊 Líneas: 8 | traducidas: 6 | iguales al original: 2 | vacías: 0 | fallidas (motor): 0 | bloqueadas (protección): 0 | técnicas, no enviadas: 0 | desde caché: 0"
+  }
+]

@@ -1,0 +1,65 @@
+{
+  "editorial_review": "Required; automatic validation is not editorial certification",
+  "inventory_resolution": {
+    "denominator": 11,
+    "display": "8/11 (72.72 %)",
+    "numerator": 8,
+    "percent": 72.72
+  },
+  "job_identity": "6a96678451dba0b871e13ed38bc0a08ceab58fe3d9cd64b6dfc5118728d57df1",
+  "processing": {
+    "denominator": 11,
+    "display": "11/11 (100.00 %)",
+    "numerator": 11,
+    "percent": 100.0
+  },
+  "runtime_routes": {
+    "observed": [],
+    "unverified": "No real game execution attached"
+  },
+  "schema_version": 1,
+  "status_counts": {
+    "accepted": 7,
+    "extraction_omission": 1,
+    "preserved_approved": 1,
+    "rejected_validation": 2
+  },
+  "target_identity": [
+    "ru",
+    "ru",
+    "russian",
+    "",
+    "1"
+  ],
+  "textual_change": {
+    "denominator": 11,
+    "display": "7/11 (63.63 %)",
+    "numerator": 7,
+    "percent": 63.63
+  },
+  "validated_translation": {
+    "denominator": 7,
+    "display": "7/7 (100.00 %)",
+    "numerator": 7,
+    "percent": 100.0
+  },
+  "visual": {
+    "counts": {
+      "reviewed": 4
+    },
+    "coverage": {
+      "denominator": 4,
+      "display": "4/4 (100.00 %)",
+      "numerator": 4,
+      "percent": 100.0
+    },
+    "no_detection_is_not_no_text": true,
+    "unobserved_runtime_resources": "not verified"
+  },
+  "visual_coverage": {
+    "denominator": 4,
+    "display": "4/4 (100.00 %)",
+    "numerator": 4,
+    "percent": 100.0
+  }
+}

@@ -5,7 +5,7 @@ Test to ensure Main.qml and all QML components load without syntax or binding er
 import os
 import sys
 import pytest
-from PyQt6.QtCore import QUrl
+from PyQt6.QtCore import QObject, QUrl
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtQml import QQmlApplicationEngine
 
@@ -20,6 +20,8 @@ def test_qml_loads_cleanly():
 
     from src.backend.app_backend import AppBackend
     backend = AppBackend(parent=app)
+    backend.config.translation_settings.mod_target_language = "spanish"
+    backend.config.translation_settings.mod_selected_engine = "google"
 
     engine = QQmlApplicationEngine(app)
     engine.rootContext().setContextProperty("appBackend", backend)
@@ -40,10 +42,14 @@ def test_qml_loads_cleanly():
 
     engine.warnings.connect(on_warnings)
     engine.load(QUrl.fromLocalFile(qml_path))
-
     assert len(engine.rootObjects()) > 0, f"QML failed to load: {errors}"
     script_errors = [e for e in errors if "TypeError" in e or "ReferenceError" in e]
     assert not script_errors, "QML script errors:\n" + "\n".join(script_errors)
+    root = engine.rootObjects()[0]
+    target_combo = root.findChild(QObject, "modTargetCombo")
+    engine_combo = root.findChild(QObject, "modEngineCombo")
+    assert target_combo is not None and target_combo.property("currentValue") == "spanish"
+    assert engine_combo is not None and engine_combo.property("currentValue") == "google"
 
 
 def test_no_helper_receives_ui_trigger_as_argument():

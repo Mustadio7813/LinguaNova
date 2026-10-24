@@ -1,0 +1,3 @@
+VERSION = "0.4.0-native.1"
+BASE_VERSION = "1.1.2"
+SCHEMA_VERSION = 1

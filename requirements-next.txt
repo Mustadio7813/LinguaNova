@@ -1,0 +1,22 @@
+# New launcher only; original requirements.txt remains untouched.
+PyQt6>=6.6,<6.11
+aiohttp>=3.11,<4
+requests>=2.32,<3
+charset-normalizer>=3.3,<4
+orjson>=3.10,<4
+py3langid==0.4.0
+openai>=1.14,<4
+google-genai>=1,<3
+httpx[socks]>=0.28,<1
+PyYAML>=6,<7
+rich>=13.7
+fonttools>=4.38,<5
+Pillow>=11.3,<14
+pillow-avif-plugin>=1.5,<2
+resvg-py>=0.4,<1
+defusedxml>=0.7,<1
+numpy>=2,<3
+opencv-python-headless>=4.10,<6
+rarfile==4.2
+unrpa>=2.3
+# rpycdec is optional; the base's read-only RPYC AST reader remains available.

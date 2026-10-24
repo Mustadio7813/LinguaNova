@@ -5,14 +5,13 @@
 """
 Language → writing system data for the font tools.
 
-The font check and the font injector used hand-written tables for ~21
-languages; for the other ~114 of the 135 languages LinguaNova translates to,
-every font was reported incompatible and no font could be injected. This
-module covers all of them:
+The font check and the font injector use writing-system mappings to select
+sample characters and suitable font families. The UI language catalogue is
+limited to five languages; script aliases remain available for existing game
+font checks:
 
-* ``resolve_lang_code`` maps a Ren'Py language name / API code / English name
-  ("persian", "fa", "Persian") to the API code using the app's own language
-  table.
+* ``resolve_lang_code`` maps supported Ren'Py language names / API codes and
+  common script aliases ("russian", "ru", "serbian") to API codes.
 * ``script_of`` gives the writing system; ``script_sample_chars`` and
   ``script_fonts`` give characters to test and Google Fonts families to use.
 * ``collect_translation_chars`` returns the characters a game's translation
@@ -152,6 +151,9 @@ def resolve_lang_code(language: str) -> str:
     raw = (language or "").strip().lower()
     if not raw:
         return ""
+    legacy_script_codes = {"georgian": "ka", "dhivehi": "dv", "serbian": "sr"}
+    if raw in legacy_script_codes:
+        return legacy_script_codes[raw]
     table = _language_table()
     for candidate in (raw, raw.replace("_", "-"), raw.replace("-", "_")):
         if candidate in table:

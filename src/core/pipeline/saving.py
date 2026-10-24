@@ -445,8 +445,12 @@ def manage_runtime_hook(project_path: str, target_language: str, config, log_emi
         hook_filename = "zzz_linguanova_runtime.rpy"
         hook_path = game_dir / hook_filename
 
-        for old in game_dir.glob("*_linguanova_*.rpy"):
-            if old.name != hook_filename:
+        legacy_hook_files = (
+            *game_dir.glob("*_linguanova_runtime.rpy"),
+            *game_dir.glob("*_linguanova_runtime.rpyc"),
+        )
+        for old in legacy_hook_files:
+            if old.name not in {hook_filename, hook_filename + "c"}:
                 old.unlink(missing_ok=True)
 
         should_exist = _is_runtime_hook_enabled(config)
@@ -515,17 +519,9 @@ def remove_language_init_files(game_dir: str) -> int:
 
 
 def list_tl_languages(game_dir: str) -> list:
-    """Language folders under game/tl (what Ren'Py can switch to)."""
-    tl_root = Path(game_dir) / "tl"
-    if not tl_root.is_dir():
-        return []
-    # A language folder holds translation scripts; tl/ may also contain
-    # helpers such as the Font Injector's linguanova_fonts/.
-    return sorted(
-        p.name for p in tl_root.iterdir()
-        if p.is_dir() and not p.name.startswith(".") and p.name.lower() != "none"
-        and any(f.suffix.lower() in (".rpy", ".rpyc") for f in p.rglob("*"))
-    )
+    """Script-bearing language folders that the shared picker can activate."""
+    from src.core.language_menu_template import installed_language_folders
+    return installed_language_folders(game_dir)
 
 
 
@@ -652,7 +648,7 @@ def _decompiled_rpy_sources(game_dir: str) -> List[Tuple[str, str]]:
         return []
 
 
-def _extract_screen_blocks(source: str) -> List[Dict[str, Any]]:
+def _extract_screen_blocks(source: str, *, include_without_actions: bool = False) -> List[Dict[str, Any]]:
     lines = source.splitlines(keepends=True)
     result: List[Dict[str, Any]] = []
     i = 0
@@ -665,12 +661,12 @@ def _extract_screen_blocks(source: str) -> List[Dict[str, Any]]:
         name = m.group("name")
         i += 1
         while i < len(lines):
-            if lines[i].strip() and _indent_width(lines[i]) == 0:
+            if lines[i].strip() and not lines[i].lstrip().startswith("#") and _indent_width(lines[i]) == 0:
                 break
             i += 1
         block = "".join(lines[start:i])
         actions = list(_LANGUAGE_ACTION_RE.finditer(block))
-        if actions:
+        if actions or include_without_actions:
             result.append({"name": name, "text": block, "actions": actions, "count": len(actions)})
     return result
 
@@ -709,7 +705,7 @@ def _patch_direct_language_buttons(screen_text: str, target_code: str, display_n
         end = idx + 1
         if is_block:
             while end < len(lines):
-                if lines[end].strip() and _indent_width(lines[end]) <= indent:
+                if lines[end].strip() and not lines[end].lstrip().startswith("#") and _indent_width(lines[end]) <= indent:
                     break
                 end += 1
         statement = "".join(lines[idx:end])
@@ -735,7 +731,9 @@ def _patch_direct_language_buttons(screen_text: str, target_code: str, display_n
     groups: Dict[Tuple[int, int], List[Dict[str, Any]]] = {}
     for st in statements:
         groups.setdefault((st["parent"], st["indent"]), []).append(st)
-    viable = [group for group in groups.values() if len(group) >= 2]
+    # A game with only its original Language(None) button is already a safe
+    # native insertion point: clone that radio/textbutton as a sibling.
+    viable = [group for group in groups.values() if group]
     if not viable:
         return None
     group = max(viable, key=len)
@@ -751,6 +749,12 @@ def _patch_direct_language_buttons(screen_text: str, target_code: str, display_n
         clone,
         count=1,
     )
+    if old_code is None:
+        clone = re.sub(
+            r"(_preferences\.language\s*)(?:is|==)\s*None\b",
+            lambda match: match.group(1) + "== " + repr(target_code),
+            clone,
+        )
     clone = _replace_textbutton_label(clone, display_name)
     if not clone:
         return None
@@ -774,7 +778,7 @@ def _dynamic_language_data_patch(screen_text: str, target_code: str, display_nam
         indent = _indent_width(line)
         end = idx + 1
         while end < len(lines):
-            if lines[end].strip() and _indent_width(lines[end]) <= indent:
+            if lines[end].strip() and not lines[end].lstrip().startswith("#") and _indent_width(lines[end]) <= indent:
                 break
             end += 1
         body = "".join(lines[idx + 1:end])
@@ -788,10 +792,11 @@ def _dynamic_language_data_patch(screen_text: str, target_code: str, display_nam
             if code_var == a:
                 return (
                     'init 900 python:\n'
+                    '    import builtins as _ln_menu_types\n'
                     "    # LinguaNova: extend the game's own dictionary-driven language selector.\n"
                     '    try:\n'
                     f'        _ln_menu_data = globals().get("{var}", None)\n'
-                    '        if isinstance(_ln_menu_data, dict):\n'
+                    '        if isinstance(_ln_menu_data, _ln_menu_types.dict):\n'
                     f'            if "{target_code}" not in _ln_menu_data:\n'
                     f'                _ln_menu_data["{target_code}"] = {display_name!r}\n'
                     '    except Exception:\n'
@@ -799,10 +804,11 @@ def _dynamic_language_data_patch(screen_text: str, target_code: str, display_nam
                 )
             return (
                 'init 900 python:\n'
+                '    import builtins as _ln_menu_types\n'
                 "    # LinguaNova: extend the game's own dictionary-driven language selector.\n"
                 '    try:\n'
                 f'        _ln_menu_data = globals().get("{var}", None)\n'
-                '        if isinstance(_ln_menu_data, dict):\n'
+                '        if isinstance(_ln_menu_data, _ln_menu_types.dict):\n'
                 f'            if "{target_code}" not in [str(v) for v in _ln_menu_data.values()]:\n'
                 f'                _ln_menu_data[{display_name!r}] = "{target_code}"\n'
                 '    except Exception:\n'
@@ -813,14 +819,15 @@ def _dynamic_language_data_patch(screen_text: str, target_code: str, display_nam
         label_index = 1 - code_index
         return (
             'init 900 python:\n'
+            '    import builtins as _ln_menu_types\n'
             "    # LinguaNova: extend the game's own two-column list/tuple selector.\n"
             '    try:\n'
             f'        _ln_menu_data = globals().get("{var}", None)\n'
-            '        if isinstance(_ln_menu_data, (list, tuple)):\n'
+            '        if isinstance(_ln_menu_data, (_ln_menu_types.list, _ln_menu_types.tuple)):\n'
             '            _ln_exists = False\n'
             '            _ln_template = None\n'
             '            for _ln_item in _ln_menu_data:\n'
-            '                if isinstance(_ln_item, (list, tuple)) and len(_ln_item) == 2:\n'
+            '                if isinstance(_ln_item, (_ln_menu_types.list, _ln_menu_types.tuple)) and len(_ln_item) == 2:\n'
             '                    if _ln_template is None:\n'
             '                        _ln_template = _ln_item\n'
             '                    try:\n'
@@ -833,9 +840,9 @@ def _dynamic_language_data_patch(screen_text: str, target_code: str, display_nam
             '                _ln_new = list(_ln_template)\n'
             f'                _ln_new[{code_index}] = "{target_code}"\n'
             f'                _ln_new[{label_index}] = {display_name!r}\n'
-            '                if isinstance(_ln_template, tuple):\n'
+            '                if isinstance(_ln_template, _ln_menu_types.tuple):\n'
             '                    _ln_new = tuple(_ln_new)\n'
-            '                if isinstance(_ln_menu_data, list):\n'
+            '                if isinstance(_ln_menu_data, _ln_menu_types.list):\n'
             '                    _ln_menu_data.append(_ln_new)\n'
             '                else:\n'
             f'                    globals()["{var}"] = _ln_menu_data + (_ln_new,)\n'
@@ -861,6 +868,14 @@ def _analyze_language_menu_sources(records: List[Tuple[str, str]], target_code: 
     candidates: List[Dict[str, Any]] = []
     for source_path, source in records:
         for screen in _extract_screen_blocks(source):
+            # Some games already enumerate renpy.known_languages() and have a
+            # single literal button for Original. Their own loop lists every
+            # new TL automatically; cloning Original would duplicate choices.
+            if (re.search(r"\brenpy\.known_languages\s*\(", screen["text"])
+                    and any(_literal_language_arg(action.group("arg")) == ""
+                            for action in screen["actions"])):
+                return {"status": "already_present", "screen": screen["name"],
+                        "source": source_path, "method": "known_languages"}
             # A data-driven selector ("for label, code in languages:" with ONE
             # Language(code) action) has a single action in the screen text;
             # requiring two skipped it and the game was reported as having no
@@ -873,8 +888,7 @@ def _analyze_language_menu_sources(records: List[Tuple[str, str]], target_code: 
             if any(code.lower() == target_code.lower() for code in existing):
                 return {"status": "already_present", "screen": screen["name"], "source": source_path, "method": "existing"}
 
-            patched = (_patch_direct_language_buttons(screen["text"], target_code, display_name)
-                       if screen["count"] >= 2 else None)
+            patched = _patch_direct_language_buttons(screen["text"], target_code, display_name)
             dynamic = None if patched else _dynamic_language_data_patch(screen["text"], target_code, display_name)
             if patched or dynamic:
                 candidates.append({
@@ -921,116 +935,9 @@ def _native_language_name(config, target_code: str) -> str:
 
 
 def _fallback_language_picker(target_code: str, display_name: str, labels: Dict[str, str]) -> str:
-    """Small language picker for games without a selector LinguaNova can extend.
-
-    Shown only in the game's menus (main menu / game menu) plus Shift+L, and
-    built with Ren'Py's own ``Language()`` action: the player switches between
-    the original and every tl/ language by its visible name ("Español"), while
-    Ren'Py keeps using the folder id ("spanish"). The game's screens are not
-    modified and nothing is forced at start-up. When LinguaNova's interface
-    MOD is installed, its panel (same key) is used instead, so there is never
-    a second button.
-    """
-    label_items = "".join(
-        f"        {json.dumps(code, ensure_ascii=False)}: {json.dumps(name, ensure_ascii=False)},\n"
-        for code, name in sorted(labels.items())
-    )
-    return (
-        "init 950 python:\n"
-        "    # Visible name for each tl/ folder (Ren'Py keeps the folder id internally).\n"
-        "    _lntl_labels = {\n" + label_items + "    }\n"
-        "\n"
-        "    def _lntl_languages():\n"
-        "        try:\n"
-        "            known = list(renpy.known_languages())\n"
-        "        except Exception:\n"
-        "            known = list(_lntl_labels)\n"
-        "        rows = []\n"
-        "        for code in known:\n"
-        "            if code:\n"
-        "                rows.append((code, _lntl_labels.get(code, code.replace('_', ' ').title())))\n"
-        "        return sorted(rows, key=lambda row: row[1].lower())\n"
-        "\n"
-        "    def _lntl_mod_present():\n"
-        "        try:\n"
-        "            return renpy.has_screen('lnmod_language_panel')\n"
-        "        except Exception:\n"
-        "            return False\n"
-        "\n"
-        "    # Overlay screens are hidden inside menus (suppress_overlay); Ren'Py 8's\n"
-        "    # always_shown_screens lets the button live in the menus only. Older\n"
-        "    # versions keep it as an in-game overlay.\n"
-        "    _lntl_button_in_menus = hasattr(config, 'always_shown_screens')\n"
-        "\n"
-        "    def _lntl_button_visible():\n"
-        "        if _lntl_mod_present() or getattr(persistent, '_lntl_hide_button', False):\n"
-        "            return False\n"
-        "        if not _lntl_button_in_menus:\n"
-        "            return True\n"
-        "        names = globals()\n"
-        "        return bool(names.get('main_menu', False) or names.get('_menu', False))\n"
-        "\n"
-        "    if _lntl_button_in_menus:\n"
-        "        if 'lntl_language_button' not in config.always_shown_screens:\n"
-        "            config.always_shown_screens.append('lntl_language_button')\n"
-        "    elif 'lntl_language_button' not in config.overlay_screens:\n"
-        "        config.overlay_screens.append('lntl_language_button')\n"
-        "\n"
-        "screen lntl_language_button():\n"
-        "    zorder 189\n"
-        "    if not _lntl_mod_present():\n"
-        "        key \"shift_K_l\" action ToggleScreen(\"lntl_language_panel\")\n"
-        "    if _lntl_button_visible() and not renpy.get_screen(\"lntl_language_panel\"):\n"
-        "        textbutton \"Idioma / Language\":\n"
-        "            xalign 1.0\n"
-        "            yalign 1.0\n"
-        "            xoffset -12\n"
-        "            yoffset -12\n"
-        "            background Solid(\"#12161fcc\")\n"
-        "            hover_background Solid(\"#2b3648ee\")\n"
-        "            padding (14, 8, 14, 8)\n"
-        "            text_size max(14, int(config.screen_height * 0.022))\n"
-        "            text_color \"#e6eaf2\"\n"
-        "            action Show(\"lntl_language_panel\")\n"
-        "\n"
-        "screen lntl_language_panel():\n"
-        "    modal True\n"
-        "    zorder 191\n"
-        "    key \"game_menu\" action Hide(\"lntl_language_panel\")\n"
-        "    key \"shift_K_l\" action Hide(\"lntl_language_panel\")\n"
-        "    add Solid(\"#000000a0\")\n"
-        "    frame:\n"
-        "        xalign 0.5\n"
-        "        yalign 0.5\n"
-        "        xminimum int(config.screen_width * 0.32)\n"
-        "        background Solid(\"#12161ff2\")\n"
-        "        padding (int(config.screen_height * 0.03), int(config.screen_height * 0.025))\n"
-        "        vbox:\n"
-        "            spacing int(config.screen_height * 0.012)\n"
-        "            text \"Idioma / Language\" size max(18, int(config.screen_height * 0.036)) color \"#e6eaf2\"\n"
-        "            null height int(config.screen_height * 0.01)\n"
-        "            textbutton \"Original\":\n"
-        "                action Language(None)\n"
-        "                selected (_preferences.language is None)\n"
-        "                text_size max(14, int(config.screen_height * 0.026))\n"
-        "                text_color \"#e6eaf2\"\n"
-        "                text_selected_color \"#4c8dff\"\n"
-        "                text_hover_color \"#ffffff\"\n"
-        "            for _lntl_code, _lntl_label in _lntl_languages():\n"
-        "                textbutton _lntl_label:\n"
-        "                    action Language(_lntl_code)\n"
-        "                    selected (_preferences.language == _lntl_code)\n"
-        "                    text_size max(14, int(config.screen_height * 0.026))\n"
-        "                    text_color \"#e6eaf2\"\n"
-        "                    text_selected_color \"#4c8dff\"\n"
-        "                    text_hover_color \"#ffffff\"\n"
-        "            null height int(config.screen_height * 0.01)\n"
-        "            textbutton \"Cerrar / Close\":\n"
-        "                action Hide(\"lntl_language_panel\")\n"
-        "                text_size max(12, int(config.screen_height * 0.02))\n"
-        "                text_color \"#9aa3b7\"\n"
-        "                text_hover_color \"#ffffff\"\n"
-    )
+    """Compatibility entry point for the shared, scrollable in-game picker."""
+    from src.core.language_menu_template import render_language_picker
+    return render_language_picker(labels)
 
 
 def _tl_language_labels(game_dir: str, config, target_code: str, display_name: str) -> Dict[str, str]:
@@ -1041,6 +948,98 @@ def _tl_language_labels(game_dir: str, config, target_code: str, display_name: s
     return labels
 
 
+def _multilingual_native_menu(records, labels):
+    """Extend immutable game sources for ALL installed languages in one helper.
+
+    Each successive clone is applied to the in-memory source. Generating a
+    second target therefore retains the first target without reading a generated
+    screen as if it belonged to the developer. Original .rpy files stay intact.
+    """
+    working = list(records)
+    screens = {}
+    data_extensions = []
+    integrated = []
+    for code, name in sorted(labels.items()):
+        result = _analyze_language_menu_sources(working, code, name)
+        if result.get("status") == "already_present":
+            integrated.append(code)
+        elif result.get("status") == "candidate":
+            if result["method"] == "data_extension":
+                data_extensions.append(result["payload"])
+                integrated.append(code)
+                continue
+            for index, (source_path, source) in enumerate(working):
+                if source_path != result["source"]:
+                    continue
+                screen = next((item for item in _extract_screen_blocks(source)
+                               if item["name"] == result["screen"]), None)
+                if screen is None:
+                    break
+                working[index] = (source_path, source.replace(screen["text"], result["payload"], 1))
+                screens[(source_path, result["screen"])] = result["payload"]
+                integrated.append(code)
+                break
+    if not integrated:
+        # Standard games often have no language control at all. Their normal
+        # Preferences content is an identifiable insertion point, so add the
+        # radio group there instead of placing a separate menu over the game.
+        for source_path, source in records:
+            inserted = _preferences_language_section(source)
+            if inserted is not None:
+                screen_name, payload = inserted
+                screens[(source_path, screen_name)] = payload
+                integrated = list(labels)
+                break
+    parts = []
+    if screens:
+        parts.append("init offset = 900\n\n" + "\n\n".join(screens.values()) + "\ninit offset = 0\n")
+    parts.extend(data_extensions)
+    return "\n\n".join(parts), integrated
+
+
+def _preferences_language_section(source):
+    """Add the chooser to a recognisable native Preferences content container.
+
+    Prefer the row of native radio/check columns used by Ren'Py's standard GUI.
+    Otherwise use a content vbox inside game_menu/viewport. Custom layouts that
+    cannot be identified still get the working Shift+L fallback.
+    """
+    for screen in _extract_screen_blocks(source, include_without_actions=True):
+        if screen["name"].lower() not in {"preferences", "settings", "options"}:
+            continue
+        if screen["actions"]:
+            continue
+        lines = screen["text"].splitlines(keepends=True)
+        candidates = []
+        for index, line in enumerate(lines):
+            match = re.match(r"^([ \t]*)(hbox|vbox)\s*:\s*(?:#.*)?$", line.rstrip("\r\n"))
+            if not match:
+                continue
+            indent = _indent_width(line)
+            end = index + 1
+            while end < len(lines) and (not lines[end].strip() or lines[end].lstrip().startswith("#") or _indent_width(lines[end]) > indent):
+                end += 1
+            body = "".join(lines[index + 1:end])
+            radio_row = match.group(2) == "hbox" and re.search(
+                r'style_prefix\s+[\"\'](?:radio|check)[\"\']', body
+            )
+            content_vbox = match.group(2) == "vbox" and re.search(
+                r"\buse\s+game_menu\b|\bviewport\s*:", screen["text"][:sum(map(len, lines[:index]))]
+            )
+            if radio_row or content_vbox:
+                score = (1000 if radio_row else 100) - indent
+                candidates.append((score, index, end, match.group(1)))
+        if not candidates:
+            continue
+        _score, index, end, indent_text = max(candidates)
+        addition = indent_text + '    use lntl_language_preferences\n'
+        before = "".join(lines[:end])
+        if not before.endswith("\n"):
+            before += "\n"
+        return screen["name"], before + addition + "".join(lines[end:])
+    return None
+
+
 def create_language_menu_integration(
     game_dir: str,
     target_language: str,
@@ -1049,136 +1048,93 @@ def create_language_menu_integration(
     lang_map=None,
     exact_language_folder: bool = False,
 ) -> Dict[str, Any]:
-    """Integrate a tl language into the game's existing selector when safe."""
+    """Publish one persistent, hot-switchable selector for every installed TL."""
     from src.utils.encoding import save_text_safely
+    from src.core.language_menu_template import install_resource_filter, render_language_picker
 
     root = Path(game_dir)
     target_code = _resolve_language_folder(
         game_dir, target_language, config, lang_map, exact=exact_language_folder
     ).strip()
-    if not target_code:
+    if not target_code or not target_code.isidentifier() or target_code.casefold() == "none":
         return {"status": "invalid_language"}
 
     tl_dir = root / "tl" / target_code
     if not tl_dir.is_dir():
-        tl_root = root / "tl"
-        if tl_root.is_dir():
-            match = next((p for p in tl_root.iterdir() if p.is_dir() and p.name.lower() == target_code.lower()), None)
-            if match:
-                target_code, tl_dir = match.name, match
-    if not tl_dir.is_dir():
         return {"status": "missing_tl", "language": target_code}
 
-    display_name = _native_language_name(config, target_code)
-    remove_language_menu_files(game_dir)
-
-    records = _iter_real_rpy_sources(game_dir)
-    result = _analyze_language_menu_sources(records, target_code, display_name)
-    if result.get("status") == "not_found":
-        decompiled = _decompiled_rpy_sources(game_dir)
-        if decompiled:
-            records = records + decompiled
-            result = _analyze_language_menu_sources(decompiled, target_code, display_name)
-    # Does the game have ANY language switch of its own (even one we cannot
-    # extend, e.g. flag imagebuttons)? Then a second picker is not added.
-    game_has_selector = any(_extract_screen_blocks(text) for _path, text in records)
-
-    if result.get("status") == "already_present":
-        log_emit("info", config.get_ui_text(
-            "pipeline_lang_menu_existing",
-            "{lang} is already present in the game's language selector."
-        ).replace("{lang}", display_name))
-        return result
-
-    if result.get("status") != "candidate" and game_has_selector:
-        log_emit("warning", config.get_ui_text(
-            "pipeline_lang_menu_not_found",
-            "Translation created, but LinguaNova could not safely identify a native language selector to extend. No game UI was modified."
-        ).replace("{lang}", display_name))
-        return {"status": "not_found", "language": target_code, "display_name": display_name}
-
-    if result.get("status") != "candidate":
-        # No selector at all: without a way to choose the language the new
-        # tl/ folder was unreachable for the player (audit point 3.1). Add a
-        # minimal picker that uses Ren'Py's own Language() action instead.
-        labels = _tl_language_labels(game_dir, config, target_code, display_name)
-        helper = root / LANGUAGE_MENU_FILE
-        content = (
-            "# ============================================================\n"
-            "# LinguaNova - Language picker (fallback)\n"
-            "# ============================================================\n"
-            "# The game has no language selector LinguaNova can extend safely.\n"
-            "# This file adds a small picker visible only in the game's menus\n"
-            "# (Shift+L at any time). It does NOT force the start-up language,\n"
-            "# NOT call renpy.change_language() and does not modify the game's\n"
-            "# screens. Delete this file to remove it.\n"
-            f"# Target: {display_name} -> game/tl/{target_code}\n"
-            "# ============================================================\n\n"
-            + _fallback_language_picker(target_code, display_name, labels)
-        )
-        try:
-            save_text_safely(helper, content, encoding="utf-8-sig", newline="\n")
-        except Exception as exc:
-            log_emit("warning", config.get_ui_text(
-                "pipeline_lang_menu_failed",
-                "Could not create the native language-menu integration: {error}"
-            ).replace("{error}", str(exc)))
-            return {"status": "error", "error": str(exc)}
-        log_emit("info", config.get_ui_text(
-            "pipeline_lang_menu_fallback",
-            "{lang}: the game has no language selector that LinguaNova can extend safely. A small "
-            "\"Language\" selector was added that only appears in the game's menus (Shift+L at any "
-            "time); the game's own screens were not modified."
-        ).replace("{lang}", display_name))
-        return {"status": "fallback_picker", "language": target_code, "display_name": display_name,
-                "output": str(helper)}
-
-    helper = root / LANGUAGE_MENU_FILE
-    stale = Path(str(helper) + "c")
-    if stale.exists():
-        try:
-            stale.unlink()
-        except OSError:
-            logger.debug("Could not remove stale language-menu .rpyc")
-
-    header = (
-        "# ============================================================\n"
-        "# LinguaNova - Native Language Menu Integration\n"
-        "# ============================================================\n"
-        "# Generated automatically. Original developer scripts are untouched.\n"
-        f"# Target: {display_name} -> game/tl/{target_code}\n"
-        f"# Source screen: {result.get('screen', '')}\n"
-        f"# Method: {result.get('method', '')}\n"
-        "#\n"
-        "# This file does NOT force the start-up language and does NOT call\n"
-        "# renpy.change_language() at startup.\n"
-        "# ============================================================\n\n"
-    )
-    content = header + (
-        "init offset = 900\n\n" + result["payload"]
-        if result["method"] == "screen_override"
-        else result["payload"]
-    )
     try:
-        save_text_safely(helper, content, encoding="utf-8-sig", newline="\n")
+        resource_filter = install_resource_filter(game_dir)
     except Exception as exc:
-        log_emit("warning", config.get_ui_text(
-            "pipeline_lang_menu_failed",
-            "Could not create the native language-menu integration: {error}"
+        log_emit("error", config.get_ui_text(
+            "pipeline_lang_menu_failed", "Could not create the language selector: {error}"
         ).replace("{error}", str(exc)))
         return {"status": "error", "error": str(exc)}
 
+    display_name = _native_language_name(config, target_code)
+    labels = _tl_language_labels(game_dir, config, target_code, display_name)
+    records = _iter_real_rpy_sources(game_dir)
+    if _analyze_language_menu_sources(records, target_code, display_name).get("status") == "not_found":
+        records += _decompiled_rpy_sources(game_dir)
+
+    native_payload, native_languages = _multilingual_native_menu(records, labels)
+    native_complete = all(code in native_languages for code in labels)
+    status = "integrated" if native_payload else (
+        "already_present" if native_complete else "fallback_picker"
+    )
+    helper = root / LANGUAGE_MENU_FILE
+    header = (
+        "# SPDX-License-Identifier: GPL-3.0-or-later\n"
+        "# LinguaNova - Shared multilingual language selector\n"
+        "# Generated helper; original game scripts are preserved.\n"
+        "# Shift+L opens the chooser during gameplay and in menus.\n"
+        "# Original uses Ren'Py's Language(None); nothing is forced at startup.\n"
+        "# Languages: " + ", ".join(sorted(labels)) + "\n\n"
+    )
+    content = header + native_payload + "\n\n" + render_language_picker(labels, show_button=not native_complete)
+    # Keep the working selector until its replacement is safely on disk.
+    # save_text_safely returns False for Windows locks; it need not raise.
+    try:
+        changed = _read_rpy_text(helper) != content
+        if changed and not save_text_safely(helper, content, encoding="utf-8-sig", newline="\n"):
+            raise OSError("Could not write the language selector: " + str(helper))
+        if not helper.is_file() or _read_rpy_text(helper) != content:
+            raise OSError("Language selector verification failed: " + str(helper))
+        if changed:
+            Path(str(helper) + "c").unlink(missing_ok=True)
+    except Exception as exc:
+        log_emit("error", config.get_ui_text(
+            "pipeline_lang_menu_failed",
+            "Could not create the language selector: {error}"
+        ).replace("{error}", str(exc)))
+        return {"status": "error", "error": str(exc), "output": str(helper)}
+
+    if status == "fallback_picker":
+        key, default = "pipeline_lang_menu_fallback", (
+            "A shared language selector was created. Use Shift+L during gameplay; "
+            "the Language button is available in the game's menus."
+        )
+    elif status == "already_present":
+        key, default = "pipeline_lang_menu_existing", (
+            "The installed languages are already in the game's selector. "
+            "Shift+L also opens the shared chooser during gameplay."
+        )
+    else:
+        key, default = "pipeline_lang_menu_integrated", (
+            "The game's language selector now includes all installed translations. "
+            "Shift+L opens the shared chooser during gameplay."
+        )
+    log_emit("info", config.get_ui_text(key, default).replace("{lang}", display_name).replace("{screen}", ""))
     log_emit("info", config.get_ui_text(
-        "pipeline_lang_menu_integrated",
-        "Added {lang} to the game's native language selector ({screen})."
-    ).replace("{lang}", display_name).replace("{screen}", result["screen"]))
-    result.update({
-        "status": "integrated",
-        "language": target_code,
-        "display_name": display_name,
-        "output": str(helper),
-    })
-    return result
+        "pipeline_lang_menu_saved",
+        "Language selector verified: {path} | installed languages: {count} | Shift+L"
+    ).replace("{path}", str(helper)).replace("{count}", str(len(labels))))
+    return {
+        "status": status, "language": target_code, "display_name": display_name,
+        "output": str(helper), "languages": sorted(labels),
+        "resource_filter": str(resource_filter),
+        "native_languages": native_languages, "hotkey": "Shift+L", "changed": changed,
+    }
 
 
 def create_language_init_file(
@@ -1196,13 +1152,23 @@ def create_language_init_file(
         ts is None or getattr(ts, "activate_language_on_launch", True)
     )
     if not enabled:
+        # Resource protection is required even when adding a menu is disabled.
+        # It never changes font files or the game's own language preference.
+        from src.core.language_menu_template import install_resource_filter
+        try:
+            resource_filter = install_resource_filter(game_dir)
+        except Exception as exc:
+            log_emit("error", config.get_ui_text(
+                "pipeline_lang_menu_failed", "Could not create the language selector: {error}"
+            ).replace("{error}", str(exc)))
+            return {"status": "error", "error": str(exc)}
         removed_menu = remove_language_menu_files(game_dir)
         if removed_legacy or removed_menu:
             log_emit("info", config.get_ui_text(
                 "log_language_init_removed",
                 "Language-menu integration is disabled; LinguaNova helper files were removed from game/."
             ))
-        return {"status": "disabled"}
+        return {"status": "disabled", "resource_filter": str(resource_filter)}
 
     return create_language_menu_integration(
         game_dir, target_language, config, log_emit,

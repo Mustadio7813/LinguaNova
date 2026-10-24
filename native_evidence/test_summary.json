@@ -1,0 +1,13 @@
+{
+  "unique_passed": 192,
+  "unique_skipped": 4,
+  "native_pipeline_cases": 12,
+  "main_window_count_during_ocr": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "engine_loads": 78
+}

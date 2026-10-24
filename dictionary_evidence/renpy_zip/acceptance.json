@@ -1,0 +1,1665 @@
+{
+  "archive_format": "zip",
+  "archive_sha256": "98b756f08150418c4ac49efcbeca740a22320e32fd02f5cbf00d78bb94147c75",
+  "base_directions": 20,
+  "creator_dependency_in_game": false,
+  "destinations": [
+    {
+      "direction": "ltr",
+      "language_id": "es",
+      "locale": "es-419",
+      "name": "Español LATAM",
+      "profile_id": "latam_neutro_sin_modismos",
+      "profile_version": "1",
+      "renpy_id": "spanish_latam"
+    },
+    {
+      "direction": "ltr",
+      "language_id": "fr",
+      "locale": "fr",
+      "name": "Français",
+      "profile_id": "",
+      "profile_version": "1",
+      "renpy_id": "french"
+    },
+    {
+      "direction": "ltr",
+      "language_id": "pt",
+      "locale": "pt",
+      "name": "Português",
+      "profile_id": "",
+      "profile_version": "1",
+      "renpy_id": "portuguese"
+    },
+    {
+      "direction": "ltr",
+      "language_id": "ru",
+      "locale": "ru",
+      "name": "Русский",
+      "profile_id": "",
+      "profile_version": "1",
+      "renpy_id": "russian"
+    },
+    {
+      "direction": "ltr",
+      "language_id": "en",
+      "locale": "en",
+      "name": "English",
+      "profile_id": "",
+      "profile_version": "1",
+      "renpy_id": "english"
+    }
+  ],
+  "engine": "RenPy 8.3.7.25031702 (SDK version used by caller must match)",
+  "fresh_processes": 13,
+  "installation": "Distributed game/ copied to a second compatible root with spaces/accents",
+  "original_returns": 5,
+  "player_persistent_retained_on_update": true,
+  "profile_additional_directions": 0,
+  "provider": "Controlled dictionary; no live-provider evidence",
+  "runs": [
+    {
+      "log": "run_00.log",
+      "mode": "select",
+      "records": [
+        {
+          "choice": {
+            "locale": "es-419",
+            "profile_id": "latam_neutro_sin_modismos",
+            "renpy_id": "spanish_latam",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "spanish_latam",
+          "text": "Te damos la bienvenida a nuestro tranquilo pueblo."
+        }
+      ],
+      "requested": "spanish_latam",
+      "returncode": 0
+    },
+    {
+      "log": "run_01.log",
+      "mode": "check",
+      "records": [
+        {
+          "choice": {
+            "locale": "es-419",
+            "profile_id": "latam_neutro_sin_modismos",
+            "renpy_id": "spanish_latam",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "spanish_latam",
+          "text": "Te damos la bienvenida a nuestro tranquilo pueblo."
+        }
+      ],
+      "requested": "spanish_latam",
+      "returncode": 0
+    },
+    {
+      "log": "run_02.log",
+      "mode": "select",
+      "records": [
+        {
+          "choice": {
+            "locale": "fr",
+            "profile_id": "",
+            "renpy_id": "french",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "88e82ba4d8c07a1b1c33c8d20ce398636a735df013bbdd227887988ad7c4e49f",
+            "images/buttons/continue_normal.png": "ea90bb60759fe96c90fa650d78fc5cb514d7da90aaf77279c8013003b11c2327",
+            "images/buttons/continue_selected.png": "008c64907dc9865ed4b5265423b3e64c86f518e739ed638dd9efce88ee8000f6",
+            "images/capitulo_01/telefono/mensaje.png": "58f95a0a7f343d6b5d2ad95753d9c32abc6d9bc9ca2b1f71ce605f201f422431"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "french",
+          "text": "Bienvenue dans notre paisible village."
+        }
+      ],
+      "requested": "french",
+      "returncode": 0
+    },
+    {
+      "log": "run_03.log",
+      "mode": "check",
+      "records": [
+        {
+          "choice": {
+            "locale": "fr",
+            "profile_id": "",
+            "renpy_id": "french",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "88e82ba4d8c07a1b1c33c8d20ce398636a735df013bbdd227887988ad7c4e49f",
+            "images/buttons/continue_normal.png": "ea90bb60759fe96c90fa650d78fc5cb514d7da90aaf77279c8013003b11c2327",
+            "images/buttons/continue_selected.png": "008c64907dc9865ed4b5265423b3e64c86f518e739ed638dd9efce88ee8000f6",
+            "images/capitulo_01/telefono/mensaje.png": "58f95a0a7f343d6b5d2ad95753d9c32abc6d9bc9ca2b1f71ce605f201f422431"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "french",
+          "text": "Bienvenue dans notre paisible village."
+        }
+      ],
+      "requested": "french",
+      "returncode": 0
+    },
+    {
+      "log": "run_04.log",
+      "mode": "select",
+      "records": [
+        {
+          "choice": {
+            "locale": "pt",
+            "profile_id": "",
+            "renpy_id": "portuguese",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "portuguese",
+          "text": "Bem-vindo à nossa tranquila aldeia."
+        }
+      ],
+      "requested": "portuguese",
+      "returncode": 0
+    },
+    {
+      "log": "run_05.log",
+      "mode": "check",
+      "records": [
+        {
+          "choice": {
+            "locale": "pt",
+            "profile_id": "",
+            "renpy_id": "portuguese",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "portuguese",
+          "text": "Bem-vindo à nossa tranquila aldeia."
+        }
+      ],
+      "requested": "portuguese",
+      "returncode": 0
+    },
+    {
+      "log": "run_06.log",
+      "mode": "select",
+      "records": [
+        {
+          "choice": {
+            "locale": "ru",
+            "profile_id": "",
+            "renpy_id": "russian",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "d470c09bc7ba56a9e48c7ea698f86b9b1b8ca430bb4f3aaf88630fedc2fada3e",
+            "images/buttons/continue_normal.png": "9e62bf4bdc9c00820a13dae3cbbb9877f0f27323b9bbcda8e16ab684afcbea1b",
+            "images/buttons/continue_selected.png": "acea80764d6fe496b6d0378e20c87566ba5b9693039ca2a3b649348df4964590",
+            "images/capitulo_01/telefono/mensaje.png": "f25d66ed6d7e809b66c716584cb2227dc14b67261decd3f777f1c6cee1521ea1"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "russian",
+          "text": "Добро пожаловать в нашу тихую деревню."
+        }
+      ],
+      "requested": "russian",
+      "returncode": 0
+    },
+    {
+      "log": "run_07.log",
+      "mode": "check",
+      "records": [
+        {
+          "choice": {
+            "locale": "ru",
+            "profile_id": "",
+            "renpy_id": "russian",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "d470c09bc7ba56a9e48c7ea698f86b9b1b8ca430bb4f3aaf88630fedc2fada3e",
+            "images/buttons/continue_normal.png": "9e62bf4bdc9c00820a13dae3cbbb9877f0f27323b9bbcda8e16ab684afcbea1b",
+            "images/buttons/continue_selected.png": "acea80764d6fe496b6d0378e20c87566ba5b9693039ca2a3b649348df4964590",
+            "images/capitulo_01/telefono/mensaje.png": "f25d66ed6d7e809b66c716584cb2227dc14b67261decd3f777f1c6cee1521ea1"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "russian",
+          "text": "Добро пожаловать в нашу тихую деревню."
+        }
+      ],
+      "requested": "russian",
+      "returncode": 0
+    },
+    {
+      "log": "run_08.log",
+      "mode": "select",
+      "records": [
+        {
+          "choice": {
+            "locale": "en",
+            "profile_id": "",
+            "renpy_id": "english",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "9437b49207157236ac01688526024ddc9324893e6e93e97821f221b790f0e159",
+            "images/buttons/continue_normal.png": "3609954a21803dd72b7597ed92e305cc8d004168648a9c29df5c0ff954128e89",
+            "images/buttons/continue_selected.png": "79eea84bb7c72c50d911009745f6027b57204d6f1125a4d68f654f9e9e7e2b11",
+            "images/capitulo_01/telefono/mensaje.png": "1603be90d0534552ed66d58b77cd6883c4fe0d70058e40b0bf12f3ee75b5d440"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "english",
+          "text": "Welcome to this peaceful village."
+        }
+      ],
+      "requested": "english",
+      "returncode": 0
+    },
+    {
+      "log": "run_09.log",
+      "mode": "check",
+      "records": [
+        {
+          "choice": {
+            "locale": "en",
+            "profile_id": "",
+            "renpy_id": "english",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "9437b49207157236ac01688526024ddc9324893e6e93e97821f221b790f0e159",
+            "images/buttons/continue_normal.png": "3609954a21803dd72b7597ed92e305cc8d004168648a9c29df5c0ff954128e89",
+            "images/buttons/continue_selected.png": "79eea84bb7c72c50d911009745f6027b57204d6f1125a4d68f654f9e9e7e2b11",
+            "images/capitulo_01/telefono/mensaje.png": "1603be90d0534552ed66d58b77cd6883c4fe0d70058e40b0bf12f3ee75b5d440"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "english",
+          "text": "Welcome to this peaceful village."
+        }
+      ],
+      "requested": "english",
+      "returncode": 0
+    },
+    {
+      "log": "run_10.log",
+      "mode": "select",
+      "records": [
+        {
+          "choice": {
+            "locale": "",
+            "profile_id": "",
+            "renpy_id": null,
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "123d12b1b2d4a91d289d51ff1851ac32cf9bffa623a3d4e95f56eee861829b19",
+            "images/buttons/continue_normal.png": "a8d8b2bc972aea86c09df5af9e40f5d97e89b4effea29e7af121742f8746303d",
+            "images/buttons/continue_selected.png": "abffb0272f4f6963dc100f462c0cd7db92beb295e69b3cd089627454178efbbb",
+            "images/capitulo_01/telefono/mensaje.png": "7cf5d7ee90c9b841e450fef603179521e0871459f1feca472719dc4c77af1ee9"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": null,
+          "text": "Welcome to our quiet village."
+        }
+      ],
+      "requested": null,
+      "returncode": 0
+    },
+    {
+      "log": "run_11.log",
+      "mode": "check",
+      "records": [
+        {
+          "choice": {
+            "locale": "",
+            "profile_id": "",
+            "renpy_id": null,
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "123d12b1b2d4a91d289d51ff1851ac32cf9bffa623a3d4e95f56eee861829b19",
+            "images/buttons/continue_normal.png": "a8d8b2bc972aea86c09df5af9e40f5d97e89b4effea29e7af121742f8746303d",
+            "images/buttons/continue_selected.png": "abffb0272f4f6963dc100f462c0cd7db92beb295e69b3cd089627454178efbbb",
+            "images/capitulo_01/telefono/mensaje.png": "7cf5d7ee90c9b841e450fef603179521e0871459f1feca472719dc4c77af1ee9"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": null,
+          "text": "Welcome to our quiet village."
+        }
+      ],
+      "requested": null,
+      "returncode": 0
+    },
+    {
+      "log": "run_12.log",
+      "mode": "sequence",
+      "records": [
+        {
+          "choice": {
+            "locale": "es-419",
+            "profile_id": "latam_neutro_sin_modismos",
+            "renpy_id": "spanish_latam",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "spanish_latam",
+          "text": "Te damos la bienvenida a nuestro tranquilo pueblo."
+        },
+        {
+          "choice": {
+            "locale": "fr",
+            "profile_id": "",
+            "renpy_id": "french",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "88e82ba4d8c07a1b1c33c8d20ce398636a735df013bbdd227887988ad7c4e49f",
+            "images/buttons/continue_normal.png": "ea90bb60759fe96c90fa650d78fc5cb514d7da90aaf77279c8013003b11c2327",
+            "images/buttons/continue_selected.png": "008c64907dc9865ed4b5265423b3e64c86f518e739ed638dd9efce88ee8000f6",
+            "images/capitulo_01/telefono/mensaje.png": "58f95a0a7f343d6b5d2ad95753d9c32abc6d9bc9ca2b1f71ce605f201f422431"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "french",
+          "text": "Bienvenue dans notre paisible village."
+        },
+        {
+          "choice": {
+            "locale": "es-419",
+            "profile_id": "latam_neutro_sin_modismos",
+            "renpy_id": "spanish_latam",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "spanish_latam",
+          "text": "Te damos la bienvenida a nuestro tranquilo pueblo."
+        },
+        {
+          "choice": {
+            "locale": "pt",
+            "profile_id": "",
+            "renpy_id": "portuguese",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "portuguese",
+          "text": "Bem-vindo à nossa tranquila aldeia."
+        },
+        {
+          "choice": {
+            "locale": "es-419",
+            "profile_id": "latam_neutro_sin_modismos",
+            "renpy_id": "spanish_latam",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "spanish_latam",
+          "text": "Te damos la bienvenida a nuestro tranquilo pueblo."
+        },
+        {
+          "choice": {
+            "locale": "ru",
+            "profile_id": "",
+            "renpy_id": "russian",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "d470c09bc7ba56a9e48c7ea698f86b9b1b8ca430bb4f3aaf88630fedc2fada3e",
+            "images/buttons/continue_normal.png": "9e62bf4bdc9c00820a13dae3cbbb9877f0f27323b9bbcda8e16ab684afcbea1b",
+            "images/buttons/continue_selected.png": "acea80764d6fe496b6d0378e20c87566ba5b9693039ca2a3b649348df4964590",
+            "images/capitulo_01/telefono/mensaje.png": "f25d66ed6d7e809b66c716584cb2227dc14b67261decd3f777f1c6cee1521ea1"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "russian",
+          "text": "Добро пожаловать в нашу тихую деревню."
+        },
+        {
+          "choice": {
+            "locale": "es-419",
+            "profile_id": "latam_neutro_sin_modismos",
+            "renpy_id": "spanish_latam",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "spanish_latam",
+          "text": "Te damos la bienvenida a nuestro tranquilo pueblo."
+        },
+        {
+          "choice": {
+            "locale": "en",
+            "profile_id": "",
+            "renpy_id": "english",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "9437b49207157236ac01688526024ddc9324893e6e93e97821f221b790f0e159",
+            "images/buttons/continue_normal.png": "3609954a21803dd72b7597ed92e305cc8d004168648a9c29df5c0ff954128e89",
+            "images/buttons/continue_selected.png": "79eea84bb7c72c50d911009745f6027b57204d6f1125a4d68f654f9e9e7e2b11",
+            "images/capitulo_01/telefono/mensaje.png": "1603be90d0534552ed66d58b77cd6883c4fe0d70058e40b0bf12f3ee75b5d440"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "english",
+          "text": "Welcome to this peaceful village."
+        },
+        {
+          "choice": {
+            "locale": "es-419",
+            "profile_id": "latam_neutro_sin_modismos",
+            "renpy_id": "spanish_latam",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "spanish_latam",
+          "text": "Te damos la bienvenida a nuestro tranquilo pueblo."
+        },
+        {
+          "choice": {
+            "locale": "",
+            "profile_id": "",
+            "renpy_id": null,
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "123d12b1b2d4a91d289d51ff1851ac32cf9bffa623a3d4e95f56eee861829b19",
+            "images/buttons/continue_normal.png": "a8d8b2bc972aea86c09df5af9e40f5d97e89b4effea29e7af121742f8746303d",
+            "images/buttons/continue_selected.png": "abffb0272f4f6963dc100f462c0cd7db92beb295e69b3cd089627454178efbbb",
+            "images/capitulo_01/telefono/mensaje.png": "7cf5d7ee90c9b841e450fef603179521e0871459f1feca472719dc4c77af1ee9"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": null,
+          "text": "Welcome to our quiet village."
+        },
+        {
+          "choice": {
+            "locale": "fr",
+            "profile_id": "",
+            "renpy_id": "french",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "88e82ba4d8c07a1b1c33c8d20ce398636a735df013bbdd227887988ad7c4e49f",
+            "images/buttons/continue_normal.png": "ea90bb60759fe96c90fa650d78fc5cb514d7da90aaf77279c8013003b11c2327",
+            "images/buttons/continue_selected.png": "008c64907dc9865ed4b5265423b3e64c86f518e739ed638dd9efce88ee8000f6",
+            "images/capitulo_01/telefono/mensaje.png": "58f95a0a7f343d6b5d2ad95753d9c32abc6d9bc9ca2b1f71ce605f201f422431"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "french",
+          "text": "Bienvenue dans notre paisible village."
+        },
+        {
+          "choice": {
+            "locale": "es-419",
+            "profile_id": "latam_neutro_sin_modismos",
+            "renpy_id": "spanish_latam",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "spanish_latam",
+          "text": "Te damos la bienvenida a nuestro tranquilo pueblo."
+        },
+        {
+          "choice": {
+            "locale": "fr",
+            "profile_id": "",
+            "renpy_id": "french",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "88e82ba4d8c07a1b1c33c8d20ce398636a735df013bbdd227887988ad7c4e49f",
+            "images/buttons/continue_normal.png": "ea90bb60759fe96c90fa650d78fc5cb514d7da90aaf77279c8013003b11c2327",
+            "images/buttons/continue_selected.png": "008c64907dc9865ed4b5265423b3e64c86f518e739ed638dd9efce88ee8000f6",
+            "images/capitulo_01/telefono/mensaje.png": "58f95a0a7f343d6b5d2ad95753d9c32abc6d9bc9ca2b1f71ce605f201f422431"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "french",
+          "text": "Bienvenue dans notre paisible village."
+        },
+        {
+          "choice": {
+            "locale": "pt",
+            "profile_id": "",
+            "renpy_id": "portuguese",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "portuguese",
+          "text": "Bem-vindo à nossa tranquila aldeia."
+        },
+        {
+          "choice": {
+            "locale": "fr",
+            "profile_id": "",
+            "renpy_id": "french",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "88e82ba4d8c07a1b1c33c8d20ce398636a735df013bbdd227887988ad7c4e49f",
+            "images/buttons/continue_normal.png": "ea90bb60759fe96c90fa650d78fc5cb514d7da90aaf77279c8013003b11c2327",
+            "images/buttons/continue_selected.png": "008c64907dc9865ed4b5265423b3e64c86f518e739ed638dd9efce88ee8000f6",
+            "images/capitulo_01/telefono/mensaje.png": "58f95a0a7f343d6b5d2ad95753d9c32abc6d9bc9ca2b1f71ce605f201f422431"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "french",
+          "text": "Bienvenue dans notre paisible village."
+        },
+        {
+          "choice": {
+            "locale": "ru",
+            "profile_id": "",
+            "renpy_id": "russian",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "d470c09bc7ba56a9e48c7ea698f86b9b1b8ca430bb4f3aaf88630fedc2fada3e",
+            "images/buttons/continue_normal.png": "9e62bf4bdc9c00820a13dae3cbbb9877f0f27323b9bbcda8e16ab684afcbea1b",
+            "images/buttons/continue_selected.png": "acea80764d6fe496b6d0378e20c87566ba5b9693039ca2a3b649348df4964590",
+            "images/capitulo_01/telefono/mensaje.png": "f25d66ed6d7e809b66c716584cb2227dc14b67261decd3f777f1c6cee1521ea1"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "russian",
+          "text": "Добро пожаловать в нашу тихую деревню."
+        },
+        {
+          "choice": {
+            "locale": "fr",
+            "profile_id": "",
+            "renpy_id": "french",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "88e82ba4d8c07a1b1c33c8d20ce398636a735df013bbdd227887988ad7c4e49f",
+            "images/buttons/continue_normal.png": "ea90bb60759fe96c90fa650d78fc5cb514d7da90aaf77279c8013003b11c2327",
+            "images/buttons/continue_selected.png": "008c64907dc9865ed4b5265423b3e64c86f518e739ed638dd9efce88ee8000f6",
+            "images/capitulo_01/telefono/mensaje.png": "58f95a0a7f343d6b5d2ad95753d9c32abc6d9bc9ca2b1f71ce605f201f422431"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "french",
+          "text": "Bienvenue dans notre paisible village."
+        },
+        {
+          "choice": {
+            "locale": "en",
+            "profile_id": "",
+            "renpy_id": "english",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "9437b49207157236ac01688526024ddc9324893e6e93e97821f221b790f0e159",
+            "images/buttons/continue_normal.png": "3609954a21803dd72b7597ed92e305cc8d004168648a9c29df5c0ff954128e89",
+            "images/buttons/continue_selected.png": "79eea84bb7c72c50d911009745f6027b57204d6f1125a4d68f654f9e9e7e2b11",
+            "images/capitulo_01/telefono/mensaje.png": "1603be90d0534552ed66d58b77cd6883c4fe0d70058e40b0bf12f3ee75b5d440"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "english",
+          "text": "Welcome to this peaceful village."
+        },
+        {
+          "choice": {
+            "locale": "fr",
+            "profile_id": "",
+            "renpy_id": "french",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "88e82ba4d8c07a1b1c33c8d20ce398636a735df013bbdd227887988ad7c4e49f",
+            "images/buttons/continue_normal.png": "ea90bb60759fe96c90fa650d78fc5cb514d7da90aaf77279c8013003b11c2327",
+            "images/buttons/continue_selected.png": "008c64907dc9865ed4b5265423b3e64c86f518e739ed638dd9efce88ee8000f6",
+            "images/capitulo_01/telefono/mensaje.png": "58f95a0a7f343d6b5d2ad95753d9c32abc6d9bc9ca2b1f71ce605f201f422431"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "french",
+          "text": "Bienvenue dans notre paisible village."
+        },
+        {
+          "choice": {
+            "locale": "",
+            "profile_id": "",
+            "renpy_id": null,
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "123d12b1b2d4a91d289d51ff1851ac32cf9bffa623a3d4e95f56eee861829b19",
+            "images/buttons/continue_normal.png": "a8d8b2bc972aea86c09df5af9e40f5d97e89b4effea29e7af121742f8746303d",
+            "images/buttons/continue_selected.png": "abffb0272f4f6963dc100f462c0cd7db92beb295e69b3cd089627454178efbbb",
+            "images/capitulo_01/telefono/mensaje.png": "7cf5d7ee90c9b841e450fef603179521e0871459f1feca472719dc4c77af1ee9"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": null,
+          "text": "Welcome to our quiet village."
+        },
+        {
+          "choice": {
+            "locale": "pt",
+            "profile_id": "",
+            "renpy_id": "portuguese",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "portuguese",
+          "text": "Bem-vindo à nossa tranquila aldeia."
+        },
+        {
+          "choice": {
+            "locale": "es-419",
+            "profile_id": "latam_neutro_sin_modismos",
+            "renpy_id": "spanish_latam",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "spanish_latam",
+          "text": "Te damos la bienvenida a nuestro tranquilo pueblo."
+        },
+        {
+          "choice": {
+            "locale": "pt",
+            "profile_id": "",
+            "renpy_id": "portuguese",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "portuguese",
+          "text": "Bem-vindo à nossa tranquila aldeia."
+        },
+        {
+          "choice": {
+            "locale": "fr",
+            "profile_id": "",
+            "renpy_id": "french",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "88e82ba4d8c07a1b1c33c8d20ce398636a735df013bbdd227887988ad7c4e49f",
+            "images/buttons/continue_normal.png": "ea90bb60759fe96c90fa650d78fc5cb514d7da90aaf77279c8013003b11c2327",
+            "images/buttons/continue_selected.png": "008c64907dc9865ed4b5265423b3e64c86f518e739ed638dd9efce88ee8000f6",
+            "images/capitulo_01/telefono/mensaje.png": "58f95a0a7f343d6b5d2ad95753d9c32abc6d9bc9ca2b1f71ce605f201f422431"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "french",
+          "text": "Bienvenue dans notre paisible village."
+        },
+        {
+          "choice": {
+            "locale": "pt",
+            "profile_id": "",
+            "renpy_id": "portuguese",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "portuguese",
+          "text": "Bem-vindo à nossa tranquila aldeia."
+        },
+        {
+          "choice": {
+            "locale": "ru",
+            "profile_id": "",
+            "renpy_id": "russian",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "d470c09bc7ba56a9e48c7ea698f86b9b1b8ca430bb4f3aaf88630fedc2fada3e",
+            "images/buttons/continue_normal.png": "9e62bf4bdc9c00820a13dae3cbbb9877f0f27323b9bbcda8e16ab684afcbea1b",
+            "images/buttons/continue_selected.png": "acea80764d6fe496b6d0378e20c87566ba5b9693039ca2a3b649348df4964590",
+            "images/capitulo_01/telefono/mensaje.png": "f25d66ed6d7e809b66c716584cb2227dc14b67261decd3f777f1c6cee1521ea1"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "russian",
+          "text": "Добро пожаловать в нашу тихую деревню."
+        },
+        {
+          "choice": {
+            "locale": "pt",
+            "profile_id": "",
+            "renpy_id": "portuguese",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "portuguese",
+          "text": "Bem-vindo à nossa tranquila aldeia."
+        },
+        {
+          "choice": {
+            "locale": "en",
+            "profile_id": "",
+            "renpy_id": "english",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "9437b49207157236ac01688526024ddc9324893e6e93e97821f221b790f0e159",
+            "images/buttons/continue_normal.png": "3609954a21803dd72b7597ed92e305cc8d004168648a9c29df5c0ff954128e89",
+            "images/buttons/continue_selected.png": "79eea84bb7c72c50d911009745f6027b57204d6f1125a4d68f654f9e9e7e2b11",
+            "images/capitulo_01/telefono/mensaje.png": "1603be90d0534552ed66d58b77cd6883c4fe0d70058e40b0bf12f3ee75b5d440"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "english",
+          "text": "Welcome to this peaceful village."
+        },
+        {
+          "choice": {
+            "locale": "pt",
+            "profile_id": "",
+            "renpy_id": "portuguese",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "portuguese",
+          "text": "Bem-vindo à nossa tranquila aldeia."
+        },
+        {
+          "choice": {
+            "locale": "",
+            "profile_id": "",
+            "renpy_id": null,
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "123d12b1b2d4a91d289d51ff1851ac32cf9bffa623a3d4e95f56eee861829b19",
+            "images/buttons/continue_normal.png": "a8d8b2bc972aea86c09df5af9e40f5d97e89b4effea29e7af121742f8746303d",
+            "images/buttons/continue_selected.png": "abffb0272f4f6963dc100f462c0cd7db92beb295e69b3cd089627454178efbbb",
+            "images/capitulo_01/telefono/mensaje.png": "7cf5d7ee90c9b841e450fef603179521e0871459f1feca472719dc4c77af1ee9"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": null,
+          "text": "Welcome to our quiet village."
+        },
+        {
+          "choice": {
+            "locale": "ru",
+            "profile_id": "",
+            "renpy_id": "russian",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "d470c09bc7ba56a9e48c7ea698f86b9b1b8ca430bb4f3aaf88630fedc2fada3e",
+            "images/buttons/continue_normal.png": "9e62bf4bdc9c00820a13dae3cbbb9877f0f27323b9bbcda8e16ab684afcbea1b",
+            "images/buttons/continue_selected.png": "acea80764d6fe496b6d0378e20c87566ba5b9693039ca2a3b649348df4964590",
+            "images/capitulo_01/telefono/mensaje.png": "f25d66ed6d7e809b66c716584cb2227dc14b67261decd3f777f1c6cee1521ea1"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "russian",
+          "text": "Добро пожаловать в нашу тихую деревню."
+        },
+        {
+          "choice": {
+            "locale": "es-419",
+            "profile_id": "latam_neutro_sin_modismos",
+            "renpy_id": "spanish_latam",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "spanish_latam",
+          "text": "Te damos la bienvenida a nuestro tranquilo pueblo."
+        },
+        {
+          "choice": {
+            "locale": "ru",
+            "profile_id": "",
+            "renpy_id": "russian",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "d470c09bc7ba56a9e48c7ea698f86b9b1b8ca430bb4f3aaf88630fedc2fada3e",
+            "images/buttons/continue_normal.png": "9e62bf4bdc9c00820a13dae3cbbb9877f0f27323b9bbcda8e16ab684afcbea1b",
+            "images/buttons/continue_selected.png": "acea80764d6fe496b6d0378e20c87566ba5b9693039ca2a3b649348df4964590",
+            "images/capitulo_01/telefono/mensaje.png": "f25d66ed6d7e809b66c716584cb2227dc14b67261decd3f777f1c6cee1521ea1"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "russian",
+          "text": "Добро пожаловать в нашу тихую деревню."
+        },
+        {
+          "choice": {
+            "locale": "fr",
+            "profile_id": "",
+            "renpy_id": "french",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "88e82ba4d8c07a1b1c33c8d20ce398636a735df013bbdd227887988ad7c4e49f",
+            "images/buttons/continue_normal.png": "ea90bb60759fe96c90fa650d78fc5cb514d7da90aaf77279c8013003b11c2327",
+            "images/buttons/continue_selected.png": "008c64907dc9865ed4b5265423b3e64c86f518e739ed638dd9efce88ee8000f6",
+            "images/capitulo_01/telefono/mensaje.png": "58f95a0a7f343d6b5d2ad95753d9c32abc6d9bc9ca2b1f71ce605f201f422431"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "french",
+          "text": "Bienvenue dans notre paisible village."
+        },
+        {
+          "choice": {
+            "locale": "ru",
+            "profile_id": "",
+            "renpy_id": "russian",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "d470c09bc7ba56a9e48c7ea698f86b9b1b8ca430bb4f3aaf88630fedc2fada3e",
+            "images/buttons/continue_normal.png": "9e62bf4bdc9c00820a13dae3cbbb9877f0f27323b9bbcda8e16ab684afcbea1b",
+            "images/buttons/continue_selected.png": "acea80764d6fe496b6d0378e20c87566ba5b9693039ca2a3b649348df4964590",
+            "images/capitulo_01/telefono/mensaje.png": "f25d66ed6d7e809b66c716584cb2227dc14b67261decd3f777f1c6cee1521ea1"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "russian",
+          "text": "Добро пожаловать в нашу тихую деревню."
+        },
+        {
+          "choice": {
+            "locale": "pt",
+            "profile_id": "",
+            "renpy_id": "portuguese",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "portuguese",
+          "text": "Bem-vindo à nossa tranquila aldeia."
+        },
+        {
+          "choice": {
+            "locale": "ru",
+            "profile_id": "",
+            "renpy_id": "russian",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "d470c09bc7ba56a9e48c7ea698f86b9b1b8ca430bb4f3aaf88630fedc2fada3e",
+            "images/buttons/continue_normal.png": "9e62bf4bdc9c00820a13dae3cbbb9877f0f27323b9bbcda8e16ab684afcbea1b",
+            "images/buttons/continue_selected.png": "acea80764d6fe496b6d0378e20c87566ba5b9693039ca2a3b649348df4964590",
+            "images/capitulo_01/telefono/mensaje.png": "f25d66ed6d7e809b66c716584cb2227dc14b67261decd3f777f1c6cee1521ea1"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "russian",
+          "text": "Добро пожаловать в нашу тихую деревню."
+        },
+        {
+          "choice": {
+            "locale": "en",
+            "profile_id": "",
+            "renpy_id": "english",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "9437b49207157236ac01688526024ddc9324893e6e93e97821f221b790f0e159",
+            "images/buttons/continue_normal.png": "3609954a21803dd72b7597ed92e305cc8d004168648a9c29df5c0ff954128e89",
+            "images/buttons/continue_selected.png": "79eea84bb7c72c50d911009745f6027b57204d6f1125a4d68f654f9e9e7e2b11",
+            "images/capitulo_01/telefono/mensaje.png": "1603be90d0534552ed66d58b77cd6883c4fe0d70058e40b0bf12f3ee75b5d440"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "english",
+          "text": "Welcome to this peaceful village."
+        },
+        {
+          "choice": {
+            "locale": "ru",
+            "profile_id": "",
+            "renpy_id": "russian",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "d470c09bc7ba56a9e48c7ea698f86b9b1b8ca430bb4f3aaf88630fedc2fada3e",
+            "images/buttons/continue_normal.png": "9e62bf4bdc9c00820a13dae3cbbb9877f0f27323b9bbcda8e16ab684afcbea1b",
+            "images/buttons/continue_selected.png": "acea80764d6fe496b6d0378e20c87566ba5b9693039ca2a3b649348df4964590",
+            "images/capitulo_01/telefono/mensaje.png": "f25d66ed6d7e809b66c716584cb2227dc14b67261decd3f777f1c6cee1521ea1"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "russian",
+          "text": "Добро пожаловать в нашу тихую деревню."
+        },
+        {
+          "choice": {
+            "locale": "",
+            "profile_id": "",
+            "renpy_id": null,
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "123d12b1b2d4a91d289d51ff1851ac32cf9bffa623a3d4e95f56eee861829b19",
+            "images/buttons/continue_normal.png": "a8d8b2bc972aea86c09df5af9e40f5d97e89b4effea29e7af121742f8746303d",
+            "images/buttons/continue_selected.png": "abffb0272f4f6963dc100f462c0cd7db92beb295e69b3cd089627454178efbbb",
+            "images/capitulo_01/telefono/mensaje.png": "7cf5d7ee90c9b841e450fef603179521e0871459f1feca472719dc4c77af1ee9"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": null,
+          "text": "Welcome to our quiet village."
+        },
+        {
+          "choice": {
+            "locale": "en",
+            "profile_id": "",
+            "renpy_id": "english",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "9437b49207157236ac01688526024ddc9324893e6e93e97821f221b790f0e159",
+            "images/buttons/continue_normal.png": "3609954a21803dd72b7597ed92e305cc8d004168648a9c29df5c0ff954128e89",
+            "images/buttons/continue_selected.png": "79eea84bb7c72c50d911009745f6027b57204d6f1125a4d68f654f9e9e7e2b11",
+            "images/capitulo_01/telefono/mensaje.png": "1603be90d0534552ed66d58b77cd6883c4fe0d70058e40b0bf12f3ee75b5d440"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "english",
+          "text": "Welcome to this peaceful village."
+        },
+        {
+          "choice": {
+            "locale": "es-419",
+            "profile_id": "latam_neutro_sin_modismos",
+            "renpy_id": "spanish_latam",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "spanish_latam",
+          "text": "Te damos la bienvenida a nuestro tranquilo pueblo."
+        },
+        {
+          "choice": {
+            "locale": "en",
+            "profile_id": "",
+            "renpy_id": "english",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "9437b49207157236ac01688526024ddc9324893e6e93e97821f221b790f0e159",
+            "images/buttons/continue_normal.png": "3609954a21803dd72b7597ed92e305cc8d004168648a9c29df5c0ff954128e89",
+            "images/buttons/continue_selected.png": "79eea84bb7c72c50d911009745f6027b57204d6f1125a4d68f654f9e9e7e2b11",
+            "images/capitulo_01/telefono/mensaje.png": "1603be90d0534552ed66d58b77cd6883c4fe0d70058e40b0bf12f3ee75b5d440"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "english",
+          "text": "Welcome to this peaceful village."
+        },
+        {
+          "choice": {
+            "locale": "fr",
+            "profile_id": "",
+            "renpy_id": "french",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "88e82ba4d8c07a1b1c33c8d20ce398636a735df013bbdd227887988ad7c4e49f",
+            "images/buttons/continue_normal.png": "ea90bb60759fe96c90fa650d78fc5cb514d7da90aaf77279c8013003b11c2327",
+            "images/buttons/continue_selected.png": "008c64907dc9865ed4b5265423b3e64c86f518e739ed638dd9efce88ee8000f6",
+            "images/capitulo_01/telefono/mensaje.png": "58f95a0a7f343d6b5d2ad95753d9c32abc6d9bc9ca2b1f71ce605f201f422431"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "french",
+          "text": "Bienvenue dans notre paisible village."
+        },
+        {
+          "choice": {
+            "locale": "en",
+            "profile_id": "",
+            "renpy_id": "english",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "9437b49207157236ac01688526024ddc9324893e6e93e97821f221b790f0e159",
+            "images/buttons/continue_normal.png": "3609954a21803dd72b7597ed92e305cc8d004168648a9c29df5c0ff954128e89",
+            "images/buttons/continue_selected.png": "79eea84bb7c72c50d911009745f6027b57204d6f1125a4d68f654f9e9e7e2b11",
+            "images/capitulo_01/telefono/mensaje.png": "1603be90d0534552ed66d58b77cd6883c4fe0d70058e40b0bf12f3ee75b5d440"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "english",
+          "text": "Welcome to this peaceful village."
+        },
+        {
+          "choice": {
+            "locale": "pt",
+            "profile_id": "",
+            "renpy_id": "portuguese",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "36b69b4275321031630d546c48587722969113bd9dbd8ccd4d5005c981fb8f25",
+            "images/buttons/continue_normal.png": "1ebd95e614eb3240083a5a9ec55f4ee39698a66960784230d50fbc873bb2e7ab",
+            "images/buttons/continue_selected.png": "9b05c52e8f2e12f56aaaed49d6b607b38a8efc40a16738cbec0b89d5234f716b",
+            "images/capitulo_01/telefono/mensaje.png": "904f0c33720b9c93aeec23cd8f5d2719023d787490d81e1fb405a8e8a77e7a59"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "portuguese",
+          "text": "Bem-vindo à nossa tranquila aldeia."
+        },
+        {
+          "choice": {
+            "locale": "en",
+            "profile_id": "",
+            "renpy_id": "english",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "9437b49207157236ac01688526024ddc9324893e6e93e97821f221b790f0e159",
+            "images/buttons/continue_normal.png": "3609954a21803dd72b7597ed92e305cc8d004168648a9c29df5c0ff954128e89",
+            "images/buttons/continue_selected.png": "79eea84bb7c72c50d911009745f6027b57204d6f1125a4d68f654f9e9e7e2b11",
+            "images/capitulo_01/telefono/mensaje.png": "1603be90d0534552ed66d58b77cd6883c4fe0d70058e40b0bf12f3ee75b5d440"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "english",
+          "text": "Welcome to this peaceful village."
+        },
+        {
+          "choice": {
+            "locale": "ru",
+            "profile_id": "",
+            "renpy_id": "russian",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "d470c09bc7ba56a9e48c7ea698f86b9b1b8ca430bb4f3aaf88630fedc2fada3e",
+            "images/buttons/continue_normal.png": "9e62bf4bdc9c00820a13dae3cbbb9877f0f27323b9bbcda8e16ab684afcbea1b",
+            "images/buttons/continue_selected.png": "acea80764d6fe496b6d0378e20c87566ba5b9693039ca2a3b649348df4964590",
+            "images/capitulo_01/telefono/mensaje.png": "f25d66ed6d7e809b66c716584cb2227dc14b67261decd3f777f1c6cee1521ea1"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "russian",
+          "text": "Добро пожаловать в нашу тихую деревню."
+        },
+        {
+          "choice": {
+            "locale": "en",
+            "profile_id": "",
+            "renpy_id": "english",
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "9437b49207157236ac01688526024ddc9324893e6e93e97821f221b790f0e159",
+            "images/buttons/continue_normal.png": "3609954a21803dd72b7597ed92e305cc8d004168648a9c29df5c0ff954128e89",
+            "images/buttons/continue_selected.png": "79eea84bb7c72c50d911009745f6027b57204d6f1125a4d68f654f9e9e7e2b11",
+            "images/capitulo_01/telefono/mensaje.png": "1603be90d0534552ed66d58b77cd6883c4fe0d70058e40b0bf12f3ee75b5d440"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": "english",
+          "text": "Welcome to this peaceful village."
+        },
+        {
+          "choice": {
+            "locale": "",
+            "profile_id": "",
+            "renpy_id": null,
+            "schema_version": 1,
+            "selected": true
+          },
+          "images": {
+            "images/buttons/continue_hover.png": "123d12b1b2d4a91d289d51ff1851ac32cf9bffa623a3d4e95f56eee861829b19",
+            "images/buttons/continue_normal.png": "a8d8b2bc972aea86c09df5af9e40f5d97e89b4effea29e7af121742f8746303d",
+            "images/buttons/continue_selected.png": "abffb0272f4f6963dc100f462c0cd7db92beb295e69b3cd089627454178efbbb",
+            "images/capitulo_01/telefono/mensaje.png": "7cf5d7ee90c9b841e450fef603179521e0871459f1feca472719dc4c77af1ee9"
+          },
+          "known": [
+            "english",
+            "french",
+            "portuguese",
+            "russian",
+            "spanish_latam"
+          ],
+          "language": null,
+          "text": "Welcome to our quiet village."
+        }
+      ],
+      "requested": null,
+      "returncode": 0
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Controlled fixture, real RenPy processes; not a commercial game",
+  "screenshots": [
+    "preferences_Original.png",
+    "preferences_english.png",
+    "preferences_french.png",
+    "preferences_portuguese.png",
+    "preferences_russian.png",
+    "preferences_spanish_latam.png"
+  ],
+  "switch_steps": 50
+}

@@ -4,7 +4,11 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from src.core.translator import TranslationEngine
-from src.ui_mod.generator import generate_interface_mod
+from src.ui_mod.generator import (
+    generate_interface_mod,
+    load_interface_mod_translations,
+    save_interface_mod_corrections,
+)
 
 
 _ES = {
@@ -46,6 +50,7 @@ def test_generate_mod_from_visible_rpy_is_independent(tmp_path: Path):
         str(exe), "english", "spanish", TranslationEngine.GOOGLE, FakeManager()
     )
     assert result.success
+    assert (game / "zzz_linguanova_ocultar_fuentes.rpy").is_file()
     assert result.translated == 3
     output = Path(result.output_path)
     assert output.name == "linguanova_mod_my_sandbox_multilang.rpy"
@@ -120,3 +125,28 @@ def test_manual_json_edits_survive_regeneration_and_junk_is_rejected(tmp_path: P
     report = json.loads((tl / "linguanova_mod_report.json").read_text(encoding="utf-8"))
     assert report["manual_entries_used"] == 1
     assert report["manual_entries_rejected"] == 1
+
+
+def test_manual_corrections_can_be_edited_in_app_and_survive_regeneration(tmp_path: Path):
+    game = tmp_path / "game"
+    game.mkdir()
+    (game / "screens.rpy").write_text(
+        'screen inventory():\n    text "Inventory"\n', encoding="utf-8"
+    )
+
+    generated = generate_interface_mod(
+        str(tmp_path), "auto", "spanish", TranslationEngine.GOOGLE, FakeManager()
+    )
+    assert generated.success
+
+    rows = load_interface_mod_translations(str(tmp_path), "spanish")
+    assert rows == [{"source": "Inventory", "target": "Inventario"}]
+    rows[0]["target"] = "Inventario corregido"
+    assert save_interface_mod_corrections(str(tmp_path), "spanish", rows) == 1
+    assert load_interface_mod_translations(str(tmp_path), "spanish")[0]["target"] == "Inventario corregido"
+
+    regenerated = generate_interface_mod(
+        str(tmp_path), "auto", "spanish", TranslationEngine.GOOGLE, FakeManager()
+    )
+    assert regenerated.success
+    assert load_interface_mod_translations(str(tmp_path), "spanish")[0]["target"] == "Inventario corregido"

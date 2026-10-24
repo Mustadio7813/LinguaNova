@@ -1,0 +1,26 @@
+{
+  "valid": true,
+  "protected_count": 283,
+  "changed": [],
+  "missing": [],
+  "patched": [
+    "LinguaNova.spec",
+    "README.es.md",
+    "README.md",
+    "build_windows.bat",
+    "locales/en.json",
+    "locales/es.json",
+    "locales/fr.json",
+    "locales/pt.json",
+    "locales/ru.json",
+    "requirements.txt",
+    "run.bat",
+    "src/backend/app_backend.py",
+    "src/core/pipeline/base.py",
+    "src/core/pipeline/orchestrator.py",
+    "src/gui/qml/Main.qml",
+    "src/utils/config.py",
+    "src/version.py"
+  ],
+  "manifest_hash": "e8f92d8c431a898d512069e8c6aa31c6d93585e9b1ab73313a51604677764a4c"
+}

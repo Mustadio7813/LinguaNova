@@ -1,0 +1,107 @@
+{
+  "without_restart": true,
+  "popups": {
+    "sourceLangPopup": {
+      "es": {
+        "spanish": "español",
+        "english": "inglés",
+        "portuguese": "portugués",
+        "french": "francés",
+        "russian": "ruso"
+      },
+      "en": {
+        "spanish": "Spanish",
+        "english": "English",
+        "portuguese": "Portuguese",
+        "french": "French",
+        "russian": "Russian"
+      },
+      "fr": {
+        "spanish": "espagnol",
+        "english": "anglais",
+        "portuguese": "portugais",
+        "french": "français",
+        "russian": "russe"
+      },
+      "pt": {
+        "spanish": "Espanhol",
+        "english": "Inglês",
+        "portuguese": "Português",
+        "french": "Francês",
+        "russian": "Russo"
+      },
+      "ru": {
+        "spanish": "испанский",
+        "english": "английский",
+        "portuguese": "португальский",
+        "french": "французский",
+        "russian": "русский"
+      }
+    },
+    "targetLangPopup": {
+      "es": {
+        "spanish": "español",
+        "english": "inglés",
+        "portuguese": "portugués",
+        "french": "francés",
+        "russian": "ruso"
+      },
+      "en": {
+        "spanish": "Spanish",
+        "english": "English",
+        "portuguese": "Portuguese",
+        "french": "French",
+        "russian": "Russian"
+      },
+      "fr": {
+        "spanish": "espagnol",
+        "english": "anglais",
+        "portuguese": "portugais",
+        "french": "français",
+        "russian": "russe"
+      },
+      "pt": {
+        "spanish": "Espanhol",
+        "english": "Inglês",
+        "portuguese": "Português",
+        "french": "Francês",
+        "russian": "Russo"
+      },
+      "ru": {
+        "spanish": "испанский",
+        "english": "английский",
+        "portuguese": "португальский",
+        "french": "французский",
+        "russian": "русский"
+      }
+    }
+  },
+  "warnings": [
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/components/EditorPage.qml:614:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/Main.qml:537:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/components/EditorPage.qml:614:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/Main.qml:537:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/components/EditorPage.qml:614:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/Main.qml:537:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/components/EditorPage.qml:614:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/Main.qml:537:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/components/EditorPage.qml:614:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/Main.qml:537:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/components/EditorPage.qml:614:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/Main.qml:537:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/components/EditorPage.qml:614:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/Main.qml:537:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/components/EditorPage.qml:614:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/Main.qml:537:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/components/EditorPage.qml:614:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/Main.qml:537:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/components/EditorPage.qml:614:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5",
+    "file:///workspace/scratch/12fa7e37c6b1/work/LinguaNova_Multidioma/src/gui/qml/Main.qml:537:5: QML Dialog: Binding loop detected for property \"implicitWidth\":\nqrc:/qt-project.org/imports/QtQuick/Controls/Material/Dialog.qml:14:5"
+  ],
+  "mod_control_height": [
+    44.0,
+    44.0
+  ],
+  "unexpected_warnings": [],
+  "success": true
+}
